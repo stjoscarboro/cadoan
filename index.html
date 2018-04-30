@@ -1,9 +1,27 @@
 <html>
 <head>
 	<title>Hello World</title>
+<script>
+  const scriptURL = '<SCRIPT URL>'
+  const form = document.forms['submit-to-google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => console.log('Success!', response))
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
 </head>
 
 <body>
-	Hello World!
+
+<form name="submit-to-google-sheet">
+  <input name="name" type="text" placeholder="Name" required>
+  <input name="email" type="email" placeholder="Email" required>
+  <input name="phone" type="text" placeholder="Phone">
+  <button type="submit">Send</button>
+</form>
+
 </body>
 </html>
