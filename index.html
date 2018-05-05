@@ -2,76 +2,15 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Store HTML form submissions in Google Sheets">
-
-  <title>Ban Đọc Thánh Thư</title>
-  
-  <link rel="stylesheet" href="css/main.css">
-  
-  <script src="https://unpkg.com/prefixfree@1.0.0/prefixfree.min.js"></script>
-  <script src="https://wzrd.in/standalone/formdata-polyfill@latest"></script>
-  <script src="https://wzrd.in/standalone/promise-polyfill@latest"></script>
-  <script src="https://wzrd.in/standalone/whatwg-fetch@latest"></script>
+	<title>Ban Đọc Thánh Thư</title>
+	
+	<link rel="stylesheet" href="css/main.css">  
+	<script src="js/jquery.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/lector.js"></script>
 </head>
 
-<body>
-
-  <div class="form-container">
-    <form name="submit-to-google-sheet">
-	  <input name="name" type="text" placeholder="Name" required><br>
-	  <input name="email" type="email" placeholder="Email" required>
-	  <input name="phone" type="text" placeholder="Phone">
-	  <button type="submit">Add</button>
-    </form>
-
-    <div class="loading js-loading is-hidden">
-      <div class="loading-spinner">
-        <svg><circle cx="25" cy="25" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg>
-      </div>
-    </div>
-
-    <p class="js-success-message is-hidden">Success!</p>
-    <p class="js-error-message is-hidden">Error!</p>
-  </div>
-
-  <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzFtg_QNtBFToZ4J1Wxn0bvwXWUMOCjyiVx0i409-8a3nY3m1SM/exec';
-    const form = document.forms['submit-to-google-sheet'];
-    const loading = document.querySelector('.js-loading');
-    const successMessage = document.querySelector('.js-success-message');
-    const errorMessage = document.querySelector('.js-error-message');
-    
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      showLoadingIndicator();
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => showSuccessMessage(response))
-        .catch(error => showErrorMessage(error))
-    });
-    
-    function showLoadingIndicator () {
-      form.classList.add('is-hidden')
-      loading.classList.remove('is-hidden')
-    }
-    
-    function showSuccessMessage (response) {
-      console.log('Success!', response)
-      setTimeout(() => {
-        successMessage.classList.remove('is-hidden')
-        loading.classList.add('is-hidden')
-      }, 500)
-    }
-    
-    function showErrorMessage (error) {
-      console.error('Error!', error.message)
-      setTimeout(() => {
-        errorMessage.classList.remove('is-hidden')
-        loading.classList.add('is-hidden')
-      }, 500)
-    }
-  </script>
+<body ng-app="lectorApp" ng-controller="LectorCtrl" data-ng-init="init()">
 
 </body>
 </html>
