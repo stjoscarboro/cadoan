@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Ban Đọc Thánh Thư</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="google-signin-client_id" content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
+	
+	<link rel="stylesheet" href="admin/lector.css"> 
+	 
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/angular.min.js"></script>
+	<script src="lector.js"></script>
+	
+	<script>
+		function onSuccess(info) {
+			var scope = angular.element('#my-signin2').scope();
+			scope && scope.signin(info);
+		}
+		
+		function onFailure(error) {
+			console.log(error);
+		}
+		
+		function renderButton() {
+			gapi.signin2.render('my-signin2', {
+				'scope': 'https://www.googleapis.com/auth/spreadsheets',
+				'width': 240,
+				'height': 50,
+				'longtitle': true,
+				'theme': 'dark',
+				'onsuccess': onSuccess,
+				'onfailure': onFailure
+			});
+		}
+	</script>
+
+	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+</head>
+
+<body ng-app="lectorApp" ng-controller="LectorCtrl" data-ng-init="init()">
+
+<div class="main">
+	
+	<div ng-if="!lectors">
+		<div id="my-signin2"></div>
+	</div>
+	
+	<div ng-if="lectors">
+		<div class="header">
+			Cộng Đoàn Thánh Giuse - Scarborough
+		</div>
+		
+		<div class="separator">
+		</div>
+		
+		<div class="header">
+			Ban Đọc Thánh Thư
+		</div>
+		
+		<div class="separator">
+		</div>
+		
+		<div class="entry">
+			<form name="entryForm" ng-submit="create()">
+				<div class="field">
+					<span class="label">Name</span>
+					<input type="text" ng-model="lector.name" class="text" required>
+				</div>
+				
+				<div class="field">
+					<span class="label">Email</span>
+					<input type="text" ng-model="lector.email" class="text" required>
+				</div>
+				
+				<div class="field">
+					<span class="label">Phone</span>
+					<input type"text" ng-model="lector.phone" class="text">
+					</select>
+				</div>
+				
+				<div class="field">
+					<span class="error"></span>
+					<input type="submit" value="Add" title="Add" class="badd">
+				</div>
+			</form>
+		</div>
+		
+		<div class="separator">
+		</div>
+		
+		<div class="report">
+			<div class="rheader">
+				<table>
+					<tr>
+						<td class="rname">Name</td>
+						<td class="remail">Email</td>
+						<td class="rphone">Phone</td>
+						<td class="rdelete" style="display: none;"><img src="images/stop.png" width="16" height="16" onclick="$('.rheader .rdelete').toggle();" /></td>
+					</tr>
+				</table>
+			</div>
+			
+			<div class="rbody">
+				<table>
+					<tr ng-repeat="lector in lectors track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
+						<td class="rname">{{lector.name}}</td>
+						<td class="remail">{{lector.email}}</td>
+						<td class="rphone">{{lector.phone}}</td>
+						<td class="rdelete"><a href="" ng-click="remove($index)"><img src="images/erase.png" width="12" height="12" title="Delete" /></a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>
