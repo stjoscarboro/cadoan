@@ -1,27 +1,96 @@
 var app = angular.module("lectorApp", []);
 
-app.controller("LectorCtrl", function($scope, $http, $location) {
+app.controller("LectorCtrl", ($scope, $http, $location) => {
+	
+	$scope.spreadsheetId = '1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM';
+	$scope.sheetId = 'Sheet1';
+	$scope.apiKey = 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
 	
 	/**
 	 * init
 	 */
 	$scope.init = function() {
-		$scope.get();
+		$scope.lector = {}
+	}
+	
+	$scope.signin = function(info) {
+		if(info && info['Zi']) {
+			$scope.apiToken = info['Zi'].access_token;
+			$scope.get();
+		}
 	}
 	
 	/**
 	 * get
 	 */
 	$scope.get = function() {
+		let url = 'https://sheets.googleapis.com/v4/spreadsheets/' + $scope.spreadsheetId + '/values/A:C';
+		
 		$scope.clear();
 		
-		$http({
-			method: 'GET',
-			url: 'https://sheets.googleapis.com/v4/spreadsheets/10qkl0h2CmUnHLbd7-aToyJn9MEw_wa1MbsDAcEnrFtw/values/lectors?key=AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8'
-		}).success(function(data) {
-			$scope.lectors = data.values;
-			console.log($scope.lectors);
-		});
+		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.apiToken }})
+			.then(response => {
+				let values = response.data.values;
+				values.splice(0, 1);
+				
+				$scope.lectors = [];
+				for(let value of values) {
+					$scope.lectors.push({name: value[0], email: value[1], phone: value[2]});
+				}
+			});
+	}
+	
+	/**
+	 * create
+	 */
+	$scope.create = function() {
+		let row = $scope.lectors.length + 1,
+			range = 'A' + row + ':C' + row,
+			url = 'https://sheets.googleapis.com/v4/spreadsheets/' + $scope.spreadsheetId + '/values/A:C:append',
+			data = $scope.lector;
+		
+		let request = {
+			values: [
+				[data.name, data.email, data.phone]
+			]
+		};
+			
+		$scope.clear();
+		
+		//post
+		$http.post(url, request, {params: { key: $scope.apiKey, access_token: $scope.apiToken, valueInputOption: "USER_ENTERED" }})
+			.then(() => {
+				$scope.lectors.push(data);
+				$scope.lector = {};
+			});
+	}
+	
+	/**
+	 * delete
+	 */
+	$scope.remove = function(id) {
+		
+		let url = 'https://sheets.googleapis.com/v4/spreadsheets/' + $scope.spreadsheetId + ':batchUpdate',
+			request = {
+				"requests": [{
+					"deleteDimension": {
+						"range": {
+							"sheetId": 0,
+							"dimension": "ROWS",
+							"startIndex": id + 1,
+							"endIndex": id + 2
+						}
+					}
+				}]
+			};
+				
+		$scope.clear();
+		
+		//delete
+		$http.post(url, request, {params: { key: $scope.apiKey, access_token: $scope.apiToken }})
+			.then(() => {
+				$scope.lectors.splice(id, 1);
+			});
 	}
 	
 	/**
@@ -32,148 +101,5 @@ app.controller("LectorCtrl", function($scope, $http, $location) {
 		$('.rheader .rdelete').hide();
 		$("[class*='rselect']").removeClass('rselect');
 	}
-	
-//	/**
-//	 * create
-//	 */
-//	$scope.create = function() {
-//		
-//		$scope.clear();
-//		
-//		//post
-//		$http({
-//			
-//			method: 'POST',
-//			url: 'pet',
-//			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-//			data: $.param($scope.pet)
-//			
-//		}).success(function(data) {
-//			
-//			//error
-//			if (data.status == 'failure') {
-//				$('.entry .error').text(data.message);
-//				$('.entry .error').show();
-//				return;
-//			}
-//			
-//			//update
-//			$scope.pets.push(data.value);
-//			
-//			//reset
-//			$scope.pet.name = '';
-//			$scope.pet.photo = '';
-//			$scope.pet.status = $scope.statuses[0];
-//			
-//			//scroll
-//			$('.rbody #rlast').get(0).scrollIntoView(false);
-//			
-//		});
-//	}
-//	
-//	/**
-//	 * delete
-//	 */
-//	$scope.delete = function(id) {
-//		
-//		$scope.clear();
-//		
-//		//delete
-//		$http({
-//			
-//			method: 'DELETE',
-//			url: 'pet/' + id
-//			
-//		}).success(function(data) {
-//			
-//			//error
-//			if (data.status == 'failure') {
-//				$('.rheader .rdelete img').attr('title', data.message);
-//				$('.rheader .rdelete').show();
-//				return;
-//			}
-//			
-//			//update
-//			$scope.pets = $.grep($scope.pets, function(e) { 
-//				return e.id != id; 
-//			});
-//			
-//		});
-//	}
-//	
-//	/**
-//	 * find
-//	 */
-//	$scope.find = function() {
-//		
-//		$scope.clear();
-//		
-//		//get
-//		$http({
-//			
-//			method: 'GET',
-//			url: 'pet/' + $scope.pet.id
-//			
-//		}).success(function(data) {
-//			
-//			//error
-//			if (data.status == 'failure') {
-//				$('.search .error').text(data.message);
-//				$('.search .error').show();
-//				return;
-//			}
-//			
-//			//success
-//			var row = $('.rbody #r' + $scope.pet.id);
-//			row.addClass('rselect');
-//			row.get(0).scrollIntoView();
-//			
-//		});
-//	}
-//	
-//	/**
-//	 * logout
-//	 */
-//	$scope.logout = function() {
-//		
-//		//post
-//		$http({
-//			
-//			method: 'POST',
-//			url: 'logout'
-//			
-//		}).success(function(data) {
-//			
-//			window.location = $location.path();
-//			
-//		});
-//	}
-//	
-//	/**
-//	 * refresh
-//	 */
-//	$scope.refresh = function() {
-//		
-//		window.location = $location.path();
-//		
-//	}
-//	
-//	/**
-//	 * user
-//	 */
-//	$scope.user = function() {
-//		
-//		//get
-//		$http({
-//			
-//			method: 'GET',
-//			url: 'user'
-//			
-//		}).success(function(data) {
-//			
-//			$scope.user = data.value;
-//			
-//		});
-//	}
 	
 });
