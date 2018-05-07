@@ -6,7 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="google-signin-client_id" content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
 	
-	<link rel="stylesheet" href="admin/lector.css"> 
+	<link rel="stylesheet" href="lector.css"> 
 	 
 	<script src="../../js/jquery.min.js"></script>
 	<script src="../../js/angular.min.js"></script>
@@ -64,19 +64,18 @@
 		<div class="entry">
 			<form name="entryForm" ng-submit="create()">
 				<div class="field">
-					<span class="label">Name</span>
+					<span class="label">Name:</span>
 					<input type="text" ng-model="lector.name" class="text" required>
 				</div>
 				
 				<div class="field">
-					<span class="label">Email</span>
+					<span class="label">Email:</span>
 					<input type="text" ng-model="lector.email" class="text" required>
 				</div>
 				
 				<div class="field">
-					<span class="label">Phone</span>
-					<input type"text" ng-model="lector.phone" class="text">
-					</select>
+					<span class="label">Phone:</span>
+					<input type="text" ng-model="lector.phone" class="text">
 				</div>
 				
 				<div class="field">
@@ -96,7 +95,7 @@
 						<td class="rname">Name</td>
 						<td class="remail">Email</td>
 						<td class="rphone">Phone</td>
-						<td class="rdelete" style="display: none;"><img src="images/stop.png" width="16" height="16" onclick="$('.rheader .rdelete').toggle();" /></td>
+						<td class="rdelete" style="display: none;"></td>
 					</tr>
 				</table>
 			</div>
@@ -107,7 +106,7 @@
 						<td class="rname">{{lector.name}}</td>
 						<td class="remail">{{lector.email}}</td>
 						<td class="rphone">{{lector.phone}}</td>
-						<td class="rdelete"><a href="" ng-click="remove($index)"><img src="images/erase.png" width="12" height="12" title="Delete" /></a></td>
+						<td class="rdelete"><a href="" ng-click="remove($index)" class="bdelete"></a></td>
 					</tr>
 				</table>
 			</div>
