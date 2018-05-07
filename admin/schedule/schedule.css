@@ -21,7 +21,7 @@
 }
 
 .report {
-	width: 600px;
+	width: 990px;
 	height: 360px;
 	padding: 20px;
 	background-color: azure;
@@ -51,30 +51,42 @@
 }
 
 .rheader {
-	width: 600px;
-	padding: 1px;
+	width: 990px;
+	height: 36px;
 	background-color: #D8D8D8;
 }
 
 .rbody {
-	width: 600px;
+	width: 990px;
 	height: 320px;
 	overflow: hidden;
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
 
-.rname {
+.rdate {
 	width: 180px;
-	height: 30px;
+	height: 56px;
+	vertical-align: top;
+	line-height: 28px;
 }
 
-.remail {
-	width: 260px;
+.rfirst {
+	width: 300px;
+	vertical-align: top;
+	line-height: 28px;
 }
 
-.rphone {
-	width: 100px;
+.rsecond {
+	width: 300px;
+	vertical-align: top;
+	line-height: 28px;
+}
+
+.rthird {
+	width: 200px;
+	vertical-align: top;
+	line-height: 28px;
 }
 
 .rscroll {
