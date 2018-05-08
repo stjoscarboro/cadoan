@@ -1,0 +1,77 @@
+.main {
+	width: 100%;
+	margin: 20px auto 20px auto;
+	font-face: 'Tahoma';
+}
+
+.header {
+	font-size: 20pt;
+	text-align: center;
+}
+
+.report {
+	width: 990px;
+	height: 360px;
+	padding: 20px;
+	background-color: azure;
+	font-size: 12pt;
+	border: solid green 1px;
+	overflow: hidden;
+	border-radius: 10px;
+	margin: auto;
+}
+
+.separator {
+	height: 20px;
+}
+
+.rheader {
+	width: 990px;
+	height: 36px;
+	background-color: #D8D8D8;
+}
+
+.rbody {
+	width: 990px;
+	height: 320px;
+	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.rdate {
+	width: 180px;
+	height: 56px;
+	vertical-align: top;
+	line-height: 28px;
+}
+
+.rfirst {
+	width: 300px;
+	vertical-align: top;
+	line-height: 28px;
+}
+
+.rsecond {
+	width: 300px;
+	vertical-align: top;
+	line-height: 28px;
+}
+
+.rthird {
+	width: 200px;
+	vertical-align: top;
+	line-height: 28px;
+}
+
+.rscroll {
+	width: 10px;
+}
+
+.rodd {
+	background-color: #F8F8F8;
+}
+
+.reven {
+	background-color: #F0F0F0;
+}
