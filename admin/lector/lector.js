@@ -2,9 +2,9 @@ var app = angular.module("lectorApp", []);
 
 app.controller("LectorCtrl", ($scope, $http, $location) => {
 	
-	$scope.spreadsheetId = '1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM';
-	$scope.sheetId = 'Sheet1';
-	$scope.apiKey = 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
+	$scope.sheetUrl 		= 'https://sheets.googleapis.com/v4/spreadsheets/1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM';
+	$scope.sheetRange 	= '/values/A:C';
+	$scope.apiKey 		= 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
 	
 	/**
 	 * init
@@ -13,9 +13,12 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 		$scope.lector = {}
 	}
 	
+	/**
+	 * signin
+	 */
 	$scope.signin = function(info) {
 		if(info && info['Zi']) {
-			$scope.apiToken = info['Zi'].access_token;
+			$scope.accessToken = info['Zi'].access_token;
 			$scope.get();
 		}
 	}
@@ -24,18 +27,22 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 	 * get
 	 */
 	$scope.get = function() {
-		let url = 'https://sheets.googleapis.com/v4/spreadsheets/' + $scope.spreadsheetId + '/values/A:C';
+		let url = $scope.sheetUrl + $scope.sheetRange;
 		
 		$scope.clear();
+		$scope.lectors = [];
 		
-		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.apiToken }})
+		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
 			.then(response => {
 				let values = response.data.values;
 				values.splice(0, 1);
 				
-				$scope.lectors = [];
 				for(let value of values) {
-					$scope.lectors.push({name: value[0], email: value[1], phone: value[2]});
+					$scope.lectors.push({
+						name: value[0],
+						email: value[1],
+						phone: value[2]
+					});
 				}
 			});
 	}
@@ -44,23 +51,18 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 	 * create
 	 */
 	$scope.create = function() {
-		let row = $scope.lectors.length + 1,
-			range = 'A' + row + ':C' + row,
-			url = 'https://sheets.googleapis.com/v4/spreadsheets/' + $scope.spreadsheetId + '/values/A:C:append',
-			data = $scope.lector;
+		let url = $scope.sheetUrl + $scope.sheetRange + ':append',
+			payload = {
+				values: [
+					Object.values($scope.lector)
+				]
+			};
 		
-		let request = {
-			values: [
-				[data.name, data.email, data.phone]
-			]
-		};
-			
 		$scope.clear();
 		
-		//post
-		$http.post(url, request, {params: { key: $scope.apiKey, access_token: $scope.apiToken, valueInputOption: "USER_ENTERED" }})
+		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken, valueInputOption: "USER_ENTERED" }})
 			.then(() => {
-				$scope.lectors.push(data);
+				$scope.lectors.push($scope.lector);
 				$scope.lector = {};
 			});
 	}
@@ -69,9 +71,8 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 	 * delete
 	 */
 	$scope.remove = function(id) {
-		
-		let url = 'https://sheets.googleapis.com/v4/spreadsheets/' + $scope.spreadsheetId + ':batchUpdate',
-			request = {
+		let url = $scope.sheetUrl + ':batchUpdate',
+			payload = {
 				"requests": [{
 					"deleteDimension": {
 						"range": {
@@ -86,8 +87,7 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 				
 		$scope.clear();
 		
-		//delete
-		$http.post(url, request, {params: { key: $scope.apiKey, access_token: $scope.apiToken }})
+		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
 			.then(() => {
 				$scope.lectors.splice(id, 1);
 			});
