@@ -53,7 +53,7 @@ app.controller("ScheduleCtrl", ($scope, $http, $location) => {
 			data = $scope.schedule,
 			payload = {
 				values: [
-					[data.date, data.first.name, data.first.reading, data.second.name, data.second.reading]
+					[data.date, data.first.name, data.first.reading, data.second.name, data.second.reading, data.offertory.name]
 				]
 			};
 			
