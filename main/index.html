@@ -46,25 +46,25 @@
 		
 		<div class="rbody">
 			<table>
-					<tr ng-repeat="schedule in schedules track by $index" ng-class-odd="'rodd'" ng-class-even="'reven'">
-						<td class="rdate">
-							<b>{{schedule.date}}</b>
-						</td>
-						
-						<td class="rfirst">
-							<b>{{schedule.first.name}}</b><br/>
-							<a href="{{schedule.first.reading}}" target="_new">Bài Đọc 1</a>
-						</td>
-						
-						<td class="rsecond">
-							<b>{{schedule.second.name}}</b><br/>
-							<a href="{{schedule.second.reading}}" target="_new">Bài Đọc 2</a>
-						</td>
-						
-						<td class="rthird">
-							<b>{{schedule.offertory.name}}</b>
-						</td>
-					</tr>
+				<tr ng-repeat="schedule in schedules track by $index" ng-class-odd="'rodd'" ng-class-even="'reven'">
+					<td class="rdate">
+						<b>{{schedule.date}}</b>
+					</td>
+					
+					<td class="rfirst">
+						<b>{{schedule.first.name}}</b><br/>
+						<a href="{{schedule.first.reading}}" target="_new">Bài Đọc 1</a>
+					</td>
+					
+					<td class="rsecond">
+						<b>{{schedule.second.name}}</b><br/>
+						<a href="{{schedule.second.reading}}" target="_new">Bài Đọc 2</a>
+					</td>
+					
+					<td class="rthird">
+						<b>{{schedule.offertory.name}}</b>
+					</td>
+				</tr>
 			</table>
 		</div>
 	</div>
