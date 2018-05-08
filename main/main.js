@@ -30,7 +30,7 @@ app.controller("MainCtrl", ($scope, $http, $location) => {
 						date: value[0],
 						first: { name: value[1], reading: value[2] },
 						second: { name: value[3], reading: value[4] },
-						offertory: value[5]
+						offertory: { name: value[5] }
 					});
 				}
 			});
