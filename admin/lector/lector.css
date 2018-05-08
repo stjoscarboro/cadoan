@@ -38,7 +38,7 @@
 
 .label {
 	display: inline-block;
-	line-height: 24px;
+	line-height: 22px;
 }
 
 .text {
@@ -47,14 +47,14 @@
 }
 
 .rheader {
-	width: 600px;
+	width: 100%;
 	padding: 1px;
 	background-color: #D8D8D8;
 }
 
 .rbody {
-	width: 600px;
-	height: 320px;
+	width: 100%;
+	height: 325px;
 	overflow: hidden;
 	overflow-x: hidden;
 	overflow-y: scroll;
@@ -118,7 +118,7 @@
 
 .eaddbtn {
 	width: 60px;
-	margin: 25px 0 0 15px;
+	margin: 23px 0 0 15px;
 }
 
 .button {

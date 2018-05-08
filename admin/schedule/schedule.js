@@ -45,58 +45,52 @@ app.controller("ScheduleCtrl", ($scope, $http, $location) => {
 			});
 	}
 	
-//	/**
-//	 * create
-//	 */
-//	$scope.create = function() {
-//		let row = $scope.lectors.length + 1,
-//			range = 'A' + row + ':C' + row,
-//			url = $scope.sheetUrl + '/values/A:C:append',
-//			data = $scope.lector;
-//		
-//		let request = {
-//			values: [
-//				[data.name, data.email, data.phone]
-//			]
-//		};
-//			
-//		$scope.clear();
-//		
-//		//post
-//		$http.post(url, request, {params: { key: $scope.apiKey, access_token: $scope.accessToken, valueInputOption: "USER_ENTERED" }})
-//			.then(() => {
-//				$scope.lectors.push(data);
-//				$scope.lector = {};
-//			});
-//	}
+	/**
+	 * create
+	 */
+	$scope.create = function() {
+		let url = $scope.sheetUrl + '/values/A:F:append',
+			data = $scope.schedule,
+			payload = {
+				values: [
+					[data.date, data.first.name, data.first.reading, data.second.name, data.second.reading]
+				]
+			};
+			
+		$scope.clear();
+		
+		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken, valueInputOption: "USER_ENTERED" }})
+			.then(() => {
+				$scope.schedules.push($scope.schedule);
+				$scope.schedule = {};
+			});
+	}
 	
-//	/**
-//	 * delete
-//	 */
-//	$scope.remove = function(id) {
-//		
-//		let url = 'https://sheets.googleapis.com/v4/spreadsheets/' + $scope.spreadsheetId + ':batchUpdate',
-//			request = {
-//				"requests": [{
-//					"deleteDimension": {
-//						"range": {
-//							"sheetId": 0,
-//							"dimension": "ROWS",
-//							"startIndex": id + 1,
-//							"endIndex": id + 2
-//						}
-//					}
-//				}]
-//			};
-//				
-//		$scope.clear();
-//		
-//		//delete
-//		$http.post(url, request, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
-//			.then(() => {
-//				$scope.lectors.splice(id, 1);
-//			});
-//	}
+	/**
+	 * delete
+	 */
+	$scope.remove = function(id) {
+		let url = $scope.sheetUrl + ':batchUpdate',
+			payload = {
+				"requests": [{
+					"deleteDimension": {
+						"range": {
+							"sheetId": 0,
+							"dimension": "ROWS",
+							"startIndex": id + 1,
+							"endIndex": id + 2
+						}
+					}
+				}]
+			};
+				
+		$scope.clear();
+		
+		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+			.then(() => {
+				$scope.schedules.splice(id, 1);
+			});
+	}
 	
 	/**
 	 * clear

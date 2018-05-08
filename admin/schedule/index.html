@@ -6,9 +6,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="google-signin-client_id" content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
 	
-	<link rel="stylesheet" href="schedule.css"> 
+	<link rel="stylesheet" href="../../css/jquery-ui.min.css">
+	<link rel="stylesheet" href="schedule.css">
 	
 	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/jquery-ui.min.js"></script>
+	<script src="../../js/jquery-ui-datepicker-vi.js"></script>
 	<script src="../../js/angular.min.js"></script>
 	<script src="../../js/googleapi.js"></script>
 	<script src="schedule.js"></script>
@@ -39,33 +42,6 @@
 		<div class="separator">
 		</div>
 		
-<!-- 		<div class="entry">
-			<form name="entryForm" ng-submit="create()">
-				<div class="field">
-					<span class="label">Name:</span>
-					<input type="text" ng-model="lector.name" class="text" required>
-				</div>
-				
-				<div class="field">
-					<span class="label">Email:</span>
-					<input type="text" ng-model="lector.email" class="text" required>
-				</div>
-				
-				<div class="field">
-					<span class="label">Phone:</span>
-					<input type="text" ng-model="lector.phone" class="text">
-				</div>
-				
-				<div class="field">
-					<span class="error"></span>
-					<input type="submit" value="Add" title="Add" class="badd">
-				</div>
-			</form>
-		</div>
-		
-		<div class="separator">
-		</div>
- -->		
 		<div class="report">
 			<div class="rheader">
 				<table>
@@ -74,7 +50,7 @@
 						<td class="rfirst">Bài Đọc 1</td>
 						<td class="rsecond">Bài Đọc 2</td>
 						<td class="rthird">Lời Nguyện GD</td>
-						<td class="rscroll"></td>
+						<td class="rdelete" style="display: none;"></td>
 					</tr>
 				</table>
 			</div>
@@ -99,9 +75,51 @@
 						<td class="rthird">
 							<b>{{schedule.offertory.name}}</b>
 						</td>
+						
+						<td class="rdelete">
+							<a href="" ng-click="remove($index)" class="bdelete"></a>
+						</td>
 					</tr>
 				</table>
 			</div>
+		</div>
+		
+		<div class="separator">
+		</div>
+		
+		<div class="entry">
+			<form name="entryForm" ng-submit="create()">
+				<div class="econtainer">
+					<div class="edate">
+						<div class="label">Ngày:</div>
+						<input type="text" id="datepicker" ng-model="schedule.date" class="text" autocomplete="off" required>
+						<script>$(() => { $("#datepicker").datepicker({ dateFormat: "DD, d MM, yy", regional: "vi" }); });</script>
+					</div>
+					
+					<div class="efirst">
+						<div class="label">Người Đọc 1</div>
+						<input type="text" ng-model="schedule.first.name" class="text" required>
+						<div class="label2">Bài Đọc 1</div>
+						<input type="text" ng-model="schedule.first.reading" class="text" required>
+					</div>
+					
+					<div class="esecond">
+						<div class="label">Người Đọc 2</div>
+						<input type="text" ng-model="schedule.second.name" class="text" required>
+						<div class="label2">Bài Đọc 2</div>
+						<input type="text" ng-model="schedule.second.reading" class="text" required>
+					</div>
+					
+					<div class="ethird">
+						<div class="label">Lời Nguyện GD</div>
+						<input type="text" ng-model="schedule.offertory.name" class="text" required>
+					</div>
+					
+					<div class="eaddbtn">
+						<input type="submit" value="Add" title="Add" class="button">
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 
