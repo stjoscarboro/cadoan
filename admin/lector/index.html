@@ -39,33 +39,6 @@
 		<div class="separator">
 		</div>
 		
-		<div class="entry">
-			<form name="entryForm" ng-submit="create()">
-				<div class="field">
-					<span class="label">Name:</span>
-					<input type="text" ng-model="lector.name" class="text" required>
-				</div>
-				
-				<div class="field">
-					<span class="label">Email:</span>
-					<input type="text" ng-model="lector.email" class="text" required>
-				</div>
-				
-				<div class="field">
-					<span class="label">Phone:</span>
-					<input type="text" ng-model="lector.phone" class="text">
-				</div>
-				
-				<div class="field">
-					<span class="error"></span>
-					<input type="submit" value="Add" title="Add" class="badd">
-				</div>
-			</form>
-		</div>
-		
-		<div class="separator">
-		</div>
-		
 		<div class="report">
 			<div class="rheader">
 				<table>
@@ -80,7 +53,7 @@
 			
 			<div class="rbody">
 				<table>
-					<tr ng-repeat="lector in lectors track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
+					<tr ng-repeat="lector in lectors track by $index" ng-class-odd="'rodd'" ng-class-even="'reven'">
 						<td class="rname">{{lector.name}}</td>
 						<td class="remail">{{lector.email}}</td>
 						<td class="rphone">{{lector.phone}}</td>
@@ -88,6 +61,34 @@
 					</tr>
 				</table>
 			</div>
+		</div>
+		
+		<div class="separator">
+		</div>
+		
+		<div class="entry">
+			<form name="entryForm" ng-submit="create()">
+				<div class="econtainer">
+					<div class="ename">
+						<div class="label">Name:</div>
+						<input type="text" ng-model="lector.name" class="text" required>
+					</div>
+					
+					<div class="eemail">
+						<div class="label">Email:</div>
+						<input type="text" ng-model="lector.email" class="text" required>
+					</div>
+					
+					<div class="ephone">
+						<div class="label">Phone:</div>
+						<input type="text" ng-model="lector.phone" class="text">
+					</div>
+					
+					<div class="eaddbtn">
+						<input type="submit" value="Add" title="Add" class="button">
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 

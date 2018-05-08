@@ -10,8 +10,8 @@
 }
 
 .entry {
-	width: 300px;
-	height: 140px;
+	width: 600px;
+	height: 50px;
 	padding: 20px;
 	background-color: azure;
 	font-size: 11pt;
@@ -36,17 +36,13 @@
 	height: 20px;
 }
 
-.field {
-	height: 40px;
-}
-
 .label {
-	width: 80px;
 	display: inline-block;
+	line-height: 24px;
 }
 
 .text {
-	width: 210px;
+	width: 100%;
 	font-size: 11pt;
 }
 
@@ -94,22 +90,40 @@
 	height: 100%;
 }
 
-.rselect {
-	outline: thin solid red;
-}
-
-.odd {
+.rodd {
 	background-color: #F8F8F8;
 }
 
-.even {
+.reven {
 	background-color: #F0F0F0;
 }
 
-.badd {
-	width: 100px;
+.econtainer {
+	display: flex;
+}
+
+.ename {
+	width: 180px;
+}
+
+.eemail {
+	width: 220px;
+	margin-left: 15px;
+}
+
+.ephone {
+	width: 120px;
+	margin-left: 15px;
+}
+
+.eaddbtn {
+	width: 60px;
+	margin: 25px 0 0 15px;
+}
+
+.button {
+	width: 100%;
 	font-size: 12pt;
-	float: right;
 }
 
 .error {
