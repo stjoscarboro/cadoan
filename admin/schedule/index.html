@@ -98,21 +98,30 @@
 					
 					<div class="efirst">
 						<div class="label">Người Đọc 1</div>
-						<input type="text" ng-model="schedule.first.name" class="text" required>
+						<select ng-model="schedule.first.name" class="select" required>
+							<option></option>
+							<option ng-repeat="lector in lectors" ng-value="lector.name">{{lector.name}}</option>
+						</select>
 						<div class="label2">Bài Đọc 1</div>
 						<input type="text" ng-model="schedule.first.reading" class="text" required>
 					</div>
 					
 					<div class="esecond">
 						<div class="label">Người Đọc 2</div>
-						<input type="text" ng-model="schedule.second.name" class="text" required>
+						<select ng-model="schedule.second.name" class="select" required>
+							<option></option>
+							<option ng-repeat="lector in lectors" ng-value="lector.name">{{lector.name}}</option>
+						</select>
 						<div class="label2">Bài Đọc 2</div>
 						<input type="text" ng-model="schedule.second.reading" class="text" required>
 					</div>
 					
 					<div class="ethird">
 						<div class="label">Lời Nguyện GD</div>
-						<input type="text" ng-model="schedule.offertory.name" class="text" required>
+						<select ng-model="schedule.offertory.name" class="select" required>
+							<option></option>
+							<option ng-repeat="lector in lectors" ng-value="lector.name">{{lector.name}}</option>
+						</select>
 					</div>
 					
 					<div class="eaddbtn">

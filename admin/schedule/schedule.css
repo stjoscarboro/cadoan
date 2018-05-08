@@ -1,6 +1,6 @@
 .main {
 	margin: 20px auto 20px auto;
-	font-face: 'Tahoma';
+	font-family: 'Helvetica';
 }
 
 .header {
@@ -47,6 +47,11 @@
 }
 
 .text {
+	width: 100%;
+	font-size: 11pt;
+}
+
+.select {
 	width: 100%;
 	font-size: 11pt;
 }

@@ -1,6 +1,6 @@
 var app = angular.module("scheduleApp", []);
 
-app.controller("ScheduleCtrl", ($scope, $http, $location) => {
+app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 	
 	$scope.sheetUrl = 'https://sheets.googleapis.com/v4/spreadsheets/18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk';
 	$scope.sheetRange = '/values/A:F';
@@ -10,14 +10,39 @@ app.controller("ScheduleCtrl", ($scope, $http, $location) => {
 	 * init
 	 */
 	$scope.init = function() {
-		$scope.schedule = {}
+		$scope.schedule = {};
 	}
 	
+	/**
+	 * signin
+	 */
 	$scope.signin = function(info) {
 		if(info && info['Zi']) {
 			$scope.accessToken = info['Zi'].access_token;
 			$scope.get();
+			$scope.lectors();
 		}
+	}
+	
+	$scope.lectors = function() {
+		let url = 'https://sheets.googleapis.com/v4/spreadsheets/1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM/values/A:C';
+		
+		$scope.clear();
+		$scope.lectors = [];
+		
+		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+			.then(response => {
+				let values = response.data.values;
+				values.splice(0, 1);
+				
+				for(let value of values) {
+					$scope.lectors.push({
+						name: value[0],
+						email: value[1],
+						phone: value[2]
+					});
+				}
+			});
 	}
 	
 	/**
@@ -56,7 +81,7 @@ app.controller("ScheduleCtrl", ($scope, $http, $location) => {
 					[data.date, data.first.name, data.first.reading, data.second.name, data.second.reading, data.offertory.name]
 				]
 			};
-			
+		
 		$scope.clear();
 		
 		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken, valueInputOption: "USER_ENTERED" }})
@@ -83,7 +108,7 @@ app.controller("ScheduleCtrl", ($scope, $http, $location) => {
 					}
 				}]
 			};
-				
+		
 		$scope.clear();
 		
 		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
