@@ -19,19 +19,21 @@ app.controller("MainCtrl", ($scope, $http, $location) => {
 	$scope.get = function() {
 		let url = 'https://sheets.googleapis.com/v4/spreadsheets/' + $scope.spreadsheetId + '/values/A:F';
 		
+		$scope.schedules = [];
+		
 		$http.get(url, {params: { key: $scope.apiKey }})
 			.then(response => {
 				let values = response.data.values;
-				values.splice(0, 1);
-				
-				$scope.schedules = [];
-				for(let value of values) {
-					$scope.schedules.push({
-						date: value[0],
-						first: { name: value[1], reading: value[2] },
-						second: { name: value[3], reading: value[4] },
-						offertory: { name: value[5] }
-					});
+
+				if(values) {
+					for(let value of values) {
+						$scope.schedules.push({
+							date: value[0],
+							first: { name: value[1], reading: value[2] },
+							second: { name: value[3], reading: value[4] },
+							offertory: { name: value[5] }
+						});
+					}
 				}
 			});
 	}
