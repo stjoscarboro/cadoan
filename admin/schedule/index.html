@@ -82,10 +82,23 @@
 			<div class="rbody">
 				<table>
 					<tr ng-repeat="schedule in schedules track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
-						<td class="rdate"><b>{{schedule.date}}</b></td>
-						<td class="rfirst"><b>{{schedule.first.name}}</b><br/>{{schedule.first.reading}}</td>
-						<td class="rsecond"><b>{{schedule.second.name}}</b><br/>{{schedule.second.reading}}</td>
-						<td class="rthird"><b>{{schedule.offertory.name}}</b></td>
+						<td class="rdate">
+							<b>{{schedule.date}}</b>
+						</td>
+						
+						<td class="rfirst">
+							<b>{{schedule.first.name}}</b><br/>
+							<a href="{{schedule.first.reading}}" target="_new">Bài Đọc 1</a>
+						</td>
+						
+						<td class="rsecond">
+							<b>{{schedule.second.name}}</b><br/>
+							<a href="{{schedule.second.reading}}" target="_new">Bài Đọc 2</a>
+						</td>
+						
+						<td class="rthird">
+							<b>{{schedule.offertory.name}}</b>
+						</td>
 					</tr>
 				</table>
 			</div>
