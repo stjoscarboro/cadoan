@@ -24,17 +24,17 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 		}
 	}
 	
+	/**
+	 * lectors
+	 */
 	$scope.lectors = function() {
 		let url = 'https://sheets.googleapis.com/v4/spreadsheets/1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM/values/A:C';
-		
-		$scope.clear();
-		$scope.lectors = [];
 		
 		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
 			.then(response => {
 				let values = response.data.values;
-				values.splice(0, 1);
 				
+				$scope.lectors = [];
 				for(let value of values) {
 					$scope.lectors.push({
 						name: value[0],
@@ -51,21 +51,21 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 	$scope.get = function() {
 		let url = $scope.sheetUrl + $scope.sheetRange;
 		
-		$scope.clear();
 		$scope.schedules = [];
 		
 		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
 			.then(response => {
 				let values = response.data.values;
-				values.splice(0, 1);
 				
-				for(let value of values) {
-					$scope.schedules.push({
-						date: value[0],
-						first: { name: value[1], reading: value[2] },
-						second: { name: value[3], reading: value[4] },
-						offertory: { name: value[5] }
-					});
+				if(values) {
+					for(let value of values) {
+						$scope.schedules.push({
+							date: value[0],
+							first: { name: value[1], reading: value[2] },
+							second: { name: value[3], reading: value[4] },
+							offertory: { name: value[5] }
+						});
+					}
 				}
 			});
 	}
@@ -82,11 +82,10 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 				]
 			};
 		
-		$scope.clear();
-		
 		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken, valueInputOption: "USER_ENTERED" }})
 			.then(() => {
-				$scope.schedules.push($scope.schedule);
+				$scope.clear();
+				$scope.sort();
 				$scope.schedule = {};
 			});
 	}
@@ -102,18 +101,41 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 						"range": {
 							"sheetId": 0,
 							"dimension": "ROWS",
-							"startIndex": id + 1,
-							"endIndex": id + 2
+							"startIndex": id,
+							"endIndex": id + 1
 						}
 					}
 				}]
 			};
 		
-		$scope.clear();
-		
 		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
 			.then(() => {
-				$scope.schedules.splice(id, 1);
+				$scope.sort();
+			});
+	}
+
+	/**
+	 * sort
+	 */
+	$scope.sort = function() {
+		let url = $scope.sheetUrl + ':batchUpdate',
+			payload = {
+				"requests": [{
+					"sortRange": {
+						"range": {
+							sheetId: 0
+						},
+						"sortSpecs": [{
+							"dimensionIndex": 0,
+							"sortOrder": "ASCENDING"
+						}]
+					}
+				}]
+			};
+		
+		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+			.then((response) => {
+				$scope.get();
 			});
 	}
 	

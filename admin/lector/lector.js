@@ -29,20 +29,20 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 	$scope.get = function() {
 		let url = $scope.sheetUrl + $scope.sheetRange;
 		
-		$scope.clear();
 		$scope.lectors = [];
 		
 		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
 			.then(response => {
 				let values = response.data.values;
-				values.splice(0, 1);
 				
-				for(let value of values) {
-					$scope.lectors.push({
-						name: value[0],
-						email: value[1],
-						phone: value[2]
-					});
+				if(values) {
+					for(let value of values) {
+						$scope.lectors.push({
+							name: value[0],
+							email: value[1],
+							phone: value[2]
+						});
+					}
 				}
 			});
 	}
@@ -58,11 +58,10 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 				]
 			};
 		
-		$scope.clear();
-		
 		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken, valueInputOption: "USER_ENTERED" }})
 			.then(() => {
-				$scope.lectors.push($scope.lector);
+				$scope.clear();
+				$scope.sort();
 				$scope.lector = {};
 			});
 	}
@@ -78,18 +77,41 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 						"range": {
 							"sheetId": 0,
 							"dimension": "ROWS",
-							"startIndex": id + 1,
-							"endIndex": id + 2
+							"startIndex": id,
+							"endIndex": id + 1
 						}
 					}
 				}]
 			};
-				
-		$scope.clear();
 		
 		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
 			.then(() => {
-				$scope.lectors.splice(id, 1);
+				$scope.sort();
+			});
+	}
+
+	/**
+	 * sort
+	 */
+	$scope.sort = function() {
+		let url = $scope.sheetUrl + ':batchUpdate',
+			payload = {
+				"requests": [{
+					"sortRange": {
+						"range": {
+							sheetId: 0
+						},
+						"sortSpecs": [{
+							"dimensionIndex": 0,
+							"sortOrder": "ASCENDING"
+						}]
+					}
+				}]
+			};
+		
+		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+			.then((response) => {
+				$scope.get();
 			});
 	}
 	
