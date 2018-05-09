@@ -1,16 +1,14 @@
 var app = angular.module("lectorApp", []);
 
-app.controller("LectorCtrl", ($scope, $http) => {
-	
-	$scope.sheetURL 		= 'https://sheets.googleapis.com/v4/spreadsheets/1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM';
-	$scope.sheetRange 	= '/values/A:C';
-	$scope.apiKey 		= 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
+app.controller("LectorCtrl", ($scope, HttpService) => {
 	
 	/**
 	 * init
 	 */
 	$scope.init = function() {
-		$scope.lector = {}
+		$scope.lector = {};
+		
+		$scope.httpService = new HttpService($scope);
 	}
 	
 	/**
@@ -29,7 +27,8 @@ app.controller("LectorCtrl", ($scope, $http) => {
 		
 		$scope.lectors = [];
 		
-		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+		
+		$scope.httpService.getSheetData('lector')
 			.then(response => {
 				let values = response.data.values;
 				
@@ -56,7 +55,7 @@ app.controller("LectorCtrl", ($scope, $http) => {
 				]
 			};
 		
-		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken, valueInputOption: "USER_ENTERED" }})
+		$scope.httpService.appendSheetData('lector', payload, {valueInputOption: "USER_ENTERED"})
 			.then(() => {
 				$scope.clear();
 				$scope.sort();
@@ -82,7 +81,7 @@ app.controller("LectorCtrl", ($scope, $http) => {
 				}]
 			};
 		
-		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+		$scope.httpService.updateSheetData('lector', payload)
 			.then(() => {
 				$scope.sort();
 			});
@@ -107,7 +106,7 @@ app.controller("LectorCtrl", ($scope, $http) => {
 				}]
 			};
 		
-		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+		$scope.httpService.updateSheetData('lector', payload)
 			.then((response) => {
 				$scope.get();
 			});

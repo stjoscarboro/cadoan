@@ -1,11 +1,6 @@
 var app = angular.module("scheduleApp", []);
 
-app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
-	
-	$scope.docURL = 'https://docs.google.com/document/d/';
-	$scope.sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk';
-	$scope.sheetRange = '/values/A:F';
-	$scope.apiKey = 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
+app.controller("ScheduleCtrl", ($scope, HttpService) => {
 	
 	/**
 	 * init
@@ -14,7 +9,7 @@ app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 		$scope.schedule = {};
 		$scope.readings = {};
 		
-		$scope.fileService = new FileService($scope);
+		$scope.httpService = new HttpService($scope);
 	}
 	
 	/**
@@ -25,18 +20,16 @@ app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 		
 		$scope.get();
 		$scope.lectors();
-		$scope.fileService.listYears();
+		$scope.listYears();
 	}
 	
 	/**
 	 * lectors
 	 */
 	$scope.lectors = function() {
-		let url = 'https://sheets.googleapis.com/v4/spreadsheets/1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM/values/A:C';
-		
 		$scope.lectors = [];
 		
-		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+		$scope.httpService.getSheetData('lector')
 			.then(response => {
 				let values = response.data.values;
 		
@@ -56,11 +49,9 @@ app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 	 * get
 	 */
 	$scope.get = function() {
-		let url = $scope.sheetURL + $scope.sheetRange;
-		
 		$scope.schedules = [];
 		
-		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+		$scope.httpService.getSheetData('schedule')
 			.then(response => {
 				let values = response.data.values;
 				
@@ -83,16 +74,15 @@ app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 	 * create
 	 */
 	$scope.create = function() {
-		let url = $scope.sheetURL + $scope.sheetRange + ':append',
-			data = $scope.schedule,
+		let data = $scope.schedule,
 			date = $.datepicker.parseDate("DD, dd MM, yy",  data.date),
 			payload = {
 				values: [
-					[date.getTime(), data.first.name, $scope.docURL + data.first.reading, data.second.name, $scope.docURL + data.second.reading, data.offertory.name]
+					[date.getTime(), data.first.name, $scope.httpService.getDocURL(data.first.reading), data.second.name, $scope.httpService.getDocURL(data.second.reading), data.offertory.name]
 				]
 			};
 		
-		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken, valueInputOption: "USER_ENTERED" }})
+		$scope.httpService.appendSheetData('schedule', payload, {valueInputOption: "USER_ENTERED"})
 			.then(() => {
 				$scope.clear();
 				$scope.sort();
@@ -106,8 +96,7 @@ app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 	 * delete
 	 */
 	$scope.remove = function(id) {
-		let url = $scope.sheetURL + ':batchUpdate',
-			payload = {
+		let payload = {
 				"requests": [{
 					"deleteDimension": {
 						"range": {
@@ -120,7 +109,7 @@ app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 				}]
 			};
 		
-		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+		$scope.httpService.updateSheetData('schedule', payload)
 			.then(() => {
 				$scope.schedules.splice(id, 1);
 			});
@@ -130,8 +119,7 @@ app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 	 * sort
 	 */
 	$scope.sort = function() {
-		let url = $scope.sheetURL + ':batchUpdate',
-			payload = {
+		let payload = {
 				"requests": [{
 					"sortRange": {
 						"range": {
@@ -145,7 +133,7 @@ app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 				}]
 			};
 		
-		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
+		$scope.httpService.updateSheetData('schedule', payload)
 			.then((response) => {
 				$scope.get();
 			});
@@ -161,6 +149,35 @@ app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 	}
 	
 	/**
+	 * listYears
+	 */
+	$scope.listYears = function() {
+		$scope.httpService.getYearData()
+			.then(response => {
+				$scope.years = response.data.files;
+			});
+	}
+	
+	/**
+	 * listReadings
+	 */
+	$scope.listReadings = function(year) {
+		$scope.httpService.getFolderData(year.id)
+			.then(response => {
+				let folders = response.data.files;
+				
+				if(folders) {
+					for(let [index, folder] of folders.entries()) {
+						$scope.httpService.getFolderData(folder.id)
+							.then(response => {
+								$scope.readings[index] = response.data.files;
+							});
+					}
+				}
+			});
+	}
+	
+	/**
 	 * selectYear
 	 */
 	$scope.selectYear = function() {
@@ -168,9 +185,10 @@ app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 			selected = $scope.schedule.year;
 		
 		$scope.readings = {};
+		
 		for(let [index, year] of years.entries()) {
 			if(year.name === selected) {
-				$scope.fileService.listReadings(year);
+				$scope.listReadings(year);
 			}
 		}
 	}

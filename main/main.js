@@ -1,15 +1,12 @@
 var app = angular.module("mainApp", []);
 
-app.controller("MainCtrl", ($scope, $http, $location) => {
-	
-	$scope.sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk';
-	$scope.sheetRange = '/values/A:F';
-	$scope.apiKey = 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
+app.controller("MainCtrl", ($scope, HttpService) => {
 	
 	/**
 	 * init
 	 */
 	$scope.init = function() {
+		$scope.httpService = new HttpService(scope);
 		$scope.get();
 	}
 	
@@ -17,11 +14,9 @@ app.controller("MainCtrl", ($scope, $http, $location) => {
 	 * get
 	 */
 	$scope.get = function() {
-		let url = $scope.sheetURL + $scope.sheetRange;
-		
 		$scope.schedules = [];
 		
-		$http.get(url, {params: { key: $scope.apiKey }})
+		$scope.httpService.getSheetData('schedule')
 			.then(response => {
 				let values = response.data.values;
 
