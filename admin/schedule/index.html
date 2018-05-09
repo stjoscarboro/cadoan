@@ -59,7 +59,7 @@
 				<table>
 					<tr ng-repeat="schedule in schedules track by $index" ng-class-odd="'rodd'" ng-class-even="'reven'">
 						<td class="rdate">
-							<b>{{schedule.date}}</b>
+							{{schedule.date}}
 						</td>
 						
 						<td class="rfirst">
@@ -129,6 +129,13 @@
 					</div>
 				</div>
 			</form>
+		</div>
+		
+		<div class="separator">
+		</div>
+		
+		<div class="linknext">
+			<a href="../lector">Ban Đọc Thánh Thư</a>
 		</div>
 	</div>
 
