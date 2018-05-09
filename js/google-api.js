@@ -1,8 +1,13 @@
 var gapidiv = 'gapi-signin';
 
 function onSuccess(info) {
-	var scope = angular.element('#' + gapidiv).scope();
-	scope && scope.signin(info);
+	let profile = info['w3'],
+		response = info['Zi'];
+	
+	if(profile && profile['U3'] === 'stjoscarboro@gmail.com') {
+		let scope = angular.element('#' + gapidiv).scope();
+		scope && scope.signin(response['access_token']);
+	}
 }
 
 function onFailure(error) {

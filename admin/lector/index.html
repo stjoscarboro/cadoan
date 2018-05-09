@@ -10,7 +10,7 @@
 	
 	<script src="../../js/jquery.min.js"></script>
 	<script src="../../js/angular.min.js"></script>
-	<script src="../../js/googleapi.js"></script>
+	<script src="../../js/google-api.js"></script>
 	<script src="lector.js"></script>
 
 	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
@@ -20,11 +20,11 @@
 
 <div class="main">
 	
-	<div ng-if="!lectors">
+	<div ng-if="!accessToken">
 		<div id="gapi-signin"></div>
 	</div>
 	
-	<div ng-if="lectors">
+	<div ng-if="accessToken">
 		<div class="header">
 			Cộng Đoàn Thánh Giuse - Scarborough
 		</div>

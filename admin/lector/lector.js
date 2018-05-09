@@ -16,11 +16,9 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 	/**
 	 * signin
 	 */
-	$scope.signin = function(info) {
-		if(info && info['Zi']) {
-			$scope.accessToken = info['Zi'].access_token;
-			$scope.get();
-		}
+	$scope.signin = function(token) {
+		$scope.accessToken = token;
+		$scope.get();
 	}
 	
 	/**
