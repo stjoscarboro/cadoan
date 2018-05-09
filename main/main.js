@@ -6,7 +6,7 @@ app.controller("MainCtrl", ($scope, HttpService) => {
 	 * init
 	 */
 	$scope.init = function() {
-		$scope.httpService = new HttpService(scope);
+		$scope.httpService = new HttpService($scope);
 		$scope.get();
 	}
 	
