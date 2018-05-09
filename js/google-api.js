@@ -1,4 +1,4 @@
-var gapidiv = 'gapi-signin';
+let gapidiv = 'gapi-signin';
 
 function onSuccess(info) {
 	let profile = info['w3'],
