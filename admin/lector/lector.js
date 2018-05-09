@@ -1,8 +1,8 @@
 var app = angular.module("lectorApp", []);
 
-app.controller("LectorCtrl", ($scope, $http, $location) => {
+app.controller("LectorCtrl", ($scope, $http) => {
 	
-	$scope.sheetUrl 		= 'https://sheets.googleapis.com/v4/spreadsheets/1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM';
+	$scope.sheetURL 		= 'https://sheets.googleapis.com/v4/spreadsheets/1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM';
 	$scope.sheetRange 	= '/values/A:C';
 	$scope.apiKey 		= 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
 	
@@ -25,7 +25,7 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 	 * get
 	 */
 	$scope.get = function() {
-		let url = $scope.sheetUrl + $scope.sheetRange;
+		let url = $scope.sheetURL + $scope.sheetRange;
 		
 		$scope.lectors = [];
 		
@@ -49,7 +49,7 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 	 * create
 	 */
 	$scope.create = function() {
-		let url = $scope.sheetUrl + $scope.sheetRange + ':append',
+		let url = $scope.sheetURL + $scope.sheetRange + ':append',
 			payload = {
 				values: [
 					Object.values($scope.lector)
@@ -68,7 +68,7 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 	 * delete
 	 */
 	$scope.remove = function(id) {
-		let url = $scope.sheetUrl + ':batchUpdate',
+		let url = $scope.sheetURL + ':batchUpdate',
 			payload = {
 				"requests": [{
 					"deleteDimension": {
@@ -92,7 +92,7 @@ app.controller("LectorCtrl", ($scope, $http, $location) => {
 	 * sort
 	 */
 	$scope.sort = function() {
-		let url = $scope.sheetUrl + ':batchUpdate',
+		let url = $scope.sheetURL + ':batchUpdate',
 			payload = {
 				"requests": [{
 					"sortRange": {

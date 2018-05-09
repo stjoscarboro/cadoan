@@ -2,7 +2,7 @@ var app = angular.module("mainApp", []);
 
 app.controller("MainCtrl", ($scope, $http, $location) => {
 	
-	$scope.sheetUrl = 'https://sheets.googleapis.com/v4/spreadsheets/18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk';
+	$scope.sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk';
 	$scope.sheetRange = '/values/A:F';
 	$scope.apiKey = 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
 	
@@ -17,7 +17,7 @@ app.controller("MainCtrl", ($scope, $http, $location) => {
 	 * get
 	 */
 	$scope.get = function() {
-		let url = $scope.sheetUrl + $scope.sheetRange;
+		let url = $scope.sheetURL + $scope.sheetRange;
 		
 		$scope.schedules = [];
 		

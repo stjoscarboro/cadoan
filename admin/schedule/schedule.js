@@ -1,8 +1,9 @@
 var app = angular.module("scheduleApp", []);
 
-app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
+app.controller("ScheduleCtrl", ($scope, $http, FileService) => {
 	
-	$scope.sheetUrl = 'https://sheets.googleapis.com/v4/spreadsheets/18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk';
+	$scope.docURL = 'https://docs.google.com/document/d/';
+	$scope.sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk';
 	$scope.sheetRange = '/values/A:F';
 	$scope.apiKey = 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
 	
@@ -11,6 +12,9 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 	 */
 	$scope.init = function() {
 		$scope.schedule = {};
+		$scope.readings = {};
+		
+		$scope.fileService = new FileService($scope);
 	}
 	
 	/**
@@ -18,8 +22,10 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 	 */
 	$scope.signin = function(token) {
 		$scope.accessToken = token;
+		
 		$scope.get();
 		$scope.lectors();
+		$scope.fileService.listYears();
 	}
 	
 	/**
@@ -28,17 +34,20 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 	$scope.lectors = function() {
 		let url = 'https://sheets.googleapis.com/v4/spreadsheets/1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM/values/A:C';
 		
+		$scope.lectors = [];
+		
 		$http.get(url, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
 			.then(response => {
 				let values = response.data.values;
-				
-				$scope.lectors = [];
-				for(let value of values) {
-					$scope.lectors.push({
-						name: value[0],
-						email: value[1],
-						phone: value[2]
-					});
+		
+				if(values) {
+					for(let value of values) {
+						$scope.lectors.push({
+							name: value[0],
+							email: value[1],
+							phone: value[2]
+						});
+					}
 				}
 			});
 	}
@@ -47,7 +56,7 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 	 * get
 	 */
 	$scope.get = function() {
-		let url = $scope.sheetUrl + $scope.sheetRange;
+		let url = $scope.sheetURL + $scope.sheetRange;
 		
 		$scope.schedules = [];
 		
@@ -74,12 +83,12 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 	 * create
 	 */
 	$scope.create = function() {
-		let url = $scope.sheetUrl + $scope.sheetRange + ':append',
+		let url = $scope.sheetURL + $scope.sheetRange + ':append',
 			data = $scope.schedule,
 			date = $.datepicker.parseDate("DD, dd MM, yy",  data.date),
 			payload = {
 				values: [
-					[date.getTime(), data.first.name, data.first.reading, data.second.name, data.second.reading, data.offertory.name]
+					[date.getTime(), data.first.name, $scope.docURL + data.first.reading, data.second.name, $scope.docURL + data.second.reading, data.offertory.name]
 				]
 			};
 		
@@ -87,7 +96,9 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 			.then(() => {
 				$scope.clear();
 				$scope.sort();
+				
 				$scope.schedule = {};
+				$scope.readings = {};
 			});
 	}
 	
@@ -95,7 +106,7 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 	 * delete
 	 */
 	$scope.remove = function(id) {
-		let url = $scope.sheetUrl + ':batchUpdate',
+		let url = $scope.sheetURL + ':batchUpdate',
 			payload = {
 				"requests": [{
 					"deleteDimension": {
@@ -119,7 +130,7 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 	 * sort
 	 */
 	$scope.sort = function() {
-		let url = $scope.sheetUrl + ':batchUpdate',
+		let url = $scope.sheetURL + ':batchUpdate',
 			payload = {
 				"requests": [{
 					"sortRange": {
@@ -147,6 +158,21 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 		$('.error').hide();
 		$('.rheader .rdelete').hide();
 		$("[class*='rselect']").removeClass('rselect');
+	}
+	
+	/**
+	 * selectYear
+	 */
+	$scope.selectYear = function() {
+		let years = $scope.years,
+			selected = $scope.schedule.year;
+		
+		$scope.readings = {};
+		for(let [index, year] of years.entries()) {
+			if(year.name === selected) {
+				$scope.fileService.listReadings(year);
+			}
+		}
 	}
 	
 });

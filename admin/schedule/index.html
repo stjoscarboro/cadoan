@@ -16,6 +16,7 @@
 	<script src="../../js/angular.min.js"></script>
 	<script src="../../js/google-api.js"></script>
 	<script src="schedule.js"></script>
+	<script src="fileservice.js"></script>
 	
 	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 </head>
@@ -95,6 +96,10 @@
 						<div class="label">Ngày:</div>
 						<input type="text" id="datepicker" ng-model="schedule.date" class="text" autocomplete="off" required>
 						<script>$(() => { $("#datepicker").datepicker({ dateFormat: "DD, dd MM, yy", regional: 'us' }); });</script>
+						<div class="label2">Năm Phụng Vụ</div>
+						<select ng-model="schedule.year" ng-change="selectYear()" class="select">
+							<option ng-repeat="year in years">{{year.name}}</option>
+						</select>
 					</div>
 					
 					<div class="efirst">
@@ -104,7 +109,10 @@
 							<option ng-repeat="lector in lectors" ng-value="lector.name">{{lector.name}}</option>
 						</select>
 						<div class="label2">Bài Đọc 1</div>
-						<input type="text" ng-model="schedule.first.reading" class="text" required>
+						<select ng-model="schedule.first.reading" class="select" required>
+							<option></option>
+							<option ng-repeat="reading in readings[0]" ng-value="reading.id">{{reading.name}}</option>
+						</select>
 					</div>
 					
 					<div class="esecond">
@@ -114,7 +122,10 @@
 							<option ng-repeat="lector in lectors" ng-value="lector.name">{{lector.name}}</option>
 						</select>
 						<div class="label2">Bài Đọc 2</div>
-						<input type="text" ng-model="schedule.second.reading" class="text" required>
+						<select ng-model="schedule.second.reading" class="select" required>
+							<option></option>
+							<option ng-repeat="reading in readings[1]" ng-value="reading.id">{{reading.name}}</option>
+						</select>
 					</div>
 					
 					<div class="ethird">
