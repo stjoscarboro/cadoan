@@ -2,8 +2,8 @@ var app = angular.module("mainApp", []);
 
 app.controller("MainCtrl", ($scope, $http, $location) => {
 	
-	$scope.spreadsheetId = '18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk';
-	$scope.sheetId = 'Sheet1';
+	$scope.sheetUrl = 'https://sheets.googleapis.com/v4/spreadsheets/18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk';
+	$scope.sheetRange = '/values/A:F';
 	$scope.apiKey = 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
 	
 	/**
@@ -17,7 +17,7 @@ app.controller("MainCtrl", ($scope, $http, $location) => {
 	 * get
 	 */
 	$scope.get = function() {
-		let url = 'https://sheets.googleapis.com/v4/spreadsheets/' + $scope.spreadsheetId + '/values/A:F';
+		let url = $scope.sheetUrl + $scope.sheetRange;
 		
 		$scope.schedules = [];
 		
@@ -26,13 +26,18 @@ app.controller("MainCtrl", ($scope, $http, $location) => {
 				let values = response.data.values;
 
 				if(values) {
-					for(let value of values) {
-						$scope.schedules.push({
-							date: value[0],
-							first: { name: value[1], reading: value[2] },
-							second: { name: value[3], reading: value[4] },
-							offertory: { name: value[5] }
-						});
+					for(let value of values) {						
+						let date = Number.parseInt(value[0]),
+							now = new Date().getTime();
+						
+						if(date > now) {
+							$scope.schedules.push({
+								date: $.datepicker.formatDate("DD, dd MM, yy", new Date(date)),
+								first: { name: value[1], reading: value[2] },
+								second: { name: value[3], reading: value[4] },
+								offertory: { name: value[5] }
+							});
+						}
 					}
 				}
 			});

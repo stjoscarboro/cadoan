@@ -59,8 +59,10 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 				
 				if(values) {
 					for(let value of values) {
+						let date = Number.parseInt(value[0]);
+
 						$scope.schedules.push({
-							date: value[0],
+							date: $.datepicker.formatDate("DD, dd MM, yy", new Date(date)),
 							first: { name: value[1], reading: value[2] },
 							second: { name: value[3], reading: value[4] },
 							offertory: { name: value[5] }
@@ -74,11 +76,12 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 	 * create
 	 */
 	$scope.create = function() {
-		let url = $scope.sheetUrl + '/values/A:F:append',
+		let url = $scope.sheetUrl + $scope.sheetRange + ':append',
 			data = $scope.schedule,
+			date = $.datepicker.parseDate("DD, dd MM, yy",  data.date),
 			payload = {
 				values: [
-					[data.date, data.first.name, data.first.reading, data.second.name, data.second.reading, data.offertory.name]
+					[date.getTime(), data.first.name, data.first.reading, data.second.name, data.second.reading, data.offertory.name]
 				]
 			};
 		
@@ -110,7 +113,7 @@ app.controller("ScheduleCtrl", ($scope, $rootScope, $http, $location) => {
 		
 		$http.post(url, payload, {params: { key: $scope.apiKey, access_token: $scope.accessToken }})
 			.then(() => {
-				$scope.sort();
+				$scope.schedules.splice(id, 1);
 			});
 	}
 
