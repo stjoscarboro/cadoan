@@ -20,6 +20,12 @@
 	<script src="../../js/http-service.js"></script>
 	
 	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+	
+	<script>
+		$(document).ready(function() {
+			console.log('here');
+		});
+	</script>
 </head>
 
 <body ng-app="scheduleApp" ng-controller="ScheduleCtrl" data-ng-init="init()">
@@ -67,7 +73,8 @@
 						
 						<td class="rfirst">
 							<b>{{schedule.first.name}}</b><br/>
-							<a href="{{schedule.first.reading}}" target="_new">Bài Đọc 1</a>
+							<!-- <a href="{{schedule.first.reading}}" target="_new">Bài Đọc 1</a> -->
+							<a href="{{schedule.first.reading}}" class="popup">Bài Đọc 1</a>
 						</td>
 						
 						<td class="rsecond">
