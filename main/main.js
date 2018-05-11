@@ -7,6 +7,8 @@ app.controller("MainCtrl", ($scope, HttpService) => {
 	 */
 	$scope.init = function() {
 		$scope.httpService = new HttpService($scope);
+		$scope.dateFormat = "DD, dd MM, yy";
+		
 		$scope.get();
 	}
 	
@@ -27,10 +29,10 @@ app.controller("MainCtrl", ($scope, HttpService) => {
 						
 						if(date > now) {
 							$scope.schedules.push({
-								date: $.datepicker.formatDate("DD, dd MM, yy", new Date(date)),
+								date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
 								first: { name: value[1], reading: value[2] },
-								second: { name: value[3], reading: value[4] },
-								offertory: { name: value[5] }
+								second: { name: value[5], reading: value[6] },
+								offertory: { name: value[9] }
 							});
 						}
 					}

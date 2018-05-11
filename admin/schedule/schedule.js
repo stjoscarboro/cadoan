@@ -11,6 +11,7 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 		
 		$scope.httpService = new HttpService($scope);
 		$scope.emailService = new EmailService($scope);
+		$scope.dateFormat = "DD, dd MM, yy";
 	}
 	
 	/**
@@ -55,20 +56,28 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 		
 		$scope.httpService.getSheetData('schedule')
 			.then(response => {
-				let values = response.data.values;
+				let values = response.data.values,
+					lastDate = Date.now();
 				
 				if(values) {
 					for(let value of values) {
 						let date = Number.parseInt(value[0]);
-
+						
 						$scope.schedules.push({
-							date: $.datepicker.formatDate("DD, dd MM, yy", new Date(date)),
-							first: { name: value[1], reading: value[2] },
-							second: { name: value[3], reading: value[4] },
-							offertory: { name: value[5] }
+							rawdate: date,
+							date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
+							first: { name: value[1], reading: value[2], mailsent: value[3] },
+							second: { name: value[4], reading: value[5], mailsent: value[6] },
+							offertory: { name: value[7] }
 						});
+						
+						lastDate = date;
 					}
 				}
+				
+				let datepicker = $('#datepicker')
+				datepicker.datepicker({ dateFormat: $scope.dateFormat });
+				datepicker.datepicker('setDate', new Date(lastDate));
 			});
 	}
 	
@@ -80,7 +89,16 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 			date = $.datepicker.parseDate("DD, dd MM, yy",  data.date),
 			payload = {
 				values: [
-					[date.getTime(), data.first.name, $scope.httpService.getDocURL(data.first.reading), data.second.name, $scope.httpService.getDocURL(data.second.reading), data.offertory.name]
+					[
+						date.getTime(),
+						data.first.name,
+						$scope.httpService.getDocURL(data.first.reading),
+						0,
+						data.second.name,
+						$scope.httpService.getDocURL(data.second.reading),
+						0,
+						data.offertory.name
+					]
 				]
 			};
 		
@@ -193,23 +211,87 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 				$scope.listReadings(year);
 			}
 		}
-	},
+	}
 	
-	$scope.sendmail = function(sidx, lidx) {
+	/**
+	 * sendEmail
+	 */
+	$scope.sendEmail = function(sidx, lidx) {
 		let schedule = $scope.schedules[sidx],
 			name = lidx === 1 ? schedule.first.name : lidx === 2 ? schedule.second.name : null,
+			mailsent = lidx === 1 ? schedule.first.mailsent : lidx === 2 ? schedule.second.mailsent : -1,
 			lector = $scope.lectors.find(item => { return item.name === name; }),
 			receiver = lector.email,
 			sender = '=?utf-8?B?' + Base64.encode('Giáo Xứ Thánh Giuse') + '?=' + ' <stjoscarboro@gmail.com>',
 			subject = '=?utf-8?B?' + Base64.encode('Bài Đọc ' + lidx + ' - ' + schedule.date) + '?=',
-			message = $scope.emailService.getEmail(lector, schedule, lidx);
-		
+			message = $scope.emailService.getEmail(lector, schedule, lidx),
+			link = $('#rmail-' + sidx + '-' + lidx);
+
 		$scope.httpService.sendEmail(receiver, sender, subject, message)
 			.then(response => {
-				console.log(response);
+				let rowidx = sidx,
+					colidx = lidx === 1 ? 3 : lidx === 2 ? 6 : -1;
+				
+				let payload = {
+						"requests": [{
+							"updateCells": {
+								"range": {
+									"sheetId": 0,
+									"startRowIndex": rowidx,
+									"endRowIndex": rowidx + 1,
+									"startColumnIndex": colidx,
+									"endColumnIndex": colidx + 1
+								},
+								"rows": [{
+									"values": [
+										{
+											"userEnteredValue": {
+												"numberValue": Number.parseInt(mailsent) + 1
+											}
+										}
+									]
+								}],
+								"fields": "*"
+							}
+						}]
+					};
+				
+				$scope.httpService.updateSheetData('schedule', payload)
+					.then((response) => {
+						link.addClass('disabled');
+					});
 			});
 		
 		return false;
 	    
 	}	
+	
+	/**
+	 * disableEmail
+	 */
+	$scope.disableEmail = function() {
+		let now = Date.now(),
+			week = 7 * 24 * 3600 * 1000,
+			sendmail1 = 8 * week,
+			sendmail2 = 2 * week;
+		
+		if($scope.schedules) {
+			for(let [index, schedule] of $scope.schedules.entries()) {
+				let scheduledate = Number.parseInt(schedule.rawdate),
+					nextmaildate = scheduledate - now,
+					mailsent1 = Number.parseInt(schedule.first.mailsent),
+					mailsent2 = Number.parseInt(schedule.second.mailsent),
+					maillink1 = $('#rmail-' + index + '-1'),
+					maillink2 = $('#rmail-' + index + '-2');
+				
+				if((nextmaildate < sendmail1 && mailsent1 === 0) || (nextmaildate < sendmail2 && mailsent1 === 1)) {
+					maillink1.removeClass('disabled');
+				}
+				
+				if((nextmaildate < sendmail1 && mailsent2 === 0) || (nextmaildate < sendmail2 && mailsent2 === 1)) {
+					maillink2.removeClass('disabled');
+				}
+			}
+		}
+	}
 });

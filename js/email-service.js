@@ -53,7 +53,7 @@ app.factory('EmailService', function() {
 				reading = index === 1 ? 'first' : 'second';
 			
 			email += '<p>Chào quý phụ huynh của em ' + lector.name + '</p>';
-			email += '<p>Chúng tôi xin gởi quý phụ huynh <b>Bài Đọc ' + index + '</b> sẽ đọc vào ngày <b>' + schedule.date + '</b>. Mong quý phụ huynh giúp cháu chuẩn bị cho bài đọc này.</p>';
+			email += '<p>Chúng tôi xin gởi quý phụ huynh <b>Bài Đọc ' + index + '</b> mà em sẽ đọc vào ngày <b>' + schedule.date + '</b>. Mong quý phụ huynh giúp em chuẩn bị cho bài đọc này.</p>';
 			email += '<p>Đại diện ban đọc thánh thư - Giáo Xứ Thánh Giuse</p>';
 			email += '<p><a href="' + schedule[reading].reading + '">Bài Đọc ' + index + '</a></p>';
 			

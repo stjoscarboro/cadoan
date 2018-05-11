@@ -17,7 +17,7 @@ app.factory('HttpService', function($http) {
 				
 				schedule: {
 					id: '18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk',
-					range: 'A:F'
+					range: 'A:H'
 				}
 			};
 		

@@ -14,6 +14,7 @@
 	width: 100%;
 	height: 50px;
 	padding: 20px;
+	margin-left: -20px;
 	background-color: azure;
 	border: solid green 1px;
 	border-radius: 10px;
@@ -23,6 +24,7 @@
 	width: 100%;
 	height: 360px;
 	padding: 20px;
+	margin-left: -20px;
 	background-color: azure;
 	border: solid green 1px;
 	overflow: hidden;
@@ -31,6 +33,8 @@
 
 .linknext {
 	width: 100%;
+	padding-top: 10px;
+	margin-left: -20px;
 }
 
 .separator {

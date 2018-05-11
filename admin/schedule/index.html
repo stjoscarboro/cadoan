@@ -26,13 +26,13 @@
 
 <body ng-app="scheduleApp" ng-controller="ScheduleCtrl" data-ng-init="init()">
 
-<div class="main">
+<div id="main" class="main">
 	
-	<div ng-if="!schedules">
+	<div ng-if="!accessToken">
 		<div id="gapi-signin"></div>
 	</div>
 	
-	<div ng-if="schedules">
+	<div ng-if="accessToken">
 		<div class="header">
 			Cộng Đoàn Thánh Giuse - Scarborough
 		</div>
@@ -69,13 +69,13 @@
 						
 						<td class="rfirst">
 							<b>{{schedule.first.name}}</b>
-							<div class="rmail"><a href="#" class="bmail" ng-click="sendmail($index, 1)"></a></div><br/>
+							<div class="rmail"><a href="" id="rmail-{{$index}}-1" class="bmail disabled" ng-click="sendEmail($index, 1)"></a></div><br/>
 							<a href="{{schedule.first.reading}}" target="_new">Bài Đọc 1</a>
 						</td>
 						
 						<td class="rsecond">
 							<b>{{schedule.second.name}}</b>
-							<div class="rmail"><a href="#" class="bmail" ng-click="sendmail($index, 2)"></a></div><br/>
+							<div class="rmail"><a href="" id="rmail-{{$index}}-2" class="bmail disabled" ng-click="sendEmail($index, 2)"></a></div><br/>
 							<a href="{{schedule.second.reading}}" target="_new">Bài Đọc 2</a>
 						</td>
 						
@@ -85,6 +85,15 @@
 						
 						<td class="rdelete">
 							<a href="" ng-click="remove($index)" class="bdelete"></a>
+						</td>
+						
+						<td style="display: none;">
+							<script>
+								$(document).ready(() => {
+									let scope = angular.element('#main').scope();
+									scope && scope.disableEmail();
+								});
+							</script>
 						</td>
 					</tr>
 				</table>
@@ -100,7 +109,7 @@
 					<div class="edate">
 						<div class="label">Ngày:</div>
 						<input type="text" id="datepicker" ng-model="schedule.date" class="text" autocomplete="off" required>
-						<script>$(() => { $("#datepicker").datepicker({ dateFormat: "DD, dd MM, yy", regional: 'us' }); });</script>
+						
 						<div class="label2">Năm Phụng Vụ</div>
 						<select ng-model="schedule.year" ng-change="selectYear()" class="select">
 							<option ng-repeat="year in years">{{year.name}}</option>
@@ -113,6 +122,7 @@
 							<option></option>
 							<option ng-repeat="lector in lectors" ng-value="lector.name">{{lector.name}}</option>
 						</select>
+						
 						<div class="label2">Bài Đọc 1</div>
 						<select ng-model="schedule.first.reading" class="select" required>
 							<option></option>
@@ -126,6 +136,7 @@
 							<option></option>
 							<option ng-repeat="lector in lectors" ng-value="lector.name">{{lector.name}}</option>
 						</select>
+						
 						<div class="label2">Bài Đọc 2</div>
 						<select ng-model="schedule.second.reading" class="select" required>
 							<option></option>
@@ -146,9 +157,6 @@
 					</div>
 				</div>
 			</form>
-		</div>
-		
-		<div class="separator">
 		</div>
 		
 		<div class="linknext">
