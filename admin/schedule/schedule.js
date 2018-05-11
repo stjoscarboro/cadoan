@@ -1,6 +1,6 @@
 var app = angular.module("scheduleApp", []);
 
-app.controller("ScheduleCtrl", ($scope, HttpService) => {
+app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 	
 	/**
 	 * init
@@ -10,6 +10,7 @@ app.controller("ScheduleCtrl", ($scope, HttpService) => {
 		$scope.readings = {};
 		
 		$scope.httpService = new HttpService($scope);
+		$scope.emailService = new EmailService($scope);
 	}
 	
 	/**
@@ -37,8 +38,9 @@ app.controller("ScheduleCtrl", ($scope, HttpService) => {
 					for(let value of values) {
 						$scope.lectors.push({
 							name: value[0],
-							email: value[1],
-							phone: value[2]
+							gender: value[1],
+							email: value[2],
+							phone: value[3]
 						});
 					}
 				}
@@ -191,6 +193,23 @@ app.controller("ScheduleCtrl", ($scope, HttpService) => {
 				$scope.listReadings(year);
 			}
 		}
-	}
+	},
 	
+	$scope.sendmail = function(sidx, lidx) {
+		let schedule = $scope.schedules[sidx],
+			name = lidx === 1 ? schedule.first.name : lidx === 2 ? schedule.second.name : null,
+			lector = $scope.lectors.find(item => { return item.name === name; }),
+			receiver = lector.email,
+			sender = '=?utf-8?B?' + Base64.encode('Giáo Xứ Thánh Giuse') + '?=' + ' <stjoscarboro@gmail.com>',
+			subject = '=?utf-8?B?' + Base64.encode('Bài Đọc ' + lidx + ' - ' + schedule.date) + '?=',
+			message = $scope.emailService.getEmail(lector, schedule, lidx);
+		
+		$scope.httpService.sendEmail(receiver, sender, subject, message)
+			.then(response => {
+				console.log(response);
+			});
+		
+		return false;
+	    
+	}	
 });

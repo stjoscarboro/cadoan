@@ -16,7 +16,7 @@ function onFailure(error) {
 
 function renderButton() {
 	gapi.signin2.render(gapidiv, {
-		'scope': 'https://www.googleapis.com/auth/spreadsheets',
+		'scope': 'https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/gmail.send',
 		'width': 240,
 		'height': 50,
 		'longtitle': true,

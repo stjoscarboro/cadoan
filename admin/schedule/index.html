@@ -14,18 +14,14 @@
 	<script src="../../js/jquery-ui.min.js"></script>
 	<script src="../../js/jquery-ui-datepicker-vi.js"></script>
 	<script src="../../js/angular.min.js"></script>
+	<script src="../../js/base64.min.js"></script>
 	<script src="../../js/google-api.js"></script>
 	
 	<script src="schedule.js"></script>
 	<script src="../../js/http-service.js"></script>
+	<script src="../../js/email-service.js"></script>
 	
 	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-	
-	<script>
-		$(document).ready(function() {
-			console.log('here');
-		});
-	</script>
 </head>
 
 <body ng-app="scheduleApp" ng-controller="ScheduleCtrl" data-ng-init="init()">
@@ -72,13 +68,14 @@
 						</td>
 						
 						<td class="rfirst">
-							<b>{{schedule.first.name}}</b><br/>
-							<!-- <a href="{{schedule.first.reading}}" target="_new">Bài Đọc 1</a> -->
-							<a href="{{schedule.first.reading}}" class="popup">Bài Đọc 1</a>
+							<b>{{schedule.first.name}}</b>
+							<div class="rmail"><a href="#" class="bmail" ng-click="sendmail($index, 1)"></a></div><br/>
+							<a href="{{schedule.first.reading}}" target="_new">Bài Đọc 1</a>
 						</td>
 						
 						<td class="rsecond">
-							<b>{{schedule.second.name}}</b><br/>
+							<b>{{schedule.second.name}}</b>
+							<div class="rmail"><a href="#" class="bmail" ng-click="sendmail($index, 2)"></a></div><br/>
 							<a href="{{schedule.second.reading}}" target="_new">Bài Đọc 2</a>
 						</td>
 						

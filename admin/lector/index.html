@@ -47,6 +47,7 @@
 				<table>
 					<tr>
 						<td class="rname">Name</td>
+						<td class="rgender">Gender</td>
 						<td class="remail">Email</td>
 						<td class="rphone">Phone</td>
 						<td class="rdelete" style="display: none;"></td>
@@ -58,6 +59,7 @@
 				<table>
 					<tr ng-repeat="lector in lectors track by $index" ng-class-odd="'rodd'" ng-class-even="'reven'">
 						<td class="rname">{{lector.name}}</td>
+						<td class="rgender">{{lector.gender}}</td>
 						<td class="remail">{{lector.email}}</td>
 						<td class="rphone">{{lector.phone}}</td>
 						<td class="rdelete"><a href="" ng-click="remove($index)" class="bdelete"></a></td>
@@ -75,6 +77,14 @@
 					<div class="ename">
 						<div class="label">Name:</div>
 						<input type="text" ng-model="lector.name" class="text" required>
+					</div>
+					
+					<div class="egender">
+						<div class="label">Gender:</div>
+						<select ng-model="lector.gender" class="select" required>
+							<option></option>
+							<option ng-repeat="gender in genders">{{gender}}</option>
+						</select>
 					</div>
 					
 					<div class="eemail">

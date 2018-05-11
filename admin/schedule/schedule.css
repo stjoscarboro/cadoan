@@ -102,16 +102,34 @@
 }
 
 .rdelete {
-	width: 30px;
-	height: 30px;
-	text-align: center;
-	background: url('../../images/erase.png') no-repeat 12px/12px;
+	width: 40px;
+	height: 40px;
+	background: url('../../images/trash.png') no-repeat 15px/15px;
 }
 
 .bdelete {
 	display: block;
 	width: 100%;
 	height: 100%;
+}
+
+.rmail {
+	float: right;
+	width: 40px;
+	height: 30px;
+	background: url('../../images/mail-send.png') no-repeat 15px/15px;
+}
+
+.bmail {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+a.bmail.disabled {
+   pointer-events: none;
+   cursor: default;
+   background: url('../../images/sent-mail.png') no-repeat 15px/15px;
 }
 
 .rselect {

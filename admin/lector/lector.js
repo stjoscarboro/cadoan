@@ -2,6 +2,8 @@ var app = angular.module("lectorApp", []);
 
 app.controller("LectorCtrl", ($scope, HttpService) => {
 	
+	$scope.genders = [ "Male", "Female", "Child" ];
+	
 	/**
 	 * init
 	 */
@@ -36,8 +38,9 @@ app.controller("LectorCtrl", ($scope, HttpService) => {
 					for(let value of values) {
 						$scope.lectors.push({
 							name: value[0],
-							email: value[1],
-							phone: value[2]
+							gender: value[1],
+							email: value[2],
+							phone: value[3]
 						});
 					}
 				}

@@ -5,13 +5,14 @@ app.factory('HttpService', function($http) {
 		let docURL = 'https://docs.google.com/document/d/',
 			sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/',
 			driveURL = 'https://www.googleapis.com/drive/v3/files',
+			mailURL = 'https://content.googleapis.com/gmail/v1/users/me/messages/send',
 			folderId = '139ho75h2sTOC4EuwXU_AHJP_vnhh7Pwl', // "readings" folder
 			apiKey = 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
 		
 		let sheets = {
 				lector: {
 					id: '1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM',
-					range: 'A:C'
+					range: 'A:D'
 				},
 				
 				schedule: {
@@ -74,6 +75,29 @@ app.factory('HttpService', function($http) {
 		 */
 		this.getYearData = function() {
 			return this.getFolderData(folderId);
+		}
+		
+		/**
+		 * sendEmail
+		 */
+		this.sendEmail = function(to, from, subject, message) {
+			let url = mailURL;
+			
+			let email = '';
+			email += 'To: ' + to + '\r\n';
+			email += 'From: ' + from + '\r\n';
+			email += 'Subject: ' + subject + '\r\n';
+			email += 'Content-Type: text/html; charset=UTF-8' + '\r\n';
+			email += 'Content-Transfer-Encoding: 8bit' + '\r\n';
+			email += 'MIME-Version: 1.0' + '\r\n';
+			email += '\r\n';
+			email += message;
+			
+			let body = {
+					raw: Base64.encode(email).replace(/\//g,'_').replace(/\+/g,'-')
+				}
+			
+			return $http.post(url, body, {params: {access_token: scope.accessToken}, headers: { 'Content-Type': 'application/json' }});
 		}
 		
 		/**
