@@ -75,9 +75,10 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 					}
 				}
 				
+				//set datepicker to lastDate
 				let datepicker = $('#datepicker')
 				datepicker.datepicker({ dateFormat: $scope.dateFormat });
-				datepicker.datepicker('setDate', new Date(lastDate));
+				$scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(lastDate));
 			});
 	}
 	
@@ -131,7 +132,7 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 		
 		$scope.httpService.updateSheetData('schedule', payload)
 			.then(() => {
-				$scope.schedules.splice(id, 1);
+				$scope.sort();
 			});
 	}
 
