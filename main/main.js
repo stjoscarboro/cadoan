@@ -31,8 +31,8 @@ app.controller("MainCtrl", ($scope, HttpService) => {
 							$scope.schedules.push({
 								date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
 								first: { name: value[1], reading: value[2] },
-								second: { name: value[5], reading: value[6] },
-								offertory: { name: value[9] }
+								second: { name: value[4], reading: value[5] },
+								offertory: { name: value[7] }
 							});
 						}
 					}
