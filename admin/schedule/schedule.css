@@ -1,5 +1,5 @@
 .main {
-	width: 906px;
+	width: 996px;
 	margin: 20px auto 20px auto;
 	font-family: 'system-ui';
 	font-size: 11pt;
@@ -85,21 +85,21 @@
 }
 
 .rfirst {
-	width: 170px;
+	width: 200px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
 }
 
 .rsecond {
-	width: 170px;
+	width: 200px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
 }
 
 .rthird {
-	width: 170px;
+	width: 200px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
@@ -157,26 +157,26 @@ a.bmail.disabled {
 }
 
 .edate {
-	width: 196px;
+	width: 218px;
 }
 
 .efirst {
-	width: 196px;
+	width: 218px;
 	margin-left: 15px;
 }
 
 .esecond {
-	width: 196px;
+	width: 218px;
 	margin-left: 15px;
 }
 
 .ethird {
-	width: 196px;
+	width: 218px;
 	margin-left: 15px;
 }
 
 .eaddbtn {
-	width: 60px;
+	width: 66px;
 	margin: 23px 0 0 15px;
 }
 
