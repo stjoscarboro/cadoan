@@ -6,8 +6,7 @@ app.factory('HttpService', function($http) {
 			sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/',
 			driveURL = 'https://www.googleapis.com/drive/v3/files',
 			mailURL = 'https://content.googleapis.com/gmail/v1/users/me/messages/send',
-//			folderId = '139ho75h2sTOC4EuwXU_AHJP_vnhh7Pwl', // "readings" folder
-			folderId = '1RhvrRHr4Rt7N7vd3PQ8slNF4Nijqfp_b', // "readings2" folder
+			folderId = '1RhvrRHr4Rt7N7vd3PQ8slNF4Nijqfp_b', // "readings" folder
 			apiKey = 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
 		
 		let sheets = {
