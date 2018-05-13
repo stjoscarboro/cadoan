@@ -12,17 +12,18 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 		$scope.httpService = new HttpService($scope);
 		$scope.emailService = new EmailService($scope);
 		$scope.dateFormat = "DD, dd MM, yy";
+		$scope.week = 7 * 24 * 3600 * 1000;
 	}
 	
 	/**
 	 * signin
 	 */
-	$scope.signin = function(token) {
+	$scope.signin = function(profile, token) {
+		$scope.profile = profile;
 		$scope.accessToken = token;
 		
 		$scope.get();
 		$scope.lectors();
-		$scope.listYears();
 	}
 	
 	/**
@@ -75,10 +76,30 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 					}
 				}
 				
-				//set datepicker to lastDate
-				let datepicker = $('#datepicker')
-				datepicker.datepicker({ dateFormat: $scope.dateFormat });
-				$scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(lastDate));
+				//init datepicker
+				let datepicker = $('#datepicker');
+				datepicker.datepicker({
+					dateFormat: $scope.dateFormat,
+					onSelect: (text) => {
+						let date = $.datepicker.parseDate($scope.dateFormat, text);
+						
+						//init datepicker with this date
+						$scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, date);
+						$scope.schedule.rawdate = date.getTime();
+						
+						//select the year based on date selection and populate readings
+						$scope.schedule.year = date.getFullYear().toString();
+						$scope.selectYear();
+					}
+				});
+				
+				//init datepicker to a week from last date
+				$scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(lastDate + $scope.week));
+				$scope.schedule.rawdate = lastDate + $scope.week;
+				
+				//select the year based on date selection and populate readings
+				$scope.schedule.year = (new Date(lastDate)).getFullYear().toString();
+				$scope.listYears();
 			});
 	}
 	
@@ -173,16 +194,24 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 	 * listYears
 	 */
 	$scope.listYears = function() {
-		$scope.httpService.getYearData()
+		if(!$scope.years) {
+			$scope.httpService.getYearData()
 			.then(response => {
 				$scope.years = response.data.files;
+				$scope.selectYear();
 			});
+		} else {
+			$scope.selectYear();
+		}
 	}
 	
 	/**
 	 * listReadings
 	 */
 	$scope.listReadings = function(year) {
+		let schedule = $scope.schedule,
+			scheduledate = $.datepicker.formatDate('yy-mm-dd', new Date(schedule.rawdate));
+		
 		$scope.httpService.getFolderData(year.id)
 			.then(response => {
 				let folders = response.data.files;
@@ -192,6 +221,21 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 						$scope.httpService.getFolderData(folder.id)
 							.then(response => {
 								$scope.readings[index] = response.data.files;
+								
+								//select matched reading
+								for(let reading of $scope.readings[index]) {
+									if(reading.name.startsWith(scheduledate)) {
+										if(index === 0) {
+											!schedule.first && (schedule.first = {});
+											$scope.schedule.first.reading = reading.id;
+										}
+										
+										if(index === 1) {
+											!schedule.second && (schedule.second = {});
+											$scope.schedule.second.reading = reading.id;
+										}
+									}
+								}
 							});
 					}
 				}
@@ -223,7 +267,7 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 			mailsent = lidx === 1 ? schedule.first.mailsent : lidx === 2 ? schedule.second.mailsent : -1,
 			lector = $scope.lectors.find(item => { return item.name === name; }),
 			receiver = lector.email,
-			sender = '=?utf-8?B?' + Base64.encode('Giáo Xứ Thánh Giuse') + '?=' + ' <stjoscarboro@gmail.com>',
+			sender = '=?utf-8?B?' + Base64.encode($scope.profile['ofa']) + '?=' + ' <' + $scope.profile['U3'] + '>',
 			subject = '=?utf-8?B?' + Base64.encode('Bài Đọc ' + lidx + ' - ' + schedule.date) + '?=',
 			message = $scope.emailService.getEmail(lector, schedule, lidx),
 			link = $('#rmail-' + sidx + '-' + lidx);
@@ -272,9 +316,8 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 	 */
 	$scope.disableEmail = function() {
 		let now = Date.now(),
-			week = 7 * 24 * 3600 * 1000,
-			sendmail1 = 8 * week,
-			sendmail2 = 2 * week;
+			sendmail1 = 8 * $scope.week,
+			sendmail2 = 2 * $scope.week;
 		
 		if($scope.schedules) {
 			for(let [index, schedule] of $scope.schedules.entries()) {

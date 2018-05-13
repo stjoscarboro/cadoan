@@ -1,12 +1,13 @@
-let gapidiv = 'gapi-signin';
+let gapidiv = 'gapi-signin',
+	gapiid = 'c3Rqb3NjYXJib3JvQGdtYWlsLmNvbQ==';
 
 function onSuccess(info) {
 	let profile = info['w3'],
 		response = info['Zi'];
 	
-	if(profile && profile['U3'] === 'stjoscarboro@gmail.com') {
+	if(profile && Base64.encode(profile['U3']) === gapiid) {
 		let scope = angular.element('#' + gapidiv).scope();
-		scope && scope.signin(response['access_token']);
+		scope && scope.signin(profile, response['access_token']);
 	}
 }
 

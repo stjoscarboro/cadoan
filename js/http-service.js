@@ -7,7 +7,7 @@ app.factory('HttpService', function($http) {
 			driveURL = 'https://www.googleapis.com/drive/v3/files',
 			mailURL = 'https://content.googleapis.com/gmail/v1/users/me/messages/send',
 			folderId = '1RhvrRHr4Rt7N7vd3PQ8slNF4Nijqfp_b', // "readings" folder
-			apiKey = 'AIzaSyDVK5zP0TnhRam0Bsvvb59RvFZMmR3jGW8';
+			gapiKey = Base64.decode('QUl6YVN5RFZLNXpQMFRuaFJhbTBCc3Z2YjU5UnZGWk1tUjNqR1c4');
 		
 		let sheets = {
 				lector: {
@@ -65,7 +65,7 @@ app.factory('HttpService', function($http) {
 		 * getFolderData
 		 */
 		this.getFolderData = function(folderId) {
-			let url = driveURL + '?q="' + folderId + '"+in+parents&orderBy=name&key=' + apiKey;
+			let url = driveURL + '?q="' + folderId + '"+in+parents&orderBy=name&key=' + gapiKey;
 			
 			return $http.get(url);
 		}
@@ -105,7 +105,7 @@ app.factory('HttpService', function($http) {
 		 */
 		getParams = function(params) {
 			!params && (params = {});
-			params.key = apiKey;
+			params.key = gapiKey;
 			params.access_token = scope.accessToken;
 			
 			return params;
