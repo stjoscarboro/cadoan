@@ -61,13 +61,13 @@
 						<td class="rfirst">
 							<b>{{schedule.first.name}}</b>
 							<div class="rmail"><a href="" id="rmail-{{$index}}-1" class="bmail disabled" ng-click="sendEmail($index, 1)"></a></div><br/>
-							<a href="{{schedule.first.reading}}" target="_new">Bài Đọc 1</a>
+							<a href="{{schedule.first.reading}}" target="_new" title="{{readings[0][$index].name}}">Bài Đọc 1</a>
 						</td>
 						
 						<td class="rsecond">
 							<b>{{schedule.second.name}}</b>
 							<div class="rmail"><a href="" id="rmail-{{$index}}-2" class="bmail disabled" ng-click="sendEmail($index, 2)"></a></div><br/>
-							<a href="{{schedule.second.reading}}" target="_new">Bài Đọc 2</a>
+							<a href="{{schedule.second.reading}}" target="_new" title="{{readings[1][$index].name}}">Bài Đọc 2</a>
 						</td>
 						
 						<td class="rthird">
