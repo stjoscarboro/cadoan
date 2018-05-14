@@ -7,7 +7,7 @@ app.controller("MainCtrl", ($scope, HttpService) => {
 	 */
 	$scope.init = function() {
 		$scope.httpService = new HttpService($scope);
-		$scope.dateFormat = "DD, dd MM, yy";
+		$scope.dateFormat = "DD, dd/mm/yy";
 		
 		$scope.get();
 	}

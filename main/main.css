@@ -1,5 +1,5 @@
 .main {
-	width: 864px;
+	width: 890px;
 	margin: 20px auto 20px auto;
 	font-family: Arial, Helvetica, serif;
 	font-size: 11pt;
@@ -43,28 +43,28 @@
 }
 
 .rdate {
-	width: 262px;
+	width: 200px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
 }
 
 .rfirst {
-	width: 180px;
+	width: 200px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
 }
 
 .rsecond {
-	width: 180px;
+	width: 200px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
 }
 
 .rthird {
-	width: 180px;
+	width: 200px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
@@ -92,28 +92,28 @@
 }
 
 .pdate {
-	width: 382px;
+	width: 230px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
 }
 
 .pfirst {
-	width: 150px;
+	width: 190px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
 }
 
 .psecond {
-	width: 150px;
+	width: 190px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
 }
 
 .pthird {
-	width: 150px;
+	width: 190px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;

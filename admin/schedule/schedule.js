@@ -11,7 +11,7 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 		
 		$scope.httpService = new HttpService($scope);
 		$scope.emailService = new EmailService($scope);
-		$scope.dateFormat = "DD, dd MM, yy";
+		$scope.dateFormat = "DD, dd/mm/yy";
 		$scope.week = 7 * 24 * 3600 * 1000;
 	}
 	
@@ -108,7 +108,7 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 	 */
 	$scope.create = function() {
 		let data = $scope.schedule,
-			date = $.datepicker.parseDate("DD, dd MM, yy",  data.date),
+			date = $.datepicker.parseDate($scope.dateFormat,  data.date),
 			payload = {
 				values: [
 					[

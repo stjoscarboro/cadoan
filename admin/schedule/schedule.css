@@ -1,5 +1,5 @@
 .main {
-	width: 996px;
+	width: 974px;
 	margin: 20px auto 20px auto;
 	font-family: Arial, Helvetica, serif;
 	font-size: 11pt;
@@ -79,21 +79,21 @@
 }
 
 .rdate {
-	width: 262px;
+	width: 200px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
 }
 
 .rfirst {
-	width: 200px;
+	width: 220px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
 }
 
 .rsecond {
-	width: 200px;
+	width: 220px;
 	vertical-align: top;
 	line-height: 24px;
 	padding: 8px;
