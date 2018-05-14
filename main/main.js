@@ -24,12 +24,12 @@ app.controller("MainCtrl", ($scope, HttpService) => {
 
 				if(values) {
 					for(let value of values) {						
-						let date = Number.parseInt(value[0]),
-							now = new Date().getTime();
+						let now = new Date(),
+							date = new Date(Number.parseInt(value[0]) + now.getTimezoneOffset() * 60 * 1000);
 						
-						if(date > now) {
+						if(date.getTime() > now.getTime()) {
 							$scope.schedules.push({
-								date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
+								date: $.datepicker.formatDate($scope.dateFormat, date),
 								first: { name: value[1], reading: value[2] },
 								second: { name: value[4], reading: value[5] },
 								offertory: { name: value[7] }
