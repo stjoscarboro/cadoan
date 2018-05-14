@@ -40,4 +40,10 @@ app.controller("MainCtrl", ($scope, HttpService) => {
 			});
 	}
 	
+	$scope.print = function() {
+		$('.pbody').printThis({
+			base: window.location.href
+		});
+	}
+	
 });

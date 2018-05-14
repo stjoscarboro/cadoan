@@ -1,13 +1,14 @@
 .main {
 	width: 774px;
 	margin: 20px auto 20px auto;
-	font-family: 'system-ui';
+	font-family: Arial, Helvetica, serif;
 	font-size: 11pt;
 }
 
 .header {
-	font-size: 20pt;
+	font-size: 18pt;
 	text-align: center;
+	padding: 5px 0 20px 0;
 }
 
 .entry {
