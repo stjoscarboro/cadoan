@@ -121,9 +121,9 @@
 
 .pbutton {
 	float: right;
-	width: 36px;
-	height: 36px;
-	background: url('../images/print.png') no-repeat 18px/18px;
+	width: 48px;
+	height: 48px;
+	background: url('../images/print.png') no-repeat 24px/24px;
 }
 
 .printbtn {
@@ -133,6 +133,11 @@
 }
 
 @media print {
-  @page { margin: 0; }
-  body { margin: 1.5cm; }
+	body {
+		font-family: Arial;
+	}
+}
+
+@page {
+	margin: 1in 0.5in 1in 0.5in;
 }

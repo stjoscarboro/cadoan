@@ -19,6 +19,7 @@ app.controller("LectorCtrl", ($scope, HttpService) => {
 	$scope.signin = function(profile, token) {
 		$scope.profile = profile;
 		$scope.accessToken = token;
+		
 		$scope.get();
 	}
 	
