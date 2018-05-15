@@ -1,6 +1,6 @@
 var app = angular.module("scheduleApp", []);
 
-app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
+app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 	
 	/**
 	 * init
@@ -48,6 +48,8 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 						});
 					}
 				}
+			}, error => {
+				$window.location.reload(true);
 			});
 	}
 	
@@ -102,6 +104,8 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 				//select the year based on date selection and populate readings
 				$scope.schedule.year = (new Date(lastDate)).getFullYear().toString();
 				$scope.listYears();
+			}, error => {
+				$window.location.reload(true);
 			});
 	}
 	
@@ -127,12 +131,14 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 			};
 		
 		$scope.httpService.appendSheetData('schedule', payload, {valueInputOption: "USER_ENTERED"})
-			.then(() => {
+			.then(response => {
 				$scope.clear();
 				$scope.sort();
 				
 				$scope.schedule = {};
 				$scope.readings = {};
+			}, error => {
+				$window.location.reload(true);
 			});
 	}
 	
@@ -156,6 +162,8 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 		$scope.httpService.updateSheetData('schedule', payload)
 			.then(() => {
 				$scope.sort();
+			}, error => {
+				$window.location.reload(true);
 			});
 	}
 
@@ -178,8 +186,10 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 			};
 		
 		$scope.httpService.updateSheetData('schedule', payload)
-			.then((response) => {
+			.then(response => {
 				$scope.get();
+			}, error => {
+				$window.location.reload(true);
 			});
 	}
 	
@@ -198,12 +208,32 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 	$scope.listYears = function() {
 		if(!$scope.years) {
 			$scope.httpService.getYearData()
-			.then(response => {
-				$scope.years = response.data.files;
-				$scope.selectYear();
-			});
+				.then(response => {
+					$scope.years = response.data.files;
+					$scope.selectYear();
+				}, error => {
+					$window.location.reload(true);
+				});
 		} else {
 			$scope.selectYear();
+		}
+	}
+	
+	/**
+	 * selectYear
+	 */
+	$scope.selectYear = function() {
+		let years = $scope.years,
+			selected = $scope.schedule.year;
+		
+		$scope.readings = {};
+		
+		if(years) {
+			for(let [index, year] of years.entries()) {
+				if(year.name === selected) {
+					$scope.listReadings(year);
+				}
+			}
 		}
 	}
 	
@@ -238,26 +268,14 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 										}
 									}
 								}
+							}, error => {
+								$window.location.reload(true);
 							});
 					}
 				}
+			}, error => {
+				$window.location.reload(true);
 			});
-	}
-	
-	/**
-	 * selectYear
-	 */
-	$scope.selectYear = function() {
-		let years = $scope.years,
-			selected = $scope.schedule.year;
-		
-		$scope.readings = {};
-		
-		for(let [index, year] of years.entries()) {
-			if(year.name === selected) {
-				$scope.listReadings(year);
-			}
-		}
 	}
 	
 	/**
@@ -269,7 +287,7 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 			mailsent = lidx === 1 ? schedule.first.mailsent : lidx === 2 ? schedule.second.mailsent : -1,
 			lector = $scope.lectors.find(item => { return item.name === name; }),
 			receiver = lector.email,
-			sender = '=?utf-8?B?' + Base64.encode($scope.profile['ofa']) + '?=' + ' <' + $scope.profile['U3'] + '>',
+			sender = '=?utf-8?B?' + Base64.encode($scope.profile.getGivenName()) + '?=' + ' <' + $scope.profile.getEmail() + '>',
 			subject = '=?utf-8?B?' + Base64.encode('Bài Đọc ' + lidx + ' - ' + schedule.date) + '?=',
 			message = $scope.emailService.getEmail(lector, schedule, lidx),
 			link = $('#rmail-' + sidx + '-' + lidx);
@@ -304,9 +322,13 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 					};
 				
 				$scope.httpService.updateSheetData('schedule', payload)
-					.then((response) => {
+					.then(response => {
 						link.addClass('disabled');
+					}, error => {
+						$window.location.reload(true);
 					});
+			}, error => {
+				$window.location.reload(true);
 			});
 		
 		return false;
