@@ -1,6 +1,6 @@
 var app = angular.module("scheduleApp", []);
 
-app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
+app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailService) => {
 	
 	/**
 	 * init
@@ -29,6 +29,22 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 	}
 	
 	/**
+	 * timeout
+	 */
+	$scope.timeout = function() {
+		let dialog = $(document.createElement('div')); 
+		
+		dialog.html('Session timed out! Reloading...');
+		dialog.dialog();
+		
+		let delay = $timeout(() => {
+			$timeout.cancel(delay);
+			dialog.dialog('close');
+			$window.location.reload();			
+		}, 2000);
+	}
+	
+	/**
 	 * lectors
 	 */
 	$scope.lectors = function() {
@@ -37,7 +53,7 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 		$scope.httpService.getSheetData('lector')
 			.then(response => {
 				let values = response.data.values;
-		
+				
 				if(values) {
 					for(let value of values) {
 						$scope.lectors.push({
@@ -49,7 +65,7 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 					}
 				}
 			}, error => {
-				$window.location.reload(true);
+				$scope.timeout();
 			});
 	}
 	
@@ -105,7 +121,7 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 				$scope.schedule.year = (new Date(lastDate)).getFullYear().toString();
 				$scope.listYears();
 			}, error => {
-				$window.location.reload(true);
+				$scope.timeout();
 			});
 	}
 	
@@ -114,7 +130,7 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 	 */
 	$scope.create = function() {
 		let data = $scope.schedule,
-			date = $.datepicker.parseDate($scope.dateFormat,  data.date),
+			date = $.datepicker.parseDate($scope.dateFormat, data.date),
 			payload = {
 				values: [
 					[
@@ -138,7 +154,7 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 				$scope.schedule = {};
 				$scope.readings = {};
 			}, error => {
-				$window.location.reload(true);
+				$scope.timeout();
 			});
 	}
 	
@@ -163,10 +179,10 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 			.then(() => {
 				$scope.sort();
 			}, error => {
-				$window.location.reload(true);
+				$scope.timeout();
 			});
 	}
-
+	
 	/**
 	 * sort
 	 */
@@ -189,7 +205,7 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 			.then(response => {
 				$scope.get();
 			}, error => {
-				$window.location.reload(true);
+				$scope.timeout();
 			});
 	}
 	
@@ -212,7 +228,7 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 					$scope.years = response.data.files;
 					$scope.selectYear();
 				}, error => {
-					$window.location.reload(true);
+					$scope.timeout();
 				});
 		} else {
 			$scope.selectYear();
@@ -269,12 +285,12 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 									}
 								}
 							}, error => {
-								$window.location.reload(true);
+								$scope.timeout();
 							});
 					}
 				}
 			}, error => {
-				$window.location.reload(true);
+				$scope.timeout();
 			});
 	}
 	
@@ -291,7 +307,7 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 			subject = '=?utf-8?B?' + Base64.encode('Bài Đọc ' + lidx + ' - ' + schedule.date) + '?=',
 			message = $scope.emailService.getEmail(lector, schedule, lidx),
 			link = $('#rmail-' + sidx + '-' + lidx);
-
+		
 		$scope.httpService.sendEmail(receiver, sender, subject, message)
 			.then(response => {
 				let rowidx = sidx,
@@ -325,15 +341,14 @@ app.controller("ScheduleCtrl", ($scope, $window, HttpService, EmailService) => {
 					.then(response => {
 						link.addClass('disabled');
 					}, error => {
-						$window.location.reload(true);
+						$scope.timeout();
 					});
 			}, error => {
-				$window.location.reload(true);
+				$scope.timeout();
 			});
 		
 		return false;
-	    
-	}	
+	}
 	
 	/**
 	 * disableEmail
