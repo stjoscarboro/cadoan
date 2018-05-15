@@ -192,5 +192,11 @@ a.bmail.disabled {
 
 .error {
 	color: red;
+	width: 300px;
+	margin-top: 16px;
+	line-height: 20px;
+}
+
+.hidden {
 	display: none;
 }

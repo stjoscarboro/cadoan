@@ -29,22 +29,6 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	}
 	
 	/**
-	 * timeout
-	 */
-	$scope.timeout = function() {
-		let dialog = $(document.createElement('div')); 
-		
-		dialog.html('Session timed out! Reloading...');
-		dialog.dialog();
-		
-		let delay = $timeout(() => {
-			$timeout.cancel(delay);
-			dialog.dialog('close');
-			$window.location.reload();			
-		}, 2000);
-	}
-	
-	/**
 	 * lectors
 	 */
 	$scope.lectors = function() {
@@ -65,7 +49,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 					}
 				}
 			}, error => {
-				$scope.timeout();
+				$scope.error();
 			});
 	}
 	
@@ -121,7 +105,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 				$scope.schedule.year = (new Date(lastDate)).getFullYear().toString();
 				$scope.listYears();
 			}, error => {
-				$scope.timeout();
+				$scope.error();
 			});
 	}
 	
@@ -154,7 +138,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 				$scope.schedule = {};
 				$scope.readings = {};
 			}, error => {
-				$scope.timeout();
+				$scope.error();
 			});
 	}
 	
@@ -179,7 +163,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 			.then(() => {
 				$scope.sort();
 			}, error => {
-				$scope.timeout();
+				$scope.error();
 			});
 	}
 	
@@ -205,7 +189,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 			.then(response => {
 				$scope.get();
 			}, error => {
-				$scope.timeout();
+				$scope.error();
 			});
 	}
 	
@@ -219,6 +203,17 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	}
 	
 	/**
+	 * error
+	 */
+	$scope.error = function() {
+		$('#error').removeClass('hidden');
+		
+		$timeout(() => {
+			$window.location.reload();			
+		}, 5000);
+	}
+	
+	/**
 	 * listYears
 	 */
 	$scope.listYears = function() {
@@ -228,7 +223,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 					$scope.years = response.data.files;
 					$scope.selectYear();
 				}, error => {
-					$scope.timeout();
+					$scope.error();
 				});
 		} else {
 			$scope.selectYear();
@@ -285,12 +280,12 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 									}
 								}
 							}, error => {
-								$scope.timeout();
+								$scope.error();
 							});
 					}
 				}
 			}, error => {
-				$scope.timeout();
+				$scope.error();
 			});
 	}
 	
@@ -341,10 +336,10 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 					.then(response => {
 						link.addClass('disabled');
 					}, error => {
-						$scope.timeout();
+						$scope.error();
 					});
 			}, error => {
-				$scope.timeout();
+				$scope.error();
 			});
 		
 		return false;
