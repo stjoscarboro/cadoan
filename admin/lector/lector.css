@@ -33,9 +33,8 @@
 }
 
 .linknext {
-	width: 100%;
 	padding-top: 10px;
-	margin-left: -20px;
+	float: left;
 }
 
 .separator {

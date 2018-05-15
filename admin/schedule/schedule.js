@@ -11,6 +11,8 @@ app.controller("ScheduleCtrl", ($scope, HttpService, EmailService) => {
 		
 		$scope.httpService = new HttpService($scope);
 		$scope.emailService = new EmailService($scope);
+		
+		$scope.driveURL = $scope.httpService.getDriveURL();
 		$scope.dateFormat = "DD, dd/mm/yy";
 		$scope.week = 7 * 24 * 3600 * 1000;
 	}
