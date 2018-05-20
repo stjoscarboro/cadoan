@@ -65,7 +65,7 @@ app.factory('HttpService', function($http) {
 		 * getDocURL
 		 */
 		this.getDocURL = function(docId) {
-			return docURL + docId;
+			return docURL + docId + '/preview';
 		}
 		
 		/**
