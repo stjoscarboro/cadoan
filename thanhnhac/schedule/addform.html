@@ -1,0 +1,104 @@
+<html>
+
+<head>
+	<title>Lịch Hát Thánh Ca</title>
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="google-signin-client_id" content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
+	
+	<link rel="stylesheet" href="../../css/jquery-ui.min.css">
+	<link rel="stylesheet" href="./schedule.css">
+	
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/jquery-ui.min.js"></script>
+	<script src="../../js/jquery-ui-datepicker-vi.js"></script>
+	<script src="../../js/angular.min.js"></script>
+	<script src="../../js/base64.min.js"></script>
+	<script src="../../js/google-api.js"></script>
+	
+	<script src="./schedule.js"></script>
+	<script src="../../js/http-service.js"></script>
+	<script src="../../js/email-service.js"></script>
+	
+	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+</head>
+
+<body ng-app="scheduleApp" ng-controller="ScheduleCtrl" data-ng-init="init()"> <!-- oncontextmenu="return false;"> --> 
+
+<div id="main" class="main">
+	
+	<div ng-if="!accessToken">
+		<div id="gapi-signin"></div>
+	</div>
+	
+	<div ng-if="accessToken">
+		<div class="header">
+			<p>Cộng Đoàn Thánh Giuse - Scarborough</p>
+			Lịch Hát Thánh Ca
+		</div>
+		
+		<div class="addform">
+			<form name="entryForm" ng-submit="create()">
+				<table cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="label">Ngày:</td>
+						<td class="calendar" colspan="2">
+							<input type="text" id="datepicker" ng-model="schedule.date" class="text" autocomplete="off" required>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="3">
+							<table cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="label">&nbsp;</td>
+									<td class="select-category column-label">Thể Loại</td>
+									<td class="select-folder column-label">Tập Nhạc</td>
+									<td class="select-songs column-label" colspan="2">Bài Hát</td>
+								</tr>
+					
+								<tr ng-repeat="x in rows">
+									<td class="label">Bài Hát {{x + 1}}:</td>
+									<td class="select-category">
+										<select ng-model="schedule.songs[x].category" ng-change="selectFolder(x)" class="select-category" required>
+											<option ng-repeat="category in categories" ng-value="category.id">{{category.name}}</option>
+										</select>
+									</td>
+									<td class="select-folder">
+										<select ng-model="schedule.songs[x].folder" ng-change="selectSongs(x)" class="select-folder" required>
+											<option ng-repeat="song in songs" ng-value="song.id">{{song.name}}</option>
+										</select>
+									</td>
+									<td class="select-songs">
+										<select ng-model="schedule.songs[x].song" class="select-songs" required>
+											<option></option>
+											<option ng-repeat="list in lists[x].list" ng-value="list.id">{{list.name}}</option>
+										</select>
+									</td>
+									<td class="icon">
+										<a href="#" ng-click="previewSong(x)" class="preview-button" title="Xem Bài Hát"></a>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="add-row">
+							<a href="#" ng-click="addSong(x)">+1</a> / <a href="#" ng-click="removeSong(x)">-1</a>
+						</td>
+						<td class="content">&nbsp;</td>
+						<td class="add-button">
+							<input type="submit" value="Lưu Lại" title="Lưu Lại">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		
+	</div>
+	
+</div>
+
+</body>
+</html>
