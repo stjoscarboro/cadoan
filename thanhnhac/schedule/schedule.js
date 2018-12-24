@@ -123,8 +123,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 			.then(response => {
 				$scope.clear();
 				$scope.sort();
-				
-				$scope.schedule = {};
+				$scope.init();
 			}, error => {
 				$scope.error();
 			});
