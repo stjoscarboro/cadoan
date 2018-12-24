@@ -12,7 +12,8 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 		$scope.schedule = {songs: []};
 		$scope.songs = {};
 		$scope.lists = {};
-		
+		$scope.schedules = [];
+				
 		$scope.rows = [0, 1, 2, 3, 4];
 		$scope.categories = {};
 		
@@ -38,8 +39,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	 * get
 	 */
 	$scope.get = function() {
-		$scope.schedules = [];
-		
+		//load existing schedules
 		$scope.httpService.getSheetData($scope.schedule_db)
 			.then(response => {
 				let values = response.data.values,
@@ -119,6 +119,14 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 			]
 		};
 		
+		//remove existing schedule
+		$scope.schedules.find((schedule, index) => {
+			if(schedule.rawdate === date.getTime()) {
+				$scope.remove(index);
+			}
+		});
+		
+		//add new schedule
 		$scope.httpService.appendSheetData($scope.schedule_db, payload, {valueInputOption: "USER_ENTERED"})
 			.then(response => {
 				$scope.clear();
@@ -148,7 +156,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 		
 		$scope.httpService.updateSheetData($scope.schedule_db, payload)
 			.then(() => {
-				$scope.sort();
+				// $scope.sort();
 			}, error => {
 				$scope.error();
 			});

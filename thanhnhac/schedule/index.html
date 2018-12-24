@@ -65,17 +65,17 @@
 								<tr ng-repeat="x in rows">
 									<td class="label">Bài Hát {{x + 1}}:</td>
 									<td class="select-category">
-										<select ng-model="schedule.songs[x].category" ng-change="selectFolder(x)" class="select-category" required>
+										<select ng-model="schedule.songs[x].category" ng-change="selectFolder(x)" class="select-category select" required>
 											<option ng-repeat="category in categories" ng-value="category.id">{{category.name}}</option>
 										</select>
 									</td>
 									<td class="select-folder">
-										<select ng-model="schedule.songs[x].folder" ng-change="selectSongs(x)" class="select-folder" required>
+										<select ng-model="schedule.songs[x].folder" ng-change="selectSongs(x)" class="select-folder select" required>
 											<option ng-repeat="song in songs" ng-value="song.id">{{song.name}}</option>
 										</select>
 									</td>
 									<td class="select-songs">
-										<select ng-model="schedule.songs[x].song" class="select-songs" required>
+										<select ng-model="schedule.songs[x].song" class="select-songs select" required>
 											<option></option>
 											<option ng-repeat="list in lists[x].list" ng-value="list.id">{{list.name}}</option>
 										</select>
@@ -94,7 +94,7 @@
 						</td>
 						<td class="content">&nbsp;</td>
 						<td class="add-button">
-							<input type="submit" value="Lưu Lại" title="Lưu Lại">
+							<input type="submit" value="Lưu Lại" title="Lưu Lại" class="submit">
 						</td>
 					</tr>
 				</table>

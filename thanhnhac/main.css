@@ -1,8 +1,8 @@
 .main {
-	width: 700px;
+	width: 740px;
 	margin: 20px auto 20px auto;
 	font-family: Arial, Helvetica, serif;
-	font-size: 11pt;
+	font-size: 12pt;
 }
 
 .header {
@@ -41,27 +41,27 @@
 .report .date {
 	width: 180px;
 	vertical-align: top;
-	line-height: 22px;
+	line-height: 24px;
 	padding-left: 4px;
 }
 
 .report .hcategory {
-	width: 114px;
+	width: 120px;
 	vertical-align: top;
-	line-height: 22px;
-	padding-left: 6px;
+	line-height: 24px;
+	padding-left: 2px;
 }
 
 .report .category {
 	width: 120px;
 	vertical-align: top;
-	line-height: 22px;
+	line-height: 24px;
 }
 
 .report .song {
 	width: 400px;
 	vertical-align: top;
-	line-height: 22px;
+	line-height: 24px;
 }
 
 .report .odd {
