@@ -6,8 +6,15 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	 * init
 	 */
 	$scope.init = function() {
-		$scope.schedule = {};
-		$scope.readings = {};
+		$scope.schedule_db = 'thanhnhac_schedule';
+		$scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
+		
+		$scope.schedule = {songs: []};
+		$scope.songs = {};
+		$scope.lists = {};
+		
+		$scope.rows = [0, 1, 2, 3, 4];
+		$scope.categories = {};
 		
 		$scope.httpService = new HttpService($scope);
 		$scope.emailService = new EmailService($scope);
@@ -25,32 +32,6 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 		$scope.accessToken = token;
 		
 		$scope.get();
-		$scope.lectors();
-	}
-	
-	/**
-	 * lectors
-	 */
-	$scope.lectors = function() {
-		$scope.lectors = [];
-		
-		$scope.httpService.getSheetData('lector')
-			.then(response => {
-				let values = response.data.values;
-				
-				if(values) {
-					for(let value of values) {
-						$scope.lectors.push({
-							name: value[0],
-							gender: value[1],
-							email: value[2],
-							phone: value[3]
-						});
-					}
-				}
-			}, error => {
-				$scope.error();
-			});
 	}
 	
 	/**
@@ -59,21 +40,20 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	$scope.get = function() {
 		$scope.schedules = [];
 		
-		$scope.httpService.getSheetData('schedule')
+		$scope.httpService.getSheetData($scope.schedule_db)
 			.then(response => {
 				let values = response.data.values,
 					lastDate = Date.now();
 				
 				if(values) {
 					for(let value of values) {
-						let date = Number.parseInt(value[0]);
+						let date = Number.parseInt(value[0]),
+							songs = JSON.parse(value[1]);
 						
 						$scope.schedules.push({
 							rawdate: date,
 							date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
-							first: { name: value[1], reading: value[2], mailsent: value[3] },
-							second: { name: value[4], reading: value[5], mailsent: value[6] },
-							offertory: { name: value[7] }
+							songs: songs
 						});
 						
 						lastDate = date;
@@ -90,10 +70,6 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 						//init datepicker with this date
 						$scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, date);
 						$scope.schedule.rawdate = date.getTime();
-						
-						//select the year based on date selection and populate readings
-						$scope.schedule.year = date.getFullYear().toString();
-						$scope.selectYear();
 					}
 				});
 				
@@ -101,9 +77,8 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 				$scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(lastDate + $scope.week));
 				$scope.schedule.rawdate = lastDate + $scope.week;
 				
-				//select the year based on date selection and populate readings
-				$scope.schedule.year = (new Date(lastDate)).getFullYear().toString();
-				$scope.listYears();
+				//init songs
+				$scope.listSongs();
 			}, error => {
 				$scope.error();
 			});
@@ -115,28 +90,41 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	$scope.create = function() {
 		let data = $scope.schedule,
 			date = $.datepicker.parseDate($scope.dateFormat, data.date),
-			payload = {
-				values: [
-					[
-						date.getTime(),
-						data.first.name,
-						$scope.httpService.getDocURL(data.first.reading),
-						0,
-						data.second.name,
-						$scope.httpService.getDocURL(data.second.reading),
-						0,
-						data.offertory.name
-					]
-				]
-			};
+			songs = [], payload;
+
+		for(let item of $scope.schedule.songs) {
+			let category, folder, song;
+			
+			Object.values($scope.categories).forEach(c => {
+				category = category ? category : c.id === item.category ? c : null;
+			});
+
+			Object.values($scope.songs).forEach(f => {
+				folder = folder ? folder : f.id === item.folder ? f : null;
+			});
+			
+			Object.values(folder.list).forEach(s => {
+				song = song ? song : s.id === item.song ? s : null;
+			});
+			
+			songs.push({category: category.name, song: song.name, url: $scope.httpService.getOpenURL(song.id)});
+		}
 		
-		$scope.httpService.appendSheetData('schedule', payload, {valueInputOption: "USER_ENTERED"})
+		payload = {
+			values: [
+				[
+					date.getTime(),
+					JSON.stringify(songs)
+				]
+			]
+		};
+		
+		$scope.httpService.appendSheetData($scope.schedule_db, payload, {valueInputOption: "USER_ENTERED"})
 			.then(response => {
 				$scope.clear();
 				$scope.sort();
 				
 				$scope.schedule = {};
-				$scope.readings = {};
 			}, error => {
 				$scope.error();
 			});
@@ -159,7 +147,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 				}]
 			};
 		
-		$scope.httpService.updateSheetData('schedule', payload)
+		$scope.httpService.updateSheetData($scope.schedule_db, payload)
 			.then(() => {
 				$scope.sort();
 			}, error => {
@@ -185,7 +173,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 				}]
 			};
 		
-		$scope.httpService.updateSheetData('schedule', payload)
+		$scope.httpService.updateSheetData($scope.schedule_db, payload)
 			.then(response => {
 				$scope.get();
 			}, error => {
@@ -214,48 +202,13 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	}
 	
 	/**
-	 * listYears
+	 * listSongs
 	 */
-	$scope.listYears = function() {
-		if(!$scope.years) {
-			$scope.httpService.getYearData()
-				.then(response => {
-					$scope.years = response.data.files;
-					$scope.selectYear();
-				}, error => {
-					$scope.error();
-				});
-		} else {
-			$scope.selectYear();
-		}
-	}
-	
-	/**
-	 * selectYear
-	 */
-	$scope.selectYear = function() {
-		let years = $scope.years,
-			selected = $scope.schedule.year;
-		
-		$scope.readings = {};
-		
-		if(years) {
-			for(let [index, year] of years.entries()) {
-				if(year.name === selected) {
-					$scope.listReadings(year);
-				}
-			}
-		}
-	}
-	
-	/**
-	 * listReadings
-	 */
-	$scope.listReadings = function(year) {
+	$scope.listSongs = function() {
 		let schedule = $scope.schedule,
-			scheduledate = $.datepicker.formatDate('yy-mm-dd', new Date(schedule.rawdate));
+		scheduledate = $.datepicker.formatDate('yy-mm-dd', new Date(schedule.rawdate));
 		
-		$scope.httpService.getFolderData(year.id)
+		$scope.httpService.getFolderData($scope.sheets_folder)
 			.then(response => {
 				let folders = response.data.files;
 				
@@ -263,113 +216,75 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 					for(let [index, folder] of folders.entries()) {
 						$scope.httpService.getFolderData(folder.id)
 							.then(response => {
-								$scope.readings[index] = response.data.files;
-								
-								//select matched reading
-								for(let reading of $scope.readings[index]) {
-									if(reading.name.startsWith(scheduledate)) {
-										if(index === 0) {
-											!schedule.first && (schedule.first = {});
-											$scope.schedule.first.reading = reading.id;
-										}
-										
-										if(index === 1) {
-											!schedule.second && (schedule.second = {});
-											$scope.schedule.second.reading = reading.id;
-										}
+								if($scope.rows.indexOf(index) !== -1) {
+									$scope.categories[index] = {
+										id: folder.id,
+										name: folder.name.replace(/\d+[.][ ]+(.*)/, '$1')
 									}
+								}
+								
+								$scope.songs[index] = {
+									id: folder.id,
+									name: folder.name,
+									list: response.data.files
 								}
 							}, error => {
 								$scope.error();
 							});
 					}
 				}
-			}, error => {
-				$scope.error();
 			});
 	}
 	
 	/**
-	 * sendEmail
+	 * selectFolder
 	 */
-	$scope.sendEmail = function(sidx, lidx) {
-		let schedule = $scope.schedules[sidx],
-			name = lidx === 1 ? schedule.first.name : lidx === 2 ? schedule.second.name : null,
-			mailsent = lidx === 1 ? schedule.first.mailsent : lidx === 2 ? schedule.second.mailsent : -1,
-			lector = $scope.lectors.find(item => { return item.name === name; }),
-			receiver = lector.email,
-			sender = '=?utf-8?B?' + Base64.encode($scope.profile.getGivenName()) + '?=' + ' <' + $scope.profile.getEmail() + '>',
-			subject = '=?utf-8?B?' + Base64.encode('Bài Đọc ' + lidx + ' - ' + schedule.date) + '?=',
-			message = $scope.emailService.getEmail(lector, schedule, lidx),
-			link = $('#rmail-' + sidx + '-' + lidx);
+	$scope.selectFolder = function(index) {
+		let category = $scope.schedule.songs[index].category;
 		
-		$scope.httpService.sendEmail(receiver, sender, subject, message)
-			.then(response => {
-				let rowidx = sidx,
-					colidx = lidx === 1 ? 3 : lidx === 2 ? 6 : -1;
-				
-				let payload = {
-						"requests": [{
-							"updateCells": {
-								"range": {
-									"sheetId": 0,
-									"startRowIndex": rowidx,
-									"endRowIndex": rowidx + 1,
-									"startColumnIndex": colidx,
-									"endColumnIndex": colidx + 1
-								},
-								"rows": [{
-									"values": [
-										{
-											"userEnteredValue": {
-												"numberValue": Number.parseInt(mailsent) + 1
-											}
-										}
-									]
-								}],
-								"fields": "*"
-							}
-						}]
-					};
-				
-				$scope.httpService.updateSheetData('schedule', payload)
-					.then(response => {
-						link.addClass('disabled');
-					}, error => {
-						$scope.error();
-					});
-			}, error => {
-				$scope.error();
-			});
-		
-		return false;
-	}
-	
-	/**
-	 * disableEmail
-	 */
-	$scope.disableEmail = function() {
-		let now = Date.now(),
-			sendmail1 = 8 * $scope.week,
-			sendmail2 = 2 * $scope.week;
-		
-		if($scope.schedules) {
-			for(let [index, schedule] of $scope.schedules.entries()) {
-				let scheduledate = Number.parseInt(schedule.rawdate),
-					nextmaildate = scheduledate - now,
-					mailsent1 = Number.parseInt(schedule.first.mailsent),
-					mailsent2 = Number.parseInt(schedule.second.mailsent),
-					maillink1 = $('#rmail-' + index + '-1'),
-					maillink2 = $('#rmail-' + index + '-2');
-				
-				if((nextmaildate < sendmail1 && mailsent1 === 0) || (nextmaildate < sendmail2 && mailsent1 === 1)) {
-					maillink1.removeClass('disabled');
-				}
-				
-				if((nextmaildate < sendmail1 && mailsent2 === 0) || (nextmaildate < sendmail2 && mailsent2 === 1)) {
-					maillink2.removeClass('disabled');
-				}
+		for(let folder of Object.values($scope.categories)) {
+			if(folder.id === category) {
+				$scope.schedule.songs[index].folder = category;
+				$scope.selectSongs(index);
 			}
 		}
+	}
+	
+	/**
+	 * selectSongs
+	 */
+	$scope.selectSongs = function(index) {
+		let folder = $scope.schedule.songs[index].folder;
+		
+		for(let songs of Object.values($scope.songs)) {
+			if(songs.id === folder) {
+				$scope.lists[index] = songs;
+			}
+		}
+	}
+	
+	/**
+	 * previewSong
+	 */
+	$scope.previewSong = function(index) {
+		let songs = $scope.schedule.songs[index];
+		
+		if(songs) {
+			$window.open($scope.httpService.getOpenURL(songs.song), '_blank');
+		}
+	}
+	
+	/**
+	 * addSong
+	 */
+	$scope.addSong = function(index) {
+		$scope.rows.push($scope.rows.length);
+	}
+	
+	/**
+	 * removeSong
+	 */
+	$scope.removeSong = function(index) {
+		$scope.rows.splice($scope.rows.length - 1, 1);
 	}
 });

@@ -2,166 +2,64 @@
 <html>
 
 <head>
-	<title>Lịch Đọc Thánh Thư</title>
+	<title>Lịch Hát Thánh Ca</title>
 	<meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="google-signin-client_id" content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
 	
-	<link rel="stylesheet" href="../../css/jquery-ui.min.css">
-	<link rel="stylesheet" href="schedule.css">
+	<link rel="stylesheet" href="./main.css">
 	
-	<script src="../../js/jquery.min.js"></script>
-	<script src="../../js/jquery-ui.min.js"></script>
-	<script src="../../js/jquery-ui-datepicker-vi.js"></script>
-	<script src="../../js/angular.min.js"></script>
-	<script src="../../js/base64.min.js"></script>
-	<script src="../../js/google-api.js"></script>
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/jquery-ui.min.js"></script>
+	<script src="../js/jquery-ui-datepicker-vi.js"></script>
+	<script src="../js/angular.min.js"></script>
+	<script src="../js/base64.min.js"></script>
+	<script src="../js/google-api.js"></script>
 	
-	<script src="schedule.js"></script>
-	<script src="../../js/http-service.js"></script>
-	<script src="../../js/email-service.js"></script>
-	
-	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+	<script src="./main.js"></script>
+	<script src="../js/http-service.js"></script>
 </head>
 
-<body ng-app="scheduleApp" ng-controller="ScheduleCtrl" data-ng-init="init()" oncontextmenu="return false;">
+<body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()"> <!-- oncontextmenu="return false;"> --> 
 
 <div id="main" class="main">
 	
-	<div ng-if="!accessToken">
-		<div id="gapi-signin"></div>
+	<div class="header">
+		<p>Cộng Đoàn Thánh Giuse - Scarborough</p>
+		Lịch Hát Thánh Ca
 	</div>
 	
-	<div ng-if="accessToken">
-		<div class="header">
-			<p>Cộng Đoàn Thánh Giuse - Scarborough</p>
-			Lịch Đọc Thánh Thư
+	<div class="report">
+		<div class="rheader">
+			<table>
+				<tr>
+					<td class="date">Ngày</td>
+					<td class="category">Thể Loại</td>
+					<td class="song">Bài Hát</td>
+				</tr>
+			</table>
 		</div>
 		
-		<div class="report">
-			<div class="rheader">
-				<table>
-					<tr>
-						<td class="rdate">Ngày</td>
-						<td class="rfirst">Bài Đọc 1</td>
-						<td class="rsecond">Bài Đọc 2</td>
-						<td class="rthird">Lời Nguyện GD</td>
-						<td class="rdelete" style="display: none;"></td>
-					</tr>
-				</table>
-			</div>
-			
-			<div class="rbody">
-				<table>
-					<tr ng-repeat="schedule in schedules track by $index" ng-class-odd="'rodd'" ng-class-even="'reven'">
-						<td class="rdate">
-							{{schedule.date}}
-						</td>
-						
-						<td class="rfirst">
-							<b>{{schedule.first.name}}</b>
-							<div class="rmail"><a href="" id="rmail-{{$index}}-1" class="bmail disabled" ng-click="sendEmail($index, 1)"></a></div><br/>
-							<a href="{{schedule.first.reading}}" target="_new" title="{{readings[0][$index].name}}">Bài Đọc 1</a>
-						</td>
-						
-						<td class="rsecond">
-							<b>{{schedule.second.name}}</b>
-							<div class="rmail"><a href="" id="rmail-{{$index}}-2" class="bmail disabled" ng-click="sendEmail($index, 2)"></a></div><br/>
-							<a href="{{schedule.second.reading}}" target="_new" title="{{readings[1][$index].name}}">Bài Đọc 2</a>
-						</td>
-						
-						<td class="rthird">
-							<b>{{schedule.offertory.name}}</b>
-						</td>
-						
-						<td class="rdelete">
-							<a href="" ng-click="remove($index)" class="bdelete"></a>
-						</td>
-						
-						<td style="display: none;">
-							<script>
-								$(document).ready(() => {
-									let scope = angular.element('#main').scope();
-									scope && scope.disableEmail();
-								});
-							</script>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		
-		<div class="separator">
-		</div>
-		
-		<div class="entry">
-			<form name="entryForm" ng-submit="create()">
-				<div class="econtainer">
-					<div class="edate">
-						<div class="label">Ngày:</div>
-						<input type="text" id="datepicker" ng-model="schedule.date" class="text" autocomplete="off" required>
-						
-						<div class="label2">Năm Phụng Vụ</div>
-						<select ng-model="schedule.year" ng-change="selectYear()" class="select">
-							<option ng-repeat="year in years">{{year.name}}</option>
-						</select>
-					</div>
-					
-					<div class="efirst">
-						<div class="label">Người Đọc 1</div>
-						<select ng-model="schedule.first.name" class="select" required>
-							<option></option>
-							<option ng-repeat="lector in lectors" ng-value="lector.name">{{lector.name}}</option>
-						</select>
-						
-						<div class="label2">Bài Đọc 1</div>
-						<select ng-model="schedule.first.reading" class="select" required>
-							<option></option>
-							<option ng-repeat="reading in readings[0]" ng-value="reading.id">{{reading.name}}</option>
-						</select>
-					</div>
-					
-					<div class="esecond">
-						<div class="label">Người Đọc 2</div>
-						<select ng-model="schedule.second.name" class="select" required>
-							<option></option>
-							<option ng-repeat="lector in lectors" ng-value="lector.name">{{lector.name}}</option>
-						</select>
-						
-						<div class="label2">Bài Đọc 2</div>
-						<select ng-model="schedule.second.reading" class="select" required>
-							<option></option>
-							<option ng-repeat="reading in readings[1]" ng-value="reading.id">{{reading.name}}</option>
-						</select>
-					</div>
-					
-					<div class="ethird">
-						<div class="label">Lời Nguyện GD</div>
-						<select ng-model="schedule.offertory.name" class="select" required>
-							<option></option>
-							<option ng-repeat="lector in lectors" ng-value="lector.name">{{lector.name}}</option>
-						</select>
-						
-						<div id="error" class="error hidden">
-							Có lỗi! Chúng tôi cần phải tải lại trang này.<br>Xin vui lòng chở vài giây...
-						</div>
-					</div>
-					
-					<div class="eaddbtn">
-						<input type="submit" value="Add" title="Add" class="button">
-					</div>
-				</div>
-			</form>
-		</div>
-	
-		<div class="linknext">
-			<a href="../lector">Ban Đọc Thánh Thư</a>
-		</div>
-		
-		<div class="linkdrive">
-			<a href="{{driveURL}}" target="_new">Danh Sách Bài Đọc</a>
+		<div class="rbody">
+			<table>
+				<tr ng-repeat="schedule in schedules" ng-class-odd="'odd'" ng-class-even="'even'">
+					<td class="date">
+						{{schedule.date}}
+					</td>
+
+					<td colspan="2">
+						<table>
+							<tr ng-repeat="song in schedule.songs">
+								<td class="category">{{song.category}}</td>
+								<td class="song"><a href="{{song.url}}" target="_blank">{{song.song}}</a></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
+	
 </div>
 
 </body>

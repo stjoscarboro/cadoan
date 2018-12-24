@@ -3,6 +3,7 @@ app.factory('HttpService', function($http) {
 	function HttpService(scope) {
 		
 		let docURL = 'https://docs.google.com/document/d/',
+			openURL = 'https://drive.google.com/open?id='
 			sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/',
 			driveURL = 'https://www.googleapis.com/drive/v3/files',
 			mailURL = 'https://content.googleapis.com/gmail/v1/users/me/messages/send',
@@ -18,6 +19,11 @@ app.factory('HttpService', function($http) {
 				schedule: {
 					id: '18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk',
 					range: 'A:H'
+				},
+				
+				thanhnhac_schedule: {
+					id: '1wJc-PNIW73HSGuYus5JBZw9IMr1fZ3J74GXm-e5b-8A',
+					range: 'A:B'
 				}
 			};
 		
@@ -66,6 +72,10 @@ app.factory('HttpService', function($http) {
 		 */
 		this.getDocURL = function(docId) {
 			return docURL + docId + '/preview';
+		}
+		
+		this.getOpenURL = function(docId) {
+			return openURL + docId;
 		}
 		
 		/**
