@@ -63,7 +63,7 @@ app.factory('HttpService', function($http) {
 		/**
 		 * getDriveURL
 		 */
-		this.getDriveURL = function() {
+		this.getDriveURL = function(folderId) {
 			return 'https://drive.google.com/drive/folders/' + folderId;
 		}
 		
