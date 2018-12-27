@@ -96,3 +96,11 @@
 .addform .icon {
 	display: inline-flex;
 }
+
+.report .delete-button {
+	float: right;
+	width: 30px;
+	height: 20px;
+	background: url('../../images/erase.png') no-repeat 15px/15px;
+	margin-right: 4px;
+}

@@ -32,15 +32,16 @@
 }
 
 .report .rbody {
-	width: 100%;
+	width: calc(100% + 4px);
 	height: calc(100% - 40px);
 	overflow: hidden;
 	overflow-x: hidden;
 	overflow-y: scroll;
+	margin-left: -2px;
 }
 
 .report .date {
-	width: 180px;
+	width: 190px;
 	vertical-align: top;
 	line-height: 24px;
 	padding-left: 4px;
@@ -54,7 +55,7 @@
 }
 
 .report .category {
-	width: 120px;
+	width: 114px;
 	vertical-align: top;
 	line-height: 24px;
 }

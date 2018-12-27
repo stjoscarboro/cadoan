@@ -123,7 +123,7 @@
 			
 			<div class="rbody" style="height: calc(100vh - 400px);">
 				<table>
-					<tr ng-repeat="schedule in schedules" ng-class-odd="'odd'" ng-class-even="'even'">
+					<tr ng-repeat="schedule in schedules track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
 						<td class="date" style="padding-top: 2px;">
 							{{schedule.date}}
 						</td>
@@ -131,7 +131,10 @@
 						<td colspan="2">
 							<table>
 								<tr>
-									<td class="liturgy" colspan="2">{{schedule.liturgy}}</td>
+									<td class="liturgy" colspan="2">
+										{{schedule.liturgy}}
+										<a href="" ng-click="remove($index)" title="Xoá Lịch" class="delete-button"></a>
+									</td>
 								</tr>
 								<tr ng-repeat="song in schedule.songs">
 									<td class="category">{{song.category}}</td>

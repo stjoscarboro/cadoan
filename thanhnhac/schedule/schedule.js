@@ -164,7 +164,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 		
 		$scope.httpService.updateSheetData($scope.schedule_db, payload)
 			.then(() => {
-				// $scope.sort();
+				$scope.sort();
 			}, error => {
 				$scope.error();
 			});
@@ -190,10 +190,19 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 		
 		$scope.httpService.updateSheetData($scope.schedule_db, payload)
 			.then(response => {
-				$scope.get();
+				$scope.refresh();
 			}, error => {
 				$scope.error();
 			});
+	}
+	
+	/**
+	 * refresh
+	 */
+	$scope.refresh = function() {
+		$scope.schedules = [];
+		$scope.liturgies = [];
+		$scope.get();
 	}
 	
 	/**
@@ -201,8 +210,6 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	 */
 	$scope.clear = function() {
 		$('.error').hide();
-		$('.rheader .rdelete').hide();
-		$("[class*='rselect']").removeClass('rselect');
 	}
 	
 	/**
