@@ -23,25 +23,22 @@ app.controller("MainCtrl", ($scope, HttpService) => {
 		
 		$scope.httpService.getSheetData($scope.schedule_db)
 			.then(response => {
-				let values = response.data.values,
-					lastDate = Date.now();
+				let values = response.data.values;
 				
 				if(values) {
 					for(let value of values) {
 						let date = Number.parseInt(value[0]),
-							songs = JSON.parse(value[1]);
+							liturgy = value[1],
+							songs = JSON.parse(value[2]);
 						
 						$scope.schedules.push({
 							rawdate: date,
 							date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
+							liturgy: liturgy,
 							songs: songs
 						});
-						
-						lastDate = date;
 					}
 				}
-			}, error => {
-				$scope.error();
 			});
 	}
 	

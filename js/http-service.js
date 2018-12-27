@@ -21,9 +21,14 @@ app.factory('HttpService', function($http) {
 					range: 'A:H'
 				},
 				
+				liturgy: {
+					id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
+					range: 'A:A'
+				},
+				
 				thanhnhac_schedule: {
 					id: '1wJc-PNIW73HSGuYus5JBZw9IMr1fZ3J74GXm-e5b-8A',
-					range: 'A:B'
+					range: 'A:C'
 				}
 			};
 		

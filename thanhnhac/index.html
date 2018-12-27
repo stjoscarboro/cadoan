@@ -34,8 +34,7 @@
 			<table>
 				<tr>
 					<td class="date">Ngày</td>
-					<td class="hcategory">Thể Loại</td>
-					<td class="song">Bài Hát</td>
+					<td class="song" colspan="2">Bài Hát</td>
 				</tr>
 			</table>
 		</div>
@@ -43,12 +42,15 @@
 		<div class="rbody">
 			<table>
 				<tr ng-repeat="schedule in schedules" ng-class-odd="'odd'" ng-class-even="'even'">
-					<td class="date">
+					<td class="date" style="padding-top: 4px;">
 						{{schedule.date}}
 					</td>
 
 					<td colspan="2">
 						<table>
+							<tr>
+								<td class="liturgy" colspan="2">{{schedule.liturgy}}</td>
+							</tr>
 							<tr ng-repeat="song in schedule.songs">
 								<td class="category">{{song.category}}</td>
 								<td class="song"><a href="{{song.url}}" target="_blank">{{song.song}}</a></td>

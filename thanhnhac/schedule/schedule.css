@@ -1,5 +1,6 @@
 .main {
 	width: 740px;
+	height: calc(100vh - 180px);
 	margin: 20px auto 20px auto;
 	font-family: Arial, Helvetica, serif;
 	font-size: 12pt;
@@ -23,6 +24,7 @@
 .addform .text {
 	font-size: inherit;
 	width: 200px;
+	padding-left: 2px;
 }
 
 .addform .select {
@@ -77,7 +79,7 @@
 .addform .add-row {
 	display: inline-block;
 	float: left;
-	margin: 10px 0 0 10px;
+	margin: 15px 0 0 10px;
 }
 
 .addform .add-button {

@@ -7,12 +7,14 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	 */
 	$scope.init = function() {
 		$scope.schedule_db = 'thanhnhac_schedule';
+		$scope.ligurty_db = 'liturgy';
 		$scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 		
 		$scope.schedule = {songs: []};
 		$scope.songs = {};
 		$scope.lists = {};
 		$scope.schedules = [];
+		$scope.liturgies = [];
 				
 		$scope.rows = [0, 1, 2, 3, 4];
 		$scope.categories = {};
@@ -48,11 +50,13 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 				if(values) {
 					for(let value of values) {
 						let date = Number.parseInt(value[0]),
-							songs = JSON.parse(value[1]);
+							liturgy = value[1],
+							songs = JSON.parse(value[2]);
 						
 						$scope.schedules.push({
 							rawdate: date,
 							date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
+							liturgy: liturgy,
 							songs: songs
 						});
 						
@@ -79,6 +83,9 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 				
 				//init songs
 				$scope.listSongs();
+				
+				//init liturgies
+				$scope.listLiturgies();
 			}, error => {
 				$scope.error();
 			});
@@ -88,8 +95,8 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	 * create
 	 */
 	$scope.create = function() {
-		let data = $scope.schedule,
-			date = $.datepicker.parseDate($scope.dateFormat, data.date),
+		let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date),
+			liturgy = $scope.schedule.liturgy,
 			songs = [], payload;
 
 		for(let item of $scope.schedule.songs) {
@@ -114,6 +121,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 			values: [
 				[
 					date.getTime(),
+					liturgy,
 					JSON.stringify(songs)
 				]
 			]
@@ -240,6 +248,19 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 							});
 					}
 				}
+			});
+	}
+	
+	$scope.listLiturgies = function() {
+		$scope.httpService.getSheetData($scope.ligurty_db)
+			.then(response => {
+				let values = response.data.values;
+			
+			if(values) {
+				for(let value of values) {
+					$scope.liturgies.push(value[0]);
+				}
+			}
 			});
 	}
 	

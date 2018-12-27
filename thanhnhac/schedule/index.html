@@ -53,6 +53,16 @@
 					</tr>
 					
 					<tr>
+						<td class="label">&nbsp;</td>
+						<td class="content">
+							<select ng-model="schedule.liturgy" class="select">
+								<option ng-repeat="liturgy in liturgies" ng-value="liturgy">{{liturgy}}</option>
+							</select>
+						</td>
+						<td class="driveurl">&nbsp;</td>
+					</tr>
+					
+					<tr>
 						<td colspan="3">
 							<table cellspacing="0" cellpadding="0">
 								<tr>
@@ -106,21 +116,23 @@
 				<table>
 					<tr>
 						<td class="date">Ngày</td>
-						<td class="hcategory">Thể Loại</td>
 						<td class="song">Bài Hát</td>
 					</tr>
 				</table>
 			</div>
 			
-			<div class="rbody">
+			<div class="rbody" style="height: calc(100vh - 400px);">
 				<table>
 					<tr ng-repeat="schedule in schedules" ng-class-odd="'odd'" ng-class-even="'even'">
-						<td class="date">
+						<td class="date" style="padding-top: 2px;">
 							{{schedule.date}}
 						</td>
 	
 						<td colspan="2">
 							<table>
+								<tr>
+									<td class="liturgy" colspan="2">{{schedule.liturgy}}</td>
+								</tr>
 								<tr ng-repeat="song in schedule.songs">
 									<td class="category">{{song.category}}</td>
 									<td class="song"><a href="{{song.url}}" target="_blank">{{song.song}}</a></td>
