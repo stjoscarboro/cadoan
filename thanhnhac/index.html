@@ -23,12 +23,14 @@
 <body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()"> <!-- oncontextmenu="return false;"> --> 
 
 <div id="main" class="main">
-	
+
+<!-- 	
 	<div class="header">
 		<p>Cộng Đoàn Thánh Giuse - Scarborough</p>
 		Lịch Hát Thánh Ca
 	</div>
-	
+-->
+	 
 	<div class="report">
 		<div class="rheader">
 			<table>
@@ -42,7 +44,7 @@
 		<div class="rbody">
 			<table>
 				<tr ng-repeat="schedule in schedules" ng-class-odd="'odd'" ng-class-even="'even'">
-					<td class="date" style="padding-top: 4px;">
+					<td class="date">
 						{{schedule.date}}
 					</td>
 

@@ -1,0 +1,39 @@
+.main {
+	width: calc(100w);
+	height: calc(100vh - 240px);
+	font-family: Arial, Helvetica, serif;
+	font-size: 12pt;
+	margin: 0
+}
+
+.header {
+	background-image: url('../images/header-bkgd.jpg');
+	height: 200px;
+}
+
+.logo {
+	background: url('../images/logo-church.png') no-repeat 80px/150px;
+	height: 140px;
+	padding: 30px;
+}
+
+.title {
+	padding: 0 0 0 200px;
+    font-size: 40pt;
+    text-align: center;
+    font-family: fantasy;
+    font-weight: bold;
+    color: white;
+}
+
+.menu {
+	height: 36px;
+	background-color: maroon;
+}
+
+.menu-text {
+	color: white;
+    line-height: 36px;
+    margin-left: 40px;
+    text-decoration: none;
+}
