@@ -9,6 +9,7 @@
 	
 	<link rel="stylesheet" href="../../css/jquery-ui.min.css">
 	<link rel="stylesheet" href="./schedule.css">
+	<link rel="stylesheet" href="../main.css">
 	
 	<script src="../../js/jquery.min.js"></script>
 	<script src="../../js/jquery-ui.min.js"></script>
@@ -101,7 +102,25 @@
 			</form>			
 		</div>
 
-		<iframe id="listframe" name="listframe" src="../index.html"></iframe>
+		<!-- <iframe id="listframe" name="listframe" src="../index.html"></iframe> -->
+		
+		<div style="margin: 20px auto 0 auto;">
+			<div ng-repeat="schedule in schedules" class="schedule">
+			 	<div class="date">
+			 		{{schedule.date}}
+			 	</div>
+			 	
+			 	<div class="liturgy">
+					{{schedule.liturgy}}
+					<!-- <a href="" ng-click="remove($index)" title="Xoá Lịch" class="delete-button" ng-if="showRemove()"></a> -->
+				</div>
+				
+				<div ng-repeat="song in schedule.songs">
+					<div class="category">{{song.category}}</div>
+					<div class="song"><a href="{{song.url}}" target="_blank">{{song.song}}</a></div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
