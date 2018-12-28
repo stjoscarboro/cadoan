@@ -18,7 +18,7 @@
 
 .mainform .content {
 	border-bottom: 1px solid lightgrey;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .mainform .label {
@@ -28,8 +28,10 @@
 
 .mainform .text {
 	font-size: inherit;
-	padding-left: 6px;
+	padding-left: 8px;
 	width: 100%;
+	border: 1px solid grey;
+    border-radius: 4px;
 }
 
 .mainform .select {
@@ -40,7 +42,8 @@
 	font-size: inherit;
     width: 100px;
     height: 30px;
-    border: 1px solid lightgray;
+    border: 1px solid grey;
+    border-radius: 4px;
 }
 
 .mainform .date {
