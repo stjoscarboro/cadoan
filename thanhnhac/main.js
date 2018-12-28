@@ -1,6 +1,6 @@
 var app = angular.module("mainApp", []);
 
-app.controller("MainCtrl", ($scope, HttpService) => {
+app.controller("MainCtrl", ($scope, $window, $timeout, HttpService) => {
 	
 	/**
 	 * init
@@ -50,5 +50,4 @@ app.controller("MainCtrl", ($scope, HttpService) => {
 			base: window.location.href
 		});
 	}
-	
 });

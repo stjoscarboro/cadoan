@@ -1,17 +1,105 @@
 .main {
-	width: 740px;
+	width: 740px !important;
 	height: calc(100vh - 180px);
 	margin: 20px auto 20px auto;
 	font-family: Arial, Helvetica, serif;
-	font-size: 12pt;
 }
 
 .header {
 	font-size: 18pt;
+	line-height: 36px;
 	text-align: center;
-	padding: 5px 0 20px 0;
+	margin-bottom: 20px;
 }
 
+.content {
+	width: 100%;
+	margin: 20px auto 10px auto;
+	padding: 20px;
+	background-color: azure;
+	border: solid green 1px;
+	border-radius: 10px;
+}
+
+.label {
+	display: inline-flex;
+	width: 100px;
+}
+
+.text {
+	font-size: inherit;
+	width: 200px;
+	padding-left: 2px;
+}
+
+.select {
+	font-size: inherit;
+}
+
+.submit {
+	font-size: inherit;
+    width: 100px;
+    height: 30px;
+    border: 1px solid lightgray;
+}
+
+.date {
+	display: inline-flex;
+	width: 200px;
+}
+
+.driveurl {
+	display: inline-flex;
+	float: right;
+}
+
+.column-label {
+	padding: 20px 0 0 0;
+}
+
+.select-category {
+	display: inline-flex;
+	width: 120px;
+	margin: 0 5px 0 0;
+}
+
+.select-folder {
+	display: inline-flex;
+	width: 140px;
+	margin: 0 5px 0 0;
+}
+
+.select-songs {
+	display: inline-flex;
+	width: 330px;
+}
+
+.add-row {
+	display: inline-block;
+}
+
+.add-button {
+	display: inline-block;
+	float: right;
+}
+
+.preview-button {
+	width: 15px;
+	height: 15px;
+	background: url('../../images/preview.png') no-repeat 0px/15px;
+}
+
+.icon {
+	display: inline-flex;
+}
+
+iframe{
+    border-width: 0px;
+    width: 100%;
+    height: calc(100vh);
+}
+
+/*
 .addform {
 	width: 100%;
 	margin: 20px auto 10px auto;
@@ -104,3 +192,4 @@
 	background: url('../../images/erase.png') no-repeat 15px/15px;
 	margin-right: 4px;
 }
+*/
