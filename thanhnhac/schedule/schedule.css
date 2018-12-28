@@ -28,7 +28,8 @@
 
 .mainform .text {
 	font-size: inherit;
-	padding-left: 8px;
+	padding-left: 7px;
+	margin-left: 1px;
 	width: 100%;
 	border: 1px solid grey;
     border-radius: 4px;
@@ -88,8 +89,8 @@
 }
 
 .mainform .preview-button {
-	width: 15px;
-	height: 15px;
+	width: 14px;
+	height: 12px;
 	background: url('../../images/preview.png') no-repeat 0px/15px;
 }
 
