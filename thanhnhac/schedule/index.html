@@ -25,7 +25,7 @@
 	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 </head>
 
-<body ng-app="scheduleApp" ng-controller="ScheduleCtrl" data-ng-init="init()"> <!-- oncontextmenu="return false;"> --> 
+<body ng-app="scheduleApp" ng-controller="ScheduleCtrl" data-ng-init="init()" class="mainform"> <!-- oncontextmenu="return false;"> --> 
 
 <div id="main" class="main">
 	
@@ -104,7 +104,7 @@
 
 		<!-- <iframe id="listframe" name="listframe" src="../index.html"></iframe> -->
 		
-		<div style="margin: 20px auto 0 auto;">
+		<div class="mainlist">
 			<div ng-repeat="schedule in schedules" class="schedule">
 			 	<div class="date">
 			 		{{schedule.date}}
@@ -112,7 +112,7 @@
 			 	
 			 	<div class="liturgy">
 					{{schedule.liturgy}}
-					<!-- <a href="" ng-click="remove($index)" title="Xoá Lịch" class="delete-button" ng-if="showRemove()"></a> -->
+					<a href="" ng-click="remove($index)" title="Xoá Lịch" class="delete-button"></a>
 				</div>
 				
 				<div ng-repeat="song in schedule.songs">

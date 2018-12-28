@@ -1,19 +1,20 @@
-.main {
+.mainlist {
 	width: 640px;
 	margin: 20px auto 20px auto;
+	font-family: initial;
 }
 
-.schedule {
+.mainlist .schedule {
 	padding-bottom: 20px;
 	line-height: 22px;
 }
 
-.date {
+.mainlist .date {
 	display: inline-flex;
 	width: 170px;
 }
 
-.liturgy {
+.mainlist .liturgy {
 	display: inline-flex;
 	font-weight: bold;
 	font-style: italic;
@@ -21,20 +22,12 @@
 	margin-bottom: 4px;
 }
 
-.category {
+.mainlist .category {
 	display: inline-flex;
 	margin-left: 190px;
 	width: 80px;
 }
 
-.song {
+.mainlist .song {
 	display: inline-flex;
-}
-
-.delete-button {
-	float: right;
-	width: 30px;
-	height: 20px;
-	background: url('../images/erase.png') no-repeat 15px/15px;
-	margin-right: 4px;
 }

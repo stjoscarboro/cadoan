@@ -1,8 +1,6 @@
 .main {
 	width: calc(100w);
 	height: calc(100vh - 240px);
-	font-family: Arial, Helvetica, serif;
-	font-size: 12pt;
 	margin: 0
 }
 
@@ -12,14 +10,14 @@
 }
 
 .logo {
-	background: url('../images/logo-church.png') no-repeat 80px/150px;
-	height: 140px;
-	padding: 30px;
+	background: url('../images/logo-church.png') no-repeat 64px/120px;
+	height: 120px;
+	padding: 36px;
 }
 
 .title {
 	margin: 0 auto 0 auto;
-    font-size: 40pt;
+    font-size: 32pt;
     text-align: center;
     font-family: fantasy;
     font-weight: bold;

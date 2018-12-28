@@ -1,195 +1,106 @@
-.main {
-	width: 740px !important;
-	height: calc(100vh - 180px);
-	margin: 20px auto 20px auto;
+.mainform {
 	font-family: Arial, Helvetica, serif;
+	background: url('../../images/bg-church.jpg');
 }
 
-.header {
+.mainform .main {
+	width: 740px;
+	margin: 20px auto 20px auto;
+}
+
+.mainform .header {
+	font-family: fantasy;
 	font-size: 18pt;
-	line-height: 36px;
+	line-height: 40px;
 	text-align: center;
 	margin-bottom: 20px;
 }
 
-.content {
-	width: 100%;
-	margin: 20px auto 10px auto;
-	padding: 20px;
-	background-color: azure;
-	border: solid green 1px;
-	border-radius: 10px;
+.mainform .content {
+	border-bottom: 1px solid lightgrey;
+    padding-bottom: 20px;
 }
 
-.label {
+.mainform .label {
 	display: inline-flex;
 	width: 100px;
 }
 
-.text {
+.mainform .text {
 	font-size: inherit;
-	width: 200px;
-	padding-left: 2px;
+	padding-left: 6px;
+	width: 100%;
 }
 
-.select {
+.mainform .select {
 	font-size: inherit;
 }
 
-.submit {
+.mainform .submit {
 	font-size: inherit;
     width: 100px;
     height: 30px;
     border: 1px solid lightgray;
 }
 
-.date {
+.mainform .date {
 	display: inline-flex;
 	width: 200px;
 }
 
-.driveurl {
+.mainform .driveurl {
 	display: inline-flex;
 	float: right;
 }
 
-.column-label {
+.mainform .column-label {
 	padding: 20px 0 0 0;
 }
 
-.select-category {
+.mainform .select-category {
 	display: inline-flex;
 	width: 120px;
 	margin: 0 5px 0 0;
 }
 
-.select-folder {
+.mainform .select-folder {
 	display: inline-flex;
 	width: 140px;
 	margin: 0 5px 0 0;
 }
 
-.select-songs {
+.mainform .select-songs {
 	display: inline-flex;
 	width: 330px;
 }
 
-.add-row {
+.mainform .add-row {
 	display: inline-block;
+	margin: 5px 0 0 0;
 }
 
-.add-button {
+.mainform .add-button {
 	display: inline-block;
 	float: right;
 }
 
-.preview-button {
+.mainform .preview-button {
 	width: 15px;
 	height: 15px;
 	background: url('../../images/preview.png') no-repeat 0px/15px;
 }
 
-.icon {
+.mainform .icon {
 	display: inline-flex;
 }
 
-iframe{
+.mainform iframe {
     border-width: 0px;
     width: 100%;
-    height: calc(100vh);
+    height: 100%;
 }
 
-/*
-.addform {
-	width: 100%;
-	margin: 20px auto 10px auto;
-	padding: 20px;
-	background-color: azure;
-	border: solid green 1px;
-	border-radius: 10px;
+.mainlist .delete-button {
+	width: 32px;
+	background: url('../../images/erase.png') no-repeat 15px/12px;
 }
-
-.addform .text {
-	font-size: inherit;
-	width: 200px;
-	padding-left: 2px;
-}
-
-.addform .select {
-	font-size: inherit;
-}
-
-.addform .submit {
-	font-size: inherit;
-    width: 100px;
-    height: 30px;
-    border: 1px solid lightgray;
-}
-
-.addform .label {
-	display: inline-block;
-	width: 85px;
-	padding: 0 10px 0 10px;
-	line-height: 35px;
-}
-
-.addform .content {
-	display: inline-flex;
-	width: 350px;
-}
-
-.addform .driveurl {
-	float: right;
-	margin: 10px 0 0 0;
-}
-
-.addform .column-label {
-	padding: 20px 0 5px 1px;
-}
-
-.addform .select-category {
-	display: inline-flex;
-	width: 120px;
-	margin: 0 5px 0 0;
-}
-
-.addform .select-folder {
-	display: inline-flex;
-	width: 140px;
-	margin: 0 5px 0 0;
-}
-
-.addform .select-songs {
-	display: inline-flex;
-	width: 330px;
-}
-
-.addform .add-row {
-	display: inline-block;
-	float: left;
-	margin: 15px 0 0 10px;
-}
-
-.addform .add-button {
-	float: right;
-	margin: 10px 0 0 0;
-}
-
-.addform .preview-button {
-	width: 30px;
-	height: 30px;
-	background: url('../../images/preview.png') no-repeat 15px/15px;
-}
-
-.addform .icon {
-	display: inline-flex;
-}
-
-.report .delete-button {
-	float: right;
-	width: 30px;
-	height: 20px;
-	background: url('../../images/erase.png') no-repeat 15px/15px;
-	margin-right: 4px;
-}
-*/
