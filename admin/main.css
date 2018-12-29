@@ -1,0 +1,9 @@
+.mainadmin {
+	font-family: initial;
+	background: url('../resources/images/bg-church.jpg');
+}
+
+.mainadmin .main {
+	width: 740px;
+	margin: 20px auto 20px auto;
+}

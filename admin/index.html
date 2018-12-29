@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Cộng Đoàn Thánh Giuse - Scarborough</title>
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="google-signin-client_id" content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
+	
+	<link rel="stylesheet" href="./main.css">
+	
+	<script src="../resources/js/jquery.min.js"></script>
+	<script src="../resources/js/jquery-ui.min.js"></script>
+	<script src="../resources/js/jquery-ui-datepicker-vi.js"></script>
+	<script src="../resources/js/angular.min.js"></script>
+	<script src="../resources/js/base64.min.js"></script>
+	<script src="../resources/js/google-api.js"></script>
+	
+	<script src="./main.js"></script>
+	<script src="../resources/js/http-service.js"></script>
+	
+	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+</head>
+
+<body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()" class="mainadmin">
+
+<div id="main" class="main">
+	<div ng-if="!accessToken">
+		<div id="gapi-signin"></div>
+	</div>
+	
+	<div ng-if="accessToken">
+		hello world!
+	</div>
+</div>
+
+</body>
+</html>
