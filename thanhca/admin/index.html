@@ -43,7 +43,7 @@
 			<form name="entryForm" ng-submit="create()">
 				<div>
 					<div class="label">Ngày:</div>
-					<div class="date">
+					<div class="calendar">
 						<input type="text" id="datepicker" ng-model="schedule.date" class="text" autocomplete="off" required>
 					</div>
 					<div class="driveurl">
@@ -53,7 +53,7 @@
 
 				<div style="padding-top: 10px;">
 					<div class="label">&nbsp;</div>
-					<div class="date">
+					<div class="calendar">
 						<select ng-model="schedule.liturgy" class="select">
 							<option ng-repeat="liturgy in liturgies" ng-value="liturgy">{{liturgy}}</option>
 						</select>
