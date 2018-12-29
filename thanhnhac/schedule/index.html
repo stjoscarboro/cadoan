@@ -68,7 +68,7 @@
 					<div class="select-songs column-label">Bài Hát</div>
 				</div>
 				
-				<div ng-repeat="x in rows" style="padding-top: 10px;">
+				<div ng-repeat="x in rows" style="padding: 5px 0 5px 0;">
 					<div class="label">Bài Hát {{x + 1}}:</div>
 					<div class="select-category">
 						<select ng-model="schedule.songs[x].category" ng-change="selectFolder(x)" class="select-category select" required>
@@ -91,7 +91,7 @@
 					</div>
 				</div>
 				
-				<div style="padding-top: 15px; padding-bottom: 10px;">
+				<div style="padding: 10px 0 10px 0;">
 					<div class="add-row">
 						<a href="" ng-click="addSong(x)">+1</a> / <a href="" ng-click="removeSong(x)">-1</a>
 					</div>

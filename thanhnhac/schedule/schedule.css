@@ -42,14 +42,14 @@
 .mainform .submit {
 	font-size: inherit;
     width: 100px;
-    height: 30px;
+    height: 26px;
     border: 1px solid grey;
     border-radius: 4px;
 }
 
 .mainform .date {
 	display: inline-flex;
-	width: 200px;
+	width: 220px;
 }
 
 .mainform .driveurl {
@@ -64,18 +64,16 @@
 .mainform .select-category {
 	display: inline-flex;
 	width: 120px;
-	margin: 0 5px 0 0;
 }
 
 .mainform .select-folder {
 	display: inline-flex;
-	width: 140px;
-	margin: 0 5px 0 0;
+	width: 150px;
 }
 
 .mainform .select-songs {
 	display: inline-flex;
-	width: 330px;
+	width: 335px;
 }
 
 .mainform .add-row {

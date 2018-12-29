@@ -6,13 +6,13 @@
 
 .header {
 	background-image: url('../images/header-bkgd.jpg');
-	height: 200px;
+	height: 160px;
 }
 
 .logo {
-	background: url('../images/logo-church.png') no-repeat 64px/120px;
+	background: url('../images/logo-church.png') no-repeat 48px/120px;
 	height: 120px;
-	padding: 36px;
+	padding: 22px;
 }
 
 .title {
