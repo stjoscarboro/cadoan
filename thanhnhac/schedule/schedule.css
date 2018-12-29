@@ -1,6 +1,6 @@
 .mainform {
 	font-family: Arial, Helvetica, serif;
-	background: url('../../images/bg-church.jpg');
+	background: url('../../resources/images/bg-church.jpg');
 }
 
 .mainform .main {
@@ -18,7 +18,7 @@
 
 .mainform .content {
 	border-bottom: 1px solid lightgrey;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
 
 .mainform .label {
@@ -89,7 +89,7 @@
 .mainform .preview-button {
 	width: 14px;
 	height: 12px;
-	background: url('../../images/preview.png') no-repeat 0px/15px;
+	background: url('../../resources/images/preview.png') no-repeat 0px/15px;
 }
 
 .mainform .icon {
@@ -104,5 +104,5 @@
 
 .mainlist .delete-button {
 	width: 32px;
-	background: url('../../images/erase.png') no-repeat 15px/12px;
+	background: url('../../resources/images/erase.png') no-repeat 15px/12px;
 }
