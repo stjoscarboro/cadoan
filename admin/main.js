@@ -1,19 +1,20 @@
 var app = angular.module("mainApp", []);
 
-app.controller("MainCtrl", ($scope, $window, $timeout, HttpService) => {
+app.controller("MainCtrl", ($scope, $window, $timeout) => {
 	
 	/**
 	 * init
 	 */
 	$scope.init = function() {
-		$scope.httpService = new HttpService($scope);
 	}
 	
 	/**
 	 * signin
 	 */
-	$scope.signin = function(profile, token) {
-		$scope.profile = profile;
-		$scope.accessToken = token;
+	$scope.signin = function(profile, token) {		
+		$timeout(() => {
+			$scope.profile = profile;
+			$scope.accessToken = token;
+		}, 10);
 	}
 });
