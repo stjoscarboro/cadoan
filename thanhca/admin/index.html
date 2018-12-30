@@ -49,7 +49,7 @@
 				<div style="padding-top: 10px;">
 					<div class="label">&nbsp;</div>
 					<div class="calendar">
-						<select ng-model="schedule.liturgy" class="select">
+						<select ng-model="schedule.liturgy" class="select" required>
 							<option ng-repeat="liturgy in liturgies" ng-value="liturgy">{{liturgy}}</option>
 						</select>
 					</div>
@@ -104,7 +104,7 @@
 			 	</div>
 			 	
 			 	<div class="liturgy">
-					{{schedule.liturgy}}
+					{{schedule.liturgy}}&nbsp;
 					<a href="" ng-click="remove($index)" title="Xoá Lịch" class="delete-button"></a>
 				</div>
 				

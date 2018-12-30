@@ -12,7 +12,7 @@
 
 .mainlist .schedule {
 	padding-bottom: 20px;
-	line-height: 22px;
+	line-height: 20px;
 }
 
 .mainlist .date {
@@ -35,5 +35,9 @@
 }
 
 .mainlist .song {
-	display: inline-flex;
+	display: inline-block;
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
