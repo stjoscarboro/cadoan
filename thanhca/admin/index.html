@@ -39,7 +39,7 @@
 				<div>
 					<div class="label">Ngày:</div>
 					<div class="calendar">
-						<input type="text" id="datepicker" ng-model="schedule.date" class="text" autocomplete="off" required>
+						<input type="text" id="datepicker" ng-model="schedule.date" class="text round-border" autocomplete="off" required>
 					</div>
 					<div class="driveurl">
 						<a href="{{driveURL}}" target="_blank">Danh Sách Bài Hát</a>
@@ -49,7 +49,8 @@
 				<div style="padding-top: 10px;">
 					<div class="label">&nbsp;</div>
 					<div class="calendar">
-						<select ng-model="schedule.liturgy" class="select" required>
+						<select ng-model="schedule.liturgy" class="select">
+							<option></option>
 							<option ng-repeat="liturgy in liturgies" ng-value="liturgy">{{liturgy}}</option>
 						</select>
 					</div>
@@ -67,11 +68,13 @@
 					<div class="label">Bài Hát {{x + 1}}:</div>
 					<div class="select-category">
 						<select ng-model="schedule.songs[x].category" ng-change="selectFolder(x)" class="select-category select" required>
+							<option></option>
 							<option ng-repeat="category in categories" ng-value="category.id">{{category.name}}</option>
 						</select>
 					</div>
 					<div class="select-folder">
 						<select ng-model="schedule.songs[x].folder" ng-change="selectSongs(x)" class="select-folder select" required>
+							<option></option>
 							<option ng-repeat="song in songs" ng-value="song.id">{{song.name}}</option>
 						</select>
 					</div>
@@ -91,7 +94,7 @@
 						<a href="" ng-click="addSong(x)">+1</a> / <a href="" ng-click="removeSong(x)">-1</a>
 					</div>
 					<div class="add-button">
-						<input type="submit" value="Lưu Lại" title="Lưu Lại" class="submit">
+						<input type="submit" value="Lưu Lại" title="Lưu Lại" class="submit round-border">
 					</div>
 				</div>
 			</form>			
@@ -110,7 +113,7 @@
 				
 				<div ng-repeat="song in schedule.songs">
 					<div class="category">{{song.category}}</div>
-					<div class="song"><a href="{{song.url}}" target="_blank">{{song.song}}</a></div>
+					<div class="song"><a href="{{song.url}}" target="_blank" title="{{song.song}}">{{song.song}}</a></div>
 				</div>
 			</div>
 		</div>
