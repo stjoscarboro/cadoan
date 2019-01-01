@@ -25,13 +25,14 @@
 	font-weight: bold;
 	font-style: italic;
 	font-size: large;
-	margin-bottom: 4px;
+	margin-bottom: 8px;
 }
 
 .mainlist .category {
 	display: inline-flex;
 	margin-left: 190px;
-	width: 80px;
+    width: 80px;
+    vertical-align: top;
 }
 
 .mainlist .song {

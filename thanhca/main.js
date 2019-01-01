@@ -30,7 +30,12 @@ app.controller("MainCtrl", ($scope, $window, $timeout, HttpService) => {
 						let date = Number.parseInt(value[0]),
 							liturgy = value[1],
 							songs = JSON.parse(value[2]);
-						
+                        
+                        for(let song of songs) {
+                            // let title = song.song.replace(/(.*)(.pdf)$/, '$1');
+                            song.url = $scope.httpService.getOpenURL(song.id);
+                        }
+                        
 						$scope.schedules.push({
 							rawdate: date,
 							date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),

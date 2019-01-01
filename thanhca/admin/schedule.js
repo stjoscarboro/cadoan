@@ -52,6 +52,12 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 						let date = Number.parseInt(value[0]),
 							liturgy = value[1],
 							songs = JSON.parse(value[2]);
+                        
+                        for(let song of songs) {
+                            song.url = $scope.httpService.getOpenURL(song.id);
+
+                            // let title = song.name.replace(/(.*)(.pdf)$/, '$1');
+                        }
 						
 						$scope.schedules.push({
 							rawdate: date,
@@ -114,7 +120,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 				song = song ? song : s.id === item.song ? s : null;
 			});
 			
-			songs.push({category: category.name, song: song.name, url: $scope.httpService.getOpenURL(song.id)});
+			songs.push({category: category.name, id: song.id, name: song.name, folder: folder.id});
 		}
 		
 		payload = {
@@ -227,9 +233,6 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
 	 * listSongs
 	 */
 	$scope.listSongs = function() {
-		let schedule = $scope.schedule,
-		scheduledate = $.datepicker.formatDate('yy-mm-dd', new Date(schedule.rawdate));
-		
 		$scope.httpService.getFolderData($scope.sheets_folder)
 			.then(response => {
 				let folders = response.data.files;
