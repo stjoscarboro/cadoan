@@ -2,42 +2,45 @@
 <html>
 
 <head>
-	<title>Lịch Hát Thánh Ca</title>
-	<meta name="robots" content="noindex, nofollow">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="google-signin-client_id" content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
-	
-	<link rel="stylesheet" href="./main.css">
-	
-	<script src="../resources/js/jquery.min.js"></script>
-	<script src="../resources/js/jquery-ui.min.js"></script>
-	<script src="../resources/js/jquery-ui-datepicker-vi.js"></script>
-	<script src="../resources/js/angular.min.js"></script>
-	<script src="../resources/js/base64.min.js"></script>
-	<script src="../resources/js/google-api.js"></script>
-	
-	<script src="./main.js"></script>
-	<script src="../resources/js/http-service.js"></script>
+    <title>Lịch Hát Thánh Ca</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="google-signin-client_id" content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
+
+    <link rel="stylesheet" href="./main.css">
+
+    <script src="../resources/js/jquery.min.js"></script>
+    <script src="../resources/js/jquery-ui.min.js"></script>
+    <script src="../resources/js/jquery-ui-datepicker-vi.js"></script>
+    <script src="../resources/js/angular.min.js"></script>
+    <script src="../resources/js/base64.min.js"></script>
+    <script src="../resources/js/google-api.js"></script>
+
+    <script src="./main.js"></script>
+    <script src="../resources/js/http-service.js"></script>
 </head>
 
-<body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()" class="mainlist"> <!-- oncontextmenu="return false;"> --> 
+<body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()" class="mainlist">
 
-<div id="main" class="main">
-	<div ng-repeat="schedule in schedules" class="schedule">
-	 	<div class="date">
-	 		{{schedule.date}}
-	 	</div>
-	 	
-	 	<div class="liturgy">
-			{{schedule.liturgy}}
-		</div>
-		
-		<div ng-repeat="song in schedule.songs">
-			<div class="category">{{song.category}}</div>
-			<div class="song"><a href="{{song.url}}" target="_blank" title="{{song.name}}">{{song.name}}</a></div>
-		</div>
-	</div>
-</div>
+    <div id="main" class="main">
+        <div ng-repeat="schedule in schedules" class="schedule">
+            <div class="date">
+                {{schedule.date}}
+            </div>
+
+            <div class="liturgy">
+                {{schedule.liturgy}}
+            </div>
+
+            <div ng-repeat="song in schedule.songs">
+                <div class="category">{{song.category}}</div>
+                <div class="song">
+                    <a href="{{song.url}}" target="_blank" title="{{song.name}}">{{song.name}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
+
 </html>
