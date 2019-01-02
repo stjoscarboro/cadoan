@@ -1,6 +1,6 @@
 var app = angular.module("scheduleApp", []);
 
-app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailService) => {
+app.controller("ScheduleCtrl", ($scope, $q, $window, $timeout, HttpService, EmailService) => {
 
     /**
      * init
@@ -13,6 +13,8 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
         $scope.schedule = {
             songs: []
         };
+
+        $scope.folders = {};
         $scope.songs = {};
         $scope.lists = {};
         $scope.schedules = [];
@@ -36,13 +38,19 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
         $scope.profile = profile;
         $scope.accessToken = token;
 
-        $scope.get();
+        $scope.listSongs()
+            .then(() => {
+                $scope.get();
+                $scope.listLiturgies();
+            });
     }
 
     /**
      * get
      */
     $scope.get = function () {
+        $scope.schedules = [];
+
         //load existing schedules
         $scope.httpService.getSheetData($scope.schedule_db)
             .then(response => {
@@ -58,7 +66,14 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
                         for (let song of songs) {
                             song.url = $scope.httpService.getOpenURL(song.id);
 
-                            // let title = song.name.replace(/(.*)(.pdf)$/, '$1');
+                            let list = $scope.folders[song.folder],
+                                title = song.name.replace(/(.*)(.pdf)$/, '$1');
+
+                            for (let item of list) {
+                                if (item.mimeType === 'audio/mp3' && item.name.indexOf(title) !== -1) {
+                                    song.audio = $scope.httpService.getOpenURL(item.id);
+                                }
+                            }
                         }
 
                         $scope.schedules.push({
@@ -88,12 +103,6 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
                 //init datepicker to a week from last date
                 $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(lastDate + $scope.week));
                 $scope.schedule.rawdate = lastDate + $scope.week;
-
-                //init songs
-                $scope.listSongs();
-
-                //init liturgies
-                $scope.listLiturgies();
             }, error => {
                 $scope.error();
             });
@@ -155,7 +164,7 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
             .then(response => {
                 $scope.clear();
                 $scope.sort();
-                $scope.init();
+                $scope.refresh();
             }, error => {
                 $scope.error();
             });
@@ -217,7 +226,10 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
      */
     $scope.refresh = function () {
         $scope.schedules = [];
-        $scope.liturgies = [];
+        $scope.lists = {};
+        $scope.schedule = {
+            songs: []
+        };
         $scope.get();
     }
 
@@ -243,39 +255,52 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
      * listSongs
      */
     $scope.listSongs = function () {
+        let deferred = $q.defer(),
+            promises = [];
+
         $scope.httpService.getFolderData($scope.sheets_folder)
             .then(response => {
                 let folders = response.data.files;
 
                 if (folders) {
                     for (let [index, folder] of folders.entries()) {
-                        $scope.httpService.getFolderData(folder.id)
-                            .then(response => {
-                                if ($scope.rows.indexOf(index) !== -1) {
-                                    $scope.categories[index] = {
-                                        id: folder.id,
-                                        name: folder.name.replace(/\d+[.][ ]+(.*)/, '$1')
-                                    }
-                                }
+                        if ($scope.rows.indexOf(index) !== -1) {
+                            $scope.categories[index] = {
+                                id: folder.id,
+                                name: folder.name.replace(/\d+[.][ ]+(.*)/, '$1')
+                            }
+                        }
 
+                        $scope.songs[index] = {
+                            id: folder.id,
+                            name: folder.name
+                        }
+
+                        promises.push($scope.listFolder(folder.id));
+                    }
+
+                    Promise.all(promises)
+                        .then(values => {
+                            for (let [index, songs] of values.entries()) {
                                 //filter only pdf files
-                                let files = response.data.files.filter(item => {
+                                songs = songs.filter(item => {
                                     return item.mimeType === 'application/pdf';
                                 });
 
-                                $scope.songs[index] = {
-                                    id: folder.id,
-                                    name: folder.name,
-                                    list: files
-                                }
-                            }, error => {
-                                $scope.error();
-                            });
-                    }
+                                $scope.songs[index].list = songs;
+                            }
+
+                            deferred.resolve();
+                        });
                 }
             });
+
+        return deferred.promise;
     }
 
+    /**
+     * listLiturgies
+     */
     $scope.listLiturgies = function () {
         $scope.httpService.getSheetData($scope.ligurty_db)
             .then(response => {
@@ -287,6 +312,27 @@ app.controller("ScheduleCtrl", ($scope, $window, $timeout, HttpService, EmailSer
                     }
                 }
             });
+    }
+
+    /**
+     * listFolder
+     */
+    $scope.listFolder = function (folder) {
+        let songs = $scope.folders[folder],
+            deferred = $q.defer();
+
+        if (songs) {
+            deferred.resolve(songs);
+        } else {
+            $scope.httpService.getFolderData(folder)
+                .then(response => {
+                    songs = response.data.files;
+                    $scope.folders[folder] = songs;
+                    deferred.resolve(songs);
+                });
+        }
+
+        return deferred.promise;
     }
 
     /**

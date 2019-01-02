@@ -1,6 +1,6 @@
 var app = angular.module("mainApp", []);
 
-app.controller("MainCtrl", ($scope, $window, $timeout, HttpService) => {
+app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
 
     /**
      * init
@@ -10,13 +10,14 @@ app.controller("MainCtrl", ($scope, $window, $timeout, HttpService) => {
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
         $scope.songs = {};
-        $scope.rows = [0, 1, 2, 3, 4];
-        $scope.categories = {};
-
+        
         $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
 
-        $scope.get();
+        $scope.listSongs()
+            .then(() => {
+                $scope.get();
+            });
     }
 
     /**
@@ -36,9 +37,18 @@ app.controller("MainCtrl", ($scope, $window, $timeout, HttpService) => {
                             songs = JSON.parse(value[2]);
 
                         for (let song of songs) {
-                            let title = song.name.replace(/(.*)(.pdf)$/, '$1');
-
                             song.url = $scope.httpService.getOpenURL(song.id);
+
+                            $scope.listFolder(song.folder)
+                                .then(list => {
+                                    let title = song.name.replace(/(.*)(.pdf)$/, '$1');
+
+                                    for (let item of list) {
+                                        if (item.mimeType === 'audio/mp3' && item.name.indexOf(title) !== -1) {
+                                            song.audio = $scope.httpService.getOpenURL(item.id);
+                                        }
+                                    }
+                                });
                         }
 
                         $scope.schedules.push({
@@ -49,9 +59,6 @@ app.controller("MainCtrl", ($scope, $window, $timeout, HttpService) => {
                         });
                     }
                 }
-
-                //init songs
-                $scope.listSongs();
             });
     }
 
@@ -59,32 +66,46 @@ app.controller("MainCtrl", ($scope, $window, $timeout, HttpService) => {
      * listSongs
      */
     $scope.listSongs = function () {
+        let deferred = $q.defer(),
+            promises = [];
+
         $scope.httpService.getFolderData($scope.sheets_folder)
             .then(response => {
                 let folders = response.data.files;
 
                 if (folders) {
-                    for (let [index, folder] of folders.entries()) {
-                        $scope.httpService.getFolderData(folder.id)
-                            .then(response => {
-                                if ($scope.rows.indexOf(index) !== -1) {
-                                    $scope.categories[index] = {
-                                        id: folder.id,
-                                        name: folder.name.replace(/\d+[.][ ]+(.*)/, '$1')
-                                    }
-                                }
-
-                                $scope.songs[index] = {
-                                    id: folder.id,
-                                    name: folder.name,
-                                    list: response.data.files
-                                }
-                            }, error => {
-                                $scope.error();
-                            });
+                    for (let folder of folders) {
+                        promises.push($scope.listFolder(folder.id));
                     }
                 }
+
+                Promise.all(promises)
+                    .then(() => {
+                        deferred.resolve();
+                    });
             });
+
+        return deferred.promise;
+    }
+
+    /**
+     * listFolder
+     */
+    $scope.listFolder = function (folder) {
+        let songs = $scope.songs[folder],
+            deferred = $q.defer();
+
+        if (songs) {
+            deferred.resolve(songs);
+        } else {
+            $scope.httpService.getFolderData(folder)
+                .then(response => {
+                    $scope.songs[folder] = response.data.files;
+                    deferred.resolve($scope.songs[folder]);
+                });
+        }
+
+        return deferred.promise;
     }
 
     /**

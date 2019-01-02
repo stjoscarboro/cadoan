@@ -1,36 +1,36 @@
 .mainform {
-	font-family: Arial, Helvetica, serif;
-	background: url('../../resources/images/bg-church.jpg');
+    font-family: Arial, Helvetica, serif;
+    background: url('../../resources/images/bg-church.jpg');
 }
 
 .mainform .main {
-	width: 740px;
-	margin: 20px auto 20px auto;
+    width: 740px;
+    margin: 20px auto 20px auto;
 }
 
 .mainform .content {
-	border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
     padding-bottom: 5px;
 }
 
 .mainform .label {
-	display: inline-flex;
-	width: 100px;
+    display: inline-flex;
+    width: 100px;
 }
 
 .mainform .text {
-	font-size: inherit;
-	padding-left: 7px;
-	margin-left: 1px;
-	width: 100%;
+    font-size: inherit;
+    padding-left: 7px;
+    margin-left: 1px;
+    width: 100%;
 }
 
 .mainform .select {
-	font-size: inherit;
+    font-size: inherit;
 }
 
 .mainform .submit {
-	font-size: inherit;
+    font-size: inherit;
     width: 100px;
     height: 26px;
 }
@@ -41,52 +41,52 @@
 }
 
 .mainform .calendar {
-	display: inline-flex;
-	width: 220px;
+    display: inline-flex;
+    width: 220px;
 }
 
 .mainform .driveurl {
-	display: inline-flex;
-	float: right;
+    display: inline-flex;
+    float: right;
 }
 
 .mainform .column-label {
-	padding: 20px 0 0 0;
+    padding: 20px 0 0 0;
 }
 
 .mainform .select-category {
-	display: inline-flex;
-	width: 120px;
+    display: inline-flex;
+    width: 120px;
 }
 
 .mainform .select-folder {
-	display: inline-flex;
-	width: 150px;
+    display: inline-flex;
+    width: 150px;
 }
 
 .mainform .select-songs {
-	display: inline-flex;
-	width: 335px;
+    display: inline-flex;
+    width: 335px;
 }
 
 .mainform .add-row {
-	display: inline-block;
-	margin: 5px 0 0 0;
+    display: inline-block;
+    margin: 5px 0 0 0;
 }
 
 .mainform .add-button {
-	display: inline-block;
-	float: right;
+    display: inline-block;
+    float: right;
 }
 
 .mainform .preview-button {
-	width: 14px;
-	height: 12px;
-	background: url('../../resources/images/preview.png') no-repeat 0px/15px;
+    width: 14px;
+    height: 12px;
+    background: url('../../resources/images/preview.png') no-repeat 0px/15px;
 }
 
 .mainform .icon {
-	display: inline-flex;
+    display: inline-flex;
 }
 
 .mainform iframe {
@@ -96,6 +96,6 @@
 }
 
 .mainlist .delete-button {
-	width: 32px;
-	background: url('../../resources/images/erase.png') no-repeat 15px/12px;
+    width: 32px;
+    background: url('../../resources/images/erase.png') no-repeat 15px/12px;
 }

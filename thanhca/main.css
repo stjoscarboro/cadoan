@@ -42,3 +42,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.mainlist .audio {
+    display: inline-block;
+    width: 32px;
+    height: 12px;
+    background: url('../resources/images/audio.png') no-repeat 15px/15px;
+}
