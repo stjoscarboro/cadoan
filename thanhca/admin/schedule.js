@@ -6,8 +6,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $timeout, HttpService, Emai
      * init
      */
     $scope.init = function () {
-        $scope.schedule_db = 'thanhnhac_schedule';
-        $scope.ligurty_db = 'liturgy';
+        $scope.schedule_db = 'cadoan_schedules';
+        $scope.ligurty_db = 'liturgies';
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
         $scope.schedule = {

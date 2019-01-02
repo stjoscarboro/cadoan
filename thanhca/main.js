@@ -6,7 +6,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
      * init
      */
     $scope.init = function () {
-        $scope.schedule_db = 'thanhnhac_schedule';
+        $scope.schedule_db = 'cadoan_schedules';
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
         $scope.songs = {};

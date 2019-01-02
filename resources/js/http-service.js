@@ -11,24 +11,34 @@ app.factory('HttpService', function ($http) {
             gapiKey = Base64.decode('QUl6YVN5RFZLNXpQMFRuaFJhbTBCc3Z2YjU5UnZGWk1tUjNqR1c4');
 
         let sheets = {
-            lector: {
+            lector_members: {
                 id: '1yl0oy1a9Brr2O3a9zC4HtuFnq2U9UkUZGj_A6C0YWDM',
                 range: 'A:D'
             },
 
-            schedule: {
+            lector_schedules: {
                 id: '18vfSNSUZ7zBH-MLhpyuo9floVgLpmCRxv2qg1ss_4tk',
                 range: 'A:H'
             },
 
-            liturgy: {
+            liturgies: {
                 id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                range: 'A:A'
+                range: 'A:A' // [text]
             },
 
-            thanhnhac_schedule: {
+            cadoan_schedules: {
                 id: '1wJc-PNIW73HSGuYus5JBZw9IMr1fZ3J74GXm-e5b-8A',
-                range: 'A:C'
+                range: 'A:C' // [date, liturgy, songs]
+            },
+
+            cadoan_members: {
+                id: '1rrjh3TAPnDz7odZTEQ6YIWKqFXxSVylVGstyb3VkqL0',
+                range: 'A:C' // [id, email, name]
+            },
+
+            cadoan_discussions: {
+                id: '1R462i8PpuGfpI38MNFexgtrTAplinMC5lcYSDTYLZdw',
+                range: 'A:C' // [date, member_id, text]
             }
         };
 

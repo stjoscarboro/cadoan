@@ -12,6 +12,11 @@
 	margin: 40px;
 }
 
+.mainadmin .admin-menu {
+    float: right;
+    margin-right: 20px;
+}
+
 iframe {
     border-width: 0px;
     width: 100%;
