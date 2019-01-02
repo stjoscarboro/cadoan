@@ -1,20 +1,20 @@
-var app = angular.module("mainApp", []);
+var app = angular.module("discussionApp", []);
 
-app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
+app.controller("DiscussionCtrl", ($scope, $q, $window, $timeout, HttpService) => {
 
     /**
      * init
      */
     $scope.init = function () {
-        $scope.schedule_db = 'cadoan_schedules';
-        $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
+        $scope.members_db = 'cadoan_members';
+        $scope.discussions_db = 'cadoan_discussions';
 
-        $scope.songs = {};
-        
+        $scope.discussion = {};
+
         $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
 
-        $scope.listSongs()
+        $scope.loadData()
             .then(() => {
                 $scope.get();
             });
@@ -24,96 +24,65 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
      * get
      */
     $scope.get = function () {
-        $scope.schedules = [];
+        console.log('get');
+    }
 
-        $scope.httpService.getSheetData($scope.schedule_db)
-            .then(response => {
-                let values = response.data.values;
+    /**
+     * create
+     */
+    $scope.create = function() {
+        let date = new Date(),
+            text = $scope.discussion.text,
+            payload;
 
-                if (values) {
-                    for (let value of values) {
-                        let date = Number.parseInt(value[0]),
-                            liturgy = value[1],
-                            songs = JSON.parse(value[2]);
+        payload = {
+            values: [
+                [
+                    date.getTime(),
+                    0,
+                    text
+                ]
+            ]
+        };
 
-                        for (let song of songs) {
-                            song.url = $scope.httpService.getOpenURL(song.id);
-
-                            $scope.listFolder(song.folder)
-                                .then(list => {
-                                    let title = song.name.replace(/(.*)(.pdf)$/, '$1');
-
-                                    for (let item of list) {
-                                        if (item.mimeType === 'audio/mp3' && item.name.indexOf(title) !== -1) {
-                                            song.audio = $scope.httpService.getOpenURL(item.id);
-                                        }
-                                    }
-                                });
-                        }
-
-                        $scope.schedules.push({
-                            rawdate: date,
-                            date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
-                            liturgy: liturgy,
-                            songs: songs
-                        });
-                    }
-                }
+        //add new discussion
+        $scope.httpService.appendSheetData($scope.discussions_db, payload, {
+                valueInputOption: "USER_ENTERED"
+            })
+            .then(() => {
+                $scope.discussion = {};
             });
     }
 
     /**
-     * listSongs
+     * loadData
      */
-    $scope.listSongs = function () {
+    $scope.loadData = function () {
         let deferred = $q.defer(),
             promises = [];
 
-        $scope.httpService.getFolderData($scope.sheets_folder)
-            .then(response => {
-                let folders = response.data.files;
+        promises.push($scope.loadMembers());
 
-                if (folders) {
-                    for (let folder of folders) {
-                        promises.push($scope.listFolder(folder.id));
-                    }
-                }
-
-                Promise.all(promises)
-                    .then(() => {
-                        deferred.resolve();
-                    });
+        Promise.all(promises)
+            .then(() => {
+                deferred.resolve();
             });
 
         return deferred.promise;
     }
 
     /**
-     * listFolder
+     * loadMembers
      */
-    $scope.listFolder = function (folder) {
-        let songs = $scope.songs[folder],
-            deferred = $q.defer();
+    $scope.loadMembers = function() {
+        let deferred = $q.defer();
 
-        if (songs) {
-            deferred.resolve(songs);
-        } else {
-            $scope.httpService.getFolderData(folder)
-                .then(response => {
-                    $scope.songs[folder] = response.data.files;
-                    deferred.resolve($scope.songs[folder]);
-                });
-        }
+        $scope.httpService.getSheetData($scope.members_db)
+            .then(response => {
+                $scope.members = response.data.values;
+                deferred.resolve();
+            });
 
         return deferred.promise;
-    }
-
-    /**
-     * print
-     */
-    $scope.print = function () {
-        $('.pbody').printThis({
-            base: window.location.href
-        });
     }
 });

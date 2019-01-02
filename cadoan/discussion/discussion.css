@@ -1,51 +1,36 @@
-.mainlist {
-    width: 640px;
-    margin: 20px auto 20px auto;
+.discussion {
     font-family: initial;
     background: url('../../resources/images/bg-church.jpg');
 }
 
-.mainlist .main {
+.discussion .main {
     width: 640px;
     margin: 20px auto 20px auto;
 }
 
-.mainlist .schedule {
-    padding-bottom: 20px;
-    line-height: 20px;
-}
-
-.mainlist .date {
-    display: inline-flex;
-    width: 170px;
-}
-
-.mainlist .liturgy {
-    display: inline-flex;
-    font-weight: bold;
-    font-style: italic;
-    font-size: large;
-    margin-bottom: 8px;
-}
-
-.mainlist .category {
-    display: inline-flex;
-    margin-left: 190px;
-    width: 80px;
-    vertical-align: top;
-}
-
-.mainlist .song {
+.discussion .label {
     display: inline-block;
-    width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding: 0 0 5px 0;
 }
 
-.mainlist .audio {
-    display: inline-block;
-    width: 28px;
-    height: 12px;
-    background: url('../../resources/images/audio.png') no-repeat 15px/12px;
+.discussion .textarea {
+    width: calc(100% - 7px);
+    height: 80px;
+    max-width: calc(100% - 7px);
+    font-family: inheriti;
+    font-size: inherit;
+}
+
+.discussion .add-button {
+    display: inline-flex;
+    float: right;
+}
+
+.discussion .submit {
+    width: 100px;
+    height: 26px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: inherit;
 }
