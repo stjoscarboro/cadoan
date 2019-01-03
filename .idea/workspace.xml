@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c46644d-cb6b-4aa5-a4d1-0ddee90c505f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/fonts/helvetica-neue-roman.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/fonts/helvetica-neue-roman.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/fonts/helvetica-neue-roman.woff2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/admin/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cadoan/addform/addform.css" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/addform/addform.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cadoan/newsform/newsform.css" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/newsform/newsform.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cadoan/schedule/schedule.css" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/schedule/schedule.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/fonts/stylesheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/fonts/stylesheet.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -121,7 +113,17 @@
     </favorites_list>
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cadoan/addform/addform.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="686">
+              <caret line="94" column="17" lean-forward="true" selection-start-line="94" selection-start-column="17" selection-end-line="94" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -146,9 +148,9 @@
         <option value="$PROJECT_DIR$/admin/index.html" />
         <option value="$PROJECT_DIR$/admin/main.css" />
         <option value="$PROJECT_DIR$/cadoan/newsform/newsform.css" />
-        <option value="$PROJECT_DIR$/cadoan/addform/addform.css" />
         <option value="$PROJECT_DIR$/cadoan/schedule/schedule.html" />
         <option value="$PROJECT_DIR$/cadoan/schedule/schedule.css" />
+        <option value="$PROJECT_DIR$/cadoan/addform/addform.css" />
       </list>
     </option>
   </component>
@@ -162,38 +164,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="stjoscarboro.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="stjoscarboro.github.io" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="stjoscarboro.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="stjoscarboro.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="cadoan" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="stjoscarboro.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="stjoscarboro.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="cadoan" type="462c0819:PsiDirectoryNode" />
-              <item name="addform" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="stjoscarboro.github.io" type="b2602c69:ProjectViewProjectNode" />
-              <item name="stjoscarboro.github.io" type="462c0819:PsiDirectoryNode" />
-              <item name="cadoan" type="462c0819:PsiDirectoryNode" />
-              <item name="schedule" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -253,12 +224,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="43" y="-10" width="1877" height="1090" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="1" />
       <window_info anchor="bottom" id="Terminal" order="2" show_stripe_button="false" sideWeight="0.49946064" weight="0.32985386" />
-      <window_info anchor="bottom" id="Find" order="3" sideWeight="0.50053936" side_tool="true" visible="true" weight="0.18162839" />
+      <window_info anchor="bottom" id="Find" order="3" sideWeight="0.50053936" side_tool="true" weight="0.18162839" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Run" order="6" />
@@ -271,10 +243,10 @@
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Project" order="4" sideWeight="0.48979592" weight="0.24919094" />
-      <window_info active="true" anchor="right" id="Version Control" order="5" sideWeight="0.5102041" side_tool="true" visible="true" weight="0.26914778" />
+      <window_info anchor="right" id="Version Control" order="5" sideWeight="0.51148224" side_tool="true" visible="true" weight="0.26914778" />
       <window_info anchor="right" id="Database" order="6" sideWeight="0.50127554" side_tool="true" weight="0.32955772" />
       <window_info anchor="right" id="Structure" order="7" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Favorites" order="8" sideWeight="0.48979592" visible="true" weight="0.26914778" />
+      <window_info active="true" anchor="right" id="Favorites" order="8" sideWeight="0.48851773" visible="true" weight="0.26914778" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -344,13 +316,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cadoan/addform/addform.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="20" column="17" lean-forward="true" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="320">
@@ -362,6 +327,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="40" column="22" lean-forward="true" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cadoan/addform/addform.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="686">
+          <caret line="94" column="17" lean-forward="true" selection-start-line="94" selection-start-column="17" selection-end-line="94" selection-end-column="17" />
         </state>
       </provider>
     </entry>
