@@ -1,19 +1,18 @@
-.discussion {
+.newsform {
     font-family: initial;
     background: url('../../resources/images/bg-church.jpg');
 }
 
-.discussion .main {
-    width: 640px;
+.newsform .main {
     margin: 20px auto 20px auto;
 }
 
-.discussion .label {
-    display: inline-block;
-    padding: 0 0 5px 0;
+.newsform .entryform {
+    border-top: 1px solid lightgrey;
+    margin-top: 20px;
 }
 
-.discussion .textarea {
+.newsform .textarea {
     width: calc(100% - 7px);
     height: 80px;
     max-width: calc(100% - 7px);
@@ -21,16 +20,26 @@
     font-size: inherit;
 }
 
-.discussion .add-button {
+.newsform .add-button {
     display: inline-flex;
     float: right;
 }
 
-.discussion .submit {
+.newsform .submit {
     width: 100px;
     height: 26px;
     border: 1px solid #aaa;
     border-radius: 4px;
     font-family: inherit;
     font-size: inherit;
+}
+
+.newsform .date {
+    display: inline-flex;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.newsform .text {
+    margin: 5px 0 20px 20px;
 }

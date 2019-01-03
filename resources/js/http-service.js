@@ -36,9 +36,9 @@ app.factory('HttpService', function ($http) {
                 range: 'A:C' // [id, email, name]
             },
 
-            cadoan_discussions: {
+            cadoan_notices: {
                 id: '1R462i8PpuGfpI38MNFexgtrTAplinMC5lcYSDTYLZdw',
-                range: 'A:C' // [date, member_id, text]
+                range: 'A:B' // [date, text]
             }
         };
 
