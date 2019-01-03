@@ -13,3 +13,11 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'helvetica-neue';
+    src: url('./helvetica-neue-roman.woff2') format('woff2'),
+         url('./helvetica-neue-roman.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

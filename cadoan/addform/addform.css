@@ -1,5 +1,5 @@
 .mainform {
-    font-family: carlitoregular;
+    font-family: helvetica-neue;
     background: url('../../resources/images/bg-church.jpg');
 }
 
@@ -96,6 +96,8 @@
 }
 
 .mainlist .delete-button {
-    width: 32px;
-    background: url('../../resources/images/erase.png') no-repeat 15px/12px;
+    position: absolute;
+    width: 38px;
+    height: 18px;
+    background: url(../../resources/images/erase.png) no-repeat 15px/12px;
 }
