@@ -1,15 +1,15 @@
 .mainadmin {
-	font-family: initial;
-	background: url('../resources/images/bg-church.jpg');
-	margin: 0;
+    font-family: initial;
+    background: url('../resources/images/bg-church.jpg');
+    margin: 0;
 }
 
 .mainadmin .main {
-	width: calc(100w);
+    width: calc(100w);
 }
 
 .mainadmin .signin {
-	margin: 40px;
+    margin: 40px;
 }
 
 .mainadmin .admin-menu {

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Lịch Hát Thánh Ca</title>
+    <title>Ca Đoàn Thánh Giuse - Scarborough</title>
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="google-signin-client_id" content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
@@ -11,6 +11,7 @@
 
     <script src="../../resources/js/jquery.min.js"></script>
     <script src="../../resources/js/jquery-ui.min.js"></script>
+    <script src="../../resources/js/jquery-ui-datepicker-vi.js"></script>
     <script src="../../resources/js/angular.min.js"></script>
     <script src="../../resources/js/base64.min.js"></script>
     <script src="../../resources/js/google-api.js"></script>
@@ -34,7 +35,7 @@
                 <div class="content">
                     <div ng-repeat="notice in notices" class="notice">
                         <div class="date">
-                            {{notice.date | date:'medium'}}
+                            {{notice.date}}
                         </div>
 
                         <div class="text">

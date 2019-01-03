@@ -49,3 +49,11 @@
     height: 12px;
     background: url('../../resources/images/audio.png') no-repeat 15px/12px;
 }
+
+.mainlist .loader {
+    display: block;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    background: url('../../resources/images/loading.gif') no-repeat 0/24px;
+}

@@ -353,11 +353,15 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $timeout, HttpService, Emai
      * selectSongs
      */
     $scope.selectSongs = function (index) {
-        let folder = $scope.schedule.songs[index].folder;
+        let songs = $scope.schedule.songs[index];
 
-        for (let songs of Object.values($scope.songs)) {
-            if (songs.id === folder) {
-                $scope.lists[index] = songs;
+        if (!songs || !songs.folder) {
+            $scope.lists[index] = null;
+        } else {
+            for (let list of Object.values($scope.songs)) {
+                if (list.id === songs.folder) {
+                    $scope.lists[index] = list;
+                }
             }
         }
     }

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Lịch Hát Thánh Ca</title>
+    <title>Ca Đoàn Thánh Giuse - Scarborough</title>
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -10,6 +10,7 @@
 
     <script src="../../resources/js/jquery.min.js"></script>
     <script src="../../resources/js/jquery-ui.min.js"></script>
+    <script src="../../resources/js/jquery-ui-datepicker-vi.js"></script>
     <script src="../../resources/js/angular.min.js"></script>
     <script src="../../resources/js/base64.min.js"></script>
 
@@ -18,6 +19,8 @@
 </head>
 
 <body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()" class="mainlist">
+
+    <div class="loader" data-loading></div>
 
     <div id="main" class="main">
         <div ng-repeat="schedule in schedules" class="schedule">
@@ -38,7 +41,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

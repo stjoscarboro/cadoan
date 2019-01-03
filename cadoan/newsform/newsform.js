@@ -12,6 +12,8 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         $scope.notice = {};
 
         $scope.httpService = new HttpService($scope);
+        $scope.dateFormat = "DD, dd/mm/yy";
+        // $scope.dateFormat = "medium";
     }
 
     /**
@@ -41,11 +43,11 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, HttpService) => {
                     values.sort((a,b) => (a[0] > b[0]) ? -1 : ((b[0] > a[0]) ? 1 : 0)); 
 
                     for(let value of values) {
-                        let date = Number.parseInt(value[0]),
+                        let date = new Date(Number.parseInt(value[0])),
                             text = value[1];
 
                         $scope.notices.push({
-                            date: date,
+                            date: $.datepicker.formatDate($scope.dateFormat, date) + ' ' + $scope.getTimeString(date),
                             text: text
                         });
                     }
@@ -91,5 +93,19 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, HttpService) => {
             });
 
         return deferred.promise;
+    }
+
+    $scope.getTimeString = function(date) {
+        let hours = date.getHours(),
+            minutes = date.getMinutes(),
+            seconds = date.getSeconds(),
+            ampm = 'AM';
+
+        if(hours > 12) {
+            hours = hours - 12;
+            ampm = 'PM';
+        }
+
+        return hours + ':' + minutes + ':' + seconds + ' ' + ampm;
     }
 });

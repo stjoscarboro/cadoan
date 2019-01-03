@@ -52,7 +52,6 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
                         }
 
                         $scope.schedules.push({
-                            rawdate: date,
                             date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
                             liturgy: liturgy,
                             songs: songs
@@ -117,3 +116,24 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         });
     }
 });
+
+
+app.directive('loading', ['$http', function ($http) {
+    return {
+        restrict: 'A',
+
+        link: function (scope, element, attrs) {
+            scope.isLoading = function () {
+                return $http.pendingRequests.length > 0;
+            };
+
+            scope.$watch(scope.isLoading, function (value) {
+                if (value) {
+                    element.removeClass('ng-hide');
+                } else {
+                    element.addClass('ng-hide');
+                }
+            });
+        }
+    };
+}]);
