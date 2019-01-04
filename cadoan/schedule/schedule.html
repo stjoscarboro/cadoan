@@ -24,28 +24,22 @@
 <div class="loader" data-loading></div>
 
 <div id="main" class="main">
-    <div class="content">
-        <div ng-repeat="schedule in schedules" class="schedule">
-            <div class="date">
-                {{schedule.date}}
-            </div>
+    <div ng-repeat="schedule in schedules" class="schedule">
+        <div class="date">
+            {{schedule.date}}
+        </div>
 
-            <div class="liturgy">
-                {{schedule.liturgy}}
-            </div>
+        <div class="liturgy">
+            {{schedule.liturgy}}
+        </div>
 
-            <div ng-repeat="song in schedule.songs">
-                <div class="category">{{song.category}}</div>
-                <div class="song">
-                    <a href="{{song.url}}" target="_blank" title="{{song.name}}">{{song.name}}</a>
-                    <a href="{{song.audio}}" target="_blank" class="audio" title="Nghe Bài Hát" ng-if="song.audio"></a>
-                </div>
+        <div ng-repeat="song in schedule.songs">
+            <div class="category">{{song.category}}</div>
+            <div class="song">
+                <a href="{{song.url}}" target="_blank" title="{{song.name}}">{{song.name}}</a>
+                <a href="{{song.audio}}" target="_blank" class="audio" title="Nghe Bài Hát" ng-if="song.audio"></a>
             </div>
         </div>
-    </div>
-
-    <div class="discussion">
-        <iframe name="iframe" src="../newsform/index.html"></iframe>
     </div>
 </div>
 </body>

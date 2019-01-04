@@ -2,29 +2,43 @@
 <html>
 
 <head>
-	<title>Ca Đoàn Thánh Giuse - Scarborough</title>
-	<meta name="robots" content="noindex, nofollow">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ca Đoàn Thánh Giuse - Scarborough</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-	<link rel="stylesheet" href="./resources/fonts/stylesheet.css">
-	<link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="./resources/fonts/stylesheet.css">
+    <link rel="stylesheet" href="./main.css">
 </head>
 
 <body class="main">
-	<div class="header">
-		<div class="logo">
-			<div class="title">
-				Ca Đoàn Thánh Giuse<br/>Scarborough
-			</div>
-		</div>
-	</div>
-	
-	<div class="menu">
-		<span>
-			<a href="./cadoan/index.html" target="iframe" class="menu-text">Lịch Hát Thánh Ca</a>
-		</span>		
-	</div>
 
-	<iframe name="iframe" src="./cadoan/index.html"></iframe>
+<div class="header">
+    <div class="logo">
+        <div class="title">
+            Ca Đoàn Thánh Giuse<br/>Scarborough
+        </div>
+    </div>
+</div>
+
+<div class="menu">
+    <span>
+        <a href="./cadoan/index.html" target="iframe" class="menu-text">Lịch Hát Thánh Ca</a>
+    </span>
+</div>
+
+<div class="right">
+    <iframe name="iframe" src="./cadoan/newsform/index.html"></iframe>
+</div>
+
+<div class="content">
+    <iframe id="iframe" name="iframe" src="./cadoan/index.html"></iframe>
+</div>
+
+<script>
+    $('#iframe').load(function () {
+        $(this).height($(this).contents().height());
+        $(this).width($(this).contents().width());
+    });</script>
+
 </body>
 </html>

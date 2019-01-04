@@ -1,12 +1,10 @@
 .mainlist {
     font-family: sans-serif;
-    /*background: url('../../resources/images/bg-church.jpg');*/
-    background-color: whitesmoke;
 }
 
 .mainlist .main {
-    width: 940px;
-    margin: 20px auto 20px auto;
+    height: auto;
+    overflow: auto;
 }
 
 .mainlist .schedule {
