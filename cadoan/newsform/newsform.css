@@ -1,14 +1,15 @@
 .newsform {
-    font-family: helvetica-neue;
-    background: url('../../resources/images/bg-church.jpg');
+    font-family: sans-serif;
+    /*background: url('../../resources/images/bg-church.jpg');*/
+    background-color: whitesmoke;
 }
 
 .newsform .main {
-    margin: 20px auto 20px auto;
+    /*margin: 20px auto 20px auto;*/
 }
 
 .newsform .content {
-    height: calc(100vh - 300px);
+    /*height: calc(100vh - 300px);*/
     overflow: auto;
 }
 

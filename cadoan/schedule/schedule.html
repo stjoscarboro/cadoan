@@ -21,9 +21,10 @@
 
 <body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()" class="mainlist">
 
-    <div class="loader" data-loading></div>
+<div class="loader" data-loading></div>
 
-    <div id="main" class="main">
+<div id="main" class="main">
+    <div class="content">
         <div ng-repeat="schedule in schedules" class="schedule">
             <div class="date">
                 {{schedule.date}}
@@ -42,6 +43,11 @@
             </div>
         </div>
     </div>
+
+    <div class="discussion">
+        <iframe name="iframe" src="../newsform/index.html"></iframe>
+    </div>
+</div>
 </body>
 
 </html>
