@@ -5,7 +5,8 @@
     <title>Ca Đoàn Thánh Giuse - Scarborough</title>
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="google-signin-client_id" content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
+    <meta name="google-signin-client_id"
+          content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
 
     <link rel="stylesheet" href="./newsform.css">
 
@@ -19,42 +20,47 @@
     <script src="./newsform.js"></script>
     <script src="../../resources/js/http-service.js"></script>
 
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/trix-editor.css">
+    <script src="../../resources/js/trix-editor.js"></script>
+    <script src="../../resources/js/angular-trix.min.js"></script>
+
+    <script src="https://apis.google.com/js/platform.js?onload=renderMemberButton" async defer></script>
 </head>
 
 <body ng-app="newsformApp" ng-controller="NewsformCtrl" data-ng-init="init()" class="newsform">
 
-    <div id="main" class="main">
+<div id="main" class="main">
 
-        <div ng-if="!accessToken">
-            <div id="gapi-signin"></div>
-        </div>
-
-        <div ng-if="accessToken">
-            <form name="entryForm" ng-submit="create()">
-                <div class="content">
-                    <div ng-repeat="notice in notices" class="notice">
-                        <div class="date">
-                            {{notice.date}}
-                        </div>
-
-                        <div class="text">
-                            {{notice.text}}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="entryform">
-                    <textarea ng-model="notice.text" class="textarea"></textarea>
-
-                    <div class="add-button">
-                        <input type="submit" value="Lưu Lại" title="Lưu Lại" class="submit">
-                    </div>
-                </div>
-            </form>
-        </div>
-
+    <div ng-if="!accessToken">
+        <div id="gapi-signin"></div>
     </div>
+
+    <div ng-if="accessToken">
+        <div class="content">
+            <div ng-repeat="notice in notices" class="notice">
+                <div class="date">
+                    {{notice.date}}
+                </div>
+
+                <div class="text" ng-bind-html="notice.text">
+                    <!--{{notice.text}}-->
+                </div>
+            </div>
+        </div>
+
+        <form name="entryForm" ng-submit="create()">
+            <div class="entryform">
+                <!--<textarea ng-model="notice.text" class="textarea"></textarea>-->
+                <trix-editor angular-trix ng-model="notice.text" class="trix-content textarea"></trix-editor>
+
+                <div class="add-button">
+                    <input type="submit" value="Lưu Lại" title="Lưu Lại" class="submit">
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
 
 </body>
 

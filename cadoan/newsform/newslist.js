@@ -1,6 +1,6 @@
-var app = angular.module("newsformApp", ['angularTrix']);
+var app = angular.module("newslistApp", []);
 
-app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService) => {
+app.controller("NewslistCtrl", ($scope, $q, $window, $timeout, $sce, HttpService) => {
 
     /**
      * init
@@ -13,14 +13,6 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
 
         $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
-    };
-
-    /**
-     * signin
-     */
-    $scope.signin = function (profile, token) {
-        $scope.profile = profile;
-        $scope.accessToken = token;
 
         $scope.loadData()
             .then(() => {
@@ -51,32 +43,6 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
                         });
                     }
                 }
-            });
-    };
-
-    /**
-     * create
-     */
-    $scope.create = function () {
-        let date = new Date(),
-            payload;
-
-        payload = {
-            values: [
-                [
-                    date.getTime(),
-                    $scope.notice.text
-                ]
-            ]
-        };
-
-        //add new notice
-        $scope.httpService.appendSheetData($scope.notices_db, payload, {
-            valueInputOption: "USER_ENTERED"
-        })
-            .then(() => {
-                $scope.notice = {};
-                $scope.get();
             });
     };
 

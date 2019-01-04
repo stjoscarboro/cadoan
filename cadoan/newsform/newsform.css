@@ -9,15 +9,14 @@
 
 .newsform .entryform {
     border-top: 1px solid lightgrey;
-    margin-top: 20px;
+    padding: 20px 0 20px 0;
 }
 
 .newsform .textarea {
-    width: calc(100% - 7px);
-    height: 80px;
-    max-width: calc(100% - 7px);
-    font-family: inheriti;
-    font-size: inherit;
+    min-height: 80px;
+    background-color: white;
+    margin-bottom: 10px;
+    border-radius: 4px;
 }
 
 .newsform .add-button {
