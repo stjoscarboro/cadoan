@@ -13,6 +13,11 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
 
         $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
+
+        $scope.loadData()
+            .then(() => {
+                $scope.get();
+            });
     };
 
     /**
@@ -22,10 +27,7 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
         $scope.profile = profile;
         $scope.accessToken = token;
 
-        $scope.loadData()
-            .then(() => {
-                $scope.get();
-            });
+        $scope.get();
     };
 
     /**
