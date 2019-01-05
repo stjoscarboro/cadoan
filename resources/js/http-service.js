@@ -38,7 +38,7 @@ app.factory('HttpService', function ($http) {
 
             cadoan_notices: {
                 id: '1R462i8PpuGfpI38MNFexgtrTAplinMC5lcYSDTYLZdw',
-                range: 'A:B' // [date, text]
+                range: 'A:C' // [date, member, text]
             }
         };
 

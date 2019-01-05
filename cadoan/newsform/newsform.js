@@ -57,7 +57,8 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
 
                     for (let value of values) {
                         let date = new Date(Number.parseInt(value[0])),
-                            text = value[1];
+                            sender = value[1],
+                            text = value[2];
 
                         $scope.notices.push({
                             date: $scope.getDateTime(date),
@@ -73,13 +74,19 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
      */
     $scope.create = function () {
         let date = new Date(),
+            sender = $scope.profile.getName(),
             payload;
 
         if ($scope.notice.text) {
+            if(Base64.encode($scope.profile.getEmail()) === gapiid) {
+                sender = 'Admin';
+            }
+
             payload = {
                 values: [
                     [
                         date.getTime(),
+                        sender,
                         $scope.notice.text
                     ]
                 ]
