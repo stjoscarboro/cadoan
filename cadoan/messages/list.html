@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <link rel="stylesheet" href="../../resources/fonts/stylesheet.css">
-    <link rel="stylesheet" href="./newsform.css">
+    <link rel="stylesheet" href="messages.css">
 
     <script src="../../resources/js/jquery.min.js"></script>
     <script src="../../resources/js/jquery-ui.min.js"></script>
@@ -17,7 +17,7 @@
     <script src="../../resources/js/base64.min.js"></script>
     <script src="../../resources/js/google-api.js"></script>
 
-    <script src="./newsform.js"></script>
+    <script src="messages.js"></script>
     <script src="../../resources/js/http-service.js"></script>
 
     <link href="../../resources/css/quill.snow.css" rel="stylesheet">
@@ -25,22 +25,22 @@
     <script src="../../resources/js/ng-quill.min.js"></script>
 </head>
 
-<body ng-app="newsformApp" ng-controller="NewsformCtrl" data-ng-init="init()" class="newsform">
+<body ng-app="messagesApp" ng-controller="MessagesCtrl" data-ng-init="init()" class="messages">
 
 <div id="main" class="main">
 
     <div class="content">
-        <div ng-repeat="notice in notices" class="notice">
+        <div ng-repeat="message in messages" class="message">
             <div class="date">
-                {{notice.date}}
+                {{message.date}}
             </div>
 
             <div class="sender">
-                [{{notice.sender}}]
+                [{{message.sender}}]
             </div>
 
-            <div ng-bind-html="notice.text" class="text ql-editor">
-                <!--{{notice.text}}-->
+            <div ng-bind-html="message.text" class="text ql-editor">
+                <!--{{message.text}}-->
             </div>
         </div>
     </div>

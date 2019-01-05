@@ -36,7 +36,7 @@ app.factory('HttpService', function ($http) {
                 range: 'A:C' // [id, email, name]
             },
 
-            cadoan_notices: {
+            cadoan_messages: {
                 id: '1R462i8PpuGfpI38MNFexgtrTAplinMC5lcYSDTYLZdw',
                 range: 'A:C' // [date, member, text]
             }

@@ -8,7 +8,7 @@
     <meta name="google-signin-client_id"
           content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
 
-    <link rel="stylesheet" href="./newsform.css">
+    <link rel="stylesheet" href="messages.css">
 
     <script src="../../resources/js/jquery.min.js"></script>
     <script src="../../resources/js/jquery-ui.min.js"></script>
@@ -18,7 +18,7 @@
     <script src="../../resources/js/base64.min.js"></script>
     <script src="../../resources/js/google-api.js"></script>
 
-    <script src="./newsform.js"></script>
+    <script src="messages.js"></script>
     <script src="../../resources/js/http-service.js"></script>
 
     <link href="../../resources/css/quill.snow.css" rel="stylesheet">
@@ -28,7 +28,7 @@
     <script src="https://apis.google.com/js/platform.js?onload=renderMemberButton" async defer></script>
 </head>
 
-<body ng-app="newsformApp" ng-controller="NewsformCtrl" data-ng-init="init()" class="newsform">
+<body ng-app="messagesApp" ng-controller="MessagesCtrl" data-ng-init="init()" class="messages">
 
 <div id="main" class="main">
 
@@ -42,10 +42,9 @@
     </div>
 
     <div ng-if="accessToken">
-        <div class="entryform">
-            <ng-quill-editor ng-model="notice.text">
-                <ng-quill-toolbar>
-                    <div>
+        <ng-quill-editor ng-model="message.text">
+            <ng-quill-toolbar>
+                <div>
                         <span class="ql-formats">
                             <select class="ql-font">
                                 <option selected></option>
@@ -59,7 +58,7 @@
                                 <option value="huge"></option>
                             </select>
                         </span>
-                        <span class="ql-formats">
+                    <span class="ql-formats">
                             <button class="ql-bold"></button>
                             <button class="ql-italic"></button>
                             <select class="ql-color"></select>
@@ -67,13 +66,12 @@
                             <button class="ql-list" value="ordered"></button>
                             <button class="ql-list" value="bullet"></button>
                         </span>
-                    </div>
-                </ng-quill-toolbar>
-            </ng-quill-editor>
+                </div>
+            </ng-quill-toolbar>
+        </ng-quill-editor>
 
-            <div class="add-button">
-                <a href="" ng-click="create()" class="button">Gửi</a>
-            </div>
+        <div class="add-button">
+            <a href="" ng-click="create()" class="button">Gửi</a>
         </div>
     </div>
 

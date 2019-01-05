@@ -1,46 +1,46 @@
-.newsform {
+.messages {
     font-family: sans-serif;
     font-size: small;
     background-color: white;
 }
 
-.newsform .content {
+.messages .content {
     overflow: hidden;
 }
 
-.newsform .add-button {
+.messages .add-button {
     float: right;
     text-align: center;
 }
 
-.newsform .date {
+.messages .date {
     display: inline-flex;
     font-style: italic;
 }
 
-.newsform .sender {
+.messages .sender {
     display: inline-flex;
     float: right;
     color: #deb887;
     font-style: italic;
 }
 
-.newsform .text {
+.messages .text {
     margin: 5px 0 10px 15px;
     padding: 0;
 }
 
-.newsform .signin {
+.messages .signin {
     margin: 20px;
 }
 
-.newsform .signin_footnote {
+.messages .signin_footnote {
     font-style: italic;
 }
 
-.newsform a.button {
+.messages a.button {
     display: block;
-    height: 20px;
+    height: 18px;
     width: 60px;
     border: 1px solid lightgrey;
     border-radius: 4px;
@@ -52,11 +52,11 @@
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.25);
 }
 
-.newsform a.button:active {
+.messages a.button:active {
     border-color: #5f3f3f;
 }
 
-.newsform .ql-container {
+.messages .ql-container {
     height: calc(100vh - 103px);
     overflow: auto;
     padding-bottom: 5px;

@@ -1,15 +1,15 @@
-var app = angular.module("newsformApp", ['ngQuill']);
+var app = angular.module("messagesApp", ['ngQuill']);
 
-app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService) => {
+app.controller("MessagesCtrl", ($scope, $q, $window, $timeout, $sce, HttpService) => {
 
     /**
      * init
      */
     $scope.init = function () {
-        $scope.notices_db = 'cadoan_notices';
+        $scope.messages_db = 'cadoan_messages';
 
-        $scope.notices = [];
-        $scope.notice = {};
+        $scope.messages = [];
+        $scope.message = {};
 
         $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
@@ -46,9 +46,9 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
      * get
      */
     $scope.get = function () {
-        $scope.notices = [];
+        $scope.messages = [];
 
-        $scope.httpService.getSheetData($scope.notices_db)
+        $scope.httpService.getSheetData($scope.messages_db)
             .then(response => {
                 let values = response.data.values;
 
@@ -60,7 +60,7 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
                             sender = value[1],
                             text = value[2];
 
-                        $scope.notices.push({
+                        $scope.messages.push({
                             date: $scope.getDateTime(date),
                             sender: sender,
                             text: $sce.trustAsHtml(text)
@@ -78,8 +78,8 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
             sender = $scope.profile.getName(),
             payload;
 
-        if ($scope.notice.text) {
-            if(Base64.encode($scope.profile.getEmail()) === gapiid) {
+        if ($scope.message.text) {
+            if (Base64.encode($scope.profile.getEmail()) === gapiid) {
                 sender = 'Admin';
             }
 
@@ -88,17 +88,17 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
                     [
                         date.getTime(),
                         sender,
-                        $scope.notice.text
+                        $scope.message.text
                     ]
                 ]
             };
 
-            //add new notice
-            $scope.httpService.appendSheetData($scope.notices_db, payload, {
+            //add new message
+            $scope.httpService.appendSheetData($scope.messages_db, payload, {
                 valueInputOption: "USER_ENTERED"
             })
                 .then(() => {
-                    $scope.notice = {};
+                    $scope.message = {};
                     $scope.updateList();
                 });
         }
@@ -123,7 +123,7 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
      * updateList
      */
     $scope.updateList = function () {
-        let listFrame = parent.document.getElementById("notice_frame"),
+        let listFrame = parent.document.getElementById("message_frame"),
             listWindow = listFrame && listFrame.contentWindow;
 
         listWindow && listWindow.refresh();
@@ -158,6 +158,6 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
 
         seconds = (seconds < 10 ? '0' : '') + seconds;
 
-        return time + ' lúc ' + (hours < 10 ? '0' : '') + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+        return time + ' lúc ' + (hours < 10 ? '0' : '') + hours + ':' + minutes + ' ' + ampm;
     };
 });
