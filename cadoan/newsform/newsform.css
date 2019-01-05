@@ -34,6 +34,10 @@
     margin: 20px;
 }
 
+.newsform .signin_footnote {
+    font-style: italic;
+}
+
 .newsform a.button {
     display: block;
     height: 20px;
