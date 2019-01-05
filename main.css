@@ -32,7 +32,12 @@
     text-decoration: none;
 }
 
-.right {
+.content {
+    height: calc(100vh - 10px);
+    margin-top: -6px;
+}
+
+.messages {
     position: fixed;
     right: 10%;
     top: 206px;
@@ -41,7 +46,7 @@
     background-color: white;
 }
 
-.content {
+.schedules {
     position: absolute;
     left: 10%;
     top: 206px;
@@ -85,6 +90,7 @@
     color: initial;
     padding-top: 4px;
     margin: 14px auto;
+    font-family: sans-serif;
     font-size: small;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.25);
 }

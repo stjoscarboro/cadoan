@@ -1,7 +1,6 @@
 .mainadmin {
-    font-family: helvetica-neue;
+    font-family: sans-serif;
     background: url('../resources/images/bg-church.jpg');
-    margin: 0;
 }
 
 .mainadmin .main {
@@ -17,8 +16,10 @@
     margin-right: 20px;
 }
 
-iframe {
-    border-width: 0px;
+.mainadmin .admin-content {
+    position: absolute;
     width: 100%;
-    height: calc(100vh - 200px);
+    left: 0;
+    top: 0;
+    height: calc(100vh - 4px);
 }

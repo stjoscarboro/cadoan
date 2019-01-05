@@ -1,95 +1,95 @@
-.mainform {
-    font-family: helvetica-neue;
+.scheduler {
+    font-family: sans-serif;
     background: url('../../resources/images/bg-church.jpg');
 }
 
-.mainform .main {
+.scheduler .main {
     width: 740px;
-    margin: 20px auto 20px auto;
+    margin: 216px auto 20px auto;
 }
 
-.mainform .content {
+.scheduler .content {
     border-bottom: 1px solid lightgrey;
     padding-bottom: 5px;
 }
 
-.mainform .label {
+.scheduler .label {
     display: inline-flex;
     width: 100px;
 }
 
-.mainform .text {
+.scheduler .text {
     font-size: inherit;
     padding-left: 7px;
     margin-left: 1px;
     width: 100%;
 }
 
-.mainform .select {
+.scheduler .select {
     font-size: inherit;
 }
 
-.mainform .submit {
+.scheduler .submit {
     font-size: inherit;
     width: 100px;
     height: 26px;
 }
 
-.mainform .round-border {
+.scheduler .round-border {
     border: 1px solid #aaa;
     border-radius: 4px;
 }
 
-.mainform .calendar {
+.scheduler .calendar {
     display: inline-flex;
     width: 220px;
 }
 
-.mainform .driveurl {
+.scheduler .driveurl {
     display: inline-flex;
     float: right;
 }
 
-.mainform .column-label {
+.scheduler .column-label {
     padding: 20px 0 0 0;
 }
 
-.mainform .select-category {
+.scheduler .select-category {
     display: inline-flex;
     width: 120px;
 }
 
-.mainform .select-folder {
+.scheduler .select-folder {
     display: inline-flex;
     width: 150px;
 }
 
-.mainform .select-songs {
+.scheduler .select-songs {
     display: inline-flex;
     width: 335px;
 }
 
-.mainform .add-row {
+.scheduler .add-row {
     display: inline-block;
     margin: 5px 0 0 0;
 }
 
-.mainform .add-button {
+.scheduler .add-button {
     display: inline-block;
     float: right;
 }
 
-.mainform .preview-button {
+.scheduler .preview-button {
     width: 14px;
     height: 12px;
     background: url('../../resources/images/preview.png') no-repeat 0px/15px;
 }
 
-.mainform .icon {
+.scheduler .icon {
     display: inline-flex;
 }
 
-.mainform iframe {
+.scheduler iframe {
     border-width: 0px;
     width: 100%;
     height: 100%;

@@ -1,12 +1,12 @@
-var app = angular.module("scheduleApp", []);
+var app = angular.module("schedulerApp", []);
 
-app.controller("ScheduleCtrl", ($scope, $q, $window, $timeout, HttpService, EmailService) => {
+app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, EmailService) => {
 
     /**
      * init
      */
     $scope.init = function () {
-        $scope.schedule_db = 'cadoan_schedules';
+        $scope.schedules_db = 'cadoan_schedules';
         $scope.ligurty_db = 'liturgies';
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
@@ -52,7 +52,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $timeout, HttpService, Emai
         $scope.schedules = [];
 
         //load existing schedules
-        $scope.httpService.getSheetData($scope.schedule_db)
+        $scope.httpService.getSheetData($scope.schedules_db)
             .then(response => {
                 let values = response.data.values,
                     lastDate = Date.now();
@@ -158,7 +158,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $timeout, HttpService, Emai
         });
 
         //add new schedule
-        $scope.httpService.appendSheetData($scope.schedule_db, payload, {
+        $scope.httpService.appendSheetData($scope.schedules_db, payload, {
                 valueInputOption: "USER_ENTERED"
             })
             .then(response => {
@@ -187,7 +187,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $timeout, HttpService, Emai
             }]
         };
 
-        $scope.httpService.updateSheetData($scope.schedule_db, payload)
+        $scope.httpService.updateSheetData($scope.schedules_db, payload)
             .then(() => {
                 $scope.sort();
             }, error => {
@@ -213,7 +213,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $timeout, HttpService, Emai
             }]
         };
 
-        $scope.httpService.updateSheetData($scope.schedule_db, payload)
+        $scope.httpService.updateSheetData($scope.schedules_db, payload)
             .then(response => {
                 $scope.refresh();
             }, error => {

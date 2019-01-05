@@ -10,46 +10,51 @@
 
     <link rel="stylesheet" href="../resources/fonts/stylesheet.css">
     <link rel="stylesheet" href="../main.css">
-    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="admin.css">
 
     <script src="../resources/js/jquery.min.js"></script>
     <script src="../resources/js/angular.min.js"></script>
     <script src="../resources/js/base64.min.js"></script>
     <script src="../resources/js/google-api.js"></script>
 
-    <script src="./main.js"></script>
+    <script src="admin.js"></script>
 
     <script src="https://apis.google.com/js/platform.js?onload=renderAdminButton" async defer></script>
 </head>
 
-<body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()" class="mainadmin">
+<body ng-app="adminApp" ng-controller="AdminCtrl" data-ng-init="init()" class="mainadmin">
 
 <div id="main" class="main">
+
     <div ng-if="!accessToken">
         <div id="gapi-signin" class="signin"></div>
     </div>
 
     <div ng-if="accessToken">
+
         <div class="header">
             <div class="logo">
                 <div class="title">
-                    Ca Đoàn Thánh Giuse
-                    <br/>Scarborough
+                    Ca Đoàn Thánh Giuse<br/>Scarborough
                 </div>
             </div>
         </div>
 
         <div class="menu">
-                <span>
-                    <a href="../cadoan/index.html" target="iframe" class="menu-text">Lịch Hát Thánh Ca</a>
-                </span>
             <span>
-                    <a href="../cadoan/addform/index.html" target="iframe" class="menu-text admin-menu">Lịch Hát Thánh Ca (Admin)</a>
-                </span>
+                <a href="../main.html" target="iframe" class="menu-text">Lịch Hát Thánh Ca</a>
+            </span>
+            <span>
+                <a href="../cadoan/scheduler/index.html" target="iframe" class="menu-text admin-menu">Lịch Hát Thánh Ca (Admin)</a>
+            </span>
         </div>
 
-        <iframe name="iframe" src="../cadoan/index.html"></iframe>
+        <div class="admin-content">
+            <iframe name="iframe" src="../main.html"></iframe>
+        </div>
+
     </div>
+
 </div>
 
 </body>

@@ -1,11 +1,11 @@
-var app = angular.module("mainApp", []);
+var app = angular.module("adminApp", []);
 
-app.controller("MainCtrl", ($scope, $window, $timeout) => {
+app.controller("AdminCtrl", ($scope, $window, $timeout) => {
 
     /**
      * init
      */
-    $scope.init = function () {}
+    $scope.init = function () {};
 
     /**
      * signin
