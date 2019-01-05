@@ -38,7 +38,7 @@ app.controller("NewslistCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
                             text = value[1];
 
                         $scope.notices.push({
-                            date: $.datepicker.formatDate($scope.dateFormat, date) + ' ' + $scope.getTimeString(date),
+                            date: $scope.getDateTime(date),
                             text: $sce.trustAsHtml(text)
                         });
                     }
@@ -61,17 +61,29 @@ app.controller("NewslistCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
         return deferred.promise;
     };
 
-    $scope.getTimeString = function (date) {
-        let hours = date.getHours(),
+    /**
+     * getDateTime
+     */
+    $scope.getDateTime = function (date) {
+        let today = new Date(),
+            hours = date.getHours(),
             minutes = date.getMinutes(),
             seconds = date.getSeconds(),
-            ampm = 'AM';
+            ampm = 'AM', time = '';
+
+        if (today.setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0)) {
+            time += 'Hôm nay';
+        } else if (today.setHours(0, 0, 0, 0) === date.setHours(24, 0, 0, 0)) {
+            time += 'Hôm qua'
+        } else {
+            time += $.datepicker.formatDate($scope.dateFormat, date);
+        }
 
         if (hours > 12) {
             hours = hours - 12;
             ampm = 'PM';
         }
 
-        return (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes + ':' + seconds + ' ' + ampm;
+        return time + ' lúc ' + (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes + ':' + seconds + ' ' + ampm;
     };
 });

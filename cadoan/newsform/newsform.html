@@ -31,18 +31,6 @@
 
 <div id="main" class="main">
 
-    <div class="content">
-        <div ng-repeat="notice in notices" class="notice">
-            <div class="date">
-                {{notice.date}}
-            </div>
-
-            <div class="text" ng-bind-html="notice.text">
-                <!--{{notice.text}}-->
-            </div>
-        </div>
-    </div>
-
     <div ng-if="!accessToken">
         <div id="gapi-signin" class="signin"></div>
     </div>

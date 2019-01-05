@@ -22,23 +22,22 @@
 
 <div class="menu">
     <span>
-        <a href="./cadoan/index.html" target="iframe" class="menu-text">Lịch Hát Thánh Ca</a>
+        <a href="./cadoan/index.html" target="content_frame" class="menu-text">Lịch Hát Thánh Ca</a>
     </span>
 </div>
 
-<div class="right">
-    <iframe name="iframe" src="./cadoan/newsform/index.html"></iframe>
-</div>
-
 <div class="content">
-    <iframe id="iframe" name="iframe" src="./cadoan/index.html"></iframe>
+    <iframe id="content_frame" name="content_frame" src="./cadoan/index.html"></iframe>
 </div>
 
-<script>
-    $('#iframe').load(function () {
-        $(this).height($(this).contents().height());
-        $(this).width($(this).contents().width());
-    });</script>
+<div class="right">
+    <div class="newslist">
+        <iframe id="notice_frame" name="notice_frame" src="./cadoan/newsform/newslist.html"></iframe>
+    </div>
+    <div class="newsform">
+        <a href="./cadoan/newsform/newsform.html" target="content_frame" class="button">Gửi Tin Nhắn</a>
+    </div>
+</div>
 
 </body>
 </html>

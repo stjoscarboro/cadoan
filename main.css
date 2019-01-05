@@ -65,6 +65,28 @@
     color: white;
 }
 
+.newslist {
+    height: calc(100vh - 280px);
+    border-bottom: 1px solid #aaa;
+    padding-bottom: 10px;
+}
+
+.newsform {
+    text-align: center;
+}
+
+.newsform > a.button {
+    display: block;
+    height: 20px;
+    width: 150px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    text-decoration: none;
+    color: initial;
+    padding-top: 4px;
+    margin: 14px auto;
+}
+
 iframe {
     border-width: 0;
     width: 100%;
