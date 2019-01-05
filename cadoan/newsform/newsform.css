@@ -18,6 +18,13 @@
     font-style: italic;
 }
 
+.newsform .sender {
+    display: inline-flex;
+    float: right;
+    color: #deb887;
+    font-style: italic;
+}
+
 .newsform .text {
     margin: 5px 0 10px 15px;
     padding: 0;

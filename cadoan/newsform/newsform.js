@@ -62,6 +62,7 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
 
                         $scope.notices.push({
                             date: $scope.getDateTime(date),
+                            sender: sender,
                             text: $sce.trustAsHtml(text)
                         });
                     }
