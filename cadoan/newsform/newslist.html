@@ -13,14 +13,16 @@
     <script src="../../resources/js/jquery-ui.min.js"></script>
     <script src="../../resources/js/jquery-ui-datepicker-vi.js"></script>
     <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-sanitize.min.js"></script>
     <script src="../../resources/js/base64.min.js"></script>
+    <script src="../../resources/js/google-api.js"></script>
 
     <script src="./newsform.js"></script>
     <script src="../../resources/js/http-service.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="../../resources/css/trix-editor.css">
-    <script src="../../resources/js/trix-editor.js"></script>
-    <script src="../../resources/js/angular-trix.min.js"></script>
+    <link href="../../resources/css/quill.snow.css" rel="stylesheet">
+    <script src="../../resources/js/quill.min.js"></script>
+    <script src="../../resources/js/ng-quill.min.js"></script>
 </head>
 
 <body ng-app="newsformApp" ng-controller="NewsformCtrl" data-ng-init="init()" class="newsform">
@@ -33,7 +35,7 @@
                 {{notice.date}}
             </div>
 
-            <div class="text" ng-bind-html="notice.text">
+            <div ng-bind-html="notice.text" class="text ql-editor">
                 <!--{{notice.text}}-->
             </div>
         </div>

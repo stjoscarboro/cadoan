@@ -1,4 +1,4 @@
-var app = angular.module("newsformApp", ['angularTrix']);
+var app = angular.module("newsformApp", ['ngQuill']);
 
 app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService) => {
 
@@ -141,6 +141,8 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
 
         if (hours > 12) {
             hours = hours - 12;
+            ampm = 'PM';
+        } else if (hours === 12 && minutes > 0) {
             ampm = 'PM';
         }
 

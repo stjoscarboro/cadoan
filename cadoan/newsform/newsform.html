@@ -14,15 +14,16 @@
     <script src="../../resources/js/jquery-ui.min.js"></script>
     <script src="../../resources/js/jquery-ui-datepicker-vi.js"></script>
     <script src="../../resources/js/angular.min.js"></script>
+    <script src="../../resources/js/angular-sanitize.min.js"></script>
     <script src="../../resources/js/base64.min.js"></script>
     <script src="../../resources/js/google-api.js"></script>
 
     <script src="./newsform.js"></script>
     <script src="../../resources/js/http-service.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="../../resources/css/trix-editor.css">
-    <script src="../../resources/js/trix-editor.js"></script>
-    <script src="../../resources/js/angular-trix.min.js"></script>
+    <link href="../../resources/css/quill.snow.css" rel="stylesheet">
+    <script src="../../resources/js/quill.min.js"></script>
+    <script src="../../resources/js/ng-quill.min.js"></script>
 
     <script src="https://apis.google.com/js/platform.js?onload=renderMemberButton" async defer></script>
 </head>
@@ -37,10 +38,35 @@
 
     <div ng-if="accessToken">
         <div class="entryform">
-            <trix-editor angular-trix ng-model="notice.text" class="trix-content textarea"></trix-editor>
+            <ng-quill-editor ng-model="notice.text">
+                <ng-quill-toolbar>
+                    <div>
+                        <span class="ql-formats">
+                            <select class="ql-font">
+                                <option selected></option>
+                                <option value="serif"></option>
+                                <option value="monospace"></option>
+                            </select>
+                            <select class="ql-size">
+                                <option value="small"></option>
+                                <option selected></option>
+                                <option value="large"></option>
+                                <option value="huge"></option>
+                            </select>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-bold"></button>
+                            <button class="ql-italic"></button>
+                            <select class="ql-color"></select>
+                            <select class="ql-background"></select>
+                            <button class="ql-list" value="ordered"></button>
+                            <button class="ql-list" value="bullet"></button>
+                        </span>
+                    </div>
+                </ng-quill-toolbar>
+            </ng-quill-editor>
 
             <div class="add-button">
-                <!--<input type="submit" value="Gửi" title="Gửi" class="submit">-->
                 <a href="" ng-click="create()" class="button">Gửi</a>
             </div>
         </div>

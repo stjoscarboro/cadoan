@@ -4,21 +4,8 @@
     background-color: white;
 }
 
-.newsform .main {
-}
-
 .newsform .content {
     overflow: hidden;
-}
-
-.newsform .entryform {
-}
-
-.newsform .textarea {
-    margin-bottom: 10px;
-    border-radius: 4px;
-    height: calc(100vh - 105px);
-    overflow: auto;
 }
 
 .newsform .add-button {
@@ -32,7 +19,8 @@
 }
 
 .newsform .text {
-    margin: 5px 0 20px 20px;
+    margin: 5px 0 10px 15px;
+    padding: 0;
 }
 
 .newsform .signin {
@@ -48,7 +36,7 @@
     text-decoration: none;
     color: initial;
     padding-top: 4px;
-    margin: 3px auto;
+    margin: 13px auto;
     font-size: small;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,0.25);
 }
@@ -56,3 +44,11 @@
 .newsform a.button:active {
     border-color: #5f3f3f;
 }
+
+.newsform .ql-container {
+    height: calc(100vh - 103px);
+    overflow: auto;
+    padding-bottom: 5px;
+}
+
+[ng-quill-editor] { display: block; }
