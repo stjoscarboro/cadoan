@@ -36,15 +36,14 @@
     </div>
 
     <div ng-if="accessToken">
-        <form name="entryForm" ng-submit="create()">
-            <div class="entryform">
-                <trix-editor angular-trix ng-model="notice.text" class="trix-content textarea"></trix-editor>
+        <div class="entryform">
+            <trix-editor angular-trix ng-model="notice.text" class="trix-content textarea"></trix-editor>
 
-                <div class="add-button">
-                    <input type="submit" value="Lưu Lại" title="Lưu Lại" class="submit">
-                </div>
+            <div class="add-button">
+                <!--<input type="submit" value="Gửi" title="Gửi" class="submit">-->
+                <a href="" ng-click="create()" class="button">Gửi</a>
             </div>
-        </form>
+        </div>
     </div>
 
 </div>

@@ -18,6 +18,18 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
             .then(() => {
                 $scope.get();
             });
+
+        $window.refresh = () => {
+            $scope.get();
+        };
+
+        $window.angular.element('.content').bind('click', (event) => {
+            let el = event.target;
+
+            if (el.tagName === "A" && !el.isContentEditable && el.host !== window.location.host) {
+                el.setAttribute("target", "_blank")
+            }
+        });
     };
 
     /**
@@ -79,10 +91,7 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
             })
                 .then(() => {
                     $scope.notice = {};
-                    $scope.get();
-
-                    let listScope = parent.document.getElementById("notice_frame").contentWindow.angular.element('#main').scope();
-                    listScope.get();
+                    $scope.updateList();
                 });
         }
     };
@@ -100,6 +109,16 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
             });
 
         return deferred.promise;
+    };
+
+    /**
+     * updateList
+     */
+    $scope.updateList = function () {
+        let listFrame = parent.document.getElementById("notice_frame"),
+            listWindow = listFrame && listFrame.contentWindow;
+
+        listWindow && listWindow.refresh();
     };
 
     /**
@@ -125,6 +144,10 @@ app.controller("NewsformCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
             ampm = 'PM';
         }
 
-        return time + ' lúc ' + (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes + ':' + seconds + ' ' + ampm;
+        minutes = (minutes < 10 ? '0' : '') + minutes;
+
+        seconds = (seconds < 10 ? '0' : '') + seconds;
+
+        return time + ' lúc ' + (hours < 10 ? '0' : '') + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
     };
 });
