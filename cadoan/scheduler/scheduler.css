@@ -1,6 +1,7 @@
 .scheduler {
     font-family: sans-serif;
-    background: url('../../resources/images/bg-church.jpg');
+    font-size: 11pt;
+    background-color: #b0d1f2;
 }
 
 .scheduler .main {
