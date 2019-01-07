@@ -1,24 +1,21 @@
 .main {
     margin: 20px 0 20px 0;
     width: 100%;
-    /* height: calc(100vh - 36px); */
 }
 
 .left {
     width: 65%;
-    /* height: calc(100vh - 36px); */
     height: 100%;
     float: left;
 }
 
 .right {
     width: 34%;
-    /* height: calc(100vh - 36px); */
     float: right;
 }
 
 iframe {
-    border-width: 0px;
+    border-width: 0;
     width: 100%;
     height: calc(100vh)
 }

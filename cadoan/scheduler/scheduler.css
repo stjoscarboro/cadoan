@@ -4,7 +4,7 @@
 }
 
 .scheduler .main {
-    width: 750px;
+    width: 850px;
     height: calc(100vh - 245px);
     background-color: whitesmoke;
     margin: 197px auto 0 auto;
@@ -15,6 +15,7 @@
 .scheduler .content {
     border-bottom: 1px solid lightgrey;
     padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .scheduler .label {
@@ -60,17 +61,22 @@
 
 .scheduler .select-category {
     display: inline-flex;
-    width: 120px;
+    width: 100px;
 }
 
 .scheduler .select-folder {
     display: inline-flex;
-    width: 150px;
+    width: 140px;
 }
 
 .scheduler .select-songs {
     display: inline-flex;
     width: 335px;
+}
+
+.scheduler .select-singer {
+    display: inline-flex;
+    width: 120px;
 }
 
 .scheduler .add-row {
@@ -94,7 +100,7 @@
 }
 
 .scheduler iframe {
-    border-width: 0px;
+    border-width: 0;
     width: 100%;
     height: 100%;
 }

@@ -18,7 +18,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
             .then(() => {
                 $scope.get();
             });
-    }
+    };
 
     /**
      * get
@@ -59,7 +59,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
                     }
                 }
             });
-    }
+    };
 
     /**
      * listSongs
@@ -85,7 +85,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
             });
 
         return deferred.promise;
-    }
+    };
 
     /**
      * listFolder
@@ -105,7 +105,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         }
 
         return deferred.promise;
-    }
+    };
 
     /**
      * print
@@ -114,7 +114,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         $('.pbody').printThis({
             base: window.location.href
         });
-    }
+    };
 });
 
 

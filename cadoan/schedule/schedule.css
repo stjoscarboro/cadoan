@@ -38,6 +38,12 @@
     width: 340px;
 }
 
+.schedule .singer {
+    margin-left: 103px;
+    color: darkgreen;
+    font-style: italic;
+}
+
 .schedule .audio {
     display: inline-block;
     width: 28px;

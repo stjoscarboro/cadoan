@@ -7,6 +7,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
      */
     $scope.init = function () {
         $scope.schedules_db = 'cadoan_schedules';
+        $scope.singers_db = 'cadoan_singers';
         $scope.ligurty_db = 'liturgies';
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
@@ -19,6 +20,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
         $scope.lists = {};
         $scope.schedules = [];
         $scope.liturgies = [];
+        $scope.singers = [];
 
         $scope.rows = [0, 1, 2, 3, 4];
         $scope.categories = {};
@@ -29,7 +31,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
         $scope.driveURL = $scope.httpService.getDriveURL($scope.sheets_folder);
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.week = 7 * 24 * 3600 * 1000;
-    }
+    };
 
     /**
      * signin
@@ -38,12 +40,11 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
         $scope.profile = profile;
         $scope.accessToken = token;
 
-        $scope.listSongs()
+        $scope.loadData()
             .then(() => {
                 $scope.get();
-                $scope.listLiturgies();
             });
-    }
+    };
 
     /**
      * get
@@ -106,7 +107,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             }, error => {
                 $scope.error();
             });
-    }
+    };
 
     /**
      * create
@@ -118,7 +119,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             payload;
 
         for (let item of $scope.schedule.songs) {
-            let category, folder, song;
+            let category, folder, song, singer;
 
             Object.values($scope.categories).forEach(c => {
                 category = category ? category : c.id === item.category ? c : null;
@@ -136,7 +137,8 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
                 category: category.name,
                 id: song.id,
                 name: song.name,
-                folder: folder.id
+                folder: folder.id,
+                singer: item.singer
             });
         }
 
@@ -159,8 +161,8 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
 
         //add new schedule
         $scope.httpService.appendSheetData($scope.schedules_db, payload, {
-                valueInputOption: "USER_ENTERED"
-            })
+            valueInputOption: "USER_ENTERED"
+        })
             .then(response => {
                 $scope.clear();
                 $scope.sort();
@@ -168,7 +170,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             }, error => {
                 $scope.error();
             });
-    }
+    };
 
     /**
      * delete
@@ -193,7 +195,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             }, error => {
                 $scope.error();
             });
-    }
+    };
 
     /**
      * sort
@@ -219,7 +221,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             }, error => {
                 $scope.error();
             });
-    }
+    };
 
     /**
      * refresh
@@ -231,14 +233,14 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             songs: []
         };
         $scope.get();
-    }
+    };
 
     /**
      * clear
      */
     $scope.clear = function () {
         $('.error').hide();
-    }
+    };
 
     /**
      * error
@@ -249,7 +251,26 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
         $timeout(() => {
             $window.location.reload();
         }, 5000);
-    }
+    };
+
+    /**
+     * loadData
+     */
+    $scope.loadData = function () {
+        let deferred = $q.defer();
+
+        Promise.all([
+            $scope.listSongs(),
+            $scope.listLiturgies(),
+            $scope.listSingers()
+        ])
+            .then(() => {
+                console.log($scope.singers);
+                deferred.resolve();
+            });
+
+        return deferred.promise;
+    };
 
     /**
      * listSongs
@@ -274,7 +295,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
                         $scope.songs[index] = {
                             id: folder.id,
                             name: folder.name
-                        }
+                        };
 
                         promises.push($scope.listFolder(folder.id));
                     }
@@ -296,12 +317,14 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             });
 
         return deferred.promise;
-    }
+    };
 
     /**
      * listLiturgies
      */
     $scope.listLiturgies = function () {
+        let deferred = $q.defer();
+
         $scope.httpService.getSheetData($scope.ligurty_db)
             .then(response => {
                 let values = response.data.values;
@@ -311,8 +334,34 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
                         $scope.liturgies.push(value[0]);
                     }
                 }
+
+                deferred.resolve();
             });
-    }
+
+        return deferred.promise;
+    };
+
+    /**
+     * listSingers
+     */
+    $scope.listSingers = function () {
+        let deferred = $q.defer();
+
+        $scope.httpService.getSheetData($scope.singers_db)
+            .then(response => {
+                let values = response.data.values;
+
+                if (values) {
+                    for (let value of values) {
+                        $scope.singers.push(value[0]);
+                    }
+                }
+
+                deferred.resolve();
+            });
+
+        return deferred.promise;
+    };
 
     /**
      * listFolder
@@ -333,7 +382,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
         }
 
         return deferred.promise;
-    }
+    };
 
     /**
      * selectFolder
@@ -347,7 +396,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
                 $scope.selectSongs(index);
             }
         }
-    }
+    };
 
     /**
      * selectSongs
@@ -364,7 +413,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
                 }
             }
         }
-    }
+    };
 
     /**
      * previewSong
@@ -375,19 +424,19 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
         if (songs) {
             $window.open($scope.httpService.getOpenURL(songs.song), '_blank');
         }
-    }
+    };
 
     /**
      * addSong
      */
     $scope.addSong = function (index) {
         $scope.rows.push($scope.rows.length);
-    }
+    };
 
     /**
      * removeSong
      */
     $scope.removeSong = function (index) {
         $scope.rows.splice($scope.rows.length - 1, 1);
-    }
+    };
 });
