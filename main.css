@@ -43,7 +43,7 @@
     top: 197px;
     width: 400px;
     height: calc(100vh - 202px);
-    background-color: white;
+    background-color: whitesmoke;
 }
 
 .schedules {
@@ -51,7 +51,7 @@
     top: 197px;
     width: 590px;
     height: calc(100vh - 202px);
-    background-color: white;
+    background-color: whitesmoke;
 }
 
 .logo {

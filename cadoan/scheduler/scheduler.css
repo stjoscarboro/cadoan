@@ -1,12 +1,15 @@
 .scheduler {
     font-family: sans-serif;
     font-size: 11pt;
-    background-color: #b0d1f2;
 }
 
 .scheduler .main {
-    width: 740px;
-    margin: 200px auto 0 auto;
+    width: 750px;
+    height: calc(100vh - 245px);
+    background-color: whitesmoke;
+    margin: 197px auto 0 auto;
+    padding: 20px;
+    overflow: auto;
 }
 
 .scheduler .content {
@@ -80,7 +83,7 @@
     float: right;
 }
 
-.scheduler .preview-button {
+.scheduler .preview {
     width: 14px;
     height: 12px;
     background: url('../../resources/images/preview.png') no-repeat 0/15px;
