@@ -12,7 +12,7 @@ app.controller("MessagesCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
         $scope.message = {};
 
         $scope.httpService = new HttpService($scope);
-        $scope.dateFormat = "DD, dd/mm/yy";
+        $scope.dateFormat = "dd/mm/yy";
 
         $scope.loadData()
             .then(() => {

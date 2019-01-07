@@ -32,25 +32,25 @@
 }
 
 .content {
-    height: calc(100vh - 10px);
-    margin-top: -6px;
+    width: 1020px;
+    height: calc(100vh - 32px);
+    margin: 0 auto;
 }
 
 .messages {
     position: fixed;
-    right: 10%;
-    top: 206px;
-    width: calc(80% - 590px);
-    height: calc(100vh - 216px);
+    left: 610px;
+    top: 197px;
+    width: 400px;
+    height: calc(100vh - 202px);
     background-color: white;
 }
 
 .schedules {
     position: absolute;
-    left: 10%;
-    top: 206px;
-    width: 580px;
-    height: calc(100vh - 216px);
+    top: 197px;
+    width: 590px;
+    height: calc(100vh - 202px);
     background-color: white;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .message-list {
-    height: calc(100vh - 280px);
+    height: calc(100vh - 267px);
     border-bottom: 1px solid #aaa;
     padding-bottom: 10px;
 }

@@ -5,7 +5,7 @@
 }
 
 .mainadmin .main {
-    width: calc(100w);
+    /*width: calc(100w);*/
 }
 
 .mainadmin .signin {
@@ -15,12 +15,4 @@
 .mainadmin .admin-menu {
     float: right;
     margin-right: 20px;
-}
-
-.mainadmin .admin-content {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
-    height: calc(100vh - 4px);
 }
