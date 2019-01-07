@@ -136,28 +136,39 @@ app.controller("MessagesCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
         let today = new Date(),
             hours = date.getHours(),
             minutes = date.getMinutes(),
-            seconds = date.getSeconds(),
-            ampm = 'AM', time = '';
+            diff = (today.setHours(0,0,0,0) - date.setHours(0,0,0,0)) / 3600000,
+            ampm, time = '';
 
-        if (today.setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0)) {
-            time += 'Hôm nay';
-        } else if (today.setHours(0, 0, 0, 0) === date.setHours(24, 0, 0, 0)) {
-            time += 'Hôm qua'
-        } else {
-            time += $.datepicker.formatDate($scope.dateFormat, date);
-        }
-
-        if (hours > 12) {
-            hours = hours - 12;
-            ampm = 'PM';
-        } else if (hours === 12 && minutes > 0) {
-            ampm = 'PM';
-        }
-
+        ampm = (hours > 12 || hours === 12 && minutes > 0) ? 'PM' : 'AM';
+        hours = (hours > 12) ? hours - 12 : hours;
+        hours = (hours < 10 ? '0' : '') + hours;
         minutes = (minutes < 10 ? '0' : '') + minutes;
 
-        seconds = (seconds < 10 ? '0' : '') + seconds;
+        switch(diff) {
+            case 0:
+                time += 'Hôm nay lúc ' + hours + ':' + minutes + ' ' + ampm;
+                break;
 
-        return time + ' lúc ' + (hours < 10 ? '0' : '') + hours + ':' + minutes + ' ' + ampm;
+            case 24:
+                time += 'Hôm qua lúc ' + hours + ':' + minutes + ' ' + ampm;
+                break;
+
+            case 48:
+            case 72:
+            case 96:
+            case 120:
+            case 144:
+                time += (diff / 24) + ' ngày trước';
+                break;
+
+            case 168:
+                time += '1 tuần trước';
+                break;
+
+            default:
+                time += $.datepicker.formatDate($scope.dateFormat, date);
+        }
+
+        return time;
     };
 });
