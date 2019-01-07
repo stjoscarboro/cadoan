@@ -22,37 +22,35 @@
     <script src="https://apis.google.com/js/platform.js?onload=renderAdminButton" async defer></script>
 </head>
 
-<body ng-app="adminApp" ng-controller="AdminCtrl" data-ng-init="init()" class="mainadmin">
+<body ng-app="adminApp" ng-controller="AdminCtrl" data-ng-init="init()" class="admin">
 
 <div id="main" class="main">
+
+    <div class="header">
+        <div class="logo">
+            <div class="title">
+                Ca Đoàn Thánh Giuse<br/>Scarborough
+            </div>
+        </div>
+    </div>
+
+    <div class="menu">
+            <span>
+                <a href="../main.html" target="iframe" class="menu-text">Lịch Hát Thánh Ca</a>
+            </span>
+        <span>
+                <a href="../cadoan/scheduler/index.html" target="iframe" class="menu-text admin-menu">Lịch Hát Thánh Ca (Admin)</a>
+            </span>
+    </div>
 
     <div ng-if="!accessToken">
         <div id="gapi-signin" class="signin"></div>
     </div>
 
     <div ng-if="accessToken">
-
-        <div class="header">
-            <div class="logo">
-                <div class="title">
-                    Ca Đoàn Thánh Giuse<br/>Scarborough
-                </div>
-            </div>
-        </div>
-
-        <div class="menu">
-            <span>
-                <a href="../main.html" target="iframe" class="menu-text">Lịch Hát Thánh Ca</a>
-            </span>
-            <span>
-                <a href="../cadoan/scheduler/index.html" target="iframe" class="menu-text admin-menu">Lịch Hát Thánh Ca (Admin)</a>
-            </span>
-        </div>
-
         <div class="content">
             <iframe name="iframe" src="../main.html"></iframe>
         </div>
-
     </div>
 
 </div>

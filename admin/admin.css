@@ -1,18 +1,14 @@
-.mainadmin {
+.admin {
     font-family: sans-serif;
     font-size: 11pt;
     background-color: #b0d1f2;
 }
 
-.mainadmin .main {
-    /*width: calc(100w);*/
+.admin .signin {
+    margin: 230px 0 0 40px;
 }
 
-.mainadmin .signin {
-    margin: 40px;
-}
-
-.mainadmin .admin-menu {
+.admin .admin-menu {
     float: right;
     margin-right: 20px;
 }

@@ -37,20 +37,20 @@
     margin: 0 auto;
 }
 
-.messages {
-    position: fixed;
-    left: 610px;
-    top: 197px;
-    width: 400px;
+.schedules {
+    position: absolute;
+    width: 590px;
     height: calc(100vh - 202px);
+    top: 197px;
     background-color: whitesmoke;
 }
 
-.schedules {
-    position: absolute;
-    top: 197px;
-    width: 590px;
+.messages {
+    position: fixed;
+    width: 400px;
     height: calc(100vh - 202px);
+    top: 197px;
+    left: 610px;
     background-color: whitesmoke;
 }
 
