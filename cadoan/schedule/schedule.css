@@ -46,16 +46,25 @@
 
 .schedule .audio {
     display: inline-block;
-    width: 28px;
+    margin-left: 15px;
+    width: 20px;
     height: 12px;
-    background: url(../../resources/images/audio.png) no-repeat 15px/12px;
+    background: url(../../resources/images/audio.png) no-repeat 0/12px;
+}
+
+.schedule .edit {
+    display: inline-block;
+    margin-left: 15px;
+    width: 20px;
+    height: 12px;
+    background: url(../../resources/images/pencil.png) no-repeat 0/16px;
 }
 
 .schedule .delete {
     display: inline-block;
-    width: 28px;
+    width: 20px;
     height: 12px;
-    background: url(../../resources/images/erase.png) no-repeat 15px/12px;
+    background: url(../../resources/images/erase.png) no-repeat 0/12px;
 }
 
 .schedule .loader {

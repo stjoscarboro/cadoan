@@ -70,7 +70,7 @@
                 <div ng-repeat="x in rows" style="padding: 5px 0 5px 0;">
                     <div class="label">Bài Hát {{x + 1}}:</div>
                     <div class="select-category">
-                        <select ng-model="schedule.songs[x].category" ng-change="selectFolder(x)" class="select-category select" required>
+                        <select ng-model="schedule.songs[x].categoryId" ng-change="selectFolder(x)" class="select-category select" required>
                             <option></option>
                             <option ng-repeat="category in categories" ng-value="category.id">{{category.name}}</option>
                         </select>
@@ -111,6 +111,8 @@
         </div>
 
         <div class="schedule">
+            <div class="loader" data-loading></div>
+
             <div ng-repeat="schedule in schedules" class="schedule">
                 <div class="date">
                     {{schedule.date}}
@@ -118,6 +120,7 @@
 
                 <div class="liturgy">
                     {{schedule.liturgy}}&nbsp;
+                    <a href="" ng-click="edit($index)" title="Thay Đổi Lịch" class="edit"></a>
                     <a href="" ng-click="remove($index)" title="Xoá Lịch" class="delete"></a>
                 </div>
 

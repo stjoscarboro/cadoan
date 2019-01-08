@@ -119,10 +119,10 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             payload;
 
         for (let item of $scope.schedule.songs) {
-            let category, folder, song, singer;
+            let category, folder, song;
 
             Object.values($scope.categories).forEach(c => {
-                category = category ? category : c.id === item.category ? c : null;
+                category = category ? category : c.id === item.categoryId ? c : null;
             });
 
             Object.values($scope.songs).forEach(f => {
@@ -134,6 +134,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             });
 
             songs.push({
+                categoryId: category.id,
                 category: category.name,
                 id: song.id,
                 name: song.name,
@@ -170,6 +171,20 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             }, error => {
                 $scope.error();
             });
+    };
+
+    /**
+     * edit
+     */
+    $scope.edit = function (id) {
+        $scope.schedule = $scope.schedules[id];
+
+        $scope.schedule.songs.forEach((song, index) => {
+            $scope.schedule.songs[index].categoryId = song.folder;
+            $scope.schedule.songs[index].folder = song.folder;
+            $scope.schedule.songs[index].song = song.id;
+            $scope.selectFolder(index);
+        });
     };
 
     /**
@@ -265,7 +280,6 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             $scope.listSingers()
         ])
             .then(() => {
-                console.log($scope.singers);
                 deferred.resolve();
             });
 
@@ -388,11 +402,11 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
      * selectFolder
      */
     $scope.selectFolder = function (index) {
-        let category = $scope.schedule.songs[index].category;
+        let categoryId = $scope.schedule.songs[index].categoryId;
 
         for (let folder of Object.values($scope.categories)) {
-            if (folder.id === category) {
-                $scope.schedule.songs[index].folder = category;
+            if (folder.id === categoryId) {
+                $scope.schedule.songs[index].folder = categoryId;
                 $scope.selectSongs(index);
             }
         }
@@ -440,3 +454,24 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
         $scope.rows.splice($scope.rows.length - 1, 1);
     };
 });
+
+
+app.directive('loading', ['$http', function ($http) {
+    return {
+        restrict: 'A',
+
+        link: function (scope, element, attrs) {
+            scope.isLoading = function () {
+                return $http.pendingRequests.length > 0;
+            };
+
+            scope.$watch(scope.isLoading, function (value) {
+                if (value) {
+                    element.removeClass('ng-hide');
+                } else {
+                    element.addClass('ng-hide');
+                }
+            });
+        }
+    };
+}]);
