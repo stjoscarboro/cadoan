@@ -30,6 +30,7 @@
 <body ng-app="schedulerApp" ng-controller="SchedulerCtrl" data-ng-init="init()" class="scheduler">
 
 <div id="main" class="main">
+    <a name="top"></a>
 
     <div ng-if="!accessToken">
         <div id="gapi-signin"></div>
@@ -120,7 +121,7 @@
 
                 <div class="liturgy">
                     {{schedule.liturgy}}&nbsp;
-                    <a href="" ng-click="edit($index)" title="Thay Đổi Lịch" class="edit"></a>
+                    <a href="#top" ng-click="edit($index)" title="Thay Đổi Lịch" class="edit"></a>
                     <a href="" ng-click="remove($index)" title="Xoá Lịch" class="delete"></a>
                 </div>
 

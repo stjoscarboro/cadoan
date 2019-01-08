@@ -15,15 +15,16 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             songs: []
         };
 
+        $scope.categories = {};
         $scope.folders = {};
         $scope.songs = {};
         $scope.lists = {};
+
         $scope.schedules = [];
         $scope.liturgies = [];
         $scope.singers = [];
 
         $scope.rows = [0, 1, 2, 3, 4];
-        $scope.categories = {};
 
         $scope.httpService = new HttpService($scope);
         $scope.emailService = new EmailService($scope);
@@ -115,8 +116,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
     $scope.create = function () {
         let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date),
             liturgy = $scope.schedule.liturgy,
-            songs = [],
-            payload;
+            songs = [], payload, removed = [];
 
         for (let item of $scope.schedule.songs) {
             let category, folder, song;
@@ -156,20 +156,21 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
         //remove existing schedule
         $scope.schedules.find((schedule, index) => {
             if (schedule.rawdate === date.getTime()) {
-                $scope.remove(index);
+                removed.push($scope.remove(index));
             }
         });
 
-        //add new schedule
-        $scope.httpService.appendSheetData($scope.schedules_db, payload, {
-            valueInputOption: "USER_ENTERED"
-        })
-            .then(response => {
-                $scope.clear();
-                $scope.sort();
-                $scope.refresh();
-            }, error => {
-                $scope.error();
+        Promise.all(removed)
+            .then(() => {
+                //add new schedule
+                $scope.httpService.appendSheetData($scope.schedules_db, payload, {
+                    valueInputOption: "USER_ENTERED"
+                })
+                    .then(response => {
+                        $scope.sort();
+                    }, error => {
+                        $scope.error();
+                    });
             });
     };
 
@@ -191,6 +192,8 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
      * delete
      */
     $scope.remove = function (id) {
+        let deferred = $q.defer();
+
         let payload = {
             "requests": [{
                 "deleteDimension": {
@@ -206,10 +209,11 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
 
         $scope.httpService.updateSheetData($scope.schedules_db, payload)
             .then(() => {
-                $scope.sort();
-            }, error => {
-                $scope.error();
+                $scope.schedules.splice(id, 1);
+                deferred.resolve();
             });
+
+        return deferred.promise;
     };
 
     /**
