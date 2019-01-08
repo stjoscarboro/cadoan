@@ -5,9 +5,9 @@
 
 .scheduler .main {
     width: 850px;
-    height: calc(100vh - 245px);
+    height: calc(100vh - 225px);
     background-color: whitesmoke;
-    margin: 197px auto 0 auto;
+    margin: 177px auto 0 auto;
     padding: 20px;
     overflow: auto;
 }
@@ -71,12 +71,12 @@
 
 .scheduler .select-songs {
     display: inline-flex;
-    width: 335px;
+    width: 325px;
 }
 
 .scheduler .select-singer {
     display: inline-flex;
-    width: 120px;
+    width: 130px;
 }
 
 .scheduler .add-row {

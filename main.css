@@ -10,7 +10,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: 160px;
+    height: 140px;
     background-image: url('./resources/images/header.png');
 }
 
@@ -18,7 +18,7 @@
     position: fixed;
     z-index: 2;
     left: 0;
-    top: 160px;
+    top: 140px;
     width: 100%;
     height: 30px;
     background-color: whitesmoke;
@@ -40,24 +40,24 @@
 .schedules {
     position: absolute;
     width: 590px;
-    height: calc(100vh - 202px);
-    top: 197px;
+    height: calc(100vh - 182px);
+    top: 177px;
     background-color: whitesmoke;
 }
 
 .messages {
     position: fixed;
     width: 400px;
-    height: calc(100vh - 202px);
-    top: 197px;
+    height: calc(100vh - 182px);
+    top: 177px;
     left: 610px;
     background-color: whitesmoke;
 }
 
 .logo {
-    background: url('./resources/images/logo.png') no-repeat 48px/150px;
-    height: 150px;
-    padding: 8px;
+    background: url('./resources/images/logo.png') no-repeat 48px/120px;
+    height: 120px;
+    padding: 12px;
 }
 
 .title {
@@ -67,11 +67,11 @@
     font-weight: bolder;
     color: navy;
     line-height: 50px;
-    margin: 18px 0;
+    margin: 8px 0;
 }
 
 .message-list {
-    height: calc(100vh - 267px);
+    height: calc(100vh - 247px);
     border-bottom: 1px solid #aaa;
     padding-bottom: 10px;
 }
