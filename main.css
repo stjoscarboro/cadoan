@@ -25,6 +25,7 @@
 }
 
 .menu-text {
+    display: inline-block;
     color: navy;
     line-height: 30px;
     margin-left: 20px;
@@ -55,9 +56,9 @@
 }
 
 .logo {
-    background: url('./resources/images/logo.png') no-repeat 48px/120px;
-    height: 120px;
-    padding: 12px;
+    background: url('./resources/images/logo.png') no-repeat 48px/130px;
+    height: 130px;
+    padding: 7px;
 }
 
 .title {
@@ -67,7 +68,7 @@
     font-weight: bolder;
     color: navy;
     line-height: 50px;
-    margin: 8px 0;
+    margin: 10px 0;
 }
 
 .message-list {
