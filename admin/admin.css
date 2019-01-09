@@ -14,30 +14,6 @@
     text-align: right;
 }
 
-.admin .dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.admin .dropdown-content {
-    display: none;
-    background-color: whitesmoke;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    border: 1px solid darkgrey;
-    border-radius: 4px;
-    margin: -4px 0 0 0;
-    padding: 4px 0 4px 0;
-    z-index: 1;
-}
-
-.admin .dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.admin .dropdown-item {
-    padding-right: 20px;
-}
-
-.admin .dropdown-item:hover {
-    background-color: #57b1f5;
+.admin .dropdown-item .menu-text {
+    line-height: 24px;
 }
