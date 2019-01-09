@@ -49,6 +49,7 @@
     margin-left: 15px;
     width: 20px;
     height: 12px;
+    vertical-align: middle;
     background: url(../../resources/images/audio.png) no-repeat 0/12px;
 }
 
@@ -57,6 +58,7 @@
     margin-left: 15px;
     width: 20px;
     height: 12px;
+    vertical-align: middle;
     background: url(../../resources/images/pencil.png) no-repeat 0/12px;
 }
 
@@ -64,6 +66,7 @@
     display: inline-block;
     width: 20px;
     height: 12px;
+    vertical-align: middle;
     background: url(../../resources/images/erase.png) no-repeat 0/12px;
 }
 
