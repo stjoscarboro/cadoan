@@ -73,7 +73,7 @@
 .message-list {
     height: calc(100vh - 247px);
     border-bottom: 1px solid #aaa;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
 }
 
 .message-form {
