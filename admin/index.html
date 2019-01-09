@@ -35,12 +35,19 @@
     </div>
 
     <div class="menu">
-            <span>
-                <a href="../main.html" target="iframe" class="menu-text">Lịch Hát Thánh Ca</a>
-            </span>
         <span>
-                <a href="../cadoan/scheduler/index.html" target="iframe" class="menu-text admin-menu">Lịch Hát Thánh Ca (Admin)</a>
-            </span>
+            <a href="../main.html" target="iframe" class="menu-text">Lịch Hát Thánh Ca</a>
+        </span>
+        <span class="admin-menu">
+            <div class="dropdown">
+                <a href="" class="menu-text">Admin</a>
+                <div class="dropdown-content">
+                    <div class="dropdown-item">
+                        <a href="../cadoan/scheduler/index.html" target="iframe" class="menu-text">Soạn Lịch Hát Thánh Ca</a>
+                    </div>
+                </div>
+            </div>
+        </span>
     </div>
 
     <div ng-if="!accessToken">
