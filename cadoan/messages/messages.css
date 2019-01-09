@@ -74,10 +74,18 @@
     padding-bottom: 5px;
 }
 
-.messages .ql-editor>ul>li, .ql-editor>ol>li {
+.messages .ql-editor > ul > li, .ql-editor > ol >li {
     padding-left: 0.5em !important;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
+}
+
+.messages .ql-editor a {
+    text-decoration: none;
+}
+
+.messages .ql-editor a:hover {
+    text-decoration: underline;
 }
 
 [ng-quill-editor] { display: block; }
