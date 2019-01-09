@@ -40,7 +40,7 @@
 .schedules {
     position: absolute;
     width: 590px;
-    height: calc(100vh - 182px);
+    height: calc(100vh - 184px);
     top: 177px;
     background-color: whitesmoke;
 }
@@ -48,7 +48,7 @@
 .messages {
     position: fixed;
     width: 400px;
-    height: calc(100vh - 182px);
+    height: calc(100vh - 184px);
     top: 177px;
     left: 610px;
     background-color: whitesmoke;
