@@ -88,12 +88,14 @@
 .scheduler .add-button {
     display: inline-block;
     float: right;
+    background-color: white;
 }
 
 .scheduler .preview {
     width: 14px;
     height: 12px;
     background: url('../../resources/images/preview.png') no-repeat 0/15px;
+    background-color: white;
 }
 
 .scheduler .icon {

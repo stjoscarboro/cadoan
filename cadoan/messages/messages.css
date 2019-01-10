@@ -57,6 +57,7 @@
     border-radius: 4px;
     text-decoration: none;
     color: initial;
+    background-color: white;
     padding-top: 4px;
     margin: 13px auto;
     font-family: sans-serif;
@@ -69,9 +70,11 @@
 }
 
 .messages .ql-container {
-    height: calc(100vh - 103px);
+    height: calc(100vh - 108px);
     overflow: auto;
     padding-bottom: 5px;
+    margin-top: 5px;
+    background-color: white;
 }
 
 .messages .ql-editor > ul > li, .ql-editor > ol >li {
