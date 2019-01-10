@@ -37,6 +37,7 @@
 
 .scheduler .submit {
     font-size: inherit;
+    background-color: white;
     width: 100px;
     height: 26px;
 }
@@ -88,7 +89,6 @@
 .scheduler .add-button {
     display: inline-block;
     float: right;
-    background-color: white;
 }
 
 .scheduler .preview {
