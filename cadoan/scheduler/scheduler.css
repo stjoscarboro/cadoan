@@ -32,6 +32,7 @@
 
 .scheduler .select {
     font-size: inherit;
+    background-color: white;
 }
 
 .scheduler .submit {
