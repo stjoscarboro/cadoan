@@ -1,6 +1,6 @@
 var app = angular.module("schedulerApp", []);
 
-app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, EmailService) => {
+app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, HttpService, EmailService) => {
 
     /**
      * init
@@ -186,6 +186,8 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, HttpService, Ema
             $scope.schedule.songs[index].song = song.id;
             $scope.selectFolder(index);
         });
+
+        $anchorScroll();
     };
 
     /**
