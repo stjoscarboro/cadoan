@@ -20,10 +20,16 @@
     <script src="../../resources/js/http-service.js"></script>
 
     <script type='text/javascript'>
+        let currentHeight = 0;
+
         // Size the parent iFrame
         function iframeResize() {
-            var height = $('body').outerHeight(); // IMPORTANT: If body's height is set to 100% with CSS this will not work.
-            parent.postMessage("resize::"+(height+50),"*");
+            let height = $('body').outerHeight();
+
+            if(height !== currentHeight) {
+                currentHeight = height;
+                parent.postMessage("resize::" + (height + 20), "*");
+            }
         }
 
         $(document).ready(function() {
