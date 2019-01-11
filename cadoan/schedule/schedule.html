@@ -18,25 +18,6 @@
 
     <script src="./schedule.js"></script>
     <script src="../../resources/js/http-service.js"></script>
-
-    <script type='text/javascript'>
-        let currentHeight = 0;
-
-        // Size the parent iFrame
-        function iframeResize() {
-            let height = $('body').outerHeight();
-
-            if(height !== currentHeight) {
-                currentHeight = height;
-                parent.postMessage("resize::" + (height + 20), "*");
-            }
-        }
-
-        $(document).ready(function() {
-            // Resize iframe
-            setInterval(iframeResize, 1000);
-        });
-    </script>
 </head>
 
 <body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()" class="schedule">

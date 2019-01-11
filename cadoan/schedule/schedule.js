@@ -56,6 +56,8 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
                             liturgy: liturgy,
                             songs: songs
                         });
+
+                        $scope.resizeFrame();
                     }
                 }
             });
@@ -105,6 +107,26 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         }
 
         return deferred.promise;
+    };
+
+    /**
+     * resizeFrame
+     */
+    $scope.resizeFrame = function () {
+        let currentHeight = 0;
+
+        let resize = () => {
+            let contentHeight = $(document).outerHeight();
+
+            if(contentHeight !== currentHeight) {
+                currentHeight = contentHeight;
+                parent.postMessage("resize::" + (contentHeight + 20), "*");
+            }
+        };
+
+        $(document).ready(() => {
+            setInterval(resize, 1000);
+        });
     };
 
     /**
