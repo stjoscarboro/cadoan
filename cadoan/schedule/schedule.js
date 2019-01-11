@@ -119,12 +119,14 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
             let contentHeight = $(document).outerHeight();
 
             if(contentHeight !== currentHeight) {
+                contentHeight += 20;
                 currentHeight = contentHeight;
-                parent.postMessage("resize::" + (contentHeight + 20), "*");
+                parent.postMessage("resize::" + contentHeight, "*");
             }
         };
 
         $(document).ready(() => {
+            resize();
             setInterval(resize, 1000);
         });
     };
