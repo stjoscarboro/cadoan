@@ -18,6 +18,19 @@
 
     <script src="./schedule.js"></script>
     <script src="../../resources/js/http-service.js"></script>
+
+    <script type='text/javascript'>
+        // Size the parent iFrame
+        function iframeResize() {
+            var height = $('body').outerHeight(); // IMPORTANT: If body's height is set to 100% with CSS this will not work.
+            parent.postMessage("resize::"+height,"*");
+        }
+
+        $(document).ready(function() {
+            // Resize iframe
+            setInterval(iframeResize, 1000);
+        });
+    </script>
 </head>
 
 <body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()" class="schedule">
@@ -25,6 +38,11 @@
 <div id="main" class="main">
     <ng-include src="'./schedule.inc'"></ng-include>
 </div>
+
+<script>
+    var content = document.getElementById('main');
+    console.log(content.offsetHeight);
+</script>
 
 </body>
 
