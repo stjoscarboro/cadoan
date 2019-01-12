@@ -79,7 +79,7 @@ app.controller("MessagesCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
             payload;
 
         if ($scope.message.text) {
-            if (Base64.encode($scope.profile.getEmail()) === gapiid) {
+            if (Base64.encode($scope.profile.getEmail()) === gapiids[0]) {
                 sender = 'Admin';
             }
 
@@ -136,7 +136,7 @@ app.controller("MessagesCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
         let today = new Date(),
             hours = date.getHours(),
             minutes = date.getMinutes(),
-            diff = (today.setHours(0,0,0,0) - date.setHours(0,0,0,0)) / 3600000,
+            diff = (today.setHours(0, 0, 0, 0) - date.setHours(0, 0, 0, 0)) / 3600000,
             ampm, time = '';
 
         ampm = (hours > 12 || hours === 12 && minutes > 0) ? 'PM' : 'AM';
@@ -144,7 +144,7 @@ app.controller("MessagesCtrl", ($scope, $q, $window, $timeout, $sce, HttpService
         hours = (hours < 10 ? '0' : '') + hours;
         minutes = (minutes < 10 ? '0' : '') + minutes;
 
-        switch(diff) {
+        switch (diff) {
             case 0:
                 time += 'Hôm nay lúc ' + hours + ':' + minutes + ' ' + ampm;
                 break;

@@ -1,11 +1,11 @@
 let gapidiv = 'gapi-signin',
-    gapiid = 'c3Rqb3NjYXJib3JvQGdtYWlsLmNvbQ==';
+    gapiids = ['c3Rqb3NjYXJib3JvQGdtYWlsLmNvbQ==', 'aW1hbmhkdW5ndHJhbkBnbWFpbC5jb20='];
 
 function onAdminSuccess(user) {
     let profile = user.getBasicProfile(),
         response = user.getAuthResponse(true);
 
-    if (profile && Base64.encode(profile.getEmail()) === gapiid) {
+    if (profile && gapiids.includes(Base64.encode(profile.getEmail()))) {
         let scope = angular.element('#' + gapidiv).scope();
         scope && scope.signin(profile, response['access_token']);
     }
