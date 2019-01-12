@@ -58,7 +58,7 @@ app.factory('HttpService', function ($http) {
             return $http.get(url, {
                 params: params
             });
-        }
+        };
 
         /**
          * appendSheetData
@@ -71,7 +71,7 @@ app.factory('HttpService', function ($http) {
             return $http.post(url, payload, {
                 params: params
             });
-        }
+        };
 
         /**
          * updateSheetData
@@ -84,28 +84,28 @@ app.factory('HttpService', function ($http) {
             return $http.post(url, payload, {
                 params: params
             });
-        }
+        };
 
         /**
          * getDriveURL
          */
         this.getDriveURL = function (folderId) {
             return 'https://drive.google.com/drive/folders/' + folderId;
-        }
+        };
 
         /**
          * getDocURL
          */
         this.getDocURL = function (docId) {
             return docURL + docId + '/preview';
-        }
+        };
 
         /**
          * getOpenURL
          */
         this.getOpenURL = function (docId) {
             return openURL + docId;
-        }
+        };
 
         /**
          * getFolderData
@@ -114,14 +114,14 @@ app.factory('HttpService', function ($http) {
             let url = driveURL + '?q="' + folderId + '"+in+parents&orderBy=name&key=' + gapiKey;
 
             return $http.get(url);
-        }
+        };
 
         /**
          * getYearData
          */
         this.getYearData = function () {
             return this.getFolderData(folderId);
-        }
+        };
 
         /**
          * sendEmail
@@ -141,7 +141,7 @@ app.factory('HttpService', function ($http) {
 
             let body = {
                 raw: Base64.encode(email).replace(/\//g, '_').replace(/\+/g, '-')
-            }
+            };
 
             return $http.post(url, body, {
                 params: {
@@ -151,7 +151,7 @@ app.factory('HttpService', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
-        }
+        };
 
         /**
          * getParams
@@ -162,7 +162,7 @@ app.factory('HttpService', function ($http) {
             params.access_token = scope.accessToken;
 
             return params;
-        }
+        };
 
     }
 
