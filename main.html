@@ -19,5 +19,17 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+    var messageEvent = eventMethod === "attachEvent" ? "onmessage" : "message";
+
+    window[eventMethod](messageEvent, function(e) {
+        if (e.data.indexOf('resize::') !== -1) {
+            var height = e.data.replace('resize::', '');
+            document.getElementById('content_frame').style.height = height + 'px';
+        }
+    }, false);
+</script>
+
 </body>
 </html>

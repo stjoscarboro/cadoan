@@ -57,6 +57,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
                             songs: songs
                         });
 
+                        //resize frame
                         $scope.resizeFrame();
                     }
                 }

@@ -28,54 +28,13 @@
 .content {
     position: absolute;
     width: 100%;
-    height: calc(100vh - 32px);
+    height: calc(100vh - 20px);
     top: 170px;
 }
 
-.menu-item {
-    display: inline-block;
-    vertical-align: top;
-    padding-left: 20px;
-}
-
-.menu-text {
-    display: inline-block;
-    color: navy;
-    line-height: 30px;
-    text-decoration: none;
-}
-
-.menucombo {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    background-color: whitesmoke;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    border: 1px solid darkgrey;
-    border-radius: 4px;
-    margin: -4px 0 0 0;
-    padding: 4px 0 4px 0;
-    z-index: 1;
-}
-
-.menucombo:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-item {
-    padding: 0 20px 0 20px;
-}
-
-.dropdown-item:hover {
-    background-color: #57b1f5;
-}
-
 .schedules {
-    width: 100%;
-    height: calc(100vh - 184px);
+    width: 700px;
+    height: 100%;
     margin: 0 auto;
     background-color: whitesmoke;
 }
@@ -133,6 +92,47 @@
 
 .message-form a.button:active {
     border-color: #5f3f3f;
+}
+
+.menu-item {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 20px;
+}
+
+.menu-text {
+    display: inline-block;
+    color: navy;
+    line-height: 30px;
+    text-decoration: none;
+}
+
+.menucombo {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    background-color: whitesmoke;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    border: 1px solid darkgrey;
+    border-radius: 4px;
+    margin: -4px 0 0 0;
+    padding: 4px 0 4px 0;
+    z-index: 1;
+}
+
+.menucombo:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 0 20px 0 20px;
+}
+
+.dropdown-item:hover {
+    background-color: #57b1f5;
 }
 
 iframe {

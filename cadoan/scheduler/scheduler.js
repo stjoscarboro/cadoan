@@ -87,6 +87,9 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
 
                         lastDate = date;
                     }
+
+                    //resize frame
+                    $scope.resizeFrame();
                 }
 
                 //init datepicker
@@ -458,6 +461,28 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
      */
     $scope.removeSong = function (index) {
         $scope.rows.splice($scope.rows.length - 1, 1);
+    };
+
+    /**
+     * resizeFrame
+     */
+    $scope.resizeFrame = function () {
+        let currentHeight = 0;
+
+        let resize = () => {
+            let contentHeight = $(document).outerHeight();
+
+            if(contentHeight !== currentHeight) {
+                // contentHeight += 20;
+                currentHeight = contentHeight;
+                parent.postMessage("resize::" + contentHeight, "*");
+            }
+        };
+
+        $(document).ready(() => {
+            resize();
+            setInterval(resize, 1000);
+        });
     };
 });
 

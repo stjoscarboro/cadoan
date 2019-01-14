@@ -4,12 +4,8 @@
 }
 
 .scheduler .main {
-    width: 850px;
-    height: calc(100vh - 225px);
-    background-color: whitesmoke;
-    margin: 177px auto 0 auto;
-    padding: 20px;
-    overflow: auto;
+    width: 832px;
+    padding: 8px;
 }
 
 .scheduler .content {
