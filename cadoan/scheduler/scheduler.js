@@ -473,7 +473,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
             let contentHeight = $(document).outerHeight();
 
             if(contentHeight !== currentHeight) {
-                // contentHeight += 20;
+                contentHeight += 20;
                 currentHeight = contentHeight;
                 parent.postMessage("resize::" + contentHeight, "*");
             }
