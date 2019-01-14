@@ -215,6 +215,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
         $scope.httpService.updateSheetData($scope.schedules_db, payload)
             .then(() => {
                 $scope.schedules.splice(id, 1);
+                $scope.resizeFrame();
                 deferred.resolve();
             });
 
@@ -476,12 +477,17 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
                 contentHeight += 20;
                 currentHeight = contentHeight;
                 parent.postMessage("resize::" + contentHeight, "*");
+                console.log('resize: ' + contentHeight);
             }
         };
 
+        if($scope.resizeInterval) {
+            clearInterval($scope.resizeInterval);
+        }
+
         $(document).ready(() => {
             resize();
-            setInterval(resize, 1000);
+            $scope.resizeInterval = setInterval(resize, 1000);
         });
     };
 });

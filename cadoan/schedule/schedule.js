@@ -126,9 +126,13 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
             }
         };
 
+        if($scope.resizeInterval) {
+            clearInterval($scope.resizeInterval);
+        }
+
         $(document).ready(() => {
             resize();
-            setInterval(resize, 1000);
+            $scope.resizeInterval = setInterval(resize, 1000);
         });
     };
 
