@@ -477,7 +477,6 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
                 contentHeight += 20;
                 currentHeight = contentHeight;
                 parent.postMessage("resize::" + contentHeight, "*");
-                console.log('resize: ' + contentHeight);
             }
         };
 
