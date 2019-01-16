@@ -79,7 +79,6 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
                         }
 
                         $scope.schedules.push({
-                            rawdate: date,
                             date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
                             liturgy: liturgy,
                             songs: songs
@@ -101,13 +100,11 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
 
                         //init datepicker with this date
                         $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, date);
-                        $scope.schedule.rawdate = date.getTime();
                     }
                 });
 
                 //init datepicker to a week from last date
                 $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(lastDate + $scope.week));
-                $scope.schedule.rawdate = lastDate + $scope.week;
             }, error => {
                 $scope.error();
             });
@@ -158,7 +155,9 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
 
         //remove existing schedule
         $scope.schedules.find((schedule, index) => {
-            if (schedule.rawdate === date.getTime()) {
+            let sdate = $.datepicker.parseDate($scope.dateFormat, schedule.date);
+
+            if (sdate.getTime() === date.getTime()) {
                 removed.push($scope.remove(index));
             }
         });
@@ -181,7 +180,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
      * edit
      */
     $scope.edit = function (id) {
-        $scope.schedule = $scope.schedules[id];
+        $scope.schedule = angular.copy($scope.schedules[id]);
 
         $scope.schedule.songs.forEach((song, index) => {
             $scope.schedule.songs[index].categoryId = song.folder;
