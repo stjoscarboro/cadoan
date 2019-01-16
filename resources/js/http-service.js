@@ -110,9 +110,24 @@ app.factory('HttpService', function ($http) {
         /**
          * getFolderData
          */
-        this.getFolderData = function (folderId) {
-            let url = driveURL + '?q="' + folderId + '"+in+parents&orderBy=name&key=' + gapiKey;
+        this.getFolderData = function (folderId, filters) {
+            let query = 'q="' + folderId + '"+in+parents',
+                params;
 
+            if(filters) {
+                Object.keys(filters).forEach(filter => {
+                    switch(filter) {
+                        case 'properties':
+                            params = filters[filter];
+                            Object.keys(params).forEach(key => {
+                                query += '+and+properties+has+{key="' + key + '"+and+value="' + params[key] + '"}';
+                            });
+                            break;
+                    }
+                });
+            }
+
+            let url = driveURL + '?' + query + '&fields=files(id,kind,mimeType,name,description,properties)&orderBy=name&key=' + gapiKey;
             return $http.get(url);
         };
 

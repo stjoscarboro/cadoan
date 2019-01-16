@@ -1,0 +1,28 @@
+.library {
+    font-family: sans-serif;
+    font-size: 11pt;
+}
+
+.library .main {
+    height: auto;
+    overflow: auto;
+}
+
+.schedule .loader {
+    display: block;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    background: url('../../resources/images/loading.gif') no-repeat 0/24px;
+}
+
+.schedule .content {
+
+}
+
+.schedule .song {
+}
+
+.schedule .song .name {
+
+}

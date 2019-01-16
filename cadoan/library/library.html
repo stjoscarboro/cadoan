@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Cache-Control" content="no-store" />
 
-    <link rel="stylesheet" href="./schedule.css">
+    <link rel="stylesheet" href="./library.css">
 
     <script src="../../resources/js/jquery.min.js"></script>
     <script src="../../resources/js/jquery-ui.min.js"></script>
@@ -15,14 +15,22 @@
     <script src="../../resources/js/angular.min.js"></script>
     <script src="../../resources/js/base64.min.js"></script>
 
-    <script src="./schedule.js"></script>
+    <script src="./library.js"></script>
     <script src="../../resources/js/http-service.js"></script>
 </head>
 
-<body ng-app="mainApp" ng-controller="MainCtrl" data-ng-init="init()" class="schedule">
+<body ng-app="libraryApp" ng-controller="LibraryCtrl" data-ng-init="init()" class="library">
 
 <div id="main" class="main">
-    <ng-include src="'./schedule.inc'"></ng-include>
+    <div class="loader" data-loading></div>
+
+    <div class="content">
+        <div ng-repeat="song in songs" class="song">
+            <div class="name">
+                {{song.name}}
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
