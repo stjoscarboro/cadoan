@@ -491,7 +491,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
 });
 
 
-app.directive('loading', ['$http', function ($http) {
+app.directive('loading', ['$http', '$window', function ($http, $window) {
     return {
         restrict: 'A',
 
@@ -505,8 +505,10 @@ app.directive('loading', ['$http', function ($http) {
                     element.removeClass('ng-hide');
                 } else {
                     element.addClass('ng-hide');
+                    $window.angular.element('.content').removeClass('ng-hide');
                 }
             });
         }
     };
 }]);
+

@@ -1,7 +1,7 @@
 .scheduler {
     font-family: sans-serif;
     font-size: 11pt;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .scheduler .main {
