@@ -51,11 +51,13 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
                                 });
                         }
 
-                        $scope.schedules.push({
-                            date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
-                            liturgy: liturgy,
-                            songs: songs
-                        });
+                        if(date >= (new Date).getTime()) {
+                            $scope.schedules.push({
+                                date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
+                                liturgy: liturgy,
+                                songs: songs
+                            });
+                        }
 
                         //resize frame
                         $scope.resizeFrame();

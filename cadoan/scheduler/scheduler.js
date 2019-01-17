@@ -502,7 +502,9 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
 
             scope.$watch(scope.isLoading, function (value) {
                 if (value) {
-                    element.removeClass('ng-hide');
+                    setTimeout(() => {
+                        element.removeClass('ng-hide');
+                    }, 100);
                 } else {
                     element.addClass('ng-hide');
                     $window.angular.element('.content').removeClass('ng-hide');
