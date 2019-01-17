@@ -4,11 +4,12 @@
 }
 
 .library .main {
+    min-width: 1080px;
     height: auto;
     overflow: auto;
 }
 
-.schedule .loader {
+.library .loader {
     display: block;
     margin: auto;
     width: 24px;
@@ -16,13 +17,43 @@
     background: url('../../resources/images/loading.gif') no-repeat 0/24px;
 }
 
-.schedule .content {
-
+.library .content {
+    padding: 0 10px 0 10px;
 }
 
-.schedule .song {
+.library .song {
+    padding: 10px;
+    border-bottom: 1px solid whitesmoke;
 }
 
-.schedule .song .name {
+.library .song .name {
+    display: inline-flex;
+    width: 400px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
+.library .song .title {
+    display: inline-flex;
+    width: 260px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.library .song .author {
+    display: inline-flex;
+    width: 260px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.library .song .category {
+    display: inline-flex;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

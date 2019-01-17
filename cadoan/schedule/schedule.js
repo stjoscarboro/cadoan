@@ -151,17 +151,13 @@ app.directive('loading', ['$http', function ($http) {
     return {
         restrict: 'A',
 
-        link: function (scope, element, attrs) {
-            scope.isLoading = function () {
+        link: (scope, element) => {
+            scope.isLoading = () => {
                 return $http.pendingRequests.length > 0;
             };
 
-            scope.$watch(scope.isLoading, function (value) {
-                if (value) {
-                    element.removeClass('ng-hide');
-                } else {
-                    element.addClass('ng-hide');
-                }
+            scope.$watch(scope.isLoading, (value) => {
+                value ? element.removeClass('ng-hide') : element.addClass('ng-hide');
             });
         }
     };

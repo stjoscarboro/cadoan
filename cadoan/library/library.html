@@ -25,10 +25,11 @@
     <div class="loader" data-loading></div>
 
     <div class="content">
-        <div ng-repeat="song in songs" class="song">
-            <div class="name">
-                {{song.name}}
-            </div>
+        <div ng-repeat="song in songs | localeOrderBy:'name'" class="song">
+            <div class="name" title="{{song.name}}">{{song.name}}</div>
+            <div class="title" title="{{song.properties.title}}">{{song.properties.title}}</div>
+            <div class="author" title="{{song.properties.author}}">{{song.properties.author}}</div>
+            <div class="category" title="{{song.properties.type}}">{{song.properties.type}}</div>
         </div>
     </div>
 </div>

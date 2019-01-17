@@ -1,4 +1,4 @@
-var app = angular.module("libraryApp", []);
+var app = angular.module("libraryApp", ['app.filters']);
 
 app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
 
@@ -8,7 +8,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
     $scope.init = function () {
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
-        $scope.songs = {};
+        $scope.songs = [];
 
         $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
@@ -23,7 +23,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
      * get
      */
     $scope.get = function () {
-        console.log($scope.songs);
+        // console.log($scope.songs);
     };
 
     /**
@@ -56,18 +56,18 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
      * listFolder
      */
     $scope.listFolder = function (folder) {
-        let songs = $scope.songs[folder],
-            deferred = $q.defer();
+        let deferred = $q.defer();
 
-        if (songs) {
-            deferred.resolve(songs);
-        } else {
-            $scope.httpService.getFolderData(folder, {properties: {author: 'Nguyễn Văn Hiển'}})
-                .then(response => {
-                    $scope.songs[folder] = response.data.files;
-                    deferred.resolve($scope.songs[folder]);
-                });
-        }
+        $scope.httpService.getFolderData(folder)
+        // $scope.httpService.getFolderData(folder, {properties: {author: 'Nguyễn Văn Hiển'}})
+            .then(response => {
+                if(response.data.files.length > 0) {
+                    response.data.files.forEach(song => {
+                        $scope.songs.push(song);
+                    });
+                }
+                deferred.resolve();
+            });
 
         return deferred.promise;
     };
@@ -113,18 +113,60 @@ app.directive('loading', ['$http', function ($http) {
     return {
         restrict: 'A',
 
-        link: function (scope, element, attrs) {
-            scope.isLoading = function () {
+        link: (scope, element) => {
+            scope.isLoading = () => {
                 return $http.pendingRequests.length > 0;
             };
 
-            scope.$watch(scope.isLoading, function (value) {
-                if (value) {
-                    element.removeClass('ng-hide');
-                } else {
-                    element.addClass('ng-hide');
-                }
+            scope.$watch(scope.isLoading, (value) => {
+                value ? element.removeClass('ng-hide') : element.addClass('ng-hide');
             });
         }
     };
 }]);
+
+
+angular.module("app.filters", [])
+    .filter("localeOrderBy", [() => {
+        return function (array, sortPredicate, reverseOrder) {
+            if (!Array.isArray(array)) {
+                return array;
+            }
+
+            if (!sortPredicate) {
+                return array;
+            }
+
+            let isString = (value) => {
+                return (typeof value === "string");
+            };
+
+            let isNumber = (value) => {
+                return (typeof value === "number");
+            };
+
+            let isBoolean = (value) => {
+                return (typeof value === "boolean");
+            };
+
+            let arrayCopy = [];
+            angular.forEach(array, (item) => {
+                arrayCopy.push(item);
+            });
+
+            arrayCopy.sort((a, b) => {
+                let valueA = a[sortPredicate];
+                let valueB = b[sortPredicate];
+
+                if (isString(valueA))
+                    return !reverseOrder ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+
+                if (isNumber(valueA) || isBoolean(valueA))
+                    return !reverseOrder ? valueA - valueB : valueB - valueA;
+
+                return 0;
+            });
+
+            return arrayCopy;
+        }
+    }]);
