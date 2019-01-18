@@ -25,12 +25,12 @@
     font-size: 10pt;
 }
 
-table tr th {
+.library table tr th {
     background: #337ab7;
     color: white;
     text-align: left;
 }
 
-input[type=search] {
+.library input[type=search] {
     width: 300px !important;
 }
