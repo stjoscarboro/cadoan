@@ -16,6 +16,10 @@
     background: url('../../resources/images/loading.gif') no-repeat 0/24px;
 }
 
+.library .panel-body {
+    padding: 0px;
+}
+
 table tr th{
     background:#337ab7;
     color:white;
