@@ -24,6 +24,9 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
      * get
      */
     $scope.get = function () {
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+
         $scope.schedules = [];
 
         $scope.httpService.getSheetData($scope.schedule_db)
@@ -51,7 +54,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
                                 });
                         }
 
-                        if(date >= (new Date).getTime()) {
+                        if(values.length <= 4 || ($scope.schedules.length < 4 && date >= today.getTime())) {
                             $scope.schedules.push({
                                 date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
                                 liturgy: liturgy,
