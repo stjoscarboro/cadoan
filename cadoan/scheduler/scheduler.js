@@ -32,9 +32,6 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         $scope.driveURL = $scope.httpService.getDriveURL($scope.sheets_folder);
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.week = 7 * 24 * 3600 * 1000;
-
-        //resize frame
-        $scope.resizeFrame();
     };
 
     /**
@@ -47,6 +44,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         $scope.loadData()
             .then(() => {
                 $scope.get();
+                $scope.resizeFrame();
             });
     };
 
@@ -482,13 +480,16 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
     $scope.resizeFrame = function () {
         let promise, height = 0;
 
+        //resize immediately
+        height = $scope.resize(height);
+
         //set resize interval
         promise = $interval(() => {
             height = $scope.resize(height);
         }, 1000);
 
         //cancel interval
-        $scope.$on('destroy', () => {
+        $scope.$on('$destroy', () => {
             $interval.cancel(promise);
         });
     };
@@ -505,13 +506,14 @@ app.directive('loading', ['$http', '$window', '$timeout', function ($http, $wind
             };
 
             scope.$watch(scope.isLoading, function (value) {
-                if (value) {
-                    $timeout(() => {
-                        element.removeClass('ng-hide');
-                    }, 100);
+                if(value) {
+                    element.removeClass('ng-hide');
                 } else {
-                    element.addClass('ng-hide');
-                    $window.angular.element('.content').removeClass('ng-hide');
+                    $timeout(() => {
+                        element.addClass('ng-hide');
+                        $window.angular.element('.content').removeClass('ng-hide');
+                        scope.resize();
+                    }, 100);
                 }
             });
         }

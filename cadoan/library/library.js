@@ -18,6 +18,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, $interval, HttpSer
         $scope.listSongs()
             .then(() => {
                 $scope.get();
+                $scope.resizeFrame();
             });
     };
 
@@ -105,7 +106,6 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, $interval, HttpSer
 
         //cancel interval
         $scope.$on('$destroy', () => {
-            alert('destroy interval');
             $interval.cancel(promise);
         });
     };
@@ -126,10 +126,9 @@ app.directive('loading', ['$http', '$window', '$timeout', function ($http, $wind
                     element.removeClass('ng-hide');
                 } else {
                     $timeout(() => {
-                        scope.resizeFrame();
                         element.addClass('ng-hide');
                         $window.angular.element('.content').removeClass('ng-hide');
-                    }, 500);
+                    }, 100);
                 }
             });
         }

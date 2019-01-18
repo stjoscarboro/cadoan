@@ -18,8 +18,6 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
             .then(() => {
                 $scope.get();
             });
-
-        $scope.resizeFrame();
     };
 
     /**
@@ -64,6 +62,9 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
                             });
                         }
                     }
+
+                    //resize frame
+                    $scope.resizeFrame();
                 }
             });
     };
@@ -134,23 +135,17 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
     $scope.resizeFrame = function () {
         let promise, height = 0;
 
+        //resize immediately
+        height = $scope.resize(height);
+
         //set resize interval
         promise = $interval(() => {
             height = $scope.resize(height);
         }, 1000);
 
         //cancel interval
-        $scope.$on('destroy', () => {
+        $scope.$on('$destroy', () => {
             $interval.cancel(promise);
-        });
-    };
-
-    /**
-     * print
-     */
-    $scope.print = function () {
-        $('.pbody').printThis({
-            base: window.location.href
         });
     };
 });
