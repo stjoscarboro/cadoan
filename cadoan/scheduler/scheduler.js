@@ -1,6 +1,6 @@
 var app = angular.module("schedulerApp", []);
 
-app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, HttpService, EmailService) => {
+app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anchorScroll, HttpService, EmailService) => {
 
     /**
      * init
@@ -32,6 +32,9 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
         $scope.driveURL = $scope.httpService.getDriveURL($scope.sheets_folder);
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.week = 7 * 24 * 3600 * 1000;
+
+        //resize frame
+        $scope.resizeFrame();
     };
 
     /**
@@ -86,9 +89,6 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
 
                         lastDate = date;
                     }
-
-                    //resize frame
-                    $scope.resizeFrame();
                 }
 
                 //init datepicker
@@ -214,7 +214,6 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
         $scope.httpService.updateSheetData($scope.schedules_db, payload)
             .then(() => {
                 $scope.schedules.splice(id, 1);
-                $scope.resizeFrame();
                 deferred.resolve();
             });
 
@@ -464,34 +463,39 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $anchorScroll, H
     };
 
     /**
+     * resize
+     */
+    $scope.resize = function (currentHeight) {
+        let contentHeight = $(document).outerHeight();
+
+        if (contentHeight !== currentHeight) {
+            contentHeight += 20;
+            parent.postMessage("resize::" + contentHeight, "*");
+        }
+
+        return contentHeight;
+    };
+
+    /**
      * resizeFrame
      */
     $scope.resizeFrame = function () {
-        let currentHeight = 0;
+        let promise, height = 0;
 
-        let resize = () => {
-            let contentHeight = $(document).outerHeight();
+        //set resize interval
+        promise = $interval(() => {
+            height = $scope.resize(height);
+        }, 1000);
 
-            if(contentHeight !== currentHeight) {
-                // contentHeight += 20;
-                currentHeight = contentHeight;
-                parent.postMessage("resize::" + contentHeight, "*");
-            }
-        };
-
-        if($scope.resizeInterval) {
-            clearInterval($scope.resizeInterval);
-        }
-
-        $(document).ready(() => {
-            resize();
-            $scope.resizeInterval = setInterval(resize, 1000);
+        //cancel interval
+        $scope.$on('destroy', () => {
+            $interval.cancel(promise);
         });
     };
 });
 
 
-app.directive('loading', ['$http', '$window', function ($http, $window) {
+app.directive('loading', ['$http', '$window', '$timeout', function ($http, $window, $timeout) {
     return {
         restrict: 'A',
 
@@ -502,7 +506,7 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
 
             scope.$watch(scope.isLoading, function (value) {
                 if (value) {
-                    setTimeout(() => {
+                    $timeout(() => {
                         element.removeClass('ng-hide');
                     }, 100);
                 } else {

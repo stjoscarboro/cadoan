@@ -1,6 +1,6 @@
 var app = angular.module("libraryApp", []);
 
-app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
+app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, $interval, HttpService) => {
 
     /**
      * init
@@ -34,7 +34,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         //resize frame
         $timeout(() => {
             $scope.resizeFrame();
-        }, 500);
+        }, 1000);
     };
 
     /**
@@ -70,11 +70,10 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         let deferred = $q.defer();
 
         $scope.httpService.getFolderData(folder)
-        // $scope.httpService.getFolderData(folder, {properties: {author: 'Nguyễn Văn Hiển'}})
             .then(response => {
                 if(response.data.files.length > 0) {
                     response.data.files.forEach(song => {
-                        song.url = $scope.httpService.getOpenURL(song.id)
+                        song.url = $scope.httpService.getOpenURL(song.id);
                         $scope.songs.push(song);
                     });
                 }
@@ -85,43 +84,39 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
     };
 
     /**
+     * resize
+     */
+    $scope.resize = function (currentHeight) {
+        let contentHeight = $(document).outerHeight();
+
+        if (contentHeight !== currentHeight) {
+            contentHeight += 20;
+            parent.postMessage("resize::" + contentHeight, "*");
+        }
+
+        return contentHeight;
+    };
+
+    /**
      * resizeFrame
      */
     $scope.resizeFrame = function () {
-        let currentHeight = 0;
+        let promise, height = 0;
 
-        let resize = () => {
-            let contentHeight = $(document).outerHeight();
+        //set resize interval
+        promise = $interval(() => {
+            height = $scope.resize(height);
+        }, 1000);
 
-            if(contentHeight !== currentHeight) {
-                contentHeight += 20;
-                currentHeight = contentHeight;
-                parent.postMessage("resize::" + contentHeight, "*");
-            }
-        };
-
-        if($scope.resizeInterval) {
-            clearInterval($scope.resizeInterval);
-        }
-
-        $(document).ready(() => {
-            resize();
-            $scope.resizeInterval = setInterval(resize, 1000);
-        });
-    };
-
-/**
-     * print
-     */
-    $scope.print = function () {
-        $('.pbody').printThis({
-            base: window.location.href
+        //cancel interval
+        $scope.$on('destroy', () => {
+            $interval.cancel(promise);
         });
     };
 });
 
 
-app.directive('loading', ['$http', '$window', function ($http, $window) {
+app.directive('loading', ['$http', '$window', '$timeout', function ($http, $window, $timeout) {
     return {
         restrict: 'A',
 
@@ -132,7 +127,7 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
 
             scope.$watch(scope.isLoading, (value) => {
                 if(value) {
-                    setTimeout(() => {
+                    $timeout(() => {
                         element.removeClass('ng-hide');
                     }, 100);
                 } else {

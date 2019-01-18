@@ -1,6 +1,6 @@
 var app = angular.module("mainApp", []);
 
-app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
+app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpService) => {
 
     /**
      * init
@@ -10,7 +10,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
         $scope.songs = {};
-        
+
         $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
 
@@ -18,6 +18,8 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
             .then(() => {
                 $scope.get();
             });
+
+        $scope.resizeFrame();
     };
 
     /**
@@ -54,16 +56,13 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
                                 });
                         }
 
-                        if(values.length <= 4 || ($scope.schedules.length < 4 && date >= today.getTime())) {
+                        if (values.length <= 4 || ($scope.schedules.length < 4 && date >= today.getTime())) {
                             $scope.schedules.push({
                                 date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
                                 liturgy: liturgy,
                                 songs: songs
                             });
                         }
-
-                        //resize frame
-                        $scope.resizeFrame();
                     }
                 }
             });
@@ -116,28 +115,33 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, HttpService) => {
     };
 
     /**
+     * resize
+     */
+    $scope.resize = function (currentHeight) {
+        let contentHeight = $(document).outerHeight();
+
+        if (contentHeight !== currentHeight) {
+            contentHeight += 20;
+            parent.postMessage("resize::" + contentHeight, "*");
+        }
+
+        return contentHeight;
+    };
+
+    /**
      * resizeFrame
      */
     $scope.resizeFrame = function () {
-        let currentHeight = 0;
+        let promise, height = 0;
 
-        let resize = () => {
-            let contentHeight = $(document).outerHeight();
+        //set resize interval
+        promise = $interval(() => {
+            height = $scope.resize(height);
+        }, 1000);
 
-            if(contentHeight !== currentHeight) {
-                contentHeight += 20;
-                currentHeight = contentHeight;
-                parent.postMessage("resize::" + contentHeight, "*");
-            }
-        };
-
-        if($scope.resizeInterval) {
-            clearInterval($scope.resizeInterval);
-        }
-
-        $(document).ready(() => {
-            resize();
-            $scope.resizeInterval = setInterval(resize, 1000);
+        //cancel interval
+        $scope.$on('destroy', () => {
+            $interval.cancel(promise);
         });
     };
 
