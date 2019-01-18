@@ -30,6 +30,9 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
                 "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Vietnamese.json"
             }
         });
+
+        //resize frame
+        $scope.resizeFrame();
     };
 
     /**
