@@ -17,7 +17,8 @@
 }
 
 .library .panel-body {
-    padding: 5px;
+    padding: 0 5px 0 5px;
+    overflow-x: hidden;
 }
 
 table tr th{
