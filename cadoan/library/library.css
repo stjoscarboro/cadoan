@@ -4,7 +4,6 @@
 }
 
 .library .main {
-    min-width: 1080px;
     height: auto;
     overflow: auto;
 }
@@ -17,43 +16,13 @@
     background: url('../../resources/images/loading.gif') no-repeat 0/24px;
 }
 
-.library .content {
-    padding: 0 10px 0 10px;
+table tr th{
+    background:#337ab7;
+    color:white;
+    text-align:left;
+    vertical-align:center;
 }
 
-.library .song {
-    padding: 10px;
-    border-bottom: 1px solid whitesmoke;
-}
-
-.library .song .name {
-    display: inline-flex;
-    width: 400px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.library .song .title {
-    display: inline-flex;
-    width: 260px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.library .song .author {
-    display: inline-flex;
-    width: 260px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.library .song .category {
-    display: inline-flex;
-    width: 100px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+input[type=search] {
+    width: 300px !important;
 }

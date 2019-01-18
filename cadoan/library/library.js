@@ -1,4 +1,4 @@
-var app = angular.module("libraryApp", ['app.filters']);
+var app = angular.module("libraryApp", []);
 
 app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
 
@@ -13,6 +13,8 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
 
+        $.fn.dataTable.ext.order.intl('vi');
+
         $scope.listSongs()
             .then(() => {
                 $scope.get();
@@ -23,7 +25,11 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
      * get
      */
     $scope.get = function () {
-        // console.log($scope.songs);
+        $('.table').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Vietnamese.json"
+            }
+        });
     };
 
     /**
@@ -63,6 +69,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
             .then(response => {
                 if(response.data.files.length > 0) {
                     response.data.files.forEach(song => {
+                        song.url = $scope.httpService.getOpenURL(song.id)
                         $scope.songs.push(song);
                     });
                 }
@@ -98,7 +105,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         });
     };
 
-    /**
+/**
      * print
      */
     $scope.print = function () {
@@ -109,7 +116,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
 });
 
 
-app.directive('loading', ['$http', function ($http) {
+app.directive('loading', ['$http', '$window', function ($http, $window) {
     return {
         restrict: 'A',
 
@@ -119,54 +126,15 @@ app.directive('loading', ['$http', function ($http) {
             };
 
             scope.$watch(scope.isLoading, (value) => {
-                value ? element.removeClass('ng-hide') : element.addClass('ng-hide');
+                if(value) {
+                    setTimeout(() => {
+                        element.removeClass('ng-hide');
+                    }, 100);
+                } else {
+                    element.addClass('ng-hide');
+                    $window.angular.element('.content').removeClass('ng-hide');
+                }
             });
         }
     };
 }]);
-
-
-angular.module("app.filters", [])
-    .filter("localeOrderBy", [() => {
-        return function (array, sortPredicate, reverseOrder) {
-            if (!Array.isArray(array)) {
-                return array;
-            }
-
-            if (!sortPredicate) {
-                return array;
-            }
-
-            let isString = (value) => {
-                return (typeof value === "string");
-            };
-
-            let isNumber = (value) => {
-                return (typeof value === "number");
-            };
-
-            let isBoolean = (value) => {
-                return (typeof value === "boolean");
-            };
-
-            let arrayCopy = [];
-            angular.forEach(array, (item) => {
-                arrayCopy.push(item);
-            });
-
-            arrayCopy.sort((a, b) => {
-                let valueA = a[sortPredicate];
-                let valueB = b[sortPredicate];
-
-                if (isString(valueA))
-                    return !reverseOrder ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-
-                if (isNumber(valueA) || isBoolean(valueA))
-                    return !reverseOrder ? valueA - valueB : valueB - valueA;
-
-                return 0;
-            });
-
-            return arrayCopy;
-        }
-    }]);
