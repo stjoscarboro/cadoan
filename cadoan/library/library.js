@@ -32,7 +32,9 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, HttpService) => {
         });
 
         //resize frame
-        $scope.resizeFrame();
+        $timeout(() => {
+            $scope.resizeFrame();
+        }, 500);
     };
 
     /**
