@@ -18,6 +18,9 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
             .then(() => {
                 $scope.get();
             });
+
+        //resize frame
+        $scope.resizeFrame();
     };
 
     /**
@@ -62,9 +65,6 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
                             });
                         }
                     }
-
-                    //resize frame
-                    $scope.resizeFrame();
                 }
             });
     };
@@ -134,9 +134,6 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
      */
     $scope.resizeFrame = function () {
         let promise, height = 0;
-
-        //resize immediately
-        height = $scope.resize(height);
 
         //set resize interval
         promise = $interval(() => {
