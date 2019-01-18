@@ -30,11 +30,6 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, $interval, HttpSer
                 "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Vietnamese.json"
             }
         });
-
-        //resize frame
-        $timeout(() => {
-            $scope.resizeFrame();
-        }, 1000);
     };
 
     /**
@@ -109,7 +104,8 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $timeout, $interval, HttpSer
         }, 1000);
 
         //cancel interval
-        $scope.$on('destroy', () => {
+        $scope.$on('$destroy', () => {
+            alert('destroy interval');
             $interval.cancel(promise);
         });
     };
@@ -127,12 +123,13 @@ app.directive('loading', ['$http', '$window', '$timeout', function ($http, $wind
 
             scope.$watch(scope.isLoading, (value) => {
                 if(value) {
-                    $timeout(() => {
-                        element.removeClass('ng-hide');
-                    }, 100);
+                    element.removeClass('ng-hide');
                 } else {
-                    element.addClass('ng-hide');
-                    $window.angular.element('.content').removeClass('ng-hide');
+                    $timeout(() => {
+                        scope.resizeFrame();
+                        element.addClass('ng-hide');
+                        $window.angular.element('.content').removeClass('ng-hide');
+                    }, 500);
                 }
             });
         }
