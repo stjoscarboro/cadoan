@@ -15,13 +15,21 @@
 
                 <tbody>
                 <tr ng-repeat="song in songs" class="song">
-                    <td class="title" title="{{song.title}}"><a href="{{song.url}}" target="_blank">{{song.title}}</a></td>
-                    <td class="author" title="{{song.author}}">{{song.author}}</td>
-                    <td class="category" title="{{song.category}}">{{song.category}}</td>
-                    <td class="edit" ng-if="accessToken"><a href="" ng-click="edit(song.id)" title="Thay Đổi"><i class="glyphicon glyphicon-edit"></i></a></td>
+                    <td class="title" title="{{song.title}}">
+                        <a href="{{song.url}}" target="_blank">{{song.title}} <span ng-if="song.others"><em>({{song.others}})</em></span></a>
+                    </td>
+                    <td class="author" title="{{song.author}}">
+                        {{song.author}}
+                    </td>
+                    <td class="category" title="{{song.category}}">
+                        {{song.category}}
+                    </td>
+                    <td class="edit" ng-if="accessToken">
+                        <a href="" ng-click="edit(song.id)" title="Thay Đổi"><i class="glyphicon glyphicon-edit"></i></a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-</div>
+</div>others
