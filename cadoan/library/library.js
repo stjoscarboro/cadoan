@@ -53,13 +53,15 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
      * get
      */
     $scope.get = function () {
-        let columns = [
-            { width: 500, targets: 0, type: "html" },
-            { width: 200, targets: 1 },
-            { width: 80, targets: 2 }
-        ];
-
-        $scope.accessToken && columns.push({ width: 20, targets: 3, searchable: false, orderable: false });
+        let admin = $scope.accessToken !== null && $scope.accessToken !== undefined,
+            columns = [
+                { width: 500, targets: 0 },
+                { width: 200, targets: 1 },
+                { width: 80, targets: 2 },
+                { width: 20, targets: 3, searchable: false, orderable: false, visible: admin },
+                { width: 0, targets: 4, visible: false, type: 'base' },
+                { width: 0, targets: 4, visible: false, type: 'base' }
+            ];
 
         $('.table').DataTable({
             language: {
@@ -70,6 +72,9 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         });
     };
 
+    /**
+     * edit
+     */
     $scope.edit = function(id) {
         let song = $filter('filter')($scope.songs, {'id':id});
         if(song && song.constructor === Array && song.length > 0) {
@@ -93,6 +98,22 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         });
 
         popup.result.finally(angular.noop).then(angular.noop, angular.noop);
+    };
+
+    /**
+     * search
+     */
+    $scope.search = function(param) {
+        let table = $('.table').DataTable();
+        table.search(param).draw();
+        //
+        // $(document).ready(function() {
+        //         table
+        //             .search(
+        //                 jQuery.fn.DataTable.ext.type.search.string(param)
+        //             )
+        //             .draw()
+        // } );
     };
 
     /**

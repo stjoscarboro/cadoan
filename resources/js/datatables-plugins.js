@@ -15,7 +15,7 @@
             ;
     }
 
-    var searchType = jQuery.fn.DataTable.ext.type.search;
+    let searchType = $.fn.DataTable.ext.type.search;
 
     searchType.string = function (data) {
         return !data ?

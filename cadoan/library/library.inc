@@ -19,14 +19,17 @@
                         <a href="{{song.url}}" target="_blank">{{song.title}} <span ng-if="song.others"><small><em>({{song.others}})</em></small></span></a>
                     </td>
                     <td class="author" title="{{song.author}}">
-                        {{song.author}}
+                        <a href="" ng-click="search(song.author)">{{song.author}}</a>
                     </td>
                     <td class="category" title="{{song.category}}">
-                        {{song.category}}
+                        <a href="" ng-click="search(song.category)">{{song.category}}</a>
                     </td>
-                    <td class="edit" ng-if="accessToken">
-                        <a href="" ng-click="edit(song.id)" title="Thay Đổi"><i class="glyphicon glyphicon-edit"></i></a>
+                    <td class="edit" title="Thay Đổi">
+                        <a href="" ng-click="edit(song.id)"><i class="glyphicon glyphicon-edit"></i></a>
                     </td>
+
+                    <td class="hidden">{{song.author}}</td>
+                    <td class="hidden">{{song.category}}</td>
                 </tr>
                 </tbody>
             </table>
