@@ -39,3 +39,7 @@
     width: 300px !important;
     font-size: inherit;
 }
+
+.library input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
