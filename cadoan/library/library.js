@@ -59,7 +59,6 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 { width: 200, targets: 1 },
                 { width: 80, targets: 2 },
                 { width: 20, targets: 3, visible: admin, searchable: false, orderable: false },
-                { width: 0, targets: 4, visible: false, type: 'hidden' },
                 { width: 0, targets: 4, visible: false, type: 'hidden' }
             ];
 

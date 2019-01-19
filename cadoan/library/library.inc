@@ -9,7 +9,7 @@
                     <th class="title">Bài Nhạc</th>
                     <th class="author">Tác Giả</th>
                     <th class="category">Thể Loại</th>
-                    <th class="edit" ng-if="accessToken">&nbsp;</th>
+                    <th class="edit">&nbsp;</th>
                 </tr>
                 </thead>
 
@@ -28,11 +28,10 @@
                         <a href="" ng-click="edit(song.id)"><i class="glyphicon glyphicon-edit"></i></a>
                     </td>
 
-                    <td class="hidden">{{song.author}}</td>
-                    <td class="hidden">{{song.category}}</td>
+                    <td class="hidden">{{song.name}} | {{song.title}} | {{song.author}} | {{song.category}} | {{song.others}}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-</div>
+</div>others
