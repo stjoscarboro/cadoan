@@ -127,7 +127,7 @@ app.factory('HttpService', function ($http) {
                 });
             }
 
-            let url = driveURL + '?' + query + '&fields=files(id,kind,mimeType,name,description,properties)&orderBy=name&key=' + gapiKey;
+            let url = driveURL + '?' + query + '&fields=files(id,kind,mimeType,name,description)&orderBy=name&key=' + gapiKey;
             return $http.get(url);
         };
 

@@ -6,12 +6,15 @@
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Cache-Control" content="no-store" />
+    <meta name="google-signin-client_id"
+          content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
 
     <link rel="stylesheet" href="./library.css">
 
     <script src="../../resources/js/jquery.min.js"></script>
     <script src="../../resources/js/angular.min.js"></script>
     <script src="../../resources/js/base64.min.js"></script>
+    <script src="../../resources/js/google-api.js"></script>
 
     <script src="../../resources/js/stjoscarboro-module.js"></script>
     <script src="../../resources/js/http-service.js"></script>
@@ -26,13 +29,21 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-    <script src="../../resources/js/datatables-plugins.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.19/sorting/intl.js"></script>
+
+    <script src="https://apis.google.com/js/platform.js?onload=renderAdminButton" async defer></script>
 </head>
 
 <body ng-app="stjoscarboro" ng-controller="LibraryCtrl" data-ng-init="init()" class="library">
 
 <div id="main" class="main">
-    <ng-include src="'./library.inc'"></ng-include>
+    <div ng-if="!accessToken" class="signin">
+        <div id="gapi-signin"></div>
+    </div>
+
+    <div ng-if="accessToken">
+        <ng-include src="'./library.inc'"></ng-include>
+    </div>
 </div>
 
 </body>

@@ -8,6 +8,10 @@
     overflow: auto;
 }
 
+.library .signin {
+    padding: 20px;
+}
+
 .library .loader {
     display: block;
     margin: auto;
@@ -33,4 +37,5 @@
 
 .library input[type=search] {
     width: 300px !important;
+    font-size: inherit;
 }
