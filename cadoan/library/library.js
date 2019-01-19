@@ -136,25 +136,38 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
      */
     $scope.listFolder = function (folder) {
         let deferred = $q.defer(),
-            properties;
+            files, properties;
 
         $scope.httpService.getFolderData(folder)
             .then(response => {
                 if(response.data.files.length > 0) {
-                    response.data.files.forEach(song => {
-                        try {
-                            properties = JSON.parse(song.description);
-                        } catch(e) {
-                            // No-Op
-                        } finally {
-                            song = Object.assign(song, properties || {});
-                            song.title = song.title || song.name;
-                            properties = null;
-                        }
+                    files = response.data.files;
 
-                        song.url = $scope.httpService.getOpenURL(song.id);
-                        $scope.songs.push(song);
-                    });
+                    if(files && files.length > 0) {
+                        files.forEach(song => {
+                            if(song.mimeType === 'application/pdf') {
+                                try {
+                                    properties = JSON.parse(song.description);
+                                } catch(e) {
+                                    // No-Op
+                                } finally {
+                                    song = Object.assign(song, properties || {});
+                                    song.title = song.title || song.name;
+                                    properties = null;
+                                }
+
+                                let title = song.name.replace(/(.*)(.pdf)$/, '$1');
+                                for (let file of files) {
+                                    if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
+                                        song.audio = $scope.httpService.getOpenURL(file.id);
+                                    }
+                                }
+
+                                song.url = $scope.httpService.getOpenURL(song.id);
+                                $scope.songs.push(song);
+                            }
+                        });
+                    }
                 }
                 deferred.resolve();
             });

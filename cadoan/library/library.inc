@@ -17,6 +17,7 @@
                 <tr ng-repeat="song in songs" class="song">
                     <td class="title" title="{{song.title}}">
                         <a href="{{song.url}}" target="_blank">{{song.title}} <span ng-if="song.others"><small><em>({{song.others}})</em></small></span></a>
+                        <a href="{{song.audio}}" target="_blank" title="Nghe Bài Hát" ng-if="song.audio"><i class="glyphicon glyphicon-music audio"></i></a>
                     </td>
                     <td class="author" title="{{song.author}}">
                         <a href="" ng-click="search(song.author)">{{song.author}}</a>

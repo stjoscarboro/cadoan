@@ -20,6 +20,13 @@
     background: url('../../resources/images/loading.gif') no-repeat 0/24px;
 }
 
+.library .audio {
+    margin-left: 10px;
+    color: green;
+    font-weight: bold;
+    font-size: 10pt;
+}
+
 .library .panel-body {
     padding: 0;
     overflow-x: hidden;
