@@ -58,9 +58,9 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 { width: 500, targets: 0 },
                 { width: 200, targets: 1 },
                 { width: 80, targets: 2 },
-                { width: 20, targets: 3, searchable: false, orderable: false, visible: admin },
-                { width: 0, targets: 4, visible: false, type: 'base' },
-                { width: 0, targets: 4, visible: false, type: 'base' }
+                { width: 20, targets: 3, visible: admin, searchable: false, orderable: false },
+                { width: 0, targets: 4, visible: false, type: 'hidden' },
+                { width: 0, targets: 4, visible: false, type: 'hidden' }
             ];
 
         $('.table').DataTable({
@@ -87,7 +87,6 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
             backdrop: false,
             controller: () => {
                 $scope.modify = function() {
-                    console.log($scope.song);
                     popup.close();
                 };
 
@@ -104,16 +103,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
      * search
      */
     $scope.search = function(param) {
-        let table = $('.table').DataTable();
-        table.search(param).draw();
-        //
-        // $(document).ready(function() {
-        //         table
-        //             .search(
-        //                 jQuery.fn.DataTable.ext.type.search.string(param)
-        //             )
-        //             .draw()
-        // } );
+        $('.table').DataTable().search(param).draw();
     };
 
     /**
