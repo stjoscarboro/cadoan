@@ -16,7 +16,7 @@
                 <tbody>
                 <tr ng-repeat="song in songs" class="song">
                     <td class="title" title="{{song.title}}">
-                        <a href="{{song.url}}" target="_blank">{{song.title}} <span ng-if="song.others"><em>({{song.others}})</em></span></a>
+                        <a href="{{song.url}}" target="_blank">{{song.title}} <span ng-if="song.others"><small><em>({{song.others}})</em></small></span></a>
                     </td>
                     <td class="author" title="{{song.author}}">
                         {{song.author}}
