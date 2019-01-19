@@ -58,13 +58,13 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 { width: 500, targets: 0 },
                 { width: 200, targets: 1 },
                 { width: 80, targets: 2 },
-                { width: 20, targets: 3, visible: admin, searchable: false, orderable: false },
+                { width: 16, targets: 3, visible: admin, searchable: false, orderable: false },
                 { width: 0, targets: 4, visible: false, type: 'hidden' }
             ];
 
         $('.table').DataTable({
             language: {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Vietnamese.json"
+                "url": "../../resources/js/datatables-vi.json"
             },
             columns: columns,
             autoWidth: false
