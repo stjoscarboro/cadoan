@@ -5,15 +5,13 @@
 
 .quick-tip:focus::before, .quick-tip:hover::before {
     position: absolute;
-    display: table;
     content: attr(data-qtip);
-    width: -o-max-content;
-    width: -moz-max-content;
-    width: -webkit-max-content;
     white-space: nowrap;
     color: black;
     background-color: #e9ebee;
+    border: 1px solid #cccccc;
     border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.25);
     padding: 5px 20px 5px 10px;
     font-family: inherit;
     font-size: inherit;
@@ -21,7 +19,5 @@
     top: 10px;
     left: 30px;
     z-index: 1;
-    box-sizing: border-box;
-    text-align: justify;
     transition: all 0.75s ease;
 }
