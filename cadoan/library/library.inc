@@ -15,9 +15,10 @@
 
                 <tbody>
                 <tr ng-repeat="song in songs" class="song">
-                    <td class="title" title="{{song.title}}">
-                        <a href="{{song.url}}" target="_blank">{{song.title}} <span ng-if="song.others"><small><em>({{song.others}})</em></small></span></a>
-                        <a href="{{song.audio}}" target="_blank" title="Nghe Bài Hát" ng-if="song.audio"><i class="glyphicon glyphicon-music audio"></i></a>
+                    <td class="title">
+                        <a href="{{song.url}}" target="_blank" title="{{song.title}}">{{song.title}}</a>
+                        <a href="{{song.audio}}" ng-if="song.audio" target="_blank" title="Nghe Bài Hát"><i class="glyphicon glyphicon-music audio"></i></a>
+                        <span ng-if="song.others" class="tooltip-toggle" data-title="{{song.others}}"><i class="glyphicon glyphicon-info-sign info"></i></span>
                     </td>
                     <td class="author" title="{{song.author}}">
                         <a href="" ng-click="search(song.author)">{{song.author}}</a>
@@ -29,7 +30,7 @@
                         <a href="" ng-click="edit(song.id)"><i class="glyphicon glyphicon-edit"></i></a>
                     </td>
 
-                    <td class="hidden">{{song.name}} | {{song.title}} | {{song.author}} | {{song.category}} | {{song.others}}</td>
+                    <td class="hidden">{{song.name}}, {{song.title}}, {{song.author}}, {{song.category}}, {{song.others}}</td>
                 </tr>
                 </tbody>
             </table>

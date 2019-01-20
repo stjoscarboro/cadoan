@@ -84,6 +84,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
             scope: $scope,
             templateUrl: 'editor.html',
             backdrop: false,
+            keyboard: false,
             controller: () => {
                 $scope.modify = function() {
                     popup.close();
@@ -94,8 +95,6 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 };
             }
         });
-
-        popup.result.finally(angular.noop).then(angular.noop, angular.noop);
     };
 
     /**

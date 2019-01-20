@@ -23,7 +23,13 @@
 .library .audio {
     margin-left: 10px;
     color: green;
-    font-weight: bold;
+    font-weight: bolder;
+    font-size: 10pt;
+}
+
+.library .info {
+    margin-left: 10px;
+    color: #cccccc;
     font-size: 10pt;
 }
 
