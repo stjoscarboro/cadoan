@@ -18,8 +18,10 @@
                     <td class="title">
                         <a href="{{song.url}}" target="_blank" title="{{song.title}}">{{song.title}}</a>
                         <a href="{{song.audio}}" ng-if="song.audio" target="_blank" title="Nghe Bài Hát"><i class="glyphicon glyphicon-music audio"></i></a>
-                        <span ng-if="song.others" class="tooltip-toggle" data-title="{{song.others}}"><i class="glyphicon glyphicon-info-sign info"></i></span>
-                        <span ng-if="song.others" class="hidden">{{song.others}}</span>
+                        <span ng-if="song.others">
+                            <span class="quick-tip" data-qtip="{{song.others}}"><i class="glyphicon glyphicon-info-sign info"></i></span>
+                            <span class="hidden">{{song.others}}</span>
+                        </span>
                     </td>
 
                     <td class="author" title="{{song.author}}">

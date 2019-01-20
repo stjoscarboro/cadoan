@@ -12,10 +12,6 @@
     padding: 20px;
 }
 
-.library .hidden {
-    display: none;
-}
-
 .library .loader {
     display: block;
     margin: auto;
@@ -35,6 +31,10 @@
     margin-left: 10px;
     color: #cccccc;
     font-size: 10pt;
+}
+
+.library .hidden {
+    display: none;
 }
 
 .library .panel-body {
