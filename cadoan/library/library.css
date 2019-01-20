@@ -12,6 +12,10 @@
     padding: 20px;
 }
 
+.library .hidden {
+    display: none;
+}
+
 .library .loader {
     display: block;
     margin: auto;
