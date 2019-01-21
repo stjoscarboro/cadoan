@@ -1,5 +1,3 @@
-var app = angular.module("adminApp", []);
-
 app.controller("AdminCtrl", ($scope, $window, $timeout) => {
 
     /**

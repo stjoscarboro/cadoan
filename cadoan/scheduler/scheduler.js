@@ -1,5 +1,3 @@
-var app = angular.module("schedulerApp", []);
-
 app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anchorScroll, HttpService, EmailService) => {
 
     /**

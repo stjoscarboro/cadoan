@@ -5,13 +5,9 @@
     <title>Ca Đoàn Thánh Giuse - Scarborough</title>
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Cache-Control" content="no-store"/>
     <meta name="google-signin-client_id"
           content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
-
-    <link rel="stylesheet" href="../../resources/css/jquery-ui.min.css">
-    <link rel="stylesheet" href="../schedule/schedule.css">
-    <link rel="stylesheet" href="./scheduler.css">
 
     <script src="../../resources/js/jquery.min.js"></script>
     <script src="../../resources/js/jquery-ui.min.js"></script>
@@ -20,14 +16,24 @@
     <script src="../../resources/js/base64.min.js"></script>
     <script src="../../resources/js/google-api.js"></script>
 
-    <script src="./scheduler.js"></script>
+    <!--<link href="../../resources/css/bootstrap.min.css" rel="stylesheet">-->
+    <script src="../../resources/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/ui-bootstrap.min.js"></script>
+
+    <script src="../../resources/js/stjoscarboro.js"></script>
     <script src="../../resources/js/http-service.js"></script>
     <script src="../../resources/js/email-service.js"></script>
+
+    <link href="../../resources/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../schedule/schedule.css" rel="stylesheet">
+
+    <link href="./scheduler.css" rel="stylesheet">
+    <script src="./scheduler.js"></script>
 
     <script src="https://apis.google.com/js/platform.js?onload=renderAdminButton" async defer></script>
 </head>
 
-<body ng-app="schedulerApp" ng-controller="SchedulerCtrl" data-ng-init="init()" class="scheduler">
+<body ng-app="stjoscarboro" ng-controller="SchedulerCtrl" data-ng-init="init()" class="scheduler">
 
 <div id="main" class="main">
     <a name="top"></a>
@@ -42,7 +48,8 @@
                 <div>
                     <div class="label">Ngày:</div>
                     <div class="calendar">
-                        <input type="text" id="datepicker" ng-model="schedule.date" class="text round-border" autocomplete="off" required>
+                        <input type="text" id="datepicker" ng-model="schedule.date" class="text round-border"
+                               autocomplete="off" required>
                     </div>
                     <div class="driveurl">
                         <a href="{{driveURL}}" target="_blank">Danh Sách Bài Hát</a>
@@ -71,13 +78,15 @@
                 <div ng-repeat="x in rows" style="padding: 5px 0 5px 0;">
                     <div class="label">Bài Hát {{x + 1}}:</div>
                     <div class="select-category">
-                        <select ng-model="schedule.songs[x].categoryId" ng-change="selectFolder(x)" class="select-category select" required>
+                        <select ng-model="schedule.songs[x].categoryId" ng-change="selectFolder(x)"
+                                class="select-category select" required>
                             <option></option>
                             <option ng-repeat="category in categories" ng-value="category.id">{{category.name}}</option>
                         </select>
                     </div>
                     <div class="select-folder">
-                        <select ng-model="schedule.songs[x].folder" ng-change="selectSongs(x)" class="select-folder select" required>
+                        <select ng-model="schedule.songs[x].folder" ng-change="selectSongs(x)"
+                                class="select-folder select" required>
                             <option></option>
                             <option ng-repeat="song in songs" ng-value="song.id">{{song.name}}</option>
                         </select>

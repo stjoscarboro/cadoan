@@ -1,5 +1,3 @@
-// let app = angular.module("libraryApp", ['ui.bootstrap']);
-
 app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $filter, $document, HttpService, DataService) => {
 
     /**
@@ -9,9 +7,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
         $scope.songs = [];
-        $scope.song = {
-            properties: {}
-        };
+        $scope.song = {};
 
         $scope.httpService = new HttpService($scope);
         $scope.dataService = new DataService($scope);
@@ -20,12 +16,12 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
 
         $.fn.dataTable.ext.order.intl('vi', {
             sensitivity: 'accent'
-        } );
+        });
 
         $scope.liturgies = $scope.dataService.getLiturties();
 
         $document.ready(() => {
-            if($window.angular.element('.signin').length === 0) {
+            if ($window.angular.element('.signin').length === 0) {
                 $scope.listSongs()
                     .then(() => {
                         $scope.get();
@@ -55,11 +51,11 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     $scope.get = function () {
         let admin = $scope.accessToken !== null && $scope.accessToken !== undefined,
             columns = [
-                { width: 500, targets: 0 },
-                { width: 200, targets: 1 },
-                { width: 80, targets: 2 },
-                { width: 16, targets: 3, visible: admin, searchable: false, orderable: false },
-                { width: 0, targets: 4, visible: false, type: 'hidden' }
+                {width: 500, targets: 0},
+                {width: 200, targets: 1},
+                {width: 80, targets: 2},
+                {width: 16, targets: 3, visible: admin, searchable: false, orderable: false},
+                {width: 0, targets: 4, visible: false, type: 'hidden'}
             ];
 
         $('.table').DataTable({
@@ -74,9 +70,9 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     /**
      * edit
      */
-    $scope.edit = function(id) {
-        let song = $filter('filter')($scope.songs, {'id':id});
-        if(song && song.constructor === Array && song.length > 0) {
+    $scope.edit = function (id) {
+        let song = $filter('filter')($scope.songs, {'id': id});
+        if (song && song.constructor === Array && song.length > 0) {
             $scope.song = song[0];
         }
 
@@ -86,11 +82,11 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
             backdrop: false,
             keyboard: false,
             controller: () => {
-                $scope.modify = function() {
+                $scope.modify = function () {
                     popup.close();
                 };
 
-                $scope.cancel = function() {
+                $scope.cancel = function () {
                     popup.close();
                 };
             }
@@ -100,7 +96,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     /**
      * search
      */
-    $scope.search = function(param) {
+    $scope.search = function (param) {
         $('.table').DataTable().search(param).draw();
     };
 
@@ -139,15 +135,15 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
 
         $scope.httpService.getFolderData(folder)
             .then(response => {
-                if(response.data.files.length > 0) {
+                if (response.data.files.length > 0) {
                     files = response.data.files;
 
-                    if(files && files.length > 0) {
+                    if (files && files.length > 0) {
                         files.forEach(song => {
-                            if(song.mimeType === 'application/pdf') {
+                            if (song.mimeType === 'application/pdf') {
                                 try {
                                     properties = JSON.parse(song.description);
-                                } catch(e) {
+                                } catch (e) {
                                     // No-Op
                                 } finally {
                                     song = Object.assign(song, properties || {});
@@ -217,7 +213,7 @@ app.directive('loading', ['$http', '$window', '$timeout', function ($http, $wind
             };
 
             scope.$watch(scope.isLoading, (value) => {
-                if(value) {
+                if (value) {
                     element.removeClass('ng-hide');
                 } else {
                     $timeout(() => {

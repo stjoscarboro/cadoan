@@ -1,5 +1,3 @@
-var app = angular.module("mainApp", []);
-
 app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpService) => {
 
     /**
