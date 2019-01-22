@@ -15,7 +15,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
 
         $scope.categories = {};
         $scope.folders = {};
-        $scope.songs = {};
+        $scope.songs = [];
         $scope.lists = {};
 
         $scope.schedules = [];
@@ -57,6 +57,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         $scope.httpService.getSheetData($scope.schedules_db)
             .then(response => {
                 let values = response.data.values,
+                    pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {}),
                     lastDate = Date.now();
 
                 if (values) {
@@ -66,16 +67,11 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
                             songs = JSON.parse(value[2]);
 
                         for (let song of songs) {
-                            song.url = $scope.httpService.getOpenURL(song.id);
+                            let item = ($scope.songs.find(item => {
+                                return item.id === song.id;
+                            }));
 
-                            let list = $scope.folders[song.folder],
-                                title = song.name.replace(/(.*)(.pdf)$/, '$1');
-
-                            for (let item of list) {
-                                if (item.mimeType === 'audio/mp3' && item.name.indexOf(title) !== -1) {
-                                    song.audio = $scope.httpService.getOpenURL(item.id);
-                                }
-                            }
+                            Object.assign(song, pick(item, 'title', 'category', 'author', 'audio', 'url', 'folder'));
                         }
 
                         $scope.schedules.push({
@@ -115,28 +111,10 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
             liturgy = $scope.schedule.liturgy,
             songs = [], payload, removed = [];
 
-        for (let item of $scope.schedule.songs) {
-            let category, folder, song;
-
-            Object.values($scope.categories).forEach(c => {
-                category = category ? category : c.id === item.categoryId ? c : null;
-            });
-
-            Object.values($scope.songs).forEach(f => {
-                folder = folder ? folder : f.id === item.folder ? f : null;
-            });
-
-            Object.values(folder.list).forEach(s => {
-                song = song ? song : s.id === item.song ? s : null;
-            });
-
+        for (let song of $scope.schedule.songs) {
             songs.push({
-                categoryId: category.id,
-                category: category.name,
-                id: song.id,
-                name: song.name,
-                folder: folder.id,
-                singer: item.singer
+                id: song.songId,
+                singer: song.singer
             });
         }
 
@@ -181,8 +159,8 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
 
         $scope.schedule.songs.forEach((song, index) => {
             $scope.schedule.songs[index].categoryId = song.folder;
-            $scope.schedule.songs[index].folder = song.folder;
-            $scope.schedule.songs[index].song = song.id;
+            $scope.schedule.songs[index].folderId = song.folder;
+            $scope.schedule.songs[index].songId = song.id;
             $scope.selectFolder(index);
         });
 
@@ -304,6 +282,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
 
                 if (folders) {
                     for (let [index, folder] of folders.entries()) {
+                        //set categories
                         if ($scope.rows.indexOf(index) !== -1) {
                             $scope.categories[index] = {
                                 id: folder.id,
@@ -311,28 +290,67 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
                             }
                         }
 
-                        $scope.songs[index] = {
+                        //set folders
+                        $scope.folders[index] = {
                             id: folder.id,
                             name: folder.name
-                        };
-
-                        promises.push($scope.listFolder(folder.id));
+                        }
                     }
 
-                    Promise.all(promises)
-                        .then(values => {
-                            for (let [index, songs] of values.entries()) {
-                                //filter only pdf files
-                                songs = songs.filter(item => {
-                                    return item.mimeType === 'application/pdf';
-                                });
-
-                                $scope.songs[index].list = songs;
-                            }
-
-                            deferred.resolve();
-                        });
+                    for (let folder of folders) {
+                        promises.push($scope.listFolder(folder.id));
+                    }
                 }
+
+                Promise.all(promises)
+                    .then(() => {
+                        deferred.resolve();
+                    });
+            });
+
+        return deferred.promise;
+    };
+
+    /**
+     * listFolder
+     */
+    $scope.listFolder = function (folder) {
+        let deferred = $q.defer();
+
+        $scope.httpService.getFolderData(folder)
+            .then(response => {
+                if (response.data.files.length > 0) {
+                    let files = response.data.files,
+                        properties;
+
+                    if (files && files.length > 0) {
+                        files.forEach(song => {
+                            if (song.mimeType === 'application/pdf') {
+                                try {
+                                    properties = JSON.parse(song.description);
+                                } catch (e) {
+                                    // No-Op
+                                } finally {
+                                    song = Object.assign(song, properties || {});
+                                    song.title = song.title || song.name;
+                                    properties = null;
+                                }
+
+                                let title = song.name.replace(/(.*)(.pdf)$/, '$1');
+                                for (let file of files) {
+                                    if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
+                                        song.audio = $scope.httpService.getOpenURL(file.id);
+                                    }
+                                }
+
+                                song.folder = folder;
+                                song.url = $scope.httpService.getOpenURL(song.id);
+                                $scope.songs.push(song);
+                            }
+                        });
+                    }
+                }
+                deferred.resolve();
             });
 
         return deferred.promise;
@@ -383,35 +401,15 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
     };
 
     /**
-     * listFolder
-     */
-    $scope.listFolder = function (folder) {
-        let songs = $scope.folders[folder],
-            deferred = $q.defer();
-
-        if (songs) {
-            deferred.resolve(songs);
-        } else {
-            $scope.httpService.getFolderData(folder)
-                .then(response => {
-                    songs = response.data.files;
-                    $scope.folders[folder] = songs;
-                    deferred.resolve(songs);
-                });
-        }
-
-        return deferred.promise;
-    };
-
-    /**
      * selectFolder
      */
     $scope.selectFolder = function (index) {
         let categoryId = $scope.schedule.songs[index].categoryId;
 
-        for (let folder of Object.values($scope.categories)) {
-            if (folder.id === categoryId) {
-                $scope.schedule.songs[index].folder = categoryId;
+        for (let category of Object.values($scope.categories)) {
+            if (category.id === categoryId) {
+                $scope.schedule.songs[index].category = category.name;
+                $scope.schedule.songs[index].folderId = categoryId;
                 $scope.selectSongs(index);
             }
         }
@@ -423,12 +421,12 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
     $scope.selectSongs = function (index) {
         let songs = $scope.schedule.songs[index];
 
-        if (!songs || !songs.folder) {
-            $scope.lists[index] = null;
-        } else {
-            for (let list of Object.values($scope.songs)) {
-                if (list.id === songs.folder) {
-                    $scope.lists[index] = list;
+        if (songs && songs.folderId) {
+            $scope.lists[index] = {songs: []};
+
+            for (let song of $scope.songs) {
+                if (song.folder === songs.folderId) {
+                    $scope.lists[index].songs.push(song);
                 }
             }
         }
@@ -441,7 +439,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         let songs = $scope.schedule.songs[index];
 
         if (songs) {
-            $window.open($scope.httpService.getOpenURL(songs.song), '_blank');
+            $window.open($scope.httpService.getOpenURL(songs.songId), '_blank');
         }
     };
 

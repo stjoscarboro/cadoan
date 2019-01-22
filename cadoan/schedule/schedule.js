@@ -7,7 +7,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
         $scope.schedule_db = 'cadoan_schedules';
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
-        $scope.songs = {};
+        $scope.songs = [];
 
         $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
@@ -32,7 +32,8 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
 
         $scope.httpService.getSheetData($scope.schedule_db)
             .then(response => {
-                let values = response.data.values;
+                let values = response.data.values,
+                    pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {});
 
                 if (values) {
                     for (let value of values) {
@@ -41,18 +42,11 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
                             songs = JSON.parse(value[2]);
 
                         for (let song of songs) {
-                            song.url = $scope.httpService.getOpenURL(song.id);
+                            let item = ($scope.songs.find(item => {
+                                return item.id === song.id;
+                            }));
 
-                            $scope.listFolder(song.folder)
-                                .then(list => {
-                                    let title = song.name.replace(/(.*)(.pdf)$/, '$1');
-
-                                    for (let item of list) {
-                                        if (item.mimeType === 'audio/mp3' && item.name.indexOf(title) !== -1) {
-                                            song.audio = $scope.httpService.getOpenURL(item.id);
-                                        }
-                                    }
-                                });
+                            Object.assign(song, pick(item, 'title', 'category', 'author', 'audio', 'url'));
                         }
 
                         if (values.length <= 4 || ($scope.schedules.length < 4 && date >= today.getTime())) {
@@ -97,18 +91,42 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
      * listFolder
      */
     $scope.listFolder = function (folder) {
-        let songs = $scope.songs[folder],
-            deferred = $q.defer();
+        let deferred = $q.defer();
 
-        if (songs) {
-            deferred.resolve(songs);
-        } else {
-            $scope.httpService.getFolderData(folder)
-                .then(response => {
-                    $scope.songs[folder] = response.data.files;
-                    deferred.resolve($scope.songs[folder]);
-                });
-        }
+        $scope.httpService.getFolderData(folder)
+            .then(response => {
+                if (response.data.files.length > 0) {
+                    let files = response.data.files,
+                        properties;
+
+                    if (files && files.length > 0) {
+                        files.forEach(song => {
+                            if (song.mimeType === 'application/pdf') {
+                                try {
+                                    properties = JSON.parse(song.description);
+                                } catch (e) {
+                                    // No-Op
+                                } finally {
+                                    song = Object.assign(song, properties || {});
+                                    song.title = song.title || song.name;
+                                    properties = null;
+                                }
+
+                                let title = song.name.replace(/(.*)(.pdf)$/, '$1');
+                                for (let file of files) {
+                                    if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
+                                        song.audio = $scope.httpService.getOpenURL(file.id);
+                                    }
+                                }
+
+                                song.url = $scope.httpService.getOpenURL(song.id);
+                                $scope.songs.push(song);
+                            }
+                        });
+                    }
+                }
+                deferred.resolve();
+            });
 
         return deferred.promise;
     };

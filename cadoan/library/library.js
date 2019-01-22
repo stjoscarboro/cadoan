@@ -130,13 +130,13 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
      * listFolder
      */
     $scope.listFolder = function (folder) {
-        let deferred = $q.defer(),
-            files, properties;
+        let deferred = $q.defer();
 
         $scope.httpService.getFolderData(folder)
             .then(response => {
                 if (response.data.files.length > 0) {
-                    files = response.data.files;
+                    let files = response.data.files,
+                        properties;
 
                     if (files && files.length > 0) {
                         files.forEach(song => {

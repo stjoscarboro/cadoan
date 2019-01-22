@@ -47,8 +47,7 @@
                 <div>
                     <div class="label">Ngày:</div>
                     <div class="calendar">
-                        <input type="text" id="datepicker" ng-model="schedule.date" class="text round-border"
-                               autocomplete="off" required>
+                        <input type="text" id="datepicker" ng-model="schedule.date" class="text round-border" autocomplete="off" required>
                     </div>
                     <div class="driveurl">
                         <a href="{{driveURL}}" target="_blank">Danh Sách Bài Hát</a>
@@ -77,23 +76,21 @@
                 <div ng-repeat="x in rows" style="padding: 5px 0 5px 0;">
                     <div class="label">Bài Hát {{x + 1}}:</div>
                     <div class="select-category">
-                        <select ng-model="schedule.songs[x].categoryId" ng-change="selectFolder(x)"
-                                class="select-category select" required>
+                        <select ng-model="schedule.songs[x].categoryId" ng-change="selectFolder(x)" class="select-category select" required>
                             <option></option>
                             <option ng-repeat="category in categories" ng-value="category.id">{{category.name}}</option>
                         </select>
                     </div>
                     <div class="select-folder">
-                        <select ng-model="schedule.songs[x].folder" ng-change="selectSongs(x)"
-                                class="select-folder select" required>
+                        <select ng-model="schedule.songs[x].folderId" ng-change="selectSongs(x)" class="select-folder select" required>
                             <option></option>
-                            <option ng-repeat="song in songs" ng-value="song.id">{{song.name}}</option>
+                            <option ng-repeat="folder in folders" ng-value="folder.id">{{folder.name}}</option>
                         </select>
                     </div>
                     <div class="select-songs">
-                        <select ng-model="schedule.songs[x].song" class="select-songs select" required>
+                        <select ng-model="schedule.songs[x].songId" class="select-songs select" required>
                             <option></option>
-                            <option ng-repeat="list in lists[x].list" ng-value="list.id">{{list.name}}</option>
+                            <option ng-repeat="song in lists[x].songs" ng-value="song.id">{{song.title}} (<em>{{song.author}}</em>)</option>
                         </select>
                     </div>
                     <div class="select-singer">
