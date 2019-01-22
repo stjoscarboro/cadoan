@@ -94,9 +94,9 @@
                         </select>
                     </div>
                     <div class="select-singer">
-                        <select ng-model="schedule.songs[x].singer" class="select-singer select">
+                        <select ng-model="schedule.songs[x].singerId" class="select-singer select">
                             <option></option>
-                            <option ng-repeat="singer in singers" ng-value="singer">{{singer}}</option>
+                            <option ng-repeat="singer in singers" ng-value="singer.id">{{singer.name}}</option>
                         </select>
                     </div>
                     <div class="icon">

@@ -67,11 +67,16 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
                             songs = JSON.parse(value[2]);
 
                         for (let song of songs) {
-                            let item = ($scope.songs.find(item => {
-                                return item.id === song.id;
-                            }));
-
+                            //find song
+                            let item = ($scope.songs.find(s => { return s.id === song.id; }));
                             Object.assign(song, pick(item, 'title', 'category', 'author', 'audio', 'url', 'folder'));
+
+                            //get singer
+                            if(song.singer) {
+                                let singer = $scope.singers.find(s => { return s.id === song.singer; });
+                                song.singerId = singer.id;
+                                song.singer = singer.name;
+                            }
                         }
 
                         $scope.schedules.push({
@@ -114,7 +119,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         for (let song of $scope.schedule.songs) {
             songs.push({
                 id: song.songId,
-                singer: song.singer
+                singer: song.singerId
             });
         }
 
@@ -390,7 +395,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
 
                 if (values) {
                     for (let value of values) {
-                        $scope.singers.push(value[0]);
+                        $scope.singers.push({ id: value[0], name: value[1] });
                     }
                 }
 

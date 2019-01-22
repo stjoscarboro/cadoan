@@ -4,15 +4,18 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
      * init
      */
     $scope.init = function () {
-        $scope.schedule_db = 'cadoan_schedules';
+        $scope.schedules_db = 'cadoan_schedules';
+        $scope.singers_db = 'cadoan_singers';
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
         $scope.songs = [];
+        $scope.singers = [];
+        $scope.schedules = [];
 
         $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
 
-        $scope.listSongs()
+        $scope.loadData()
             .then(() => {
                 $scope.get();
             });
@@ -30,7 +33,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
 
         $scope.schedules = [];
 
-        $scope.httpService.getSheetData($scope.schedule_db)
+        $scope.httpService.getSheetData($scope.schedules_db)
             .then(response => {
                 let values = response.data.values,
                     pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {});
@@ -42,11 +45,16 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
                             songs = JSON.parse(value[2]);
 
                         for (let song of songs) {
-                            let item = ($scope.songs.find(item => {
-                                return item.id === song.id;
-                            }));
-
+                            //find song
+                            let item = ($scope.songs.find(s => { return s.id === song.id; }));
                             Object.assign(song, pick(item, 'title', 'category', 'author', 'audio', 'url'));
+
+                            //get singer
+                            if(song.singer) {
+                                let singer = $scope.singers.find(s => { return s.id === song.singer; });
+                                song.singerId = singer.id;
+                                song.singer = singer.name;
+                            }
                         }
 
                         if (values.length <= 4 || ($scope.schedules.length < 4 && date >= today.getTime())) {
@@ -59,6 +67,23 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
                     }
                 }
             });
+    };
+
+    /**
+     * loadData
+     */
+    $scope.loadData = function () {
+        let deferred = $q.defer();
+
+        Promise.all([
+            $scope.listSongs(),
+            $scope.listSingers()
+        ])
+            .then(() => {
+                deferred.resolve();
+            });
+
+        return deferred.promise;
     };
 
     /**
@@ -125,6 +150,28 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
                         });
                     }
                 }
+                deferred.resolve();
+            });
+
+        return deferred.promise;
+    };
+
+    /**
+     * listSingers
+     */
+    $scope.listSingers = function () {
+        let deferred = $q.defer();
+
+        $scope.httpService.getSheetData($scope.singers_db)
+            .then(response => {
+                let values = response.data.values;
+
+                if (values) {
+                    for (let value of values) {
+                        $scope.singers.push({ id: value[0], name: value[1] });
+                    }
+                }
+
                 deferred.resolve();
             });
 

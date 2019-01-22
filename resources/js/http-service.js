@@ -43,7 +43,7 @@ app.factory('HttpService', function ($http) {
 
             cadoan_singers: {
                 id: '1c-CU_cRvWy_Wp5PhrkKN_k-H3TKArH9-5z098Wx6Ibo',
-                range: 'A:A' // [name]
+                range: 'A:B' // [id, name]
             }
         };
 
