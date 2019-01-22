@@ -1,4 +1,4 @@
-app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anchorScroll, HttpService, EmailService) => {
+app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anchorScroll, HttpService) => {
 
     /**
      * init
@@ -25,7 +25,6 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         $scope.rows = [0, 1, 2, 3, 4];
 
         $scope.httpService = new HttpService($scope);
-        $scope.emailService = new EmailService($scope);
 
         $scope.driveURL = $scope.httpService.getDriveURL($scope.sheets_folder);
         $scope.dateFormat = "DD, dd/mm/yy";
