@@ -65,3 +65,42 @@ app.factory('EmailService', function() {
 	return EmailService;
 	
 });
+
+
+
+// /**
+//  * getYearData
+//  */
+// service.getYearData = function () {
+//     return this.getFolderData(folderId);
+// };
+//
+// /**
+//  * sendEmail
+//  */
+// service.sendEmail = function (to, from, subject, message) {
+//     let url = mailURL;
+//
+//     let email = '';
+//     email += 'To: ' + to + '\r\n';
+//     email += 'From: ' + from + '\r\n';
+//     email += 'Subject: ' + subject + '\r\n';
+//     email += 'Content-Type: text/html; charset=UTF-8' + '\r\n';
+//     email += 'Content-Transfer-Encoding: 8bit' + '\r\n';
+//     email += 'MIME-Version: 1.0' + '\r\n';
+//     email += '\r\n';
+//     email += message;
+//
+//     let body = {
+//         raw: Base64.encode(email).replace(/\//g, '_').replace(/\+/g, '-')
+//     };
+//
+//     return $http.post(url, body, {
+//         params: {
+//             access_token: this.access_token
+//         },
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     });
+// };

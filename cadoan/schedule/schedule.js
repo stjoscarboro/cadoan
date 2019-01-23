@@ -1,4 +1,4 @@
-app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpService) => {
+app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpService, FileService) => {
 
     /**
      * init
@@ -12,7 +12,6 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
         $scope.singers = [];
         $scope.schedules = [];
 
-        $scope.httpService = new HttpService($scope);
         $scope.dateFormat = "DD, dd/mm/yy";
 
         $scope.loadData()
@@ -33,7 +32,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
 
         $scope.schedules = [];
 
-        $scope.httpService.getSheetData($scope.schedules_db)
+        HttpService.getSheetData($scope.schedules_db)
             .then(response => {
                 let values = response.data.values,
                     pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {});
@@ -76,80 +75,15 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
         let deferred = $q.defer();
 
         Promise.all([
-            $scope.listSongs(),
+            FileService.listSongs($scope.sheets_folder),
             $scope.listSingers()
         ])
-            .then(() => {
-                deferred.resolve();
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * listSongs
-     */
-    $scope.listSongs = function () {
-        let deferred = $q.defer(),
-            promises = [];
-
-        $scope.httpService.getFolderData($scope.sheets_folder)
-            .then(response => {
-                let folders = response.data.files;
-
-                if (folders) {
-                    for (let folder of folders) {
-                        promises.push($scope.listFolder(folder.id));
-                    }
+            .then((values) => {
+                let songs = values[0];
+                for(let list of songs) {
+                    Array.prototype.push.apply($scope.songs, list);
                 }
 
-                Promise.all(promises)
-                    .then(() => {
-                        deferred.resolve();
-                    });
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * listFolder
-     */
-    $scope.listFolder = function (folder) {
-        let deferred = $q.defer();
-
-        $scope.httpService.getFolderData(folder)
-            .then(response => {
-                if (response.data.files.length > 0) {
-                    let files = response.data.files,
-                        properties;
-
-                    if (files && files.length > 0) {
-                        files.forEach(song => {
-                            if (song.mimeType === 'application/pdf') {
-                                try {
-                                    properties = JSON.parse(song.description);
-                                } catch (e) {
-                                    // No-Op
-                                } finally {
-                                    song = Object.assign(song, properties || {});
-                                    song.title = song.title || song.name;
-                                    properties = null;
-                                }
-
-                                let title = song.name.replace(/(.*)(.pdf)$/, '$1');
-                                for (let file of files) {
-                                    if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
-                                        song.audio = $scope.httpService.getOpenURL(file.id);
-                                    }
-                                }
-
-                                song.url = $scope.httpService.getOpenURL(song.id);
-                                $scope.songs.push(song);
-                            }
-                        });
-                    }
-                }
                 deferred.resolve();
             });
 
@@ -162,7 +96,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
     $scope.listSingers = function () {
         let deferred = $q.defer();
 
-        $scope.httpService.getSheetData($scope.singers_db)
+        HttpService.getSheetData($scope.singers_db)
             .then(response => {
                 let values = response.data.values;
 

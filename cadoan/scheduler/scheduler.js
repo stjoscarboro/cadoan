@@ -1,4 +1,4 @@
-app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anchorScroll, HttpService) => {
+app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anchorScroll, HttpService, FileService) => {
 
     /**
      * init
@@ -24,9 +24,6 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
 
         $scope.rows = [0, 1, 2, 3, 4];
 
-        $scope.httpService = new HttpService($scope);
-
-        $scope.driveURL = $scope.httpService.getDriveURL($scope.sheets_folder);
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.week = 7 * 24 * 3600 * 1000;
 
@@ -40,6 +37,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
     $scope.signin = function (profile, token) {
         $scope.profile = profile;
         $scope.accessToken = token;
+        HttpService.setAccessToken(token);
 
         $scope.loadData()
             .then(() => {
@@ -54,7 +52,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         $scope.schedules = [];
 
         //load existing schedules
-        $scope.httpService.getSheetData($scope.schedules_db)
+        HttpService.getSheetData($scope.schedules_db)
             .then(response => {
                 let values = response.data.values,
                     pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {}),
@@ -145,7 +143,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         Promise.all(removed)
             .then(() => {
                 //add new schedule
-                $scope.httpService.appendSheetData($scope.schedules_db, payload, {
+                HttpService.appendSheetData($scope.schedules_db, payload, {
                     valueInputOption: "USER_ENTERED"
                 })
                     .then(response => {
@@ -191,7 +189,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
             }]
         };
 
-        $scope.httpService.updateSheetData($scope.schedules_db, payload)
+        HttpService.updateSheetData($scope.schedules_db, payload)
             .then(() => {
                 $scope.schedules.splice(id, 1);
                 deferred.resolve();
@@ -218,7 +216,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
             }]
         };
 
-        $scope.httpService.updateSheetData($scope.schedules_db, payload)
+        HttpService.updateSheetData($scope.schedules_db, payload)
             .then(response => {
                 $scope.refresh();
             }, error => {
@@ -263,25 +261,27 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         let deferred = $q.defer();
 
         Promise.all([
-            $scope.listSongs(),
+            FileService.listSongs($scope.sheets_folder),
+            $scope.listCategories(),
             $scope.listLiturgies(),
             $scope.listSingers()
         ])
-            .then(() => {
+            .then((values) => {
+                let songs = values[0];
+                for(let list of songs) {
+                    Array.prototype.push.apply($scope.songs, list);
+                }
+
                 deferred.resolve();
             });
 
         return deferred.promise;
     };
 
-    /**
-     * listSongs
-     */
-    $scope.listSongs = function () {
-        let deferred = $q.defer(),
-            promises = [];
+    $scope.listCategories = function() {
+        let deferred = $q.defer();
 
-        $scope.httpService.getFolderData($scope.sheets_folder)
+        FileService.getFolderData($scope.sheets_folder)
             .then(response => {
                 let folders = response.data.files;
 
@@ -301,60 +301,8 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
                             name: folder.name
                         }
                     }
-
-                    for (let folder of folders) {
-                        promises.push($scope.listFolder(folder.id));
-                    }
                 }
 
-                Promise.all(promises)
-                    .then(() => {
-                        deferred.resolve();
-                    });
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * listFolder
-     */
-    $scope.listFolder = function (folder) {
-        let deferred = $q.defer();
-
-        $scope.httpService.getFolderData(folder)
-            .then(response => {
-                if (response.data.files.length > 0) {
-                    let files = response.data.files,
-                        properties;
-
-                    if (files && files.length > 0) {
-                        files.forEach(song => {
-                            if (song.mimeType === 'application/pdf') {
-                                try {
-                                    properties = JSON.parse(song.description);
-                                } catch (e) {
-                                    // No-Op
-                                } finally {
-                                    song = Object.assign(song, properties || {});
-                                    song.title = song.title || song.name;
-                                    properties = null;
-                                }
-
-                                let title = song.name.replace(/(.*)(.pdf)$/, '$1');
-                                for (let file of files) {
-                                    if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
-                                        song.audio = $scope.httpService.getOpenURL(file.id);
-                                    }
-                                }
-
-                                song.folder = folder;
-                                song.url = $scope.httpService.getOpenURL(song.id);
-                                $scope.songs.push(song);
-                            }
-                        });
-                    }
-                }
                 deferred.resolve();
             });
 
@@ -367,7 +315,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
     $scope.listLiturgies = function () {
         let deferred = $q.defer();
 
-        $scope.httpService.getSheetData($scope.ligurty_db)
+        HttpService.getSheetData($scope.ligurty_db)
             .then(response => {
                 let values = response.data.values;
 
@@ -389,7 +337,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
     $scope.listSingers = function () {
         let deferred = $q.defer();
 
-        $scope.httpService.getSheetData($scope.singers_db)
+        HttpService.getSheetData($scope.singers_db)
             .then(response => {
                 let values = response.data.values;
 
@@ -444,7 +392,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         let songs = $scope.schedule.songs[index];
 
         if (songs) {
-            $window.open($scope.httpService.getOpenURL(songs.songId), '_blank');
+            $window.open(FileService.getOpenURL(songs.songId), '_blank');
         }
     };
 
