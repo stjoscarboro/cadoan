@@ -21,7 +21,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
 
         $document.ready(() => {
             if ($window.angular.element('.signin').length === 0) {
-                $scope.listSongs()
+                $scope.loadData()
                     .then(() => {
                         $scope.get();
                         $scope.resizeFrame();
@@ -38,7 +38,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $scope.accessToken = token;
         HttpService.setAccessToken(token);
 
-        $scope.listSongs()
+        $scope.loadData()
             .then(() => {
                 $scope.get();
                 $scope.resizeFrame();
@@ -58,13 +58,15 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 {width: 0, targets: 4, visible: false, type: 'hidden'}
             ];
 
-        $('.table').DataTable({
-            language: {
-                "url": "../../resources/js/datatables-vi.json"
-            },
-            columns: columns,
-            autoWidth: false
-        });
+        $timeout(() => {
+            $('.table').DataTable({
+                language: {
+                    "url": "../../resources/js/datatables-vi.json"
+                },
+                columns: columns,
+                autoWidth: false
+            });
+        }, 1);
     };
 
     /**
@@ -112,79 +114,9 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
             .then((values) => {
                 let songs = values[0];
                 for(let list of songs) {
-                    Array.prototype.push.apply($scope.songs, list);
+                    $scope.songs = $scope.songs.concat(list);
                 }
 
-                deferred.resolve();
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * listSongs
-     */
-    $scope.listSongs = function () {
-        let deferred = $q.defer(),
-            promises = [];
-
-        FileService.getFolderData($scope.sheets_folder)
-            .then(response => {
-                let folders = response.data.files;
-
-                if (folders) {
-                    for (let folder of folders) {
-                        promises.push($scope.listFolder(folder.id));
-                    }
-                }
-
-                Promise.all(promises)
-                    .then(() => {
-                        deferred.resolve();
-                    });
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * listFolder
-     */
-    $scope.listFolder = function (folder) {
-        let deferred = $q.defer();
-
-        FileService.getFolderData(folder)
-            .then(response => {
-                if (response.data.files.length > 0) {
-                    let files = response.data.files,
-                        properties;
-
-                    if (files && files.length > 0) {
-                        files.forEach(song => {
-                            if (song.mimeType === 'application/pdf') {
-                                try {
-                                    properties = JSON.parse(song.description);
-                                } catch (e) {
-                                    // No-Op
-                                } finally {
-                                    song = Object.assign(song, properties || {});
-                                    song.title = song.title || song.name;
-                                    properties = null;
-                                }
-
-                                let title = song.name.replace(/(.*)(.pdf)$/, '$1');
-                                for (let file of files) {
-                                    if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
-                                        song.audio = FileService.getOpenURL(file.id);
-                                    }
-                                }
-
-                                song.url = FileService.getOpenURL(song.id);
-                                $scope.songs.push(song);
-                            }
-                        });
-                    }
-                }
                 deferred.resolve();
             });
 
