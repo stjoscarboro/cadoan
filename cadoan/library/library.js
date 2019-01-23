@@ -1,4 +1,4 @@
-app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $filter, $document, HttpService, DataService) => {
+app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $filter, $document, HttpService, FileService, DataService) => {
 
     /**
      * init
@@ -9,7 +9,6 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $scope.songs = [];
         $scope.song = {};
 
-        $scope.httpService = new HttpService($scope);
         $scope.dataService = new DataService($scope);
 
         $scope.dateFormat = "DD, dd/mm/yy";
@@ -37,6 +36,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     $scope.signin = function (profile, token) {
         $scope.profile = profile;
         $scope.accessToken = token;
+        HttpService.setAccessToken(token);
 
         $scope.listSongs()
             .then(() => {
@@ -101,13 +101,34 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     };
 
     /**
+     * loadData
+     */
+    $scope.loadData = function () {
+        let deferred = $q.defer();
+
+        Promise.all([
+            FileService.listSongs($scope.sheets_folder)
+        ])
+            .then((values) => {
+                let songs = values[0];
+                for(let list of songs) {
+                    Array.prototype.push.apply($scope.songs, list);
+                }
+
+                deferred.resolve();
+            });
+
+        return deferred.promise;
+    };
+
+    /**
      * listSongs
      */
     $scope.listSongs = function () {
         let deferred = $q.defer(),
             promises = [];
 
-        $scope.httpService.getFolderData($scope.sheets_folder)
+        FileService.getFolderData($scope.sheets_folder)
             .then(response => {
                 let folders = response.data.files;
 
@@ -132,7 +153,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     $scope.listFolder = function (folder) {
         let deferred = $q.defer();
 
-        $scope.httpService.getFolderData(folder)
+        FileService.getFolderData(folder)
             .then(response => {
                 if (response.data.files.length > 0) {
                     let files = response.data.files,
@@ -154,11 +175,11 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                                 let title = song.name.replace(/(.*)(.pdf)$/, '$1');
                                 for (let file of files) {
                                     if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
-                                        song.audio = $scope.httpService.getOpenURL(file.id);
+                                        song.audio = FileService.getOpenURL(file.id);
                                     }
                                 }
 
-                                song.url = $scope.httpService.getOpenURL(song.id);
+                                song.url = FileService.getOpenURL(song.id);
                                 $scope.songs.push(song);
                             }
                         });
