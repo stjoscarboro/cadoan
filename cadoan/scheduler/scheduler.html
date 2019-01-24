@@ -61,7 +61,7 @@
                     <div class="calendar">
                         <select ng-model="schedule.liturgy" class="select">
                             <option></option>
-                            <option ng-repeat="liturgy in liturgies" ng-value="liturgy">{{liturgy}}</option>
+                            <option ng-repeat="liturgy in liturgies" ng-value="liturgy.id">{{liturgy.name}}</option>
                         </select>
                     </div>
                     <div class="driveurl">&nbsp;</div>
@@ -90,13 +90,13 @@
                         </select>
                     </div>
                     <div class="select-songs">
-                        <select ng-model="schedule.songs[x].songId" class="select-songs select" required>
+                        <select ng-model="schedule.songs[x].id" class="select-songs select" required>
                             <option></option>
                             <option ng-repeat="song in lists[x].songs" ng-value="song.id">{{song.title}} (<em>{{song.author}}</em>)</option>
                         </select>
                     </div>
                     <div class="select-singer">
-                        <select ng-model="schedule.songs[x].singerId" class="select-singer select">
+                        <select ng-model="schedule.songs[x].singer" class="select-singer select">
                             <option></option>
                             <option ng-repeat="singer in singers" ng-value="singer.id">{{singer.name}}</option>
                         </select>

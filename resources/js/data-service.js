@@ -4,7 +4,7 @@ app.factory('DataService', ['$q', 'HttpService', function($q, HttpService) {
         sheets = {
             liturgies: {
                 id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                range: 'A:A' // [text]
+                range: 'A:B' // [text]
             },
 
             cadoan: {
@@ -88,6 +88,72 @@ app.factory('DataService', ['$q', 'HttpService', function($q, HttpService) {
             url = sheetURL + sheet.id + ':batchUpdate';
 
         return HttpService.postData(url, payload, params);
+    };
+
+    /**
+     * listLiturgies
+     */
+    service.listLiturgies = function () {
+        let deferred = $q.defer(),
+            results = [];
+
+        service.getSheetData('liturgies')
+            .then(
+                //success
+                (response) => {
+                    let values = response.data.values;
+
+                    if (values) {
+                        for (let value of values) {
+                            if(value[1]) {
+                                results.push({ id: value[0], name: value[1] });
+                            }
+                        }
+                    }
+
+                    deferred.resolve(results);
+                },
+
+                //failure
+                (response) => {
+                    console.log(response.data.error);
+                }
+            );
+
+        return deferred.promise;
+    };
+
+    /**
+     * listSingers
+     */
+    service.listSingers = function () {
+        let deferred = $q.defer(),
+            results = [];
+
+        service.getSheetData('cadoan.singers')
+            .then(
+                //success
+                (response) => {
+                    let values = response.data.values;
+
+                    if (values) {
+                        for (let value of values) {
+                            if(value[1]) {
+                                results.push({ id: value[0], name: value[1] });
+                            }
+                        }
+                    }
+
+                    deferred.resolve(results);
+                },
+
+                //failure
+                (response) => {
+                    console.log(response.data.error);
+                }
+            );
+
+        return deferred.promise;
     };
 
     /**

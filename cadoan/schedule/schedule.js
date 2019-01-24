@@ -7,8 +7,10 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
         $scope.songs = [];
-        $scope.singers = [];
+
         $scope.schedules = [];
+        $scope.liturgies = [];
+        $scope.singers = [];
 
         $scope.dateFormat = "DD, dd/mm/yy";
 
@@ -41,15 +43,21 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
                             liturgy = value[1],
                             songs = JSON.parse(value[2]);
 
+                        //get liturgy
+                        if(liturgy) {
+                            let item = $scope.liturgies.find(i => { return i.id === liturgy; });
+                            liturgy = item.name;
+                        }
+
+                        //populate songs
                         for (let song of songs) {
                             //find song
-                            let item = ($scope.songs.find(s => { return s.id === song.id; }));
-                            Object.assign(song, pick(item, 'title', 'category', 'author', 'audio', 'url'));
+                            let item = ($scope.songs.find(i => { return i.id === song.id; }));
+                            Object.assign(song, pick(item, 'title', 'category', 'author', 'audio', 'url', 'folder'));
 
                             //get singer
                             if(song.singer) {
-                                let singer = $scope.singers.find(s => { return s.id === song.singer; });
-                                song.singerId = singer.id;
+                                let singer = $scope.singers.find(i => { return i.id === song.singer; });
                                 song.singer = singer.name;
                             }
                         }
@@ -74,35 +82,20 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
 
         Promise.all([
             FileService.listSongs($scope.sheets_folder),
-            $scope.listSingers()
+            DataService.listLiturgies(),
+            DataService.listSingers()
         ])
             .then((values) => {
-                let songs = values[0];
-                for(let list of songs) {
+                //populate songs
+                for(let list of values[0]) {
                     Array.prototype.push.apply($scope.songs, list);
                 }
 
-                deferred.resolve();
-            });
+                //populate liturgies
+                $scope.liturgies = values[1];
 
-        return deferred.promise;
-    };
-
-    /**
-     * listSingers
-     */
-    $scope.listSingers = function () {
-        let deferred = $q.defer();
-
-        DataService.getSheetData('cadoan.singers')
-            .then(response => {
-                let values = response.data.values;
-
-                if (values) {
-                    for (let value of values) {
-                        $scope.singers.push({ id: value[0], name: value[1] });
-                    }
-                }
+                //populate singers
+                $scope.singers = values[2];
 
                 deferred.resolve();
             });

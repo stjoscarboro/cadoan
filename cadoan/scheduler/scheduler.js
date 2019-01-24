@@ -62,15 +62,21 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
                             liturgy = value[1],
                             songs = JSON.parse(value[2]);
 
+                        //get liturgy
+                        if(liturgy) {
+                            let item = $scope.liturgies.find(i => { return i.id === liturgy; });
+                            liturgy = item.name;
+                        }
+
+                        //populate songs
                         for (let song of songs) {
                             //find song
-                            let item = ($scope.songs.find(s => { return s.id === song.id; }));
+                            let item = ($scope.songs.find(i => { return i.id === song.id; }));
                             Object.assign(song, pick(item, 'title', 'category', 'author', 'audio', 'url', 'folder'));
 
                             //get singer
                             if(song.singer) {
-                                let singer = $scope.singers.find(s => { return s.id === song.singer; });
-                                song.singerId = singer.id;
+                                let singer = $scope.singers.find(i => { return i.id === song.singer; });
                                 song.singer = singer.name;
                             }
                         }
@@ -112,8 +118,8 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
 
         for (let song of $scope.schedule.songs) {
             songs.push({
-                id: song.songId,
-                singer: song.singerId
+                id: song.id,
+                singer: song.singer
             });
         }
 
@@ -148,8 +154,8 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
                             $scope.sort();
                         },
 
-                        (error) => {
-                            console.log(error.data.error);
+                        (response) => {
+                            console.log(response.data.error);
                             // $scope.error(error.data.error);
                         }
                     );
@@ -162,10 +168,18 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
     $scope.edit = function (id) {
         $scope.schedule = angular.copy($scope.schedules[id]);
 
+        //get liturgy
+        let liturgy = $scope.liturgies.find(i => { return i.name === $scope.schedule.liturgy; });
+        liturgy && ($scope.schedule.liturgy = liturgy.id);
+
         $scope.schedule.songs.forEach((song, index) => {
+            //get singer
+            let singer = $scope.singers.find(i => { return i.name === song.singer; });
+            singer && (song.singer = singer.id);
+
+            $scope.schedule.songs[index].id = song.id;
             $scope.schedule.songs[index].categoryId = song.folder;
             $scope.schedule.songs[index].folderId = song.folder;
-            $scope.schedule.songs[index].songId = song.id;
             $scope.selectFolder(index);
         });
 
@@ -258,15 +272,21 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
 
         Promise.all([
             FileService.listSongs($scope.sheets_folder),
-            $scope.listCategories(),
-            $scope.listLiturgies(),
-            $scope.listSingers()
+            DataService.listLiturgies(),
+            DataService.listSingers(),
+            $scope.listCategories()
         ])
             .then((values) => {
-                let songs = values[0];
-                for(let list of songs) {
+                //populate songs
+                for(let list of values[0]) {
                     Array.prototype.push.apply($scope.songs, list);
                 }
+
+                //populate liturgies
+                $scope.liturgies = values[1];
+
+                //populate singers
+                $scope.singers = values[2];
 
                 deferred.resolve();
             });
@@ -296,50 +316,6 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
                             id: folder.id,
                             name: folder.name
                         }
-                    }
-                }
-
-                deferred.resolve();
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * listLiturgies
-     */
-    $scope.listLiturgies = function () {
-        let deferred = $q.defer();
-
-        DataService.getSheetData('liturgies')
-            .then(response => {
-                let values = response.data.values;
-
-                if (values) {
-                    for (let value of values) {
-                        $scope.liturgies.push(value[0]);
-                    }
-                }
-
-                deferred.resolve();
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * listSingers
-     */
-    $scope.listSingers = function () {
-        let deferred = $q.defer();
-
-        DataService.getSheetData('cadoan.singers')
-            .then(response => {
-                let values = response.data.values;
-
-                if (values) {
-                    for (let value of values) {
-                        $scope.singers.push({ id: value[0], name: value[1] });
                     }
                 }
 
@@ -385,10 +361,10 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
      * previewSong
      */
     $scope.previewSong = function (index) {
-        let songs = $scope.schedule.songs[index];
+        let song = $scope.schedule.songs[index];
 
-        if (songs) {
-            $window.open(FileService.getOpenURL(songs.songId), '_blank');
+        if (song) {
+            $window.open(FileService.getOpenURL(song.id), '_blank');
         }
     };
 
