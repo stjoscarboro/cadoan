@@ -1,4 +1,4 @@
-app.factory('DataService', ['$q', 'HttpService', function($q, HttpService) {
+app.factory('DataService', ['$q', 'HttpService', function ($q, HttpService) {
 
     let sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/',
         sheets = {
@@ -28,7 +28,7 @@ app.factory('DataService', ['$q', 'HttpService', function($q, HttpService) {
                     range: 'A:B' // [id, name]
                 }
             }
-    };
+        };
 
     let service = {};
 
@@ -91,9 +91,11 @@ app.factory('DataService', ['$q', 'HttpService', function($q, HttpService) {
     };
 
     /**
-     * listLiturgies
+     * loadLiturgies
+     *
+     * @returns {f}
      */
-    service.listLiturgies = function () {
+    service.loadLiturgies = function () {
         let deferred = $q.defer(),
             results = [];
 
@@ -105,8 +107,8 @@ app.factory('DataService', ['$q', 'HttpService', function($q, HttpService) {
 
                     if (values) {
                         for (let value of values) {
-                            if(value[1]) {
-                                results.push({ id: value[0], name: value[1] });
+                            if (value[1]) {
+                                results.push({id: value[0], name: value[1]});
                             }
                         }
                     }
@@ -124,9 +126,11 @@ app.factory('DataService', ['$q', 'HttpService', function($q, HttpService) {
     };
 
     /**
-     * listSingers
+     * loadSingers
+     *
+     * @returns {f}
      */
-    service.listSingers = function () {
+    service.loadSingers = function () {
         let deferred = $q.defer(),
             results = [];
 
@@ -138,9 +142,73 @@ app.factory('DataService', ['$q', 'HttpService', function($q, HttpService) {
 
                     if (values) {
                         for (let value of values) {
-                            if(value[1]) {
-                                results.push({ id: value[0], name: value[1] });
+                            if (value[1]) {
+                                results.push({id: value[0], name: value[1]});
                             }
+                        }
+                    }
+
+                    deferred.resolve(results);
+                },
+
+                //failure
+                (response) => {
+                    console.log(response.data.error);
+                }
+            );
+
+        return deferred.promise;
+    };
+
+    /**
+     * loadSchedules
+     *
+     * @param liturgies
+     * @param singers
+     * @param songs
+     * @returns {f}
+     */
+    service.loadSchedules = function (liturgies, singers, songs) {
+        let deferred = $q.defer(),
+            results = [];
+
+        service.getSheetData('cadoan.schedules')
+            .then(
+                //success
+                (response) => {
+                    let values = response.data.values,
+                        pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {});
+
+                    if (values) {
+                        for (let value of values) {
+                            let date = Number.parseInt(value[0]),
+                                liturgy = value[1],
+                                list = JSON.parse(value[2]);
+
+                            //get liturgy
+                            if (liturgy) {
+                                let item = liturgies.find(i => { return i.id === liturgy; });
+                                liturgy = item.name;
+                            }
+
+                            //populate songs
+                            for (let item of list) {
+                                //find song
+                                let song = (songs.find(i => { return i.id === item.id; }));
+                                Object.assign(item, pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
+
+                                //get singer
+                                if (item.singer) {
+                                    let singer = singers.find(i => { return i.id === item.singer; });
+                                    item.singer = singer.name;
+                                }
+                            }
+
+                            results.push({
+                                date: date,
+                                liturgy: liturgy,
+                                songs: list
+                            });
                         }
                     }
 
@@ -166,7 +234,7 @@ app.factory('DataService', ['$q', 'HttpService', function($q, HttpService) {
         let split = sheetId.split('.'),
             sheet = sheets;
 
-        for(let key of split) {
+        for (let key of split) {
             sheet = sheet[key];
         }
 

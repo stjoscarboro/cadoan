@@ -27,48 +27,17 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
      * get
      */
     $scope.get = function () {
-        let today = new Date();
-        today.setHours(0, 0, 0, 0);
-
         $scope.schedules = [];
 
-        DataService.getSheetData('cadoan.schedules')
-            .then(response => {
-                let values = response.data.values,
-                    pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {});
+        DataService.loadSchedules($scope.liturgies, $scope.singers, $scope.songs)
+            .then(schedules => {
+                let today = new Date();
+                today.setHours(0, 0, 0, 0);
 
-                if (values) {
-                    for (let value of values) {
-                        let date = Number.parseInt(value[0]),
-                            liturgy = value[1],
-                            songs = JSON.parse(value[2]);
-
-                        //get liturgy
-                        if(liturgy) {
-                            let item = $scope.liturgies.find(i => { return i.id === liturgy; });
-                            liturgy = item.name;
-                        }
-
-                        //populate songs
-                        for (let song of songs) {
-                            //find song
-                            let item = ($scope.songs.find(i => { return i.id === song.id; }));
-                            Object.assign(song, pick(item, 'title', 'category', 'author', 'audio', 'url', 'folder'));
-
-                            //get singer
-                            if(song.singer) {
-                                let singer = $scope.singers.find(i => { return i.id === song.singer; });
-                                song.singer = singer.name;
-                            }
-                        }
-
-                        if (values.length <= 4 || ($scope.schedules.length < 4 && date >= today.getTime())) {
-                            $scope.schedules.push({
-                                date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
-                                liturgy: liturgy,
-                                songs: songs
-                            });
-                        }
+                for(let schedule of schedules) {
+                    if (schedules.length <= 4 || ($scope.schedules.length < 4 && schedule.date >= today.getTime())) {
+                        schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(schedule.date));
+                        $scope.schedules.push(schedule);
                     }
                 }
             });
@@ -82,8 +51,8 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
 
         Promise.all([
             FileService.listSongs($scope.sheets_folder),
-            DataService.listLiturgies(),
-            DataService.listSingers()
+            DataService.loadLiturgies(),
+            DataService.loadSingers()
         ])
             .then((values) => {
                 //populate songs

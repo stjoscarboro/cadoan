@@ -49,46 +49,14 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
     $scope.get = function () {
         $scope.schedules = [];
 
-        //load existing schedules
-        DataService.getSheetData('cadoan.schedules')
-            .then(response => {
-                let values = response.data.values,
-                    pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {}),
-                    lastDate = Date.now();
+        DataService.loadSchedules($scope.liturgies, $scope.singers, $scope.songs)
+            .then(schedules => {
+                let lastDate;
 
-                if (values) {
-                    for (let value of values) {
-                        let date = Number.parseInt(value[0]),
-                            liturgy = value[1],
-                            songs = JSON.parse(value[2]);
-
-                        //get liturgy
-                        if(liturgy) {
-                            let item = $scope.liturgies.find(i => { return i.id === liturgy; });
-                            liturgy = item.name;
-                        }
-
-                        //populate songs
-                        for (let song of songs) {
-                            //find song
-                            let item = ($scope.songs.find(i => { return i.id === song.id; }));
-                            Object.assign(song, pick(item, 'title', 'category', 'author', 'audio', 'url', 'folder'));
-
-                            //get singer
-                            if(song.singer) {
-                                let singer = $scope.singers.find(i => { return i.id === song.singer; });
-                                song.singer = singer.name;
-                            }
-                        }
-
-                        $scope.schedules.push({
-                            date: $.datepicker.formatDate($scope.dateFormat, new Date(date)),
-                            liturgy: liturgy,
-                            songs: songs
-                        });
-
-                        lastDate = date;
-                    }
+                for (let schedule of schedules) {
+                    lastDate = schedule.date;
+                    schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(schedule.date));
+                    $scope.schedules.push(schedule);
                 }
 
                 //init datepicker
@@ -255,11 +223,11 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
      */
     $scope.error = function (error) {
         let popup = $uibModal.open({
-                scope: $scope,
-                templateUrl: '../../resources/error.html',
-                backdrop: false,
-                keyboard: false
-            });
+            scope: $scope,
+            templateUrl: '../../resources/error.html',
+            backdrop: false,
+            keyboard: false
+        });
 
         $scope.error = error;
     };
@@ -272,13 +240,13 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
 
         Promise.all([
             FileService.listSongs($scope.sheets_folder),
-            DataService.listLiturgies(),
-            DataService.listSingers(),
+            DataService.loadLiturgies(),
+            DataService.loadSingers(),
             $scope.listCategories()
         ])
             .then((values) => {
                 //populate songs
-                for(let list of values[0]) {
+                for (let list of values[0]) {
                     Array.prototype.push.apply($scope.songs, list);
                 }
 
@@ -294,7 +262,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
         return deferred.promise;
     };
 
-    $scope.listCategories = function() {
+    $scope.listCategories = function () {
         let deferred = $q.defer();
 
         FileService.getFolderData($scope.sheets_folder)
