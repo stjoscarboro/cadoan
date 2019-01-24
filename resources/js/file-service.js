@@ -9,28 +9,28 @@ app.factory('FileService', ['$q', 'HttpService', function ($q, HttpService) {
     /**
      * getFolderURL
      */
-    service.getFolderURL = function (folderId) {
+    service.getFolderURL = (folderId) => {
         return 'https://drive.google.com/drive/folders/' + folderId;
     };
 
     /**
      * getPreviewURL
      */
-    service.getPreviewURL = function (docId) {
+    service.getPreviewURL = (docId) => {
         return docURL + docId + '/preview';
     };
 
     /**
      * getOpenURL
      */
-    service.getOpenURL = function (docId) {
+    service.getOpenURL = (docId) => {
         return openURL + docId;
     };
 
     /**
      * getFolderData
      */
-    service.getFolderData = function (folderId, filters) {
+    service.getFolderData = (folderId, filters) => {
         let query = 'q="' + folderId + '"+in+parents',
             params;
 
@@ -49,13 +49,13 @@ app.factory('FileService', ['$q', 'HttpService', function ($q, HttpService) {
 
         let url = driveURL + '?' + query + '&fields=files(id,kind,mimeType,name,description)&orderBy=name';
 
-        return HttpService.get(url);
+        return HttpService.getFile(url);
     };
 
     /**
      * listSongs
      */
-    service.listSongs = function (folder) {
+    service.listSongs = (folder) => {
         let deferred = $q.defer(),
             promises = [];
 
@@ -81,7 +81,7 @@ app.factory('FileService', ['$q', 'HttpService', function ($q, HttpService) {
     /**
      * listFolder
      */
-    service.listFolder = function (folder) {
+    service.listFolder = (folder) => {
         let deferred = $q.defer(),
             songs = [];
 
@@ -126,4 +126,5 @@ app.factory('FileService', ['$q', 'HttpService', function ($q, HttpService) {
     };
 
     return service;
+
 }]);

@@ -1,4 +1,4 @@
-app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $filter, $document, HttpService, FileService, DataService) => {
+app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $filter, $document, HttpService, DataService, FileService) => {
 
     /**
      * init
@@ -9,15 +9,13 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $scope.songs = [];
         $scope.song = {};
 
-        $scope.dataService = new DataService($scope);
-
         $scope.dateFormat = "DD, dd/mm/yy";
 
         $.fn.dataTable.ext.order.intl('vi', {
             sensitivity: 'accent'
         });
 
-        $scope.liturgies = $scope.dataService.getLiturties();
+        $scope.liturgies = DataService.getLiturties();
 
         $document.ready(() => {
             if ($window.angular.element('.signin').length === 0) {
@@ -79,20 +77,20 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         }
 
         let popup = $uibModal.open({
-            scope: $scope,
-            templateUrl: 'editor.html',
-            backdrop: false,
-            keyboard: false,
-            controller: () => {
-                $scope.modify = function () {
-                    popup.close();
-                };
+                scope: $scope,
+                templateUrl: 'editor.html',
+                backdrop: false,
+                keyboard: false,
+                controller: () => {
+                    $scope.modify = function () {
+                        popup.close();
+                    };
 
-                $scope.cancel = function () {
-                    popup.close();
-                };
-            }
-        });
+                    $scope.cancel = function () {
+                        popup.close();
+                    };
+                }
+            });
     };
 
     /**

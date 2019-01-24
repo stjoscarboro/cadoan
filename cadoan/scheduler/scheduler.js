@@ -1,12 +1,9 @@
-app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anchorScroll, HttpService, FileService) => {
+app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $anchorScroll, HttpService, DataService, FileService) => {
 
     /**
      * init
      */
     $scope.init = function () {
-        $scope.schedules_db = 'cadoan_schedules';
-        $scope.singers_db = 'cadoan_singers';
-        $scope.ligurty_db = 'liturgies';
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
         $scope.schedule = {
@@ -24,6 +21,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
 
         $scope.rows = [0, 1, 2, 3, 4];
 
+        $scope.driveURL = FileService.getFolderURL($scope.sheets_folder);
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.week = 7 * 24 * 3600 * 1000;
 
@@ -52,7 +50,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         $scope.schedules = [];
 
         //load existing schedules
-        HttpService.getSheetData($scope.schedules_db)
+        DataService.getSheetData('cadoan.schedules')
             .then(response => {
                 let values = response.data.values,
                     pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {}),
@@ -101,8 +99,6 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
 
                 //init datepicker to a week from last date
                 $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(lastDate + $scope.week));
-            }, error => {
-                $scope.error();
             });
     };
 
@@ -143,14 +139,20 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
         Promise.all(removed)
             .then(() => {
                 //add new schedule
-                HttpService.appendSheetData($scope.schedules_db, payload, {
+                DataService.appendSheetData('cadoan.schedules', payload, {
                     valueInputOption: "USER_ENTERED"
                 })
-                    .then(response => {
-                        $scope.sort();
-                    }, error => {
-                        $scope.error();
-                    });
+                    .then(
+                        //success
+                        () => {
+                            $scope.sort();
+                        },
+
+                        (error) => {
+                            console.log(error.data.error);
+                            // $scope.error(error.data.error);
+                        }
+                    );
             });
     };
 
@@ -189,7 +191,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
             }]
         };
 
-        HttpService.updateSheetData($scope.schedules_db, payload)
+        DataService.updateSheetData('cadoan.schedules', payload)
             .then(() => {
                 $scope.schedules.splice(id, 1);
                 deferred.resolve();
@@ -216,11 +218,9 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
             }]
         };
 
-        HttpService.updateSheetData($scope.schedules_db, payload)
-            .then(response => {
+        DataService.updateSheetData('cadoan.schedules', payload)
+            .then(() => {
                 $scope.refresh();
-            }, error => {
-                $scope.error();
             });
     };
 
@@ -237,21 +237,17 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
     };
 
     /**
-     * clear
-     */
-    $scope.clear = function () {
-        $('.error').hide();
-    };
-
-    /**
      * error
      */
-    $scope.error = function () {
-        $('#error').removeClass('hidden');
+    $scope.error = function (error) {
+        let popup = $uibModal.open({
+                scope: $scope,
+                templateUrl: '../../resources/error.html',
+                backdrop: false,
+                keyboard: false
+            });
 
-        $timeout(() => {
-            $window.location.reload();
-        }, 5000);
+        $scope.error = error;
     };
 
     /**
@@ -315,7 +311,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
     $scope.listLiturgies = function () {
         let deferred = $q.defer();
 
-        HttpService.getSheetData($scope.ligurty_db)
+        DataService.getSheetData('liturgies')
             .then(response => {
                 let values = response.data.values;
 
@@ -337,7 +333,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $timeout, $interval, $anch
     $scope.listSingers = function () {
         let deferred = $q.defer();
 
-        HttpService.getSheetData($scope.singers_db)
+        DataService.getSheetData('cadoan.singers')
             .then(response => {
                 let values = response.data.values;
 

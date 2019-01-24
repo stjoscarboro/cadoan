@@ -1,11 +1,9 @@
-app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpService, FileService) => {
+app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpService, DataService, FileService) => {
 
     /**
      * init
      */
     $scope.init = function () {
-        $scope.schedules_db = 'cadoan_schedules';
-        $scope.singers_db = 'cadoan_singers';
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
         $scope.songs = [];
@@ -32,7 +30,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
 
         $scope.schedules = [];
 
-        HttpService.getSheetData($scope.schedules_db)
+        DataService.getSheetData('cadoan.schedules')
             .then(response => {
                 let values = response.data.values,
                     pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {});
@@ -96,7 +94,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
     $scope.listSingers = function () {
         let deferred = $q.defer();
 
-        HttpService.getSheetData($scope.singers_db)
+        DataService.getSheetData('cadoan.singers')
             .then(response => {
                 let values = response.data.values;
 
