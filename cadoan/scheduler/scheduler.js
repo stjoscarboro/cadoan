@@ -239,7 +239,7 @@ app.controller("SchedulerCtrl", ($scope, $q, $window, $uibModal, $timeout, $inte
         let deferred = $q.defer();
 
         Promise.all([
-            FileService.listSongs($scope.sheets_folder),
+            FileService.listFolder($scope.sheets_folder),
             DataService.loadLiturgies(),
             DataService.loadSingers(),
             $scope.listCategories()

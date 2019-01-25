@@ -1,8 +1,14 @@
-app.factory('FileService', ['$q', 'HttpService', function ($q, HttpService) {
+app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     let docURL = 'https://docs.google.com/document/d/',
         openURL = 'https://drive.google.com/open?id=',
-        driveURL = 'https://www.googleapis.com/drive/v3/files';
+        driveURL = 'https://www.googleapis.com/drive/v3/files',
+
+        folders = {
+            cadoan: {
+                sheets: '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p'
+            }
+        };
 
     let service = {};
 
@@ -31,7 +37,8 @@ app.factory('FileService', ['$q', 'HttpService', function ($q, HttpService) {
      * getFolderData
      */
     service.getFolderData = (folderId, filters) => {
-        let query = 'q="' + folderId + '"+in+parents',
+        let folder = getFolder(folderId) || folderId,
+            query = 'q="' + folder + '"+in+parents',
             params;
 
         if (filters) {
@@ -48,34 +55,7 @@ app.factory('FileService', ['$q', 'HttpService', function ($q, HttpService) {
         }
 
         let url = driveURL + '?' + query + '&fields=files(id,kind,mimeType,name,description)&orderBy=name';
-
         return HttpService.getFile(url);
-    };
-
-    /**
-     * listSongs
-     */
-    service.listSongs = (folder) => {
-        let deferred = $q.defer(),
-            promises = [];
-
-        service.getFolderData(folder)
-            .then(response => {
-                let folders = response.data.files;
-
-                if (folders) {
-                    for (let folder of folders) {
-                        promises.push(service.listFolder(folder.id));
-                    }
-                }
-
-                Promise.all(promises)
-                    .then((values) => {
-                        deferred.resolve(values);
-                    });
-            });
-
-        return deferred.promise;
     };
 
     /**
@@ -83,46 +63,106 @@ app.factory('FileService', ['$q', 'HttpService', function ($q, HttpService) {
      */
     service.listFolder = (folder) => {
         let deferred = $q.defer(),
-            songs = [];
+            promises = [];
 
         service.getFolderData(folder)
-            .then(response => {
-                if (response.data.files.length > 0) {
-                    let files = response.data.files,
-                        properties;
+            .then(
+                //success
+                (response) => {
+                    let folders = response.data.files;
 
-                    if (files && files.length > 0) {
-                        files.forEach(song => {
-                            if (song.mimeType === 'application/pdf') {
-                                try {
-                                    properties = JSON.parse(song.description);
-                                } catch (e) {
-                                    // No-Op
-                                } finally {
-                                    song = Object.assign(song, properties || {});
-                                    song.title = song.title || song.name;
-                                    properties = null;
-                                }
-
-                                let title = song.name.replace(/(.*)(.pdf)$/, '$1');
-                                for (let file of files) {
-                                    if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
-                                        song.audio = service.getOpenURL(file.id);
-                                    }
-                                }
-
-                                song.folder = folder;
-                                song.url = service.getOpenURL(song.id);
-                                songs.push(song);
-                            }
-                        });
+                    if (folders) {
+                        for (let folder of folders) {
+                            promises.push(service.listFiles(folder.id));
+                        }
                     }
-                }
 
-                deferred.resolve(songs);
-            });
+                    Promise.all(promises)
+                        .then((values) => {
+                            deferred.resolve(values);
+                        });
+                },
+
+                //failure
+                (response) => {
+                    console.log(response.data.error);
+                }
+            );
 
         return deferred.promise;
+    };
+
+    /**
+     * listFiles
+     */
+    service.listFiles = (folder) => {
+        let deferred = $q.defer(),
+            results = [];
+
+        service.getFolderData(folder)
+            .then(
+                //success
+                (response) => {
+                    if (response.data.files.length > 0) {
+                        let sheets = response.data.files,
+                            properties;
+
+                        if (sheets && sheets.length > 0) {
+                            sheets.forEach(sheet => {
+                                if (sheet.mimeType === 'application/pdf') {
+                                    try {
+                                        properties = JSON.parse(sheet.description);
+                                    } catch (e) {
+                                        // No-Op
+                                    } finally {
+                                        sheet = Object.assign(sheet, properties || {});
+                                        sheet.title = sheet.title || sheet.name;
+                                        properties = null;
+                                    }
+
+                                    let title = sheet.name.replace(/(.*)(.pdf)$/, '$1');
+                                    for (let file of sheets) {
+                                        if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
+                                            sheet.audio = service.getOpenURL(file.id);
+                                        }
+                                    }
+
+                                    sheet.folder = folder;
+                                    sheet.url = service.getOpenURL(sheet.id);
+                                    results.push(sheet);
+                                }
+                            });
+                        }
+                    }
+
+                    deferred.resolve(results);
+                },
+
+                //failure
+                (response) => {
+                    console.log(response.data.error);
+                }
+            );
+
+        return deferred.promise;
+    };
+
+    /**
+     * getFolder
+     *
+     * @param folderId
+     *
+     * @returns {*}
+     */
+    let getFolder = (folderId) => {
+        let split = folderId.split('.'),
+            folder = folders;
+
+        for (let key of split) {
+            folder = folder[key];
+        }
+
+        return folder;
     };
 
     return service;

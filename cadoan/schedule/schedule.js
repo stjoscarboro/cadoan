@@ -50,7 +50,7 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
         let deferred = $q.defer();
 
         Promise.all([
-            FileService.listSongs($scope.sheets_folder),
+            FileService.listFolder('cadoan.sheets'),
             DataService.loadLiturgies(),
             DataService.loadSingers()
         ])

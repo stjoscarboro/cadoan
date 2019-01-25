@@ -1,6 +1,7 @@
-app.factory('DataService', ['$q', 'HttpService', function ($q, HttpService) {
+app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
 
     let sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/',
+
         sheets = {
             liturgies: {
                 id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
@@ -83,7 +84,7 @@ app.factory('DataService', ['$q', 'HttpService', function ($q, HttpService) {
      *
      * @returns {*|void}
      */
-    service.updateSheetData = function (sheetId, payload, params) {
+    service.updateSheetData = (sheetId, payload, params) => {
         let sheet = getSheet(sheetId),
             url = sheetURL + sheet.id + ':batchUpdate';
 
@@ -95,7 +96,7 @@ app.factory('DataService', ['$q', 'HttpService', function ($q, HttpService) {
      *
      * @returns {f}
      */
-    service.loadLiturgies = function () {
+    service.loadLiturgies = () => {
         let deferred = $q.defer(),
             results = [];
 
@@ -130,7 +131,7 @@ app.factory('DataService', ['$q', 'HttpService', function ($q, HttpService) {
      *
      * @returns {f}
      */
-    service.loadSingers = function () {
+    service.loadSingers = () => {
         let deferred = $q.defer(),
             results = [];
 
@@ -168,7 +169,7 @@ app.factory('DataService', ['$q', 'HttpService', function ($q, HttpService) {
      * @param songs
      * @returns {f}
      */
-    service.loadSchedules = function (liturgies, singers, songs) {
+    service.loadSchedules = (liturgies, singers, songs) => {
         let deferred = $q.defer(),
             results = [];
 
@@ -225,6 +226,7 @@ app.factory('DataService', ['$q', 'HttpService', function ($q, HttpService) {
     };
 
     /**
+     * getSheet
      *
      * @param sheetId
      *

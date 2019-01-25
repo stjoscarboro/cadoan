@@ -107,7 +107,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         let deferred = $q.defer();
 
         Promise.all([
-            FileService.listSongs($scope.sheets_folder)
+            FileService.listFolder($scope.sheets_folder)
         ])
             .then((values) => {
                 let songs = values[0];
