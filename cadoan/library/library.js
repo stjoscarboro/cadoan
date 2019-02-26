@@ -11,6 +11,10 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
 
         $scope.dateFormat = "DD, dd/mm/yy";
 
+        $scope.pageSize = 10;
+        $scope.pageCounter = 1;
+        $scope.maxSize = 7;
+
         $.fn.dataTable.ext.order.intl('vi', {
             sensitivity: 'accent'
         });
@@ -114,6 +118,8 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 for(let list of songs) {
                     $scope.songs = $scope.songs.concat(list);
                 }
+
+                $scope.songs = $filter('orderBy')($scope.songs, 'title');
 
                 deferred.resolve();
             });
