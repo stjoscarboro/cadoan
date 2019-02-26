@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2c46644d-cb6b-4aa5-a4d1-0ddee90c505f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cadoan/library/editor.html" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/library/editor.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cadoan/library/library.js" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/library/library.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/file-service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/file-service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/google-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/google-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/http-service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/http-service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stjoscarboro.github.io.iml" beforeDir="false" afterPath="$PROJECT_DIR$/stjoscarboro.github.io.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <ignored path="$PROJECT_DIR$/.idea/shelf/" />
@@ -119,30 +114,12 @@
     </favorites_list>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cadoan/library/editor.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="434">
-              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cadoan/library/library.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/js/file-service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="154" column="52" lean-forward="true" selection-start-line="154" selection-start-column="52" selection-end-line="154" selection-end-column="52" />
+            <state relative-caret-position="386">
+              <caret line="85" column="21" lean-forward="true" selection-start-line="85" selection-start-column="21" selection-end-line="85" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -150,17 +127,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/js/http-service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/js/google-api.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="3" column="15" lean-forward="true" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
+            <state relative-caret-position="798">
+              <caret line="57" column="26" lean-forward="true" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -265,9 +233,9 @@
         <option value="$PROJECT_DIR$/cadoan/library/library.html" />
         <option value="$PROJECT_DIR$/cadoan/library/editor.html" />
         <option value="$PROJECT_DIR$/resources/js/google-api.js" />
-        <option value="$PROJECT_DIR$/resources/js/file-service.js" />
         <option value="$PROJECT_DIR$/resources/js/http-service.js" />
         <option value="$PROJECT_DIR$/cadoan/library/library.js" />
+        <option value="$PROJECT_DIR$/resources/js/file-service.js" />
       </list>
     </option>
   </component>
@@ -463,7 +431,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="39" y="23" width="1642" height="1027" extended-state="6" />
+    <frame x="39" y="23" width="1641" height="1027" extended-state="6" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
@@ -482,8 +450,8 @@
       <window_info anchor="right" id="Commander" order="1" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Project" order="4" sideWeight="0.4699739" visible="true" weight="0.3140037" />
-      <window_info active="true" anchor="right" id="Version Control" order="5" sideWeight="0.53002614" side_tool="true" visible="true" weight="0.3140037" />
+      <window_info anchor="right" content_ui="combo" id="Project" order="4" sideWeight="0.4684492" visible="true" weight="0.31358024" />
+      <window_info active="true" anchor="right" id="Version Control" order="5" sideWeight="0.5315508" side_tool="true" visible="true" weight="0.31358024" />
       <window_info anchor="right" id="Database" order="6" sideWeight="0.50127554" side_tool="true" weight="0.32955772" />
       <window_info anchor="right" id="Structure" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Favorites" order="8" sideWeight="0.48770052" weight="0.26896977" />
@@ -509,9 +477,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/css/images/ui-icons_555555_256x240.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/css/jquery-ui.min.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -643,13 +608,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -801,24 +759,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/admin/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="27" column="72" selection-start-line="27" selection-start-column="72" selection-end-line="27" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/google-api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="3" column="15" lean-forward="true" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/http-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/file-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="154" column="52" lean-forward="true" selection-start-line="154" selection-start-column="52" selection-end-line="154" selection-end-column="52" />
+        <state relative-caret-position="476">
+          <caret line="34" column="36" lean-forward="true" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -833,6 +784,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="434">
           <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/queue-http.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="9" column="3" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/http-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="798">
+          <caret line="57" column="26" lean-forward="true" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/file-service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="85" column="21" lean-forward="true" selection-start-line="85" selection-start-column="21" selection-end-line="85" selection-end-column="21" />
         </state>
       </provider>
     </entry>

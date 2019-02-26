@@ -73,13 +73,28 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
                     if (folders) {
                         for (let folder of folders) {
-                            promises.push(service.listFiles(folder.id));
+                            promises.push(
+                                new Promise(resolve => {
+                                    setTimeout(() => {
+                                        service.listFiles(folder.id)
+                                            .then(result => {
+                                                resolve(result);
+                                            })
+                                    }, Math.floor(Math.random() * 2000) + 2000);
+                                })
+                            );
                         }
                     }
 
-                    Promise.all(promises)
-                        .then((values) => {
-                            deferred.resolve(values);
+                    promises.reduce((promise, task) => {
+                        return promise.then(results =>
+                            task.then(result =>
+                                [...results, result]
+                            )
+                        );
+                    }, Promise.resolve([]))
+                        .then(results => {
+                            deferred.resolve(results);
                         });
                 },
 
