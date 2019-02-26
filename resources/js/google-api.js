@@ -27,7 +27,7 @@ function onFailure(error) {
 
 function renderAdminButton() {
     gapi.signin2.render(gapidiv, {
-        'scope': 'https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/gmail.send',
+        'scope': 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/gmail.send',
         'width': 240,
         'height': 50,
         'longtitle': true,

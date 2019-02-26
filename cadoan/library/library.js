@@ -7,6 +7,8 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
         $scope.songs = [];
+        $scope.categories = [];
+        $scope.authors = [];
         $scope.song = {};
 
         $scope.dateFormat = "DD, dd/mm/yy";
@@ -86,11 +88,19 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 backdrop: false,
                 keyboard: false,
                 controller: () => {
-                    $scope.modify = function () {
+                    $scope.modify = () => {
+                        let description = {
+                            title: $scope.song.title,
+                            author: $scope.song.author,
+                            category: $scope.song.category,
+                            others: $scope.song.others
+                        };
+
+                        FileService.updateFile($scope.song.id, {description: JSON.stringify(description)});
                         popup.close();
                     };
 
-                    $scope.cancel = function () {
+                    $scope.cancel = () => {
                         popup.close();
                     };
                 }
@@ -117,6 +127,17 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 let songs = values[0];
                 for(let list of songs) {
                     $scope.songs = $scope.songs.concat(list);
+                }
+
+                //parse categories and authors
+                for(let song of $scope.songs) {
+                    if(song.category && $scope.categories.indexOf(song.category) === -1) {
+                        $scope.categories.push(song.category);
+                    }
+
+                    if(song.author && $scope.authors.indexOf(song.author) === -1) {
+                        $scope.authors.push(song.author);
+                    }
                 }
 
                 $scope.songs = $filter('orderBy')($scope.songs, 'title');

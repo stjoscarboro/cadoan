@@ -148,6 +148,14 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
     };
 
     /**
+     * updateFile
+     */
+    service.updateFile = (id, payload) => {
+        let url = driveURL + '/' + id;
+        return HttpService.updateData(url, payload);
+    };
+
+    /**
      * getFolder
      *
      * @param folderId

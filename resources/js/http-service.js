@@ -60,6 +60,22 @@ app.factory('HttpService', ['$http', function ($http) {
     };
 
     /**
+     * updateData
+     *
+     * @param url
+     * @param payload
+     * @param params
+     *
+     * @returns {*}
+     */
+    service.updateData = (url, payload, params) => {
+        params = getParams(params);
+        return $http.patch(url, payload, {
+            params: params
+        });
+    };
+
+    /**
      * getURL
      *
      * @param url
