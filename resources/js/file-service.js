@@ -62,8 +62,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
      * listFolder
      */
     service.listFolder = (folder) => {
-        let deferred = $q.defer(),
-            results = [];
+        let deferred = $q.defer();
 
         service.getFolderData(folder)
             .then(
@@ -71,15 +70,11 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                 (response) => {
                     let folders = response.data.files;
 
+                    // service.sequencelListFolders(folders)
                     service.groupListFolders(folders, 2)
                         .then(results => {
                             deferred.resolve(results);
                         });
-
-                    // service.sequencelListFolders(folders)
-                    //     .then(results => {
-                    //         deferred.resolve(results);
-                    //     });
                 },
 
                 //failure
