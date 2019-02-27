@@ -181,7 +181,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
 });
 
 
-app.directive('loading', ['$http', '$window', '$timeout', function ($http, $window, $timeout) {
+app.directive('loading', ['$http', function ($http) {
     return {
         restrict: 'A',
 
@@ -191,14 +191,7 @@ app.directive('loading', ['$http', '$window', '$timeout', function ($http, $wind
             };
 
             scope.$watch(scope.isLoading, (value) => {
-                if (value) {
-                    element.removeClass('ng-hide');
-                } else {
-                    $timeout(() => {
-                        element.addClass('ng-hide');
-                        $window.angular.element('.content').removeClass('ng-hide');
-                    }, 100);
-                }
+                value ? element.removeClass('ng-hide') : element.addClass('ng-hide');
             });
         }
     };

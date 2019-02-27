@@ -1,10 +1,12 @@
 <div>
     <div class="loader" data-loading></div>
 
-    <div class="content ng-hide">
+    <div class="content">
         <div class="search">
             <input class="form-control" type="text" placeholder="Search" aria-label="Search">
         </div>
+
+        <div uib-pagination ng-model="pageCounter" total-items="songs.length" items-per-page="pageSize" max-size="maxSize" class="pagination-sm pull-right"></div>
 
         <div ng-repeat="song in songs.slice((pageCounter - 1) * pageSize, pageCounter * pageSize)" class="counter">
             <div class="song">
