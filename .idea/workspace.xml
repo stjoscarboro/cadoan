@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c46644d-cb6b-4aa5-a4d1-0ddee90c505f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/resources/js/file-service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/file-service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cadoan/library/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/library/admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cadoan/library/library.html" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/library/library.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <ignored path="$PROJECT_DIR$/.idea/shelf/" />
@@ -117,17 +118,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cadoan/library/library.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="22" column="66" lean-forward="true" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
+            <state relative-caret-position="294">
+              <caret line="21" lean-forward="true" selection-start-line="20" selection-end-line="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/js/file-service.js">
+        <entry file="file://$PROJECT_DIR$/cadoan/library/admin.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-25">
-              <caret line="64" column="33" selection-start-line="64" selection-start-column="33" selection-end-line="64" selection-end-column="33" />
+            <state relative-caret-position="336">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/js/datatables-plugins.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="336">
+              <caret line="24" column="21" lean-forward="true" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -220,7 +230,6 @@
         <option value="$PROJECT_DIR$/cadoan/schedule/schedule.inc" />
         <option value="$PROJECT_DIR$/resources/js/email-service.js" />
         <option value="$PROJECT_DIR$/cadoan/schedule/schedule.html" />
-        <option value="$PROJECT_DIR$/cadoan/library/admin.html" />
         <option value="$PROJECT_DIR$/resources/error.html" />
         <option value="$PROJECT_DIR$/cadoan/scheduler/scheduler.html" />
         <option value="$PROJECT_DIR$/cadoan/scheduler/scheduler.js" />
@@ -233,8 +242,9 @@
         <option value="$PROJECT_DIR$/resources/js/google-api.js" />
         <option value="$PROJECT_DIR$/resources/js/http-service.js" />
         <option value="$PROJECT_DIR$/cadoan/library/library.js" />
-        <option value="$PROJECT_DIR$/cadoan/library/library.html" />
         <option value="$PROJECT_DIR$/resources/js/file-service.js" />
+        <option value="$PROJECT_DIR$/cadoan/library/library.html" />
+        <option value="$PROJECT_DIR$/cadoan/library/admin.html" />
       </list>
     </option>
   </component>
@@ -461,7 +471,7 @@
       <window_info anchor="right" id="Commander" order="1" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Project" order="4" sideWeight="0.4673797" visible="true" weight="0.31358024" />
+      <window_info active="true" anchor="right" content_ui="combo" id="Project" order="4" sideWeight="0.4673797" visible="true" weight="0.31358024" />
       <window_info anchor="right" id="Version Control" order="5" sideWeight="0.5326203" side_tool="true" visible="true" weight="0.31358024" />
       <window_info anchor="right" id="Database" order="6" sideWeight="0.50127554" side_tool="true" weight="0.32955772" />
       <window_info anchor="right" id="Structure" order="7" side_tool="true" weight="0.25" />
@@ -590,13 +600,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
           <caret line="4117" column="8" selection-start-line="4117" selection-start-column="8" selection-end-line="4117" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/datatables-plugins.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
@@ -749,13 +752,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cadoan/library/admin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="14" column="60" lean-forward="true" selection-start-line="14" selection-start-column="60" selection-end-line="14" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/stjoscarboro-app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -805,17 +801,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cadoan/library/library.html">
+    <entry file="file://$PROJECT_DIR$/resources/js/file-service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="22" column="66" lean-forward="true" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
+        <state relative-caret-position="952">
+          <caret line="68" column="25" lean-forward="true" selection-start-line="68" selection-start-column="25" selection-end-line="68" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/file-service.js">
+    <entry file="file://$PROJECT_DIR$/resources/js/datatables-plugins.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-25">
-          <caret line="64" column="33" selection-start-line="64" selection-start-column="33" selection-end-line="64" selection-end-column="33" />
+        <state relative-caret-position="336">
+          <caret line="24" column="21" lean-forward="true" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cadoan/library/library.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="21" lean-forward="true" selection-start-line="20" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cadoan/library/admin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
         </state>
       </provider>
     </entry>
