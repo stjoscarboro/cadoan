@@ -63,7 +63,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
      */
     service.listFolder = (folder) => {
         let deferred = $q.defer(),
-            promises = [];
+            results = [];
 
         service.getFolderData(folder)
             .then(
@@ -71,31 +71,15 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                 (response) => {
                     let folders = response.data.files;
 
-                    if (folders) {
-                        for (let folder of folders) {
-                            promises.push(
-                                new Promise(resolve => {
-                                    setTimeout(() => {
-                                        service.listFiles(folder.id)
-                                            .then(result => {
-                                                resolve(result);
-                                            })
-                                    }, Math.floor(Math.random() * 2000) + 2000);
-                                })
-                            );
-                        }
-                    }
-
-                    promises.reduce((promise, task) => {
-                        return promise.then(results =>
-                            task.then(result =>
-                                [...results, result]
-                            )
-                        );
-                    }, Promise.resolve([]))
+                    service.groupListFolders(folders, 2)
                         .then(results => {
                             deferred.resolve(results);
                         });
+
+                    // service.sequencelListFolders(folders)
+                    //     .then(results => {
+                    //         deferred.resolve(results);
+                    //     });
                 },
 
                 //failure
@@ -103,6 +87,74 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                     console.log(response.data.error);
                 }
             );
+
+        return deferred.promise;
+    };
+
+    /**
+     * sequencelListFolders
+     */
+    service.sequencelListFolders = (folders) => {
+        let results = [],
+            promise = $q.when(),
+            deferred = $q.defer();
+
+        for(let folder of folders) {
+            promise = promise.then(() => {
+                return service.listFiles(folder.id);
+            })
+                .then(result => {
+                    results.push(result);
+                });
+        }
+
+        promise.then(() => {
+            deferred.resolve(results);
+        });
+
+        return deferred.promise;
+    };
+
+    /**
+     * groupListFolders
+     */
+    service.groupListFolders = (folders, count) => {
+        let results = [], groups = [],
+            promise = $q.when(),
+            deferred = $q.defer();
+
+        for(let i=0; i<Math.ceil(folders.length / count); i++) {
+            let group = [];
+            for(let j = 0; j < count; j++) {
+                let folder = folders[i * count + j];
+                folder && group.push(folders[i * count + j]);
+            }
+            groups.push(group);
+        }
+
+        for(let group of groups) {
+            promise = promise.then(() => {
+                return new Promise(resolve => {
+                    let promises = [];
+
+                    for(let folder of group) {
+                        promises.push(service.listFiles(folder.id));
+                    }
+
+                    Promise.all(promises)
+                        .then(values => {
+                            for(value of values) {
+                                results.push(value);
+                            }
+                            resolve();
+                        });
+                });
+            });
+        }
+
+        promise.then(() => {
+            deferred.resolve(results);
+        });
 
         return deferred.promise;
     };
