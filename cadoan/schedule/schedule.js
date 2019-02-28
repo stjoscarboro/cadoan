@@ -6,13 +6,17 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     $scope.init = function () {
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
-        $scope.songs = [];
+        $scope.schedule = {
+            songs: []
+        };
 
         $scope.schedules = [];
         $scope.liturgies = [];
         $scope.singers = [];
+        $scope.songs = [];
 
         $scope.dateFormat = "DD, dd/mm/yy";
+        $scope.week = 7 * 24 * 3600 * 1000;
 
         $document.ready(() => {
             if ($window.angular.element('.signin').length === 0) {
@@ -99,7 +103,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
             backdrop: false,
             keyboard: false,
             controller: () => {
-                $scope.modify = () => {
+                $scope.submit = () => {
                     popup.close();
                 };
 
@@ -107,6 +111,24 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                     popup.close();
                 };
             }
+        });
+
+        //init datepicker
+        popup.opened.then(() => {
+            $timeout(() => {
+                //init datepicker
+                let datepicker = $('#datepicker');
+
+                datepicker.datepicker({
+                    dateFormat: $scope.dateFormat,
+                    onSelect: (text) => {
+                        let date = $.datepicker.parseDate($scope.dateFormat, text);
+
+                        //init datepicker with this date
+                        $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, date);
+                    }
+                });
+            }, 1000);
         });
     };
 

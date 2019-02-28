@@ -88,7 +88,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 backdrop: false,
                 keyboard: false,
                 controller: () => {
-                    $scope.modify = () => {
+                    $scope.submit = () => {
                         let description = {
                             title: $scope.song.title,
                             author: $scope.song.author,
