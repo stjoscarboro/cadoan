@@ -4,8 +4,6 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
      * init
      */
     $scope.init = function () {
-        $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
-
         $scope.songs = [];
         $scope.categories = [];
         $scope.authors = [];
@@ -121,15 +119,15 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         let deferred = $q.defer();
 
         Promise.all([
-            FileService.listFolder($scope.sheets_folder)
+            FileService.listFolder('cadoan.sheets')
         ])
             .then((values) => {
-                let songs = values[0];
-                for(let list of songs) {
-                    $scope.songs = $scope.songs.concat(list);
+                //populate songs
+                for(let list of values[0]) {
+                    Array.prototype.push.apply($scope.songs, list);
                 }
 
-                //parse categories and authors
+                //parse categories
                 for(let song of $scope.songs) {
                     if(song.category && $scope.categories.indexOf(song.category) === -1) {
                         $scope.categories.push(song.category);

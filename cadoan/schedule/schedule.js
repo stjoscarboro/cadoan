@@ -14,7 +14,9 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.liturgies = [];
         $scope.singers = [];
         $scope.songs = [];
+        $scope.categories = [];
 
+        $scope.rows = [0, 1, 2, 3, 4];
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.week = 7 * 24 * 3600 * 1000;
 
@@ -55,7 +57,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 let today = new Date();
                 today.setHours(0, 0, 0, 0);
 
-                for(let schedule of schedules) {
+                for (let schedule of schedules) {
                     if (schedules.length <= 4 || ($scope.schedules.length < 4 && schedule.date >= today.getTime())) {
                         schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(schedule.date));
                         $scope.schedules.push(schedule);
@@ -77,8 +79,15 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         ])
             .then((values) => {
                 //populate songs
-                for(let list of values[0]) {
+                for (let list of values[0]) {
                     Array.prototype.push.apply($scope.songs, list);
+                }
+
+                //parse categories and authors
+                for(let song of $scope.songs) {
+                    if(song.category && $scope.categories.indexOf(song.category) === -1) {
+                        $scope.categories.push(song.category);
+                    }
                 }
 
                 //populate liturgies
@@ -103,6 +112,10 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
             backdrop: false,
             keyboard: false,
             controller: () => {
+                $scope.init = () => {
+                    console.log('init');
+                };
+
                 $scope.submit = () => {
                     popup.close();
                 };
@@ -128,8 +141,22 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                         $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, date);
                     }
                 });
-            }, 1000);
+            }, 100);
         });
+    };
+
+    /**
+     * addSong
+     */
+    $scope.addSong = function () {
+        $scope.rows.push($scope.rows.length);
+    };
+
+    /**
+     * removeSong
+     */
+    $scope.removeSong = function () {
+        $scope.rows.splice($scope.rows.length - 1, 1);
     };
 
     /**

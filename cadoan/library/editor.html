@@ -4,15 +4,15 @@
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label for="title" class="col-sm-3 control-label">Tên Bài Hát</label>
-            <div class="col-sm-8">
+            <label for="title" class="col-md-3 control-label">Tên Bài Hát</label>
+            <div class="col-md-8">
                 <input type="text" id="title" class="form-control" ng-model="song.title">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="author" class="col-sm-3 control-label">Tác Giả</label>
-            <div class="col-sm-8">
+            <label for="author" class="col-md-3 control-label">Tác Giả</label>
+            <div class="col-md-8">
                 <input id="author" list="authors" class="form-control" ng-model="song.author">
                 <datalist id="authors">
                     <option ng-repeat="author in authors | orderBy: author" ng-value="author">{{author}}</option>
@@ -21,8 +21,8 @@
         </div>
 
         <div class="form-group">
-            <label for="category" class="col-sm-3 control-label">Thể Loại</label>
-            <div class="col-sm-8">
+            <label for="category" class="col-md-3 control-label">Thể Loại</label>
+            <div class="col-md-8">
                 <input id="category" list="categories" class="form-control" ng-model="song.category">
                 <datalist id="categories">
                     <option ng-repeat="category in categories | orderBy: category" ng-value="category">{{category}}</option>
@@ -31,8 +31,8 @@
         </div>
 
         <div class="form-group">
-            <label for="others" class="col-sm-3 control-label">Thông Tin Khác</label>
-            <div class="col-sm-8">
+            <label for="others" class="col-md-3 control-label">Thông Tin Khác</label>
+            <div class="col-md-8">
                 <textarea class="form-control" id="others" ng-model="song.others"></textarea>
                 <span class="small">* Các thông tin khác giúp cho việc tìm kiếm bài hát dễ dàng hơn, như năm hoặc mùa phụng vụ, etc.</span>
             </div>

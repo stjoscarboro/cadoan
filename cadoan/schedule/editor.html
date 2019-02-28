@@ -3,43 +3,71 @@
         <h3 class="modal-title">Lịch Hát Thánh Ca</h3>
     </div>
     <div class="modal-body">
-        <div class="form-group">
-            <label for="title" class="col-sm-3 control-label">Ngày</label>
-            <div class="col-sm-8">
+        <div class="form-group row row-no-padding">
+            <label class="col-md-2 control-label">Ngày:</label>
+            <div class="col-md-5">
                 <input type="text" id="datepicker" ng-model="schedule.date" class="form-control" autocomplete="off" required>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="author" class="col-sm-3 control-label">Tác Giả</label>
-            <div class="col-sm-8">
-                <input id="author" list="authors" class="form-control" ng-model="song.author">
-                <datalist id="authors">
-                    <option ng-repeat="author in authors | orderBy: author" ng-value="author">{{author}}</option>
-                </datalist>
+        <div class="form-group row row-no-padding">
+            <label class="col-md-2 control-label">Lịch Phụng Vụ:</label>
+            <div class="col-md-5">
+                <select ng-model="schedule.liturgy" class="form-control" required>
+                    <option></option>
+                    <option ng-repeat="liturgy in liturgies" ng-value="liturgy.id">{{liturgy.name}}</option>
+                </select>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="category" class="col-sm-3 control-label">Thể Loại</label>
-            <div class="col-sm-8">
-                <input id="category" list="categories" class="form-control" ng-model="song.category">
-                <datalist id="categories">
-                    <option ng-repeat="category in categories | orderBy: category" ng-value="category">{{category}}</option>
-                </datalist>
+        <div class="form-group row" style="padding-top: 10px; margin-bottom: 2px;">
+            <label class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <div class="row row-no-padding">
+                    <label class="col-md-3">Tập Nhạc</label>
+                    <label class="col-md-6">Bài Hát</label>
+                    <label class="col-md-2">Solo</label>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="others" class="col-sm-3 control-label">Thông Tin Khác</label>
-            <div class="col-sm-8">
-                <textarea class="form-control" id="others" ng-model="song.others"></textarea>
-                <span class="small">* Các thông tin khác giúp cho việc tìm kiếm bài hát dễ dàng hơn, như năm hoặc mùa phụng vụ, etc.</span>
+        <div ng-repeat="x in rows" class="form-group row">
+            <label class="col-md-2 control-label">Bài Hát {{x + 1}}:</label>
+            <div class="col-md-10">
+                <div class="row row-no-padding">
+                    <div class="col-md-3">
+                        <select ng-model="schedule.songs[x].categoryId" ng-change="selectFolder(x)" class="form-control">
+                            <option></option>
+                            <option ng-repeat="category in categories" ng-value="category.id">{{category.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <select ng-model="schedule.songs[x].id" class="form-control" required>
+                            <option></option>
+                            <option ng-repeat="song in lists[x].songs" ng-value="song.id">{{song.title}} (<em>{{song.author}}</em>)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select ng-model="schedule.songs[x].singer" class="form-control">
+                            <option></option>
+                            <option ng-repeat="singer in singers" ng-value="singer.id">{{singer.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="margin-top: 8px;">
+                        <a href="" ng-click="previewSong(x)" title="Xem Bài Hát"><i class="glyphicon glyphicon-open-file"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="modal-footer">
+        <div class="pull-left">
+            <a href="" ng-click="addSong(x)"><i class="glyphicon glyphicon-plus"></i></a>
+            <i style="font-weight: 600; font-size: 12pt;">/</i>
+            <a href="" ng-click="removeSong(x)"><i class="glyphicon glyphicon-minus"></i></a>
+        </div>
+
         <button class="btn btn-default" type="button" ng-click="cancel()">Bỏ Qua</button>
         <button class="btn btn-primary" type="submit">Lưu Lại</button>
     </div>
