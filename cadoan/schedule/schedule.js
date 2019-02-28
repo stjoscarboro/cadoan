@@ -1,4 +1,4 @@
-app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpService, DataService, FileService) => {
+app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $document, HttpService, DataService, FileService) => {
 
     /**
      * init
@@ -14,13 +14,30 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
 
         $scope.dateFormat = "DD, dd/mm/yy";
 
+        $document.ready(() => {
+            if ($window.angular.element('.signin').length === 0) {
+                $scope.loadData()
+                    .then(() => {
+                        $scope.get();
+                        $scope.resizeFrame();
+                    });
+            }
+        });
+    };
+
+    /**
+     * signin
+     */
+    $scope.signin = function (profile, token) {
+        $scope.profile = profile;
+        $scope.accessToken = token;
+        HttpService.setAccessToken(token);
+
         $scope.loadData()
             .then(() => {
                 $scope.get();
+                $scope.resizeFrame();
             });
-
-        //resize frame
-        $scope.resizeFrame();
     };
 
     /**
@@ -70,6 +87,27 @@ app.controller("MainCtrl", ($scope, $q, $window, $timeout, $interval, HttpServic
             });
 
         return deferred.promise;
+    };
+
+    /**
+     * create
+     */
+    $scope.create = function () {
+        let popup = $uibModal.open({
+            scope: $scope,
+            templateUrl: 'editor.html',
+            backdrop: false,
+            keyboard: false,
+            controller: () => {
+                $scope.modify = () => {
+                    popup.close();
+                };
+
+                $scope.cancel = () => {
+                    popup.close();
+                };
+            }
+        });
     };
 
     /**

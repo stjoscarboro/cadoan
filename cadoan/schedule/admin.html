@@ -6,12 +6,15 @@
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Cache-Control" content="no-store"/>
+    <meta name="google-signin-client_id"
+          content="732186080790-iokhb7a1vlil8tpm725aqnek5saoamh9.apps.googleusercontent.com">
 
     <script src="../../resources/js/jquery.min.js"></script>
     <script src="../../resources/js/jquery-ui.min.js"></script>
     <script src="../../resources/js/jquery-ui-datepicker-vi.js"></script>
     <script src="../../resources/js/angular.min.js"></script>
     <script src="../../resources/js/base64.min.js"></script>
+    <script src="../../resources/js/google-api.js"></script>
 
     <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
     <script src="../../resources/js/bootstrap.min.js"></script>
@@ -24,12 +27,20 @@
 
     <link href="./schedule.css" rel="stylesheet">
     <script src="./schedule.js"></script>
+
+    <script src="https://apis.google.com/js/platform.js?onload=renderAdminButton" async defer></script>
 </head>
 
 <body ng-app="stjoscarboro" ng-controller="ScheduleCtrl" data-ng-init="init()" class="schedule">
 
 <div id="main" class="main">
-    <ng-include src="'./schedule.inc'"></ng-include>
+    <div ng-if="!accessToken" class="signin">
+        <div id="gapi-signin"></div>
+    </div>
+
+    <div ng-if="accessToken">
+        <ng-include src="'./schedule.inc'"></ng-include>
+    </div>
 </div>
 
 </body>
