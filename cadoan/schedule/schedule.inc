@@ -12,9 +12,14 @@
             </div>
 
             <div class="liturgy">
-                {{schedule.liturgy}}
+                {{schedule.liturgy.name}} - {{schedule.liturgy.year}}
                 <a href="" ng-click="edit($index)" title="Thay Đổi Lịch" class="edit" ng-if="accessToken"><i class="glyphicon glyphicon-edit"></i></a>
                 <a href="" ng-click="remove($index)" title="Xoá Lịch" class="delete" ng-if="accessToken"><i class="glyphicon glyphicon-remove"></i></a>
+
+                <div class="liturgy other" ng-if="schedule.liturgy.other">
+                    <div class="date">&nbsp;</div>
+                    {{schedule.liturgy.other}}
+                </div>
             </div>
 
             <div ng-repeat="song in schedule.songs">

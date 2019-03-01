@@ -6,7 +6,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     $scope.init = function () {
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
-        $scope.schedule = { songs: [] };
+        $scope.schedule = { liturgy: {}, songs: [] };
         $scope.schedules = [];
         $scope.liturgies = [];
         $scope.singers = [];
@@ -14,6 +14,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.categories = [];
         $scope.lists = {};
 
+        $scope.years = [ 'Năm A', 'Năm B', 'Năm C'];
         $scope.rows = 5;
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.week = 7 * 24 * 3600 * 1000;
@@ -94,9 +95,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     $scope.refresh = function () {
         $scope.schedules = [];
         $scope.lists = {};
-        $scope.schedule = {
-            songs: []
-        };
+        $scope.schedule = { liturgy: {}, songs: [] };
         $scope.get();
     };
 
@@ -120,7 +119,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
 
                 $scope.cancel = () => {
                     $scope.lists = {};
-                    $scope.schedule = { songs: [] };
+                    $scope.schedule = { liturgy: {}, songs: [] };
+                    $scope.rows = 5;
                     popup.close();
                 };
             }
@@ -158,6 +158,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
      */
     $scope.edit = function (id) {
         $scope.schedule = angular.copy($scope.schedules[id]);
+        $scope.rows = $scope.schedule.songs.length;
 
         //get liturgy
         let liturgy = $scope.liturgies.find(i => { return i.name === $scope.schedule.liturgy; });
@@ -224,7 +225,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
             values: [
                 [
                     date.getTime(),
-                    liturgy,
+                    JSON.stringify(liturgy),
                     JSON.stringify(songs)
                 ]
             ]
@@ -313,20 +314,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 }
             }
         }
-    };
-
-    /**
-     * addSong
-     */
-    $scope.addSong = function () {
-        $scope.rows.push($scope.rows.length);
-    };
-
-    /**
-     * removeSong
-     */
-    $scope.removeSong = function () {
-        $scope.rows.splice($scope.rows.length - 1, 1);
     };
 
     /**

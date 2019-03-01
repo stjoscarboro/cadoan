@@ -5,22 +5,40 @@
     </div>
 
     <div class="modal-body">
-        <div class="form-group row row-no-padding">
+        <div class="form-group row">
             <label class="col-md-2 control-label">Ngày:</label>
 
-            <div class="col-md-5">
-                <input type="text" id="datepicker" ng-model="schedule.date" class="form-control" autocomplete="off" required>
+            <div class="col-md-10">
+                <div class="row row-no-padding">
+                    <div class="col-md-5">
+                        <input type="text" id="datepicker" ng-model="schedule.date" class="form-control" autocomplete="off" required>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group row row-no-padding">
+        <div class="form-group row">
             <label class="col-md-2 control-label">Lịch Phụng Vụ:</label>
 
-            <div class="col-md-5">
-                <select ng-model="schedule.liturgy" class="form-control" required>
-                    <option></option>
-                    <option ng-repeat="liturgy in liturgies" ng-value="liturgy.id">{{liturgy.name}}</option>
-                </select>
+            <div class="col-md-10">
+                <div class="row row-no-padding">
+                    <div class="col-md-5">
+                        <select ng-model="schedule.liturgy.id" class="form-control" required>
+                            <option></option>
+                            <option ng-repeat="liturgy in liturgies" ng-value="liturgy.id">{{liturgy.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2" style="width: 98px;">
+                        <select ng-model="schedule.liturgy.year" class="form-control" ng-init="schedule.liturgy.year = years[2]" required>
+                            <option ng-repeat="year in years" ng-value="year">{{year}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-5">
+                        <input type="text" ng-model="schedule.liturgy.other" class="form-control">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -36,7 +54,7 @@
             </div>
         </div>
 
-        <div ng-repeat="x in [] | range:schedule.songs.length || rows" class="form-group row">
+        <div ng-repeat="x in [] | range: rows" class="form-group row">
             <label class="col-md-2 control-label">Bài Hát {{x + 1}}:</label>
 
             <div class="col-md-10">
@@ -70,9 +88,9 @@
 
     <div class="modal-footer">
         <div class="pull-left">
-            <a href="" ng-click="addSong(x)" title="Thêm Bài Hát"><i class="glyphicon glyphicon-plus"></i></a>
+            <a href="" ng-click="rows = rows + 1" title="Thêm Bài Hát"><i class="glyphicon glyphicon-plus"></i></a>
             <i style="font-weight: 600; font-size: 12pt;">/</i>
-            <a href="" ng-click="removeSong(x)" title="Bớt Bài Hát"><i class="glyphicon glyphicon-minus"></i></a>
+            <a href="" ng-click="rows = rows - 1" title="Bớt Bài Hát"><i class="glyphicon glyphicon-minus"></i></a>
         </div>
 
         <button class="btn btn-default" type="button" ng-click="cancel()">Bỏ Qua</button>

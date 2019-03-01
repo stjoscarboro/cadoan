@@ -30,6 +30,13 @@
     font-size: 12pt;
 }
 
+.schedule .liturgy.other {
+    display: block;
+    color: #dc143c;
+    padding-bottom: 8px;
+    line-height: 14px;
+}
+
 .schedule .category {
     display: inline-flex;
     margin-left: 20px;
@@ -93,7 +100,7 @@
 }
 
 .ui-datepicker {
-    width: 24em;
+    width: 22.8em;
 }
 
 .modal-dialog {

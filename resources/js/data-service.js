@@ -183,13 +183,13 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                     if (values) {
                         for (let value of values) {
                             let date = Number.parseInt(value[0]),
-                                liturgy = value[1],
+                                liturgy = JSON.parse(value[1]),
                                 list = JSON.parse(value[2]);
 
                             //get liturgy
                             if (liturgy) {
-                                let item = liturgies.find(i => { return i.id === liturgy; });
-                                liturgy = item.name;
+                                let item = liturgies.find(i => { return i.id === liturgy.id; });
+                                liturgy.name = item.name;
                             }
 
                             //populate songs
