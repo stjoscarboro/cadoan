@@ -96,6 +96,10 @@
     width: 1000px;
 }
 
+.light.modal-backdrop {
+    background-color: lightgrey;
+}
+
 .row-no-padding > [class*="col-"] {
     padding-left: 0 !important;
 }

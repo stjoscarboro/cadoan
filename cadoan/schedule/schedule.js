@@ -107,7 +107,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         let popup = $uibModal.open({
             scope: $scope,
             templateUrl: 'editor.html',
-            backdrop: false,
+            backdrop: 'static',
+            backdropClass: 'light',
             keyboard: false,
             controller: () => {
                 $scope.submit = () => {
