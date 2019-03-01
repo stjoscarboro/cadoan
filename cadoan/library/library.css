@@ -60,3 +60,23 @@
 .library input[type=search]::-webkit-search-cancel-button {
     -webkit-appearance: searchfield-cancel-button;
 }
+
+.library .dataTables_length {
+    display: inline-block;
+    padding-top: 5px;
+}
+
+.library .dataTables_paginate.paging_simple_numbers {
+    display: inline-block;
+    float: right;
+}
+
+.library .dataTables_info {
+    display: inline-block;
+    padding-top: 5px;
+}
+
+.library .dataTables_filter {
+    display: inline-block;
+    float: right;
+}

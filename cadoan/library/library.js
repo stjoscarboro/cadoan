@@ -66,7 +66,8 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                     "url": "../../resources/js/datatables-vi.json"
                 },
                 columns: columns,
-                autoWidth: false
+                autoWidth: false,
+                dom: '<lp<t>if>'
             });
         }, 1);
     };
