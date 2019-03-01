@@ -68,15 +68,15 @@
 
 .library .dataTables_filter {
     display: inline-block;
-    padding-top: 5px;
+    padding-top: 2px;
 }
 
 .library .dataTables_length {
     display: inline-block;
-    padding-top: 5px;
+    padding-top: 2px;
     float: right;
-    padding-right: 32px;
-    font-size: small;
+    padding-right: 20px;
+    font-size: 0;
 }
 
 .library .dataTables_length select.input-sm {
@@ -86,7 +86,7 @@
 .library .dataTables_paginate {
     display: inline-block;
     float: right;
-    font-size: small;
+    font-size: smaller;
 }
 
 .library .dataTables_info {
