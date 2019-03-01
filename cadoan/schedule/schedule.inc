@@ -13,7 +13,7 @@
 
             <div class="liturgy">
                 {{schedule.liturgy}}
-                <a href="#top" ng-click="edit($index)" title="Thay Đổi Lịch" class="edit" ng-if="accessToken"><i class="glyphicon glyphicon-edit"></i></a>
+                <a href="" ng-click="edit($index)" title="Thay Đổi Lịch" class="edit" ng-if="accessToken"><i class="glyphicon glyphicon-edit"></i></a>
                 <a href="" ng-click="remove($index)" title="Xoá Lịch" class="delete" ng-if="accessToken"><i class="glyphicon glyphicon-remove"></i></a>
             </div>
 

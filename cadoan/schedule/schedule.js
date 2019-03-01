@@ -1,4 +1,4 @@
-app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $document, $anchorScroll, HttpService, DataService, FileService) => {
+app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $document, HttpService, DataService, FileService) => {
 
     /**
      * init
@@ -172,7 +172,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
             $scope.selectSongs(index);
         });
 
-        $anchorScroll();
         $scope.create();
     };
 
