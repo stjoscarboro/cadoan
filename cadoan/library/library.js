@@ -85,6 +85,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 scope: $scope,
                 templateUrl: 'editor.html',
                 backdrop: 'static',
+                backdropClass: 'light',
                 keyboard: false,
                 controller: () => {
                     $scope.submit = () => {

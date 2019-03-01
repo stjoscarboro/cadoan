@@ -104,27 +104,27 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
      */
     $scope.create = function () {
         let popup = $uibModal.open({
-            scope: $scope,
-            templateUrl: 'editor.html',
-            backdrop: 'static',
-            backdropClass: 'light',
-            keyboard: false,
-            controller: () => {
-                $scope.submit = () => {
-                    $scope.save()
-                        .then(() => {
-                            popup.close();
-                        });
-                };
+                scope: $scope,
+                templateUrl: 'editor.html',
+                backdrop: 'static',
+                backdropClass: 'light',
+                keyboard: false,
+                controller: () => {
+                    $scope.submit = () => {
+                        $scope.save()
+                            .then(() => {
+                                popup.close();
+                            });
+                    };
 
-                $scope.cancel = () => {
-                    $scope.lists = {};
-                    $scope.schedule = { liturgy: {}, songs: [] };
-                    $scope.rows = 5;
-                    popup.close();
-                };
-            }
-        });
+                    $scope.cancel = () => {
+                        $scope.lists = {};
+                        $scope.schedule = { liturgy: {}, songs: [] };
+                        $scope.rows = 5;
+                        popup.close();
+                    };
+                }
+            });
 
         //init datepicker
         popup.opened.then(() => {
