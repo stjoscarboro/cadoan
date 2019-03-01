@@ -67,7 +67,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 },
                 columns: columns,
                 autoWidth: false,
-                dom: '<lp<t>if>'
+                dom: '<fpl<t>i>'
             });
         }, 1);
     };

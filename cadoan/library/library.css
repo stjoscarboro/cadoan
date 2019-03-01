@@ -61,12 +61,19 @@
     -webkit-appearance: searchfield-cancel-button;
 }
 
-.library .dataTables_length {
+.library .dataTables_filter {
     display: inline-block;
     padding-top: 5px;
 }
 
-.library .dataTables_paginate.paging_simple_numbers {
+.library .dataTables_length {
+    display: inline-block;
+    padding-top: 5px;
+    float: right;
+    padding-right: 32px;
+}
+
+.library .dataTables_paginate {
     display: inline-block;
     float: right;
 }
@@ -74,9 +81,4 @@
 .library .dataTables_info {
     display: inline-block;
     padding-top: 5px;
-}
-
-.library .dataTables_filter {
-    display: inline-block;
-    float: right;
 }
