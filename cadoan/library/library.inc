@@ -3,7 +3,7 @@
 
     <div class="content">
         <div class="panel-body">
-            <table class="table table-bordered bordered table-striped datatable" data-page-length='10'>
+            <table class="table table-striped table-bordered" data-page-length='10'>
                 <thead>
                 <tr class="song header">
                     <th class="title">Bài Nhạc</th>

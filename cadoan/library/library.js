@@ -83,7 +83,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         let popup = $uibModal.open({
                 scope: $scope,
                 templateUrl: 'editor.html',
-                backdrop: false,
+                backdrop: 'static',
                 keyboard: false,
                 controller: () => {
                     $scope.submit = () => {
