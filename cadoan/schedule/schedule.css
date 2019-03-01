@@ -29,17 +29,17 @@
 .schedule .category {
     display: inline-flex;
     margin-left: 20px;
-    width: 80px;
+    width: 100px;
     vertical-align: top;
 }
 
 .schedule .song {
     display: inline-block;
-    width: calc(100% - 120px);
+    width: calc(100% - 140px);
 }
 
 .schedule .singer {
-    margin-left: 103px;
+    margin-left: 123px;
     color: darkgreen;
     font-style: italic;
 }
@@ -47,6 +47,7 @@
 .schedule .audio {
     display: inline-block;
     margin-left: 15px;
+    color: green;
 }
 
 .schedule .create {
@@ -71,17 +72,6 @@
     width: 24px;
     height: 24px;
     background: url('../../resources/images/loading.gif') no-repeat 0/24px;
-}
-
-.schedule .content {
-    width: 480px;
-    float: left;
-}
-
-.schedule .discussion {
-    width: 420px;
-    height: 400px;
-    float: right;
 }
 
 .schedule a {
