@@ -94,7 +94,7 @@
 
 .modal-dialog {
     width: 1008px;
-    margin-top: 6px;
+    margin-top: 0;
 }
 
 .light.modal-backdrop {
