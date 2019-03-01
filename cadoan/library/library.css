@@ -73,6 +73,10 @@
     padding-right: 32px;
 }
 
+.library .dataTables_length select.input-sm {
+    width: 60px;
+}
+
 .library .dataTables_paginate {
     display: inline-block;
     float: right;
