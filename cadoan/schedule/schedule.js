@@ -157,7 +157,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
      */
     $scope.edit = function (id) {
         $scope.schedule = angular.copy($scope.schedules[id]);
-        $scope.rows = $scope.schedule.songs.length;
 
         //get liturgy
         let liturgy = $scope.liturgies.find(i => { return i.name === $scope.schedule.liturgy; });
