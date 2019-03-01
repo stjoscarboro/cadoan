@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <div class="form-group row" style="padding-top: 10px; margin-bottom: 2px;">
+        <div class="form-group row" style="padding-top: 10px; margin-bottom: 4px;">
             <label class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <div class="row row-no-padding">
@@ -36,21 +36,19 @@
             <div class="col-md-10">
                 <div class="row row-no-padding">
                     <div class="col-md-3">
-                        <select ng-model="schedule.songs[x].categoryId" ng-change="selectFolder(x)" class="form-control">
-                            <option></option>
-                            <option ng-repeat="category in categories" ng-value="category.id">{{category.name}}</option>
+                        <select ng-model="schedule.songs[x].category" ng-change="selectSongs(x)" class="form-control">
+                            <option ng-repeat="category in categories | orderBy: category:false:categoryComparator" ng-value="category">{{category}}</option>
                         </select>
                     </div>
                     <div class="col-md-6">
                         <select ng-model="schedule.songs[x].id" class="form-control" required>
                             <option></option>
-                            <option ng-repeat="song in lists[x].songs" ng-value="song.id">{{song.title}} (<em>{{song.author}}</em>)</option>
+                            <option ng-repeat="song in lists[x].songs | orderBy: 'title':false:localeComparator" ng-value="song.id">{{song.title}} (<em>{{song.author}}</em>)</option>
                         </select>
                     </div>
                     <div class="col-md-2">
                         <select ng-model="schedule.songs[x].singer" class="form-control">
-                            <option></option>
-                            <option ng-repeat="singer in singers" ng-value="singer.id">{{singer.name}}</option>
+                            <option ng-repeat="singer in singers | orderBy: 'name':false:localeComparator" ng-value="singer.id">{{singer.name}}</option>
                         </select>
                     </div>
                     <div class="col-md-1" style="margin-top: 8px;">
