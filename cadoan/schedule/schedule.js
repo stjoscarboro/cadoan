@@ -6,10 +6,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     $scope.init = function () {
         $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
 
-        $scope.schedule = {
-            songs: []
-        };
-
+        $scope.schedule = { songs: [] };
         $scope.schedules = [];
         $scope.liturgies = [];
         $scope.singers = [];
@@ -121,9 +118,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 };
 
                 $scope.cancel = () => {
-                    $scope.schedule = {
-                        songs: []
-                    };
+                    $scope.lists = {};
+                    $scope.schedule = { songs: [] };
                     popup.close();
                 };
             }

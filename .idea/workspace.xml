@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c46644d-cb6b-4aa5-a4d1-0ddee90c505f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/cadoan/schedule/editor.html" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/schedule/editor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cadoan/schedule/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/schedule/schedule.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <ignored path="$PROJECT_DIR$/.idea/shelf/" />
@@ -114,7 +114,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cadoan/schedule/editor.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="112">
@@ -129,11 +129,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="266" lean-forward="true" selection-start-line="266" selection-end-line="266" />
+            <state relative-caret-position="112">
+              <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -150,8 +150,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cadoan/scheduler/scheduler.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="62" column="50" lean-forward="true" selection-start-line="62" selection-start-column="50" selection-end-line="62" selection-end-column="50" />
+            <state relative-caret-position="461">
+              <caret line="213" column="26" lean-forward="true" selection-start-line="213" selection-start-column="8" selection-end-line="213" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -160,7 +160,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$scope.refresh</find>
       <find>$scope.sort</find>
       <find>solid</find>
       <find>rawdate</find>
@@ -190,6 +189,7 @@
       <find>col-sm</find>
       <find>col-md</find>
       <find>orderB</find>
+      <find>close</find>
     </findStrings>
     <replaceStrings>
       <replace>$scope.scheduler</replace>
@@ -260,8 +260,8 @@
         <option value="$PROJECT_DIR$/cadoan/library/library.js" />
         <option value="$PROJECT_DIR$/cadoan/library/editor.html" />
         <option value="$PROJECT_DIR$/cadoan/schedule/schedule.css" />
-        <option value="$PROJECT_DIR$/cadoan/schedule/schedule.js" />
         <option value="$PROJECT_DIR$/cadoan/schedule/editor.html" />
+        <option value="$PROJECT_DIR$/cadoan/schedule/schedule.js" />
       </list>
     </option>
   </component>
@@ -813,24 +813,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cadoan/scheduler/scheduler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="62" column="50" lean-forward="true" selection-start-line="62" selection-start-column="50" selection-end-line="62" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="266" lean-forward="true" selection-start-line="266" selection-end-line="266" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.inc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
           <caret line="16" column="151" lean-forward="true" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="151" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cadoan/scheduler/scheduler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="213" column="26" lean-forward="true" selection-start-line="213" selection-start-column="8" selection-end-line="213" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -844,6 +837,13 @@
             <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#div#0;n#div#2;n#form#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
         </state>
       </provider>
     </entry>
