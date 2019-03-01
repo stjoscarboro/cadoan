@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c46644d-cb6b-4aa5-a4d1-0ddee90c505f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/cadoan/library/library.css" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/library/library.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cadoan/schedule/schedule.css" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/schedule/schedule.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <ignored path="$PROJECT_DIR$/.idea/shelf/" />
@@ -132,11 +132,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cadoan/library/library.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="694">
-              <caret line="76" column="16" selection-start-line="76" selection-start-column="16" selection-end-line="76" selection-end-column="16" />
+            <state relative-caret-position="722">
+              <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -239,7 +248,6 @@
         <option value="$PROJECT_DIR$/resources/js/data-service.js" />
         <option value="$PROJECT_DIR$/cadoan/schedule/schedule.js" />
         <option value="$PROJECT_DIR$/cadoan/schedule/editor.html" />
-        <option value="$PROJECT_DIR$/cadoan/schedule/schedule.css" />
         <option value="$PROJECT_DIR$/cadoan/schedule/admin.html" />
         <option value="$PROJECT_DIR$/cadoan/schedule/schedule.inc" />
         <option value="$PROJECT_DIR$/cadoan/library/library.inc" />
@@ -247,6 +255,7 @@
         <option value="$PROJECT_DIR$/cadoan/library/library.html" />
         <option value="$PROJECT_DIR$/cadoan/library/library.js" />
         <option value="$PROJECT_DIR$/cadoan/library/library.css" />
+        <option value="$PROJECT_DIR$/cadoan/schedule/schedule.css" />
       </list>
     </option>
   </component>
@@ -292,7 +301,7 @@
               <item name="stjoscarboro.github.io" type="b2602c69:ProjectViewProjectNode" />
               <item name="stjoscarboro.github.io" type="462c0819:PsiDirectoryNode" />
               <item name="cadoan" type="462c0819:PsiDirectoryNode" />
-              <item name="library" type="462c0819:PsiDirectoryNode" />
+              <item name="schedule" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="stjoscarboro.github.io" type="b2602c69:ProjectViewProjectNode" />
@@ -448,7 +457,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="35" y="23" width="1641" height="1027" extended-state="6" />
+    <frame x="39" y="23" width="1641" height="1027" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
@@ -718,13 +727,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
@@ -820,8 +822,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cadoan/library/library.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="694">
-          <caret line="76" column="16" selection-start-line="76" selection-start-column="16" selection-end-line="76" selection-end-column="16" />
+        <state relative-caret-position="722">
+          <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
         </state>
       </provider>
     </entry>
