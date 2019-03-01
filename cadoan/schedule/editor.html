@@ -1,11 +1,12 @@
 <form class="form-horizontal" role="form" ng-submit="submit()">
     <div class="modal-header">
+        <a href="" ng-click="cancel()" title="Đóng" class="close" style="margin-top: 4px;"><i class="glyphicon glyphicon-remove"></i></a>
         <h3 class="modal-title">Lịch Hát Thánh Ca</h3>
     </div>
     <div class="modal-body">
         <div class="form-group row row-no-padding">
             <label class="col-md-2 control-label">Ngày:</label>
-            <div class="col-md-5">
+            <div class="col-md-5">close
                 <input type="text" id="datepicker" ng-model="schedule.date" class="form-control" autocomplete="off" required>
             </div>
         </div>
