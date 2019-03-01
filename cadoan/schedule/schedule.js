@@ -14,7 +14,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.categories = [];
         $scope.lists = {};
 
-        $scope.rows = [0, 1, 2, 3, 4];
+        $scope.rows = 5;
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.week = 7 * 24 * 3600 * 1000;
 
@@ -157,6 +157,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
      */
     $scope.edit = function (id) {
         $scope.schedule = angular.copy($scope.schedules[id]);
+        $scope.rows = $scope.schedule.songs.length;
 
         //get liturgy
         let liturgy = $scope.liturgies.find(i => { return i.name === $scope.schedule.liturgy; });
@@ -408,3 +409,15 @@ app.directive('loading', ['$http', function ($http) {
         }
     };
 }]);
+
+app.filter('range', function() {
+    return function(input, total) {
+        total = parseInt(total);
+
+        for (let i=0; i<total; i++) {
+            input.push(i);
+        }
+
+        return input;
+    };
+});
