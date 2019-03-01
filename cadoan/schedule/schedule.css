@@ -99,7 +99,7 @@
 
 .light.modal-backdrop {
     background-color: lightgrey;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .row-no-padding > [class*="col-"] {
