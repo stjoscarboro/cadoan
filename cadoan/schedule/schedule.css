@@ -57,8 +57,9 @@
 
 .schedule .audio {
     display: inline-block;
-    margin-left: 15px;
+    margin-left: 10px;
     color: green;
+    font-weight: bolder;
 }
 
 .schedule .create {
@@ -71,11 +72,13 @@
 .schedule .edit {
     display: inline-block;
     margin-left: 15px;
+    font-weight: bolder;
 }
 
 .schedule .delete {
     display: inline-block;
     margin-left: 10px;
+    font-weight: bolder;
 }
 
 .schedule .loader {

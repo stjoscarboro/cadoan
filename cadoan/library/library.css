@@ -24,13 +24,11 @@
     margin-left: 10px;
     color: green;
     font-weight: bolder;
-    font-size: 10pt;
 }
 
 .library .info {
     margin-left: 10px;
     color: #cccccc;
-    font-size: 10pt;
 }
 
 .library .hidden {
@@ -49,7 +47,6 @@
 .library table tr th {
     background: #337ab7;
     color: white;
-    text-align: left;
 }
 
 .library input[type=search] {
