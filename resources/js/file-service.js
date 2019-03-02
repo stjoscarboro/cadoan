@@ -220,10 +220,6 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     /**
      * getFolder
-     *
-     * @param folderId
-     *
-     * @returns {*}
      */
     let getFolder = (folderId) => {
         let split = folderId.split('.'),

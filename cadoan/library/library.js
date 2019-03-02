@@ -52,8 +52,8 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     $scope.get = function () {
         let admin = $scope.accessToken !== null && $scope.accessToken !== undefined,
             columns = [
-                {width: 500, targets: 0},
-                {width: 200, targets: 1},
+                {width: 450, targets: 0},
+                {width: 250, targets: 1},
                 {width: 80, targets: 2},
                 {width: 16, targets: 3, visible: admin, searchable: false, orderable: false},
                 {width: 0, targets: 4, visible: false, type: 'hidden'}
