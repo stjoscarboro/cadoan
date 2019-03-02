@@ -12,13 +12,13 @@
             </div>
 
             <div class="liturgy">
-                {{schedule.liturgy.name}} - {{schedule.liturgy.year}}
+                {{(liturgies | filter: {'id': schedule.liturgy.id})[0].name}} - {{(years | filter: {'id': schedule.liturgy.year})[0].name}}
                 <a href="" ng-click="edit($index)" title="Thay Đổi Lịch" class="edit" ng-if="accessToken"><i class="glyphicon glyphicon-edit"></i></a>
                 <a href="" ng-click="remove($index)" title="Xoá Lịch" class="delete" ng-if="accessToken"><i class="glyphicon glyphicon-remove"></i></a>
 
-                <div class="liturgy other" ng-if="schedule.liturgy.other">
+                <div class="liturgy special" ng-if="schedule.liturgy.special">
                     <div class="date">&nbsp;</div>
-                    {{schedule.liturgy.other}}
+                    {{schedule.liturgy.special}}
                 </div>
             </div>
 
@@ -28,7 +28,7 @@
                     <a href="{{song.url}}" target="_blank" title="{{song.title}}">{{song.title}} (<em>{{song.author}}</em>)</a>
                     <a href="{{song.audio}}" title="Nghe Bài Hát" class="audio" ng-if="song.audio" target="_blank"><i class="glyphicon glyphicon-music"></i></a>
                 </div>
-                <div class="singer" ng-if="song.singer">Solo: {{song.singer}}</div>
+                <div class="singer" ng-if="song.singer">Solo: {{(singers | filter: {'id': song.singer})[0].name}}</div>
             </div>
         </div>
     </div>

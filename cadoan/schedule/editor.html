@@ -30,13 +30,13 @@
                     </div>
 
                     <div class="col-md-2" style="width: 98px;">
-                        <select ng-model="schedule.liturgy.year" class="form-control" ng-init="schedule.liturgy.year = years[2]" required>
-                            <option ng-repeat="year in years" ng-value="year">{{year}}</option>
+                        <select ng-model="schedule.liturgy.year" class="form-control" required>
+                            <option ng-repeat="year in years" ng-value="year.id">{{year.name}}</option>
                         </select>
                     </div>
 
                     <div class="col-md-5">
-                        <input type="text" ng-model="schedule.liturgy.other" class="form-control">
+                        <input type="text" ng-model="schedule.liturgy.special" class="form-control">
                     </div>
                 </div>
             </div>

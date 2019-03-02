@@ -10,6 +10,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.schedules = [];
         $scope.liturgies = [];
         $scope.singers = [];
+        $scope.years = [];
         $scope.songs = [];
         $scope.categories = [];
         $scope.lists = {};
@@ -51,7 +52,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     $scope.get = function () {
         $scope.schedules = [];
 
-        DataService.loadSchedules($scope.liturgies, $scope.singers, $scope.songs)
+        DataService.loadSchedules($scope.songs)
             .then(schedules => {
                 let today = new Date();
                 today.setHours(0, 0, 0, 0);
@@ -132,6 +133,16 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 //init datepicker
                 let datepicker = $('#datepicker');
 
+                let setYear = () => {
+                    let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date);
+
+                    for(let year of $scope.years) {
+                        if(date.getTime() >= year.start && date.getTime() < year.end) {
+                            $scope.schedule.liturgy.year = year.id;
+                        }
+                    }
+                };
+
                 datepicker.datepicker({
                     dateFormat: $scope.dateFormat,
                     onSelect: (text) => {
@@ -139,6 +150,9 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
 
                         //init datepicker with this date
                         $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, date);
+
+                        //init year
+                        setYear();
                     }
                 });
 
@@ -149,6 +163,9 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                         $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(date.getTime() + $scope.week));
                     }
                 }
+
+                //init year
+                setYear();
             }, 100);
         });
     };
@@ -214,6 +231,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
             songs = [], payload, removed = [],
             deferred = $q.defer();
 
+        //parse songs
         for (let song of $scope.schedule.songs) {
             songs.push({
                 id: song.id,
@@ -221,6 +239,10 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
             });
         }
 
+        //clean liturgy of empty properties
+        Object.keys(liturgy).forEach(key => (!liturgy[key]) && delete liturgy[key]);
+
+        //create payload
         payload = {
             values: [
                 [
@@ -272,7 +294,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         Promise.all([
             FileService.listFolder('cadoan.sheets'),
             DataService.loadLiturgies(),
-            DataService.loadSingers()
+            DataService.loadSingers(),
+            DataService.loadYears()
         ])
             .then((values) => {
                 //populate songs
@@ -292,6 +315,9 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
 
                 //populate singers
                 $scope.singers = values[2];
+
+                //populate years
+                $scope.years = values[3];
 
                 deferred.resolve();
             });

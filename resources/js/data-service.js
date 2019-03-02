@@ -27,6 +27,11 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                 singers: {
                     id: '1c-CU_cRvWy_Wp5PhrkKN_k-H3TKArH9-5z098Wx6Ibo',
                     range: 'A:B' // [id, name]
+                },
+
+                years: {
+                    id: '1GPIzPBml9fx_W_Tgl4udEGBpmDHOxiZL-3rNiEGvwYE',
+                    range: 'A:D' // [id, name, from, to]
                 }
             }
         };
@@ -162,14 +167,52 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
     };
 
     /**
+     * loadSingers
+     *
+     * @returns {f}
+     */
+    service.loadYears = () => {
+        let deferred = $q.defer(),
+            results = [];
+
+        service.getSheetData('cadoan.years')
+            .then(
+                //success
+                (response) => {
+                    let values = response.data.values;
+
+                    if (values) {
+                        for (let value of values) {
+                            if (value[1]) {
+                                results.push({
+                                    id: value[0],
+                                    name: value[1],
+                                    start: Date.parse(value[2]),
+                                    end: Date.parse(value[3])
+                                });
+                            }
+                        }
+                    }
+
+                    deferred.resolve(results);
+                },
+
+                //failure
+                (response) => {
+                    console.log(response.data.error);
+                }
+            );
+
+        return deferred.promise;
+    };
+
+    /**
      * loadSchedules
      *
-     * @param liturgies
-     * @param singers
      * @param songs
      * @returns {f}
      */
-    service.loadSchedules = (liturgies, singers, songs) => {
+    service.loadSchedules = (songs) => {
         let deferred = $q.defer(),
             results = [];
 
@@ -186,23 +229,13 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                                 liturgy = JSON.parse(value[1]),
                                 list = JSON.parse(value[2]);
 
-                            //get liturgy
-                            if (liturgy) {
-                                let item = liturgies.find(i => { return i.id === liturgy.id; });
-                                liturgy.name = item.name;
-                            }
-
                             //populate songs
                             for (let item of list) {
                                 //find song
-                                let song = (songs.find(i => { return i.id === item.id; }));
+                                let song = (songs.find(i => {
+                                    return i.id === item.id;
+                                }));
                                 Object.assign(item, pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
-
-                                //get singer
-                                if (item.singer) {
-                                    let singer = singers.find(i => { return i.id === item.singer; });
-                                    item.singer = singer.name;
-                                }
                             }
 
                             results.push({
