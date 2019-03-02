@@ -68,7 +68,9 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 autoWidth: false,
                 dom: '<fpl<t>i<"dataTables_drive">>',
                 initComplete: () => {
-                    $(".dataTables_drive").append('<a href="' + $scope.driveURL + '" target="_blank" title="Tải Bài Hát">Danh Sách Bài Hát</a>');
+                    if($scope.accessToken) {
+                        $(".dataTables_drive").append('<a href="' + $scope.driveURL + '" target="_blank" title="Tải Bài Hát">Danh Sách Bài Hát</a>');
+                    }
                 }
             });
         }, 1);
