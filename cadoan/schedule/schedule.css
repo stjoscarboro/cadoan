@@ -64,7 +64,8 @@
 .schedule .create {
     display: inline-block;
     float: right;
-    margin-top: 7px;
+    margin-top: 5px;
+    font-size: 14pt;
 }
 
 .schedule .edit {

@@ -10,6 +10,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $scope.song = {};
 
         $scope.dateFormat = "DD, dd/mm/yy";
+        $scope.driveURL = FileService.getFolderURL('cadoan.sheets');
 
         $scope.pageSize = 10;
         $scope.pageCounter = 1;
@@ -18,8 +19,6 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $.fn.dataTable.ext.order.intl('vi', {
             sensitivity: 'accent'
         });
-
-        $scope.liturgies = DataService.getLiturties();
 
         $document.ready(() => {
             if ($window.angular.element('.signin').length === 0) {
@@ -67,7 +66,10 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 },
                 columns: columns,
                 autoWidth: false,
-                dom: '<fpl<t>i>'
+                dom: '<fpl<t>i<"dataTables_drive">>',
+                initComplete: () => {
+                    $(".dataTables_drive").append('<a href="' + $scope.driveURL + '" target="_blank" title="Tải Bài Hát">Danh Sách Bài Hát</a>');
+                }
             });
         }, 1);
     };

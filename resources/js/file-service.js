@@ -16,7 +16,8 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
      * getFolderURL
      */
     service.getFolderURL = (folderId) => {
-        return 'https://drive.google.com/drive/folders/' + folderId;
+        let folder = getFolder(folderId) || folderId;
+        return 'https://drive.google.com/drive/folders/' + folder;
     };
 
     /**

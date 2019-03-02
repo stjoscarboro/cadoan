@@ -4,8 +4,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
      * init
      */
     $scope.init = function () {
-        $scope.sheets_folder = '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p';
-
         $scope.schedule = { liturgy: {}, songs: [] };
         $scope.schedules = [];
         $scope.liturgies = [];
