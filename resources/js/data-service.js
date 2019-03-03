@@ -38,14 +38,18 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
 
     let service = {};
 
-    service.getLiturties = () => {
+    /**
+     * getCategories
+     *
+     * @returns {string[]}
+     */
+    service.getCategories = () => {
         return [
             'Nhập Lễ',
             'Đáp Ca',
             'Dâng Lễ',
             'Hiệp Lễ',
-            'Kết Lễ',
-            'Phụng Vụ'
+            'Kết Lễ'
         ]
     };
 
@@ -256,6 +260,32 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
             );
 
         return deferred.promise;
+    };
+
+    /**
+     * sortByLocale
+     * @param array
+     * @param property
+     */
+    service.sortByLocale = (array, property) => {
+        array && array.sort((v1, v2) => {
+            let p1 = typeof v1 === 'object' && property ? v1[property] : v1,
+                p2 = typeof v2 === 'object' && property ? v2[property] : v2;
+            return p1 && p2 ? p1.localeCompare(p2) : 0;
+        });
+    };
+
+    /**
+     * sortCategories
+     * @param array
+     */
+    service.sortCategories = (array) => {
+        service.sortByLocale(array);
+
+        array && array.sort((v1, v2) => {
+            let order = service.getCategories().reverse();
+            return order.indexOf(v2) - order.indexOf(v1);
+        });
     };
 
     /**

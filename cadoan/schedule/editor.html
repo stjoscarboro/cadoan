@@ -61,20 +61,20 @@
                 <div class="row row-no-padding">
                     <div class="col-md-3">
                         <select ng-model="schedule.songs[x].category" ng-change="selectSongs(x)" class="form-control">
-                            <option ng-repeat="category in categories | orderBy: category:false:categoryComparator" ng-value="category">{{category}}</option>
+                            <option ng-repeat="category in categories" ng-value="category">{{category}}</option>
                         </select>
                     </div>
 
                     <div class="col-md-6">
                         <select ng-model="schedule.songs[x].id" class="form-control" required>
                             <option></option>
-                            <option ng-repeat="song in lists[x].songs | orderBy: 'title':false:localeComparator" ng-value="song.id">{{song.title}} (<em>{{song.author}}</em>)</option>
+                            <option ng-repeat="song in lists[x].songs" ng-value="song.id">{{song.title}} (<em>{{song.author}}</em>)</option>
                         </select>
                     </div>
 
                     <div class="col-md-2">
                         <select ng-model="schedule.songs[x].singer" class="form-control">
-                            <option ng-repeat="singer in singers | orderBy: 'name':false:localeComparator" ng-value="singer.id">{{singer.name}}</option>
+                            <option ng-repeat="singer in singers" ng-value="singer.id">{{singer.name}}</option>
                         </select>
                     </div>
 

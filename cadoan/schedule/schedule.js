@@ -40,7 +40,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.loadData()
             .then(() => {
                 $scope.get();
-                $scope.resizeFrame();
+                resizeFrame($scope);
             });
     };
 
@@ -317,6 +317,11 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 //populate years
                 $scope.years = values[3];
 
+                //sort data
+                DataService.sortByLocale($scope.songs, 'title');
+                DataService.sortCategories($scope.categories);
+                DataService.sortByLocale($scope.singers, 'name');
+
                 deferred.resolve();
             });
 
@@ -349,27 +354,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         if (song) {
             $window.open(FileService.getOpenURL(song.id), '_blank');
         }
-    };
-
-    /**
-     * localeSensitiveComparator
-     */
-    $scope.localeComparator = function (v1, v2) {
-        // If we don't get strings, just compare by index
-        if (v1.type !== 'string' || v2.type !== 'string') {
-            return (v1.index < v2.index) ? -1 : 1;
-        }
-
-        // Compare strings alphabetically, taking locale into account
-        return v1.value.localeCompare(v2.value);
-    };
-
-    /**
-     * categoryComparator
-     */
-    $scope.categoryComparator = function (v1, v2) {
-        let order = [ 'Kết Lễ', 'Hiệp Lễ', 'Dâng Lễ', 'Đáp Ca', 'Nhập Lễ' ];
-        return order.indexOf(v2.value) - order.indexOf(v1.value) || $scope.localeComparator(v1, v2);
     };
 });
 
