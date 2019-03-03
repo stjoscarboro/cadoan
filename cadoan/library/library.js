@@ -153,28 +153,25 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     };
 
     /**
-     * resize
-     */
-    $scope.resize = function (currentHeight) {
-        let contentHeight = $(document).outerHeight();
-
-        if (contentHeight !== currentHeight) {
-            contentHeight += 20;
-            parent.postMessage("resize::" + contentHeight, "*");
-        }
-
-        return contentHeight;
-    };
-
-    /**
      * resizeFrame
      */
     $scope.resizeFrame = function () {
         let promise, height = 0;
 
+        let resize = (currentHeight) => {
+            let contentHeight = $(document).outerHeight();
+
+            if (contentHeight !== currentHeight) {
+                contentHeight += 20;
+                parent.postMessage("resize::" + contentHeight, "*");
+            }
+
+            return contentHeight;
+        };
+
         //set resize interval
         promise = $interval(() => {
-            height = $scope.resize(height);
+            height = resize(height);
         }, 1000);
 
         //cancel interval
