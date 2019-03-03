@@ -8,10 +8,6 @@
     overflow: auto;
 }
 
-.library .signin {
-    padding: 20px;
-}
-
 .library .loader {
     display: block;
     margin: auto;
