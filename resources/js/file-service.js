@@ -95,14 +95,14 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
             promise = $q.when(),
             deferred = $q.defer();
 
-        for(let folder of folders) {
+        folders.forEach(folder => {
             promise = promise.then(() => {
                 return service.listFiles(folder.id);
             })
                 .then(result => {
                     results.push(result);
                 });
-        }
+        });
 
         promise.then(() => {
             deferred.resolve(results);
@@ -119,34 +119,34 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
             promise = $q.when(),
             deferred = $q.defer();
 
-        for(let i=0; i<Math.ceil(folders.length / count); i++) {
+        for (let i = 0; i < Math.ceil(folders.length / count); i++) {
             let group = [];
-            for(let j = 0; j < count; j++) {
+            for (let j = 0; j < count; j++) {
                 let folder = folders[i * count + j];
                 folder && group.push(folders[i * count + j]);
             }
             groups.push(group);
         }
 
-        for(let group of groups) {
+        groups.forEach(group => {
             promise = promise.then(() => {
                 return new Promise(resolve => {
                     let promises = [];
 
-                    for(let folder of group) {
+                    group.forEach(folder => {
                         promises.push(service.listFiles(folder.id));
-                    }
+                    });
 
                     Promise.all(promises)
                         .then(values => {
-                            for(value of values) {
+                            values.forEach(value => {
                                 results.push(value);
-                            }
+                            });
                             resolve();
                         });
                 });
             });
-        }
+        });
 
         promise.then(() => {
             deferred.resolve(results);
@@ -184,11 +184,11 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                                     }
 
                                     let title = sheet.name.replace(/(.*)(.pdf)$/, '$1');
-                                    for (let file of sheets) {
+                                    sheets.forEach(file => {
                                         if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
                                             sheet.audio = service.getOpenURL(file.id);
                                         }
-                                    }
+                                    });
 
                                     sheet.folder = folder;
                                     sheet.url = service.getOpenURL(sheet.id);
@@ -225,9 +225,9 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
         let split = folderId.split('.'),
             folder = folders;
 
-        for (let key of split) {
+        split.forEach(key => {
             folder = folder[key];
-        }
+        });
 
         return folder;
     };

@@ -42,7 +42,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $scope.loadData()
             .then(() => {
                 $scope.get();
-                $scope.resizeFrame();
+                resizeFrame($scope);
             });
     };
 

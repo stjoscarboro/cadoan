@@ -116,11 +116,11 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                     let values = response.data.values;
 
                     if (values) {
-                        for (let value of values) {
+                        values.forEach(value => {
                             if (value[1]) {
                                 results.push({id: value[0], name: value[1]});
                             }
-                        }
+                        });
                     }
 
                     deferred.resolve(results);
@@ -151,11 +151,11 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                     let values = response.data.values;
 
                     if (values) {
-                        for (let value of values) {
+                        values.forEach(value => {
                             if (value[1]) {
                                 results.push({id: value[0], name: value[1]});
                             }
-                        }
+                        });
                     }
 
                     deferred.resolve(results);
@@ -186,7 +186,7 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                     let values = response.data.values;
 
                     if (values) {
-                        for (let value of values) {
+                        values.forEach(value => {
                             if (value[1]) {
                                 results.push({
                                     id: value[0],
@@ -195,7 +195,7 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                                     end: Date.parse(value[3])
                                 });
                             }
-                        }
+                        });
                     }
 
                     deferred.resolve(results);
@@ -228,26 +228,26 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                         pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {});
 
                     if (values) {
-                        for (let value of values) {
+                        values.forEach(value => {
                             let date = Number.parseInt(value[0]),
                                 liturgy = JSON.parse(value[1]),
                                 list = JSON.parse(value[2]);
 
                             //populate songs
-                            for (let item of list) {
+                            list.forEach(item => {
                                 //find song
                                 let song = (songs.find(i => {
                                     return i.id === item.id;
                                 }));
                                 Object.assign(item, pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
-                            }
+                            });
 
                             results.push({
                                 date: date,
                                 liturgy: liturgy,
                                 songs: list
                             });
-                        }
+                        });
                     }
 
                     deferred.resolve(results);
@@ -299,9 +299,9 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
         let split = sheetId.split('.'),
             sheet = sheets;
 
-        for (let key of split) {
+        split.forEach(key => {
             sheet = sheet[key];
-        }
+        });
 
         return sheet;
     };
