@@ -68,7 +68,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 autoWidth: false,
                 dom: '<fpl<t>i<"dataTables_drive">>',
                 initComplete: () => {
-                    if($scope.accessToken) {
+                    if ($scope.accessToken) {
                         $(".dataTables_drive").append('<a href="' + $scope.driveURL + '" target="_blank" title="Tải Bài Hát">Danh Sách Bài Hát</a>');
                     }
                 }
@@ -129,23 +129,22 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         ])
             .then((values) => {
                 //populate songs
-                for(let list of values[0]) {
+                for (let list of values[0]) {
                     Array.prototype.push.apply($scope.songs, list);
                 }
 
                 //parse categories
-                for(let song of $scope.songs) {
-                    if(song.category && $scope.categories.indexOf(song.category) === -1) {
+                for (let song of $scope.songs) {
+                    if (song.category && $scope.categories.indexOf(song.category) === -1) {
                         $scope.categories.push(song.category);
                     }
 
-                    if(song.author && $scope.authors.indexOf(song.author) === -1) {
+                    if (song.author && $scope.authors.indexOf(song.author) === -1) {
                         $scope.authors.push(song.author);
                     }
                 }
 
                 $scope.songs = $filter('orderBy')($scope.songs, 'title');
-
                 deferred.resolve();
             });
 

@@ -11,6 +11,7 @@ app.directive('loading', ['$http', function ($http) {
 
             scope.$watch(scope.isLoading, (value) => {
                 value ? element.removeClass('ng-hide') : element.addClass('ng-hide');
+                scope.loading = value;
             });
         }
     };

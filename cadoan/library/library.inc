@@ -1,7 +1,7 @@
 <div>
     <div class="loader" data-loading></div>
 
-    <div class="content">
+    <div class="content" ng-if="!loading">
         <div class="panel-body">
             <table class="table table-striped table-bordered" data-page-length='10'>
                 <thead>
