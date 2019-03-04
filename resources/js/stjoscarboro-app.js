@@ -1,17 +1,24 @@
 let app = angular.module('stjoscarboro', ['ui.bootstrap']);
 
-app.directive('loading', ['$http', function ($http) {
+app.directive('loading', ['$http', '$window', function ($http, $window) {
     return {
         restrict: 'A',
 
         link: (scope, element) => {
+            let content = $window.angular.element('.content');
+
             scope.isLoading = () => {
                 return $http.pendingRequests.length > 0;
             };
 
             scope.$watch(scope.isLoading, (value) => {
-                value ? element.removeClass('ng-hide') : element.addClass('ng-hide');
-                scope.loading = value;
+                if(value) {
+                    element.removeClass('ng-hide');
+                    content && content.addClass('ng-hide');
+                } else {
+                    element.addClass('ng-hide');
+                    content && content.removeClass('ng-hide');
+                }
             });
         }
     };
