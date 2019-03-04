@@ -56,7 +56,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 today.setHours(0, 0, 0, 0);
 
                 for (let schedule of schedules) {
-                    if ($scope.accessToken || schedule.date >= today.getTime()) {
+                    if ($scope.accessToken || schedules.length <= 4 || schedule.date >= today.getTime()) {
                         schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(schedule.date));
                         $scope.schedules.push(schedule);
                     }
