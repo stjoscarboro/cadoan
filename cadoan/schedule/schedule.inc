@@ -1,7 +1,7 @@
 <div>
     <div class="loader" data-loading></div>
 
-    <div class="content">
+    <div class="content" ng-if="!loading">
         <div class="create" ng-if="accessToken">
             <a href="" ng-click="create()" title="Soạn Lịch"><i class="glyphicon glyphicon-new-window"></i></a>
         </div>
