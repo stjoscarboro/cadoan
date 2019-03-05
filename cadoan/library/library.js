@@ -63,7 +63,8 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 columns: columns,
                 autoWidth: false,
                 ordering: false,
-                lengthMenu: [15, 25, 50],
+                pageLength: 15,
+                lengthMenu: [[10, 15, 25, 50, -1], [10, 15, 25, 50, "All"]],
                 dom: '<fpl<t>i<"dataTables_drive">>',
                 initComplete: () => {
                     if ($scope.accessToken) {
