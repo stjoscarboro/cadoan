@@ -16,10 +16,6 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $scope.pageCounter = 1;
         $scope.maxSize = 7;
 
-        $.fn.dataTable.ext.order.intl('vi', {
-            sensitivity: 'accent'
-        });
-
         $document.ready(() => {
             if ($window.angular.element('.signin').length === 0) {
                 $scope.loadData()
@@ -60,12 +56,17 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
             ];
 
         $timeout(() => {
+            $.fn.dataTable.ext.order.intl('vi', {
+                sensitivity: 'accent'
+            });
+
             $('.table').DataTable({
                 language: {
                     "url": "../../resources/js/datatables-vi.json"
                 },
                 columns: columns,
                 autoWidth: false,
+                ordering: false,
                 dom: '<fpl<t>i<"dataTables_drive">>',
                 initComplete: () => {
                     if ($scope.accessToken) {
@@ -144,7 +145,11 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                     }
                 }
 
-                $scope.songs = $filter('orderBy')($scope.songs, 'title');
+                //sort data
+                DataService.sortByLocale($scope.songs, 'title');
+                DataService.sortCategories($scope.categories);
+                DataService.sortByLocale($scope.authors, 'name');
+
                 deferred.resolve();
             });
 

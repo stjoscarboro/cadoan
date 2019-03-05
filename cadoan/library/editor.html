@@ -19,7 +19,7 @@
             <div class="col-md-8">
                 <input id="author" list="authors" class="form-control" ng-model="song.author">
                 <datalist id="authors">
-                    <option ng-repeat="author in authors | orderBy: author" ng-value="author">{{author}}</option>
+                    <option ng-repeat="author in authors" ng-value="author">{{author}}</option>
                 </datalist>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <div class="col-md-8">
                 <input id="category" list="categories" class="form-control" ng-model="song.category">
                 <datalist id="categories">
-                    <option ng-repeat="category in categories | orderBy: category" ng-value="category">{{category}}</option>
+                    <option ng-repeat="category in categories" ng-value="category">{{category}}</option>
                 </datalist>
             </div>
         </div>
