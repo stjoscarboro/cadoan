@@ -11,7 +11,7 @@
             .replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/g, 'o')
             .replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/g, 'u')
             .replace(/ý|ỳ|ỷ|ỹ|ỵ/g, 'y')
-            .replace(/đ|Đ/g, 'd')
+            .replace(/đ/g, 'd')
             ;
     }
 
@@ -34,52 +34,3 @@
     };
 
 }());
-
-
-/**
- * intl
- */
-(function (factory) {
-    "use strict";
-
-    if (typeof define === 'function' && define.amd) {
-        // AMD
-        define(['jquery'], function ($) {
-            return factory($, window, document);
-        });
-    } else if (typeof exports === 'object') {
-        // CommonJS
-        module.exports = function (root, $) {
-            if (!root) {
-                root = window;
-            }
-
-            if (!$) {
-                $ = typeof window !== 'undefined' ?
-                    require('jquery') :
-                    require('jquery')(root);
-            }
-
-            return factory($, root, root.document);
-        };
-    } else {
-        // Browser
-        factory(jQuery, window, document);
-    }
-}
-(function ($, window, document) {
-
-    $.fn.dataTable.ext.order.intl = function (locales, options) {
-        if (window.Intl) {
-            var collator = new Intl.Collator(locales, options);
-            var types = $.fn.dataTable.ext.type;
-
-            delete types.order['string-pre'];
-            types.order['string-asc'] = collator.compare;
-            types.order['string-desc'] = function (a, b) {
-                return collator.compare(a, b) * -1;
-            };
-        }
-    };
-
-}));

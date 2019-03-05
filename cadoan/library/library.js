@@ -56,10 +56,6 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
             ];
 
         $timeout(() => {
-            $.fn.dataTable.ext.order.intl('vi', {
-                sensitivity: 'accent'
-            });
-
             $('.table').DataTable({
                 language: {
                     "url": "../../resources/js/datatables-vi.json"
