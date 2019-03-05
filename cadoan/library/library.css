@@ -94,6 +94,13 @@
     padding-top: 5px;
 }
 
+.library .dataTables_drive .drive-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: url('../../resources/images/google-drive.png') no-repeat 0/26px;
+}
+
 .library .dataTables_wrapper .horizontal-flip {
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);

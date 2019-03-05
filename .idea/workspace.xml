@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c46644d-cb6b-4aa5-a4d1-0ddee90c505f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/resources/js/datatables-vi.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/datatables-vi.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cadoan/library/library.css" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/library/library.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cadoan/library/library.js" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/library/library.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <ignored path="$PROJECT_DIR$/.idea/shelf/" />
@@ -114,20 +115,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/js/datatables-vi.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="84">
               <caret line="6" column="47" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cadoan/library/library.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="56" column="23" lean-forward="true" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -146,6 +138,24 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="70">
               <caret line="5" column="60" lean-forward="true" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="60" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cadoan/library/library.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="70" column="150" selection-start-line="70" selection-start-column="150" selection-end-line="70" selection-end-column="150" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cadoan/library/library.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="666">
+              <caret line="101" selection-start-line="98" selection-end-line="101" />
             </state>
           </provider>
         </entry>
@@ -253,10 +263,10 @@
         <option value="$PROJECT_DIR$/cadoan/library/library.html" />
         <option value="$PROJECT_DIR$/cadoan/library/editor.html" />
         <option value="$PROJECT_DIR$/resources/js/datatables-plugins.js" />
-        <option value="$PROJECT_DIR$/cadoan/library/library.js" />
         <option value="$PROJECT_DIR$/cadoan/library/library.inc" />
-        <option value="$PROJECT_DIR$/cadoan/library/library.css" />
         <option value="$PROJECT_DIR$/resources/js/datatables-vi.json" />
+        <option value="$PROJECT_DIR$/cadoan/library/library.js" />
+        <option value="$PROJECT_DIR$/cadoan/library/library.css" />
       </list>
     </option>
   </component>
@@ -464,7 +474,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="36" y="23" width="1642" height="1027" extended-state="6" />
+    <frame x="35" y="23" width="1642" height="1027" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
@@ -828,17 +838,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cadoan/library/library.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cadoan/library/library.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="20" column="68" lean-forward="true" selection-start-line="20" selection-start-column="68" selection-end-line="20" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/datatables-vi.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="6" column="47" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -849,17 +859,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cadoan/library/library.css">
+    <entry file="file://$PROJECT_DIR$/cadoan/library/library.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="56" column="23" lean-forward="true" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
+        <state relative-caret-position="322">
+          <caret line="70" column="150" selection-start-line="70" selection-start-column="150" selection-end-line="70" selection-end-column="150" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/datatables-vi.json">
+    <entry file="file://$PROJECT_DIR$/cadoan/library/library.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="6" column="47" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
+        <state relative-caret-position="666">
+          <caret line="101" selection-start-line="98" selection-end-line="101" />
         </state>
       </provider>
     </entry>
