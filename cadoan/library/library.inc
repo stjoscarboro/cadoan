@@ -3,7 +3,7 @@
 
     <div class="content ng-hide">
         <div class="panel-body">
-            <table class="table table-striped table-bordered" data-page-length='10'>
+            <table class="table table-striped table-bordered">
                 <thead>
                     <tr class="song header">
                         <th class="title">Bài Nhạc</th>
