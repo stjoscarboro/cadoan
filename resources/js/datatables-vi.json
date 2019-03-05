@@ -6,7 +6,7 @@
   "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
   "sInfoFiltered": "(được lọc từ _MAX_ mục)",
   "sInfoPostFix": "",
-  "sSearch": "<i class=\"glyphicon glyphicon-search horizontal-flip brand-color\"></i>",
+  "sSearch": "<i class=\"glyphicon glyphicon-search horizontal-flip brand-color\" style=\"top: 3px;\"></i>",
   "sUrl": "",
   "oPaginate": {
     "sFirst": "<i class=\"glyphicon glyphicon-triangle-left brand-color\"></i>",
