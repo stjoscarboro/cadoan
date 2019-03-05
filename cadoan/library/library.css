@@ -94,7 +94,7 @@
     padding-top: 5px;
 }
 
-.library .horizontal-flip {
+.library .dataTables_wrapper .horizontal-flip {
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
@@ -103,6 +103,6 @@
     -ms-filter: "FlipH";
 }
 
-.library .brand-color {
+.library .dataTables_wrapper .brand-color {
     color: #337ab7
 }
