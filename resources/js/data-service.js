@@ -239,7 +239,10 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                                 let song = (songs.find(i => {
                                     return i.id === item.id;
                                 }));
-                                Object.assign(item, pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
+
+                                if(song) {
+                                    Object.assign(item, pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
+                                }
                             });
 
                             results.push({
