@@ -97,7 +97,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
         folders.forEach(folder => {
             promise = promise.then(() => {
-                return service.listFiles(folder.id);
+                return service.listFiles(folder);
             })
                 .then(result => {
                     results.push(result);
@@ -134,7 +134,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                     let promises = [];
 
                     group.forEach(folder => {
-                        promises.push(service.listFiles(folder.id));
+                        promises.push(service.listFiles(folder));
                     });
 
                     Promise.all(promises)
@@ -162,7 +162,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
         let deferred = $q.defer(),
             results = [];
 
-        service.getFolderData(folder)
+        service.getFolderData(folder.id)
             .then(
                 //success
                 (response) => {
@@ -190,7 +190,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                                         }
                                     });
 
-                                    sheet.folder = folder;
+                                    sheet.folder = folder.name;
                                     sheet.url = service.getOpenURL(sheet.id);
                                     results.push(sheet);
                                 }
