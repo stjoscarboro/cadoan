@@ -42,7 +42,7 @@ app.factory('resizeFrame', ['$interval', ($interval) => {
         //set resize interval
         promise = $interval(() => {
             height = resize(height);
-        }, 100);
+        }, 1000);
 
         //cancel interval
         $scope.$on('$destroy', () => {
