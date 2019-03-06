@@ -120,11 +120,6 @@
     margin-top: 0;
 }
 
-.light.modal-backdrop {
-    background-color: lightgrey;
-    border-radius: 6px;
-}
-
 .row-no-padding > [class*="col-"] {
     padding-left: 0 !important;
 }
