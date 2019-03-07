@@ -14,7 +14,7 @@ app.directive('loading', ['$http', '$window', '$timeout', function ($http, $wind
             scope.$watch(scope.isLoading, (value) => {
                 if(value) {
                     element.removeClass('ng-hide');
-                    content && content.addClass('ng-hide');
+                    content && content.addClass('ng-hide hide-scrollbar');
                 } else {
                     element.addClass('ng-hide');
                     content && content.removeClass('ng-hide');
