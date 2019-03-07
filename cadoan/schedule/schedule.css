@@ -89,6 +89,10 @@
     background: url('../../resources/images/loading.gif') no-repeat 0/24px;
 }
 
+.schedule .hide-scrollbar {
+    overflow: hidden;
+}
+
 .schedule a {
     text-decoration: none;
 }

@@ -1,6 +1,6 @@
 let app = angular.module('stjoscarboro', ['ui.bootstrap']);
 
-app.directive('loading', ['$http', '$window', function ($http, $window) {
+app.directive('loading', ['$http', '$window', '$timeout', function ($http, $window, $timeout) {
     return {
         restrict: 'A',
 
@@ -18,6 +18,10 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
                 } else {
                     element.addClass('ng-hide');
                     content && content.removeClass('ng-hide');
+
+                    $timeout(() => {
+                        content.removeClass('hide-scrollbar');
+                    });
                 }
             });
         }
