@@ -79,10 +79,10 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
      * edit
      */
     $scope.edit = function (id) {
-        let song = $filter('filter')($scope.songs, {'id': id});
-        if (song && song.constructor === Array && song.length > 0) {
-            $scope.song = song[0];
-        }
+        let song = $filter('filter')($scope.songs, {'id': id})[0],
+            pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {});
+
+        $scope.song = angular.copy(song);
 
         let popup = $uibModal.open({
                 scope: $scope,
@@ -100,6 +100,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                         };
 
                         FileService.updateFile($scope.song.id, {description: JSON.stringify(description)});
+                        Object.assign(song, pick($scope.song, 'title', 'category', 'author', 'others'));
                         popup.close();
                     };
 

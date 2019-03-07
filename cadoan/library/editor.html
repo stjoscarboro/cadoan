@@ -10,7 +10,7 @@
             <label for="title" class="col-md-3 control-label">Tên Bài Hát</label>
 
             <div class="col-md-8">
-                <input type="text" id="title" class="form-control" ng-model="song.title">
+                <input type="text" id="title" class="form-control" ng-model="song.title" required>
             </div>
         </div>
 
@@ -18,7 +18,7 @@
             <label for="author" class="col-md-3 control-label">Tác Giả</label>
 
             <div class="col-md-8">
-                <input id="author" list="authors" class="form-control" ng-model="song.author">
+                <input id="author" list="authors" class="form-control" ng-model="song.author" required>
                 <datalist id="authors">
                     <option ng-repeat="author in authors" ng-value="author">{{author}}</option>
                 </datalist>
@@ -29,7 +29,7 @@
             <label for="category" class="col-md-3 control-label">Thể Loại</label>
 
             <div class="col-md-8">
-                <input id="category" list="categories" class="form-control" ng-model="song.category">
+                <input id="category" list="categories" class="form-control" ng-model="song.category" required>
                 <datalist id="categories">
                     <option ng-repeat="category in categories" ng-value="category">{{category}}</option>
                 </datalist>
