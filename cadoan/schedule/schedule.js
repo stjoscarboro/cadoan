@@ -302,11 +302,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 }
 
                 //parse categories
-                for (let song of $scope.songs) {
-                    if (song.category && $scope.categories.indexOf(song.category) === -1) {
-                        $scope.categories.push(song.category);
-                    }
-                }
+                $scope.categories = DataService.listCategories($scope.songs);
 
                 //populate liturgies
                 $scope.liturgies = values[1];
@@ -319,8 +315,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
 
                 //sort data
                 DataService.sortByLocale($scope.songs, 'title');
-                DataService.sortCategories($scope.categories);
                 DataService.sortByLocale($scope.singers, 'name');
+                DataService.sortCategories($scope.categories);
 
                 deferred.resolve();
             });

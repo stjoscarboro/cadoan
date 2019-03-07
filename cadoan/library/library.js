@@ -133,20 +133,15 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 }
 
                 //parse categories
-                for (let song of $scope.songs) {
-                    if (song.category && $scope.categories.indexOf(song.category) === -1) {
-                        $scope.categories.push(song.category);
-                    }
+                $scope.categories = DataService.listCategories($scope.songs);
 
-                    if (song.author && $scope.authors.indexOf(song.author) === -1) {
-                        $scope.authors.push(song.author);
-                    }
-                }
+                //parse authors
+                $scope.authors = DataService.listAuthors($scope.songs);
 
                 //sort data
                 DataService.sortByLocale($scope.songs, 'title');
-                DataService.sortCategories($scope.categories);
                 DataService.sortByLocale($scope.authors, 'name');
+                DataService.sortCategories($scope.categories);
 
                 deferred.resolve();
             });

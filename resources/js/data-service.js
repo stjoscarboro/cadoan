@@ -266,6 +266,46 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
     };
 
     /**
+     * listCategories
+     *
+     * @param songs
+     * @returns {Array}
+     */
+    service.listCategories = (songs) => {
+        let categories = {}, category;
+
+        for (let song of songs) {
+            category = categories[song.category] || 0;
+            categories[song.category] = category + 1;
+        }
+
+        return Object.keys(categories).reduce((values, key) => {
+            categories[key] > 0 && values.push(key);
+            return values;
+        }, []);
+    };
+
+    /**
+     * listAuthors
+     *
+     * @param songs
+     * @returns {Array}
+     */
+    service.listAuthors = (songs) => {
+        let authors = {}, author;
+
+        for (let song of songs) {
+            author = authors[song.author] || 0;
+            authors[song.author] = author + 1;
+        }
+
+        return Object.keys(authors).reduce((values, key) => {
+            authors[key] > 1 && values.push(key);
+            return values;
+        }, []);
+    };
+
+    /**
      * sortByLocale
      * @param array
      * @param property
