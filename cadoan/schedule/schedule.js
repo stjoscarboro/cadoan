@@ -149,6 +149,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                     }
                 };
 
+                //init datepicker
                 datepicker.datepicker({
                     dateFormat: $scope.dateFormat,
                     onSelect: (text) => {
@@ -163,7 +164,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                     }
                 });
 
-                //init datepicker to a week from last date
+                //set datepicker to a week from last scheduled date
                 if(!$scope.schedule.date) {
                     for (let schedule of $scope.schedules) {
                         let date = $.datepicker.parseDate($scope.dateFormat, schedule.date);
