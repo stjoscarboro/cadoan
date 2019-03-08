@@ -5,7 +5,7 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
         sheets = {
             liturgies: {
                 id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                range: 'A:B' // [text]
+                range: 'A:D' // [id, text, year, date]
             },
 
             cadoan: {
@@ -27,11 +27,6 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                 singers: {
                     id: '1c-CU_cRvWy_Wp5PhrkKN_k-H3TKArH9-5z098Wx6Ibo',
                     range: 'A:B' // [id, name]
-                },
-
-                years: {
-                    id: '1GPIzPBml9fx_W_Tgl4udEGBpmDHOxiZL-3rNiEGvwYE',
-                    range: 'A:D' // [id, name, from, to]
                 }
             }
         };
@@ -117,8 +112,16 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
 
                     if (values) {
                         values.forEach(value => {
-                            if (value[1]) {
-                                results.push({id: value[0], name: value[1]});
+                            if (value[2]) {
+                                let date = new Date(Date.parse(value[3]) + 24 * 3600 * 1000);
+                                date.setHours(0, 0 , 0, 0);
+
+                                results.push({
+                                    id: value[0],
+                                    name: value[1],
+                                    year: value[2],
+                                    date: date
+                                });
                             }
                         });
                     }
@@ -153,46 +156,9 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                     if (values) {
                         values.forEach(value => {
                             if (value[1]) {
-                                results.push({id: value[0], name: value[1]});
-                            }
-                        });
-                    }
-
-                    deferred.resolve(results);
-                },
-
-                //failure
-                (response) => {
-                    console.log(response.data.error);
-                }
-            );
-
-        return deferred.promise;
-    };
-
-    /**
-     * loadSingers
-     *
-     * @returns {f}
-     */
-    service.loadYears = () => {
-        let deferred = $q.defer(),
-            results = [];
-
-        service.getSheetData('cadoan.years')
-            .then(
-                //success
-                (response) => {
-                    let values = response.data.values;
-
-                    if (values) {
-                        values.forEach(value => {
-                            if (value[1]) {
                                 results.push({
                                     id: value[0],
-                                    name: value[1],
-                                    start: Date.parse(value[2]),
-                                    end: Date.parse(value[3])
+                                    name: value[1]
                                 });
                             }
                         });

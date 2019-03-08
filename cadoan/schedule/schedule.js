@@ -8,11 +8,9 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.schedules = [];
         $scope.liturgies = [];
         $scope.singers = [];
-        $scope.years = [];
         $scope.songs = [];
         $scope.categories = [];
         $scope.lists = {};
-        $scope.years = [];
 
         $scope.rows = 5;
         $scope.dateFormat = "DD, dd/mm/yy";
@@ -131,12 +129,14 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 //init datepicker
                 let datepicker = $('#datepicker');
 
-                let setYear = () => {
+                let setLiturgy = () => {
                     let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date);
+                    $scope.schedule.liturgy = {};
 
-                    for(let year of $scope.years) {
-                        if(date.getTime() >= year.start && date.getTime() < year.end) {
-                            $scope.schedule.liturgy.year = year.id;
+                    for(let liturgy of $scope.liturgies) {
+                        if(date.getTime() === liturgy.date.getTime()) {
+                            $scope.schedule.liturgy.id = liturgy.id;
+                            $scope.schedule.liturgy.year = liturgy.year;
                         }
                     }
                 };
@@ -149,8 +149,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                         //init datepicker with this date
                         $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, date);
 
-                        //init year
-                        setYear();
+                        //init liturgy
+                        setLiturgy()
                     }
                 });
 
@@ -162,8 +162,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                     }
                 }
 
-                //init year
-                setYear();
+                //init liturgy
+                setLiturgy()
             }, 100);
         });
     };
@@ -237,15 +237,12 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
             });
         }
 
-        //clean liturgy of empty properties
-        Object.keys(liturgy).forEach(key => (!liturgy[key]) && delete liturgy[key]);
-
         //create payload
         payload = {
             values: [
                 [
                     date.getTime(),
-                    JSON.stringify(liturgy),
+                    JSON.stringify({id: liturgy.id, special: liturgy.special}),
                     JSON.stringify(songs)
                 ]
             ]
@@ -292,8 +289,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         Promise.all([
             FileService.listFolder('cadoan.sheets'),
             DataService.loadLiturgies(),
-            DataService.loadSingers(),
-            DataService.loadYears()
+            DataService.loadSingers()
         ])
             .then((values) => {
                 //populate songs
@@ -309,9 +305,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
 
                 //populate singers
                 $scope.singers = values[2];
-
-                //populate years
-                $scope.years = values[3];
 
                 //sort data
                 DataService.sortByLocale($scope.songs, 'title');
