@@ -131,7 +131,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
 
                 let setLiturgy = () => {
                     let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date);
-                    $scope.schedule.liturgy = {};
 
                     for(let liturgy of $scope.liturgies) {
                         if(date.getTime() === liturgy.date.getTime()) {
@@ -150,6 +149,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                         $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, date);
 
                         //init liturgy
+                        $scope.schedule.liturgy = {};
                         setLiturgy()
                     }
                 });
@@ -176,8 +176,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.rows = $scope.schedule.songs.length;
 
         //get liturgy
-        let liturgy = $scope.liturgies.find(i => { return i.name === $scope.schedule.liturgy; });
-        liturgy && ($scope.schedule.liturgy = liturgy.id);
+        let liturgy = $scope.liturgies.find(i => { return i.id === $scope.schedule.liturgy.id; });
+        liturgy && Object.assign($scope.schedule.liturgy,liturgy);
 
         $scope.schedule.songs.forEach((song, index) => {
             //get singer
