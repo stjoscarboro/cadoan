@@ -56,6 +56,14 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 for (let schedule of schedules) {
                     if ($scope.accessToken || schedules.length <= 4 || schedule.date >= today.getTime()) {
                         schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(schedule.date));
+
+                        //parse liturgy
+                        for (let liturgy of $scope.liturgies) {
+                            if (liturgy.id === schedule.liturgy.id && liturgy.year === schedule.liturgy.year) {
+                                Object.assign(schedule.liturgy, AppUtil.pick(liturgy, 'name', 'year'));
+                            }
+                        }
+
                         $scope.schedules.push(schedule);
                     }
                 }
@@ -238,7 +246,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
      */
     $scope.save = function () {
         let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date),
-            liturgy = Object.assign({}, AppUtil.pick($scope.schedule.liturgy, 'id', 'special')),
+            liturgy = Object.assign({}, AppUtil.pick($scope.schedule.liturgy, 'id', 'year', 'special')),
             songs = [], payload, removed = [],
             deferred = $q.defer();
 

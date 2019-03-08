@@ -4,8 +4,25 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
 
         sheets = {
             liturgies: {
-                id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                range: 'A:D' // [id, text, year, date]
+                years: {
+                    id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
+                    range: 'Years!A:D', // [id, name, from, to]
+                },
+
+                1: {
+                    id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
+                    range: 'A!A:D', // [id, text, year, date]
+                },
+
+                2: {
+                    id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
+                    range: 'B!A:D', // [id, text, year, date]
+                },
+
+                3: {
+                    id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
+                    range: 'C!A:D', // [id, text, year, date]
+                }
             },
 
             cadoan: {
@@ -96,15 +113,15 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
     };
 
     /**
-     * loadLiturgies
+     * loadYears
      *
      * @returns {f}
      */
-    service.loadLiturgies = () => {
+    service.loadYears = () => {
         let deferred = $q.defer(),
             results = [];
 
-        service.getSheetData('liturgies')
+        service.getSheetData('liturgies.years')
             .then(
                 //success
                 (response) => {
@@ -112,15 +129,12 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
 
                     if (values) {
                         values.forEach(value => {
-                            if (value[2]) {
-                                let date = new Date(Date.parse(value[3]) + 24 * 3600 * 1000);
-                                date.setHours(0, 0, 0, 0);
-
+                            if (value[1]) {
                                 results.push({
                                     id: value[0],
                                     name: value[1],
-                                    year: value[2],
-                                    date: date
+                                    start: Date.parse(value[2]),
+                                    end: Date.parse(value[3])
                                 });
                             }
                         });
@@ -134,6 +148,63 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
                     console.log(response.data.error);
                 }
             );
+
+        return deferred.promise;
+    };
+
+    /**
+     * loadLiturgies
+     *
+     * @returns {f}
+     */
+    service.loadLiturgies = () => {
+        let results = [],
+            promise = $q.when(),
+            deferred = $q.defer();
+
+        service.loadYears()
+            .then(years => {
+                years.forEach(year => {
+                    promise = promise.then(() => {
+                        return new Promise(resolve => {
+                            service.getSheetData('liturgies.' + year.id)
+                                .then(
+                                    //success
+                                    (response) => {
+                                        let values = response.data.values;
+
+                                        if (values) {
+                                            values.forEach(value => {
+                                                if (value[2]) {
+                                                    let date = new Date(Date.parse(value[3]) + 24 * 3600 * 1000);
+                                                    date.setHours(0, 0, 0, 0);
+
+                                                    results.push({
+                                                        id: value[0],
+                                                        name: value[1],
+                                                        year: value[2],
+                                                        date: date
+                                                    });
+                                                }
+                                            });
+                                        }
+
+                                        resolve();
+                                    },
+
+                                    //failure
+                                    (response) => {
+                                        console.log(response.data.error);
+                                    }
+                                );
+                        });
+                    });
+
+                    promise.then(() => {
+                        deferred.resolve(results);
+                    });
+                });
+            });
 
         return deferred.promise;
     };

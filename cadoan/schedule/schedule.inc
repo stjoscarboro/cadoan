@@ -12,9 +12,7 @@
             </div>
 
             <div class="liturgy">
-                <span ng-repeat="liturgy in liturgies | filter: {'id': schedule.liturgy.id}">
-                    {{liturgy.name}} - {{liturgy.year}}
-                </span>
+                {{schedule.liturgy.name}} - {{schedule.liturgy.year}}
                 <a href="" ng-click="edit($index)" title="Thay Đổi Lịch" ng-if="accessToken"><i class="glyphicon glyphicon-edit edit"></i></a>
                 <a href="" ng-click="remove($index)" title="Xoá Lịch" ng-if="accessToken"><i class="glyphicon glyphicon-remove delete"></i></a>
 
