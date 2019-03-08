@@ -134,8 +134,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
 
                     for (let liturgy of $scope.liturgies) {
                         if (date.getTime() === liturgy.date.getTime()) {
-                            $scope.schedule.liturgy.id = liturgy.id;
-                            $scope.schedule.liturgy.year = liturgy.year;
+                            Object.assign($scope.schedule.liturgy, AppUtil.pick(liturgy, 'id', 'year'));
                         }
                     }
                 };
@@ -199,8 +198,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
             });
             singer && (song.singer = singer.id);
 
-            $scope.schedule.songs[index].id = song.id;
-            $scope.schedule.songs[index].category = song.category;
+            Object.assign($scope.schedule.songs[index], AppUtil.pick(song, 'id', 'category'));
             $scope.selectSongs(index);
         });
 
