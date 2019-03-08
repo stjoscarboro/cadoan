@@ -54,9 +54,19 @@
     -webkit-appearance: searchfield-cancel-button;
 }
 
+.library .modal-dialog {
+    width: 640px;
+}
+
 .light.modal-backdrop {
     background-color: lightgrey;
     border-radius: 6px;
+}
+
+.library .modal-header .link {
+    display: inline-block;
+    padding-top: 8px;
+    color: #555555;
 }
 
 .library .dataTables_filter {
