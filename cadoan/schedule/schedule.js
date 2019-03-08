@@ -1,4 +1,4 @@
-app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $document, resizeFrame, HttpService, DataService, FileService) => {
+app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $document, HttpService, DataService, FileService, AppUtil) => {
 
     /**
      * init
@@ -21,7 +21,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 $scope.loadData()
                     .then(() => {
                         $scope.get();
-                        resizeFrame($scope);
+                        AppUtil.resizeFrame($scope);
                     });
             }
         });
@@ -38,7 +38,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.loadData()
             .then(() => {
                 $scope.get();
-                resizeFrame($scope);
+                AppUtil.resizeFrame($scope);
             });
     };
 
@@ -152,11 +152,9 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 //init datepicker
                 datepicker.datepicker({
                     dateFormat: $scope.dateFormat,
-                    onSelect: (text) => {
-                        let date = $.datepicker.parseDate($scope.dateFormat, text);
-
+                    onSelect: (date) => {
                         //init datepicker with this date
-                        $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, date);
+                        $scope.schedule.date = date;
 
                         //init liturgy
                         $scope.schedule.liturgy = {};
@@ -190,7 +188,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
 
         //get liturgy
         let liturgy = $scope.liturgies.find(i => { return i.id === $scope.schedule.liturgy.id; });
-        liturgy && Object.assign($scope.schedule.liturgy,liturgy);
+        liturgy && Object.assign($scope.schedule.liturgy, liturgy);
 
         $scope.schedule.songs.forEach((song, index) => {
             //get singer

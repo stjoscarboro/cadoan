@@ -24,8 +24,15 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
     };
 }]);
 
-app.factory('resizeFrame', ['$interval', ($interval) => {
-    return ($scope) => {
+app.factory('AppUtil', ['$interval', ($interval) => {
+    let util = {};
+
+    /**
+     * resizeFrame
+     *
+     * @param scope
+     */
+    util.resizeFrame = (scope) => {
         let promise, height = 0;
 
         let resize = (currentHeight) => {
@@ -45,10 +52,23 @@ app.factory('resizeFrame', ['$interval', ($interval) => {
         }, 1000);
 
         //cancel interval
-        $scope.$on('$destroy', () => {
+        scope.$on('$destroy', () => {
             $interval.cancel(promise);
         });
-    }
+    };
+
+    /**
+     * pick
+     *
+     * @param obj
+     * @param keys
+     */
+    util.pick = (obj, ...keys) => {
+        keys.reduce((o, k) => (o[k] = obj[k], o), {});
+        return obj;
+    };
+
+    return util;
 }]);
 
 app.filter('range', () => {

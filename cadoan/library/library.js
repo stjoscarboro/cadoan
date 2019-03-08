@@ -1,4 +1,4 @@
-app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $filter, $document, resizeFrame, HttpService, DataService, FileService) => {
+app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $filter, $document, HttpService, DataService, FileService, AppUtil) => {
 
     /**
      * init
@@ -21,7 +21,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 $scope.loadData()
                     .then(() => {
                         $scope.get();
-                        resizeFrame($scope);
+                        AppUtil.resizeFrame($scope);
                     });
             }
         });
@@ -38,7 +38,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $scope.loadData()
             .then(() => {
                 $scope.get();
-                resizeFrame($scope);
+                AppUtil.resizeFrame($scope);
             });
     };
 
@@ -79,8 +79,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
      * edit
      */
     $scope.edit = function (id) {
-        let song = $filter('filter')($scope.songs, {'id': id})[0],
-            pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {});
+        let song = $filter('filter')($scope.songs, {'id': id})[0];
 
         $scope.song = angular.copy(song);
 
@@ -100,7 +99,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                         };
 
                         FileService.updateFile($scope.song.id, {description: JSON.stringify(description)});
-                        Object.assign(song, pick($scope.song, 'title', 'category', 'author', 'others'));
+                        Object.assign(song, AppUtil.pick($scope.song, 'title', 'category', 'author', 'others'));
                         popup.close();
                     };
 

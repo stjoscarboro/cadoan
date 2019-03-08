@@ -1,4 +1,4 @@
-app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
+app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, AppUtil) => {
 
     let sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/',
 
@@ -190,8 +190,7 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
             .then(
                 //success
                 (response) => {
-                    let values = response.data.values,
-                        pick = (obj, ...keys) => keys.reduce((o, k) => (o[k] = obj[k], o), {});
+                    let values = response.data.values;
 
                     if (values) {
                         values.forEach(value => {
@@ -207,7 +206,7 @@ app.factory('DataService', ['$q', 'HttpService', ($q, HttpService) => {
                                 }));
 
                                 if(song) {
-                                    Object.assign(item, pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
+                                    Object.assign(item, AppUtil.pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
                                 }
                             });
 
