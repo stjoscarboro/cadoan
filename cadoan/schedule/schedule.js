@@ -4,7 +4,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
      * init
      */
     $scope.init = function () {
-        $scope.schedule = { liturgy: {}, songs: [] };
+        $scope.schedule = {liturgy: {}, songs: []};
         $scope.schedules = [];
         $scope.liturgies = [];
         $scope.singers = [];
@@ -92,7 +92,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     $scope.refresh = function () {
         $scope.schedules = [];
         $scope.lists = {};
-        $scope.schedule = { liturgy: {}, songs: [] };
+        $scope.schedule = {liturgy: {}, songs: []};
         $scope.get();
     };
 
@@ -116,7 +116,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
 
                     $scope.cancel = () => {
                         $scope.lists = {};
-                        $scope.schedule = { liturgy: {}, songs: [] };
+                        $scope.schedule = {liturgy: {}, songs: []};
                         $scope.rows = 5;
                         popup.close();
                     };
@@ -132,8 +132,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 let setLiturgy = () => {
                     let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date);
 
-                    for(let liturgy of $scope.liturgies) {
-                        if(date.getTime() === liturgy.date.getTime()) {
+                    for (let liturgy of $scope.liturgies) {
+                        if (date.getTime() === liturgy.date.getTime()) {
                             $scope.schedule.liturgy.id = liturgy.id;
                             $scope.schedule.liturgy.year = liturgy.year;
                         }
@@ -141,8 +141,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 };
 
                 let setCategories = () => {
-                    if($scope.schedule.songs.length === 0) {
-                        for(let i=0; i<5; i++) {
+                    if ($scope.schedule.songs.length === 0) {
+                        for (let i = 0; i < 5; i++) {
                             $scope.schedule.songs.push({category: $scope.categories[i]});
                             $scope.selectSongs(i);
                         }
@@ -163,7 +163,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 });
 
                 //set datepicker to a week from last scheduled date
-                if(!$scope.schedule.date) {
+                if (!$scope.schedule.date) {
                     for (let schedule of $scope.schedules) {
                         let date = $.datepicker.parseDate($scope.dateFormat, schedule.date);
                         $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(date.getTime() + $scope.week));
@@ -187,12 +187,16 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.rows = $scope.schedule.songs.length;
 
         //get liturgy
-        let liturgy = $scope.liturgies.find(i => { return i.id === $scope.schedule.liturgy.id; });
+        let liturgy = $scope.liturgies.find(i => {
+            return i.id === $scope.schedule.liturgy.id;
+        });
         liturgy && Object.assign($scope.schedule.liturgy, liturgy);
 
         $scope.schedule.songs.forEach((song, index) => {
             //get singer
-            let singer = $scope.singers.find(i => { return i.name === song.singer; });
+            let singer = $scope.singers.find(i => {
+                return i.name === song.singer;
+            });
             singer && (song.singer = singer.id);
 
             $scope.schedule.songs[index].id = song.id;
@@ -234,18 +238,15 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * save
      */
-    $scope.save = function() {
+    $scope.save = function () {
         let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date),
-            liturgy = $scope.schedule.liturgy,
+            liturgy = Object.assign({}, AppUtil.pick($scope.schedule.liturgy, 'id', 'special')),
             songs = [], payload, removed = [],
             deferred = $q.defer();
 
         //parse songs
         for (let song of $scope.schedule.songs) {
-            songs.push({
-                id: song.id,
-                singer: song.singer
-            });
+            songs.push(Object.assign({}, AppUtil.pick(song, 'id', 'singer')));
         }
 
         //create payload
@@ -253,7 +254,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
             values: [
                 [
                     date.getTime(),
-                    JSON.stringify({id: liturgy.id, special: liturgy.special}),
+                    JSON.stringify(liturgy),
                     JSON.stringify(songs)
                 ]
             ]

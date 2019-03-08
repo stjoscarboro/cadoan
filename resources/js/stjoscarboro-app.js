@@ -12,7 +12,7 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
             };
 
             scope.$watch(scope.isLoading, (value) => {
-                if(value) {
+                if (value) {
                     element.removeClass('ng-hide');
                     content && content.addClass('ng-hide');
                 } else {
@@ -64,8 +64,7 @@ app.factory('AppUtil', ['$interval', ($interval) => {
      * @param keys
      */
     util.pick = (obj, ...keys) => {
-        keys.reduce((o, k) => (o[k] = obj[k], o), {});
-        return obj;
+        return keys.reduce((o, k) => (o[k] = obj[k], o), {});
     };
 
     return util;
@@ -75,7 +74,7 @@ app.filter('range', () => {
     return (input, total) => {
         total = parseInt(total);
 
-        for (let i=0; i<total; i++) {
+        for (let i = 0; i < total; i++) {
             input.push(i);
         }
 

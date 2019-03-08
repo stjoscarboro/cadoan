@@ -114,7 +114,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
                         values.forEach(value => {
                             if (value[2]) {
                                 let date = new Date(Date.parse(value[3]) + 24 * 3600 * 1000);
-                                date.setHours(0, 0 , 0, 0);
+                                date.setHours(0, 0, 0, 0);
 
                                 results.push({
                                     id: value[0],
@@ -205,7 +205,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
                                     return i.id === item.id;
                                 }));
 
-                                if(song) {
+                                if (song) {
                                     Object.assign(item, AppUtil.pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
                                 }
                             });
