@@ -12,8 +12,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.songs = [];
         $scope.categories = [];
         $scope.lists = {};
+        $scope.years = [];
 
-        $scope.years = [ 'Năm A', 'Năm B', 'Năm C'];
         $scope.rows = 5;
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.week = 7 * 24 * 3600 * 1000;
@@ -350,17 +350,5 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         if (song) {
             $window.open(FileService.getOpenURL(song.id), '_blank');
         }
-    };
-});
-
-app.filter('range', function() {
-    return function(input, total) {
-        total = parseInt(total);
-
-        for (let i=0; i<total; i++) {
-            input.push(i);
-        }
-
-        return input;
     };
 });

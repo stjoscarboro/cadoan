@@ -50,3 +50,15 @@ app.factory('resizeFrame', ['$interval', ($interval) => {
         });
     }
 }]);
+
+app.filter('range', () => {
+    return (input, total) => {
+        total = parseInt(total);
+
+        for (let i=0; i<total; i++) {
+            input.push(i);
+        }
+
+        return input;
+    };
+});
