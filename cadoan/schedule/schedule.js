@@ -140,6 +140,15 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                     }
                 };
 
+                let setCategories = () => {
+                    if($scope.schedule.songs.length === 0) {
+                        for(let i=0; i<5; i++) {
+                            $scope.schedule.songs.push({category: $scope.categories[i]});
+                            $scope.selectSongs(i);
+                        }
+                    }
+                };
+
                 datepicker.datepicker({
                     dateFormat: $scope.dateFormat,
                     onSelect: (text) => {
@@ -163,7 +172,10 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 }
 
                 //init liturgy
-                setLiturgy()
+                setLiturgy();
+
+                //init categories
+                setCategories();
             }, 100);
         });
     };
