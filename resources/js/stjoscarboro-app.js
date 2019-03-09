@@ -24,7 +24,7 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
     };
 }]);
 
-app.factory('AppUtil', ['$interval', ($interval) => {
+app.factory('AppUtil', ['$interval', '$window', ($interval, $window) => {
     let util = {};
 
     /**
