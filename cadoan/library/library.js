@@ -21,7 +21,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                 $scope.loadData()
                     .then(() => {
                         $scope.get();
-                        AppUtil.resizeFrame($scope);
+                        // AppUtil.resizeFrame($scope);
                     });
             }
         });
@@ -38,7 +38,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
         $scope.loadData()
             .then(() => {
                 $scope.get();
-                AppUtil.resizeFrame($scope);
+                // AppUtil.resizeFrame($scope);
             });
     };
 
@@ -70,6 +70,10 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                     if ($scope.accessToken) {
                         $(".dataTables_drive").append('<a href="' + $scope.driveURL + '" target="_blank" title="Danh Sách Bài Hát" class="drive-icon"></a>');
                     }
+
+                    $timeout(() => {
+                        AppUtil.resizeFrame($scope);
+                    }, 100);
                 }
             });
         }, 1);
