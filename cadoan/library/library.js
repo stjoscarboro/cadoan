@@ -3,7 +3,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     /**
      * init
      */
-    $scope.init = function () {
+    $scope.init = () => {
         $scope.songs = [];
         $scope.categories = [];
         $scope.authors = [];
@@ -30,7 +30,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     /**
      * signin
      */
-    $scope.signin = function (profile, token) {
+    $scope.signin = (profile, token) => {
         $scope.profile = profile;
         $scope.accessToken = token;
         HttpService.setAccessToken(token);
@@ -45,7 +45,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     /**
      * get
      */
-    $scope.get = function () {
+    $scope.get = () => {
         let admin = $scope.accessToken !== null && $scope.accessToken !== undefined,
             columns = [
                 {width: 'calc(50% - 16)', targets: 0},
@@ -78,7 +78,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     /**
      * edit
      */
-    $scope.edit = function (id) {
+    $scope.edit = (id) => {
         let song = $filter('filter')($scope.songs, {'id': id})[0];
 
         $scope.song = angular.copy(song);
@@ -113,14 +113,14 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
     /**
      * search
      */
-    $scope.search = function (param) {
+    $scope.search = (param) => {
         $('.table').DataTable().search(param).draw();
     };
 
     /**
      * loadData
      */
-    $scope.loadData = function () {
+    $scope.loadData = () => {
         let deferred = $q.defer();
 
         Promise.all([

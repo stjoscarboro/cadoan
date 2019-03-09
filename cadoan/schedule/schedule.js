@@ -3,7 +3,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * init
      */
-    $scope.init = function () {
+    $scope.init = () => {
         $scope.schedule = {liturgy: {}, songs: []};
         $scope.schedules = [];
         $scope.liturgies = [];
@@ -30,7 +30,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * signin
      */
-    $scope.signin = function (profile, token) {
+    $scope.signin = (profile, token) => {
         $scope.profile = profile;
         $scope.accessToken = token;
         HttpService.setAccessToken(token);
@@ -45,7 +45,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * get
      */
-    $scope.get = function () {
+    $scope.get = () => {
         $scope.schedules = [];
 
         DataService.loadSchedules($scope.songs)
@@ -73,7 +73,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * sort
      */
-    $scope.sort = function () {
+    $scope.sort = () => {
         let payload = {
             "requests": [{
                 "sortRange": {
@@ -97,7 +97,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * refresh
      */
-    $scope.refresh = function () {
+    $scope.refresh = () => {
         $scope.schedules = [];
         $scope.lists = {};
         $scope.schedule = {liturgy: {}, songs: []};
@@ -107,7 +107,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * create
      */
-    $scope.create = function () {
+    $scope.create = () => {
         let popup = $uibModal.open({
                 scope: $scope,
                 templateUrl: 'editor.html',
@@ -189,7 +189,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * edit
      */
-    $scope.edit = function (id) {
+    $scope.edit = (id) => {
         $scope.schedule = angular.copy($scope.schedules[id]);
         $scope.rows = $scope.schedule.songs.length;
 
@@ -216,7 +216,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * delete
      */
-    $scope.remove = function (id) {
+    $scope.remove = (id) => {
         let deferred = $q.defer();
 
         let payload = {
@@ -244,7 +244,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * save
      */
-    $scope.save = function () {
+    $scope.save = () => {
         let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date),
             liturgy = Object.assign({}, AppUtil.pick($scope.schedule.liturgy, 'id', 'year', 'special')),
             songs = [], payload, removed = [],
@@ -301,7 +301,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * loadData
      */
-    $scope.loadData = function () {
+    $scope.loadData = () => {
         let deferred = $q.defer();
 
         Promise.all([
@@ -338,7 +338,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * selectSongs
      */
-    $scope.selectSongs = function (index) {
+    $scope.selectSongs = (index) => {
         let songs = $scope.schedule.songs[index];
 
         if (songs && songs.category) {
@@ -355,7 +355,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     /**
      * previewSong
      */
-    $scope.previewSong = function (index) {
+    $scope.previewSong = (index) => {
         let song = $scope.schedule.songs[index];
 
         if (song) {

@@ -1,4 +1,4 @@
-app.factory('HttpService', ['$http', function ($http) {
+app.factory('HttpService', ['$http', ($http) => {
 
     let gapiKey = Base64.decode('QUl6YVN5RFZLNXpQMFRuaFJhbTBCc3Z2YjU5UnZGWk1tUjNqR1c4');
 
@@ -21,7 +21,7 @@ app.factory('HttpService', ['$http', function ($http) {
      * @param params
      * @returns {*}
      */
-    service.getFile = function (url, params) {
+    service.getFile = (url, params) => {
         url = getURL(url);
         return $http.get(url, {
             params: params
