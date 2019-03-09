@@ -24,7 +24,7 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
     };
 }]);
 
-app.factory('AppUtil', ['$interval', '$document', ($interval, $document) => {
+app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $interval, $timeout) => {
     let util = {};
 
     /**
@@ -46,10 +46,15 @@ app.factory('AppUtil', ['$interval', '$document', ($interval, $document) => {
             return contentHeight;
         };
 
+        //resize frame
+        $timeout(() => {
+            height = resize(height);
+        }, 100);
+
         //set resize interval
         promise = $interval(() => {
             height = resize(height);
-        }, 100);
+        }, 1000);
 
         //cancel interval
         scope.$on('$destroy', () => {
