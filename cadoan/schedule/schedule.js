@@ -21,7 +21,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                 $scope.loadData()
                     .then(() => {
                         $scope.get();
-                        AppUtil.resizeFrame($scope);
                     });
             }
         });
@@ -38,7 +37,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.loadData()
             .then(() => {
                 $scope.get();
-                AppUtil.resizeFrame($scope);
             });
     };
 
@@ -67,6 +65,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                         $scope.schedules.push(schedule);
                     }
                 }
+                
+                AppUtil.resizeFrame($scope);
             });
     };
 
