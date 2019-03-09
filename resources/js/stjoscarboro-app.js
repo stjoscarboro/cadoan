@@ -49,7 +49,7 @@ app.factory('AppUtil', ['$interval', '$document', ($interval, $document) => {
         //set resize interval
         promise = $interval(() => {
             height = resize(height);
-        }, 1000);
+        }, 100);
 
         //cancel interval
         scope.$on('$destroy', () => {
