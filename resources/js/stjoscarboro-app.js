@@ -36,9 +36,10 @@ app.factory('AppUtil', ['$interval', ($interval) => {
         let promise, height = 0;
 
         let resize = (currentHeight) => {
-            let contentHeight = $(document).outerHeight();
+            let document = $(document),
+                contentHeight = document.offsetParent ? document.offsetParent().outerHeight() : document.outerHeight();
 
-            if (Math.abs(contentHeight - currentHeight) > 100) {
+            if (contentHeight !== currentHeight) {
                 contentHeight += 20;
                 parent.postMessage("resize::" + contentHeight, "*");
             }
