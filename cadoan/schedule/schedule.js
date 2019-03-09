@@ -102,6 +102,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
         $scope.schedules = [];
         $scope.lists = {};
         $scope.schedule = {liturgy: {}, songs: []};
+        $scope.rows = 5;
         $scope.get();
     };
 
