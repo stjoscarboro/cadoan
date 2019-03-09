@@ -117,8 +117,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/js/stjoscarboro-app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="38" column="16" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
+            <state relative-caret-position="532">
+              <caret line="38" column="107" selection-start-line="38" selection-start-column="107" selection-end-line="38" selection-end-column="107" />
             </state>
           </provider>
         </entry>
@@ -144,8 +144,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cadoan/library/library.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
-              <caret line="72" selection-start-line="72" selection-end-line="72" />
+            <state>
+              <caret column="93" selection-start-column="93" selection-end-column="93" />
             </state>
           </provider>
         </entry>
@@ -828,15 +828,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cadoan/library/library.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
+        <state>
+          <caret column="93" selection-start-column="93" selection-end-column="93" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/stjoscarboro-app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="38" column="16" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
+        <state relative-caret-position="532">
+          <caret line="38" column="107" selection-start-line="38" selection-start-column="107" selection-end-line="38" selection-end-column="107" />
         </state>
       </provider>
     </entry>
