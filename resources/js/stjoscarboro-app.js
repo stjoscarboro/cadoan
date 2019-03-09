@@ -24,7 +24,7 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
     };
 }]);
 
-app.factory('AppUtil', ['$interval', ($interval) => {
+app.factory('AppUtil', ['$interval', '$timeout', ($interval, $timeout) => {
     let util = {};
 
     /**
@@ -32,29 +32,37 @@ app.factory('AppUtil', ['$interval', ($interval) => {
      *
      * @param scope
      */
-    util.resizeFrame = (scope) => {
-        let promise, height = 0;
+    // util.resizeFrame = (scope) => {
+    //     let promise, height = 0;
+    //
+    //     let resize = (currentHeight) => {
+    //         let contentHeight = $(document).outerHeight();
+    //
+    //         if (contentHeight !== currentHeight) {
+    //             contentHeight += 20;
+    //             parent.postMessage("resize::" + contentHeight, "*");
+    //         }
+    //
+    //         return contentHeight;
+    //     };
+    //
+    //     //set resize interval
+    //     promise = $interval(() => {
+    //         height = resize(height);
+    //     }, 1000);
+    //
+    //     //cancel interval
+    //     scope.$on('$destroy', () => {
+    //         $interval.cancel(promise);
+    //     });
+    // };
 
-        let resize = (currentHeight) => {
-            let contentHeight = $(document).outerHeight();
+    util.resizeFrame = () => {
+        let contentHeight = $(document).outerHeight() + 20;
 
-            if (contentHeight !== currentHeight) {
-                contentHeight += 20;
-                parent.postMessage("resize::" + contentHeight, "*");
-            }
-
-            return contentHeight;
-        };
-
-        //set resize interval
-        promise = $interval(() => {
-            height = resize(height);
-        }, 1000);
-
-        //cancel interval
-        scope.$on('$destroy', () => {
-            $interval.cancel(promise);
-        });
+        $timeout(() => {
+            parent.postMessage("resize::" + contentHeight, "*");
+        }, 100);
     };
 
     /**
