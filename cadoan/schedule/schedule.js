@@ -65,7 +65,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                         $scope.schedules.push(schedule);
                     }
                 }
-                
+
+                //resize host's iframe
                 AppUtil.resizeFrame($scope);
             });
     };

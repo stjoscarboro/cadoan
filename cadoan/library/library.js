@@ -69,6 +69,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interv
                         $(".dataTables_drive").append('<a href="' + $scope.driveURL + '" target="_blank" title="Danh Sách Bài Hát" class="drive-icon"></a>');
                     }
 
+                    //resize host's iframe
                     AppUtil.resizeFrame($scope);
                 }
             });
