@@ -39,8 +39,8 @@ app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $inter
             let contentHeight = $document.offsetParent().outerHeight();
 
             if (Math.abs(contentHeight - currentHeight) !== 20) {
-                contentHeight += 20;
-                parent.postMessage("resize::" + contentHeight, "*");
+                currentHeight = contentHeight + 20;
+                parent.postMessage("resize::" + currentHeight, "*");
             }
         };
 
