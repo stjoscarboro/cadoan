@@ -113,7 +113,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $filter
         popup.opened.then(() => {
             $timeout(() => {
                 //scroll main window up
-                $window.scroll(0, 0);
+                parent.self.scrollTo(0, 0);
             }, 100);
         });
     };
