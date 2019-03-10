@@ -36,7 +36,7 @@ app.factory('AppUtil', ['$interval', '$timeout', ($interval, $timeout) => {
         let promise, height = 0;
 
         let resize = (currentHeight) => {
-            let contentHeight = window.innerHeight;
+            let contentHeight = window.outerHeight;
 
             if (contentHeight !== currentHeight) {
                 contentHeight += 20;
