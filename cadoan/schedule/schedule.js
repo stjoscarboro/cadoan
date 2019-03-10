@@ -1,4 +1,4 @@
-app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $document, HttpService, DataService, FileService, AppUtil) => {
+app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $document, HttpService, DataService, FileService, AppUtil) => {
 
     /**
      * init
@@ -91,19 +91,18 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
 
         DataService.updateSheetData('cadoan.schedules', payload)
             .then(() => {
-                $scope.refresh();
+                $scope.clear();
+                $scope.get();
             });
     };
 
     /**
-     * refresh
+     * clear
      */
-    $scope.refresh = () => {
-        $scope.schedules = [];
+    $scope.clear = () => {
         $scope.lists = {};
         $scope.schedule = {liturgy: {}, songs: []};
         $scope.rows = 5;
-        $scope.get();
     };
 
     /**
@@ -125,9 +124,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
                     };
 
                     $scope.cancel = () => {
-                        $scope.lists = {};
-                        $scope.schedule = {liturgy: {}, songs: []};
-                        $scope.rows = 5;
+                        $scope.clear();
                         popup.close();
                     };
                 }
@@ -216,7 +213,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $inter
     };
 
     /**
-     * delete
+     * remove
      */
     $scope.remove = (id) => {
         let deferred = $q.defer();

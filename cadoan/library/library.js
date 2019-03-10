@@ -1,4 +1,4 @@
-app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $interval, $filter, $document, HttpService, DataService, FileService, AppUtil) => {
+app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $filter, $document, HttpService, DataService, FileService, AppUtil) => {
 
     /**
      * init
