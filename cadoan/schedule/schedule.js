@@ -4,17 +4,16 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
      * init
      */
     $scope.init = () => {
-        $scope.schedule = {liturgy: {}, songs: []};
         $scope.schedules = [];
         $scope.liturgies = [];
         $scope.singers = [];
         $scope.songs = [];
         $scope.categories = [];
-        $scope.lists = {};
 
-        $scope.rows = 5;
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.week = 7 * 24 * 3600 * 1000;
+
+        $scope.clear();
 
         $document.ready(() => {
             if ($window.angular.element('.signin').length === 0) {
