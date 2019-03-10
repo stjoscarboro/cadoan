@@ -180,6 +180,9 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
 
                 //init categories
                 setCategories();
+
+                //scroll main window up
+                $window.scroll(0, 0);
             }, 100);
         });
     };
