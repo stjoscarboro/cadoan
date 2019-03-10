@@ -38,7 +38,7 @@ app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $inter
         let resize = (currentHeight) => {
             let contentHeight = $document.offsetParent().outerHeight();
 
-            if (window.scrollbars.visible) {
+            if (contentHeight !== currentHeight) {
                 contentHeight += 20;
                 parent.postMessage("resize::" + contentHeight, "*");
             }
