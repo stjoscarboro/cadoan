@@ -2,46 +2,44 @@
     <div class="loader" data-loading></div>
 
     <div class="content ng-hide">
-        <div class="panel-body">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr class="song header">
-                        <th class="title">Bài Nhạc</th>
-                        <th class="author">Tác Giả</th>
-                        <th class="category">Thể Loại</th>
-                        <th class="edit">&nbsp;</th>
-                    </tr>
-                </thead>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr class="song header">
+                    <th class="title">Bài Nhạc</th>
+                    <th class="author">Tác Giả</th>
+                    <th class="category">Thể Loại</th>
+                    <th class="edit">&nbsp;</th>
+                </tr>
+            </thead>
 
-                <tbody>
-                    <tr ng-repeat="song in songs" class="song">
-                        <td class="title">
-                            <a href="{{song.url}}" target="_blank" title="{{song.title}}">{{song.title}}</a>
-                            <a href="{{song.audio}}" ng-if="song.audio" target="_blank" title="Nghe Bài Hát"><i class="glyphicon glyphicon-music audio"></i></a>
-                            <span ng-if="song.others">
-                                <span class="quick-tip" data-qtip="{{song.others}}"><i class="glyphicon glyphicon-info-sign info"></i></span>
-                                <span class="hidden">{{song.others}}</span>
-                            </span>
-                        </td>
+            <tbody>
+                <tr ng-repeat="song in songs" class="song">
+                    <td class="title">
+                        <a href="{{song.url}}" target="_blank" title="{{song.title}}">{{song.title}}</a>
+                        <a href="{{song.audio}}" ng-if="song.audio" target="_blank" title="Nghe Bài Hát"><i class="glyphicon glyphicon-music audio"></i></a>
+                        <span ng-if="song.others">
+                            <span class="quick-tip" data-qtip="{{song.others}}"><i class="glyphicon glyphicon-info-sign info"></i></span>
+                            <span class="hidden">{{song.others}}</span>
+                        </span>
+                    </td>
 
-                        <td class="author">
-                            <a href="" ng-click="search(song.author)" title="{{song.author}}">{{song.author}}</a>
-                        </td>
+                    <td class="author">
+                        <a href="" ng-click="search(song.author)" title="{{song.author}}">{{song.author}}</a>
+                    </td>
 
-                        <td class="category">
-                            <a href="" ng-click="search(song.category)" title="{{song.category}}">{{song.category}}</a>
-                        </td>
+                    <td class="category">
+                        <a href="" ng-click="search(song.category)" title="{{song.category}}">{{song.category}}</a>
+                    </td>
 
-                        <td class="edit">
-                            <a href="" ng-click="edit(song.id)" title="Thay Đổi"><i class="glyphicon glyphicon-edit"></i></a>
-                        </td>
+                    <td class="edit">
+                        <a href="" ng-click="edit(song.id)" title="Thay Đổi"><i class="glyphicon glyphicon-edit"></i></a>
+                    </td>
 
-                        <td class="hidden">
-                            {{song.name}}, {{song.title}}, {{song.author}}, {{song.category}}, {{song.others}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                    <td class="hidden">
+                        {{song.name}}, {{song.title}}, {{song.author}}, {{song.category}}, {{song.others}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
