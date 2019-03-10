@@ -59,7 +59,7 @@ app.factory('AppUtil', ['$document', '$window', '$interval', '$timeout', ($docum
      * scrollFrame
      */
     util.scrollFrame = () => {
-        parent.postMessage("scroll::[0, 0]", "*");
+        parent.postMessage("scroll::0:0", "*");
     };
 
     /**

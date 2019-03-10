@@ -181,8 +181,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
                 //init categories
                 setCategories();
 
-                //scroll main window up
-                parent.self.scrollTo(0, 0);
+                //scroll host's iframe
+                AppUtil.scrollFrame();
             }, 100);
         });
     };
