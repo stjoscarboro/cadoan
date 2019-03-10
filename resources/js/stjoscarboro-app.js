@@ -51,7 +51,7 @@ app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $inter
 
         //set resize interval
         promise = $interval(() => {
-            height = resize(height);
+            resize();
         }, 1000);
 
         //cancel interval
