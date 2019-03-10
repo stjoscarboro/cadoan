@@ -24,7 +24,7 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
     };
 }]);
 
-app.factory('AppUtil', ['$interval', '$timeout', ($interval, $timeout) => {
+app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $interval, $timeout) => {
     let util = {};
 
     /**
@@ -36,9 +36,9 @@ app.factory('AppUtil', ['$interval', '$timeout', ($interval, $timeout) => {
         let promise, height = 0;
 
         let resize = (currentHeight) => {
-            let contentHeight = window.screen.height;
+            let contentHeight = $document.offsetParent().outerHeight();
 
-            if (contentHeight !== currentHeight) {
+            if (window.scrollbars.visible) {
                 contentHeight += 20;
                 parent.postMessage("resize::" + contentHeight, "*");
             }
