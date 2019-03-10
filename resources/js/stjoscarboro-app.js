@@ -44,15 +44,10 @@ app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $inter
             }
         };
 
-        //resize frame
-        $timeout(() => {
-            resize();
-        }, 100);
-
-        //set resize interval
+        //set frame resize interval
         promise = $interval(() => {
             resize();
-        }, 1000);
+        }, 100);
 
         //cancel interval
         scope.$on('$destroy', () => {
