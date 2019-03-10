@@ -33,22 +33,20 @@ app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $inter
      * @param scope
      */
     util.resizeFrame = (scope) => {
-        let promise, height = 0;
+        let promise, currentHeight = 0;
 
-        let resize = (currentHeight) => {
+        let resize = () => {
             let contentHeight = $document.offsetParent().outerHeight();
 
             if (Math.abs(contentHeight - currentHeight) !== 20) {
                 contentHeight += 20;
                 parent.postMessage("resize::" + contentHeight, "*");
             }
-
-            return contentHeight;
         };
 
         //resize frame
         $timeout(() => {
-            height = resize(height);
+            resize();
         }, 100);
 
         //set resize interval
