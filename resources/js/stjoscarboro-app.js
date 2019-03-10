@@ -24,7 +24,7 @@ app.directive('loading', ['$http', '$window', function ($http, $window) {
     };
 }]);
 
-app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $interval, $timeout) => {
+app.factory('AppUtil', ['$interval', '$timeout', ($interval, $timeout) => {
     let util = {};
 
     /**
@@ -36,7 +36,7 @@ app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $inter
         let promise, height = 0;
 
         let resize = (currentHeight) => {
-            let contentHeight = $document.offsetParent ? $document.offsetParent().outerHeight() : $document.outerHeight();
+            let contentHeight = window.innerHeight;
 
             if (contentHeight !== currentHeight) {
                 contentHeight += 20;
