@@ -159,51 +159,49 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
      */
     service.loadLiturgies = () => {
         let results = [],
-            promise = $q.when(),
-            deferred = $q.defer();
+            deferred = $q.defer(),
+            promises = [];
 
-        service.loadYears()
-            .then(years => {
-                years.forEach(year => {
-                    promise = promise.then(() => {
-                        return new Promise(resolve => {
-                            service.getSheetData('liturgies.' + year.id)
-                                .then(
-                                    //success
-                                    (response) => {
-                                        let values = response.data.values;
+        //iterate through years to get all liturgies
+        for(let i = 1; i <= 3; i++) {
+            promises.push(new Promise(resolve => {
+                service.getSheetData('liturgies.' + i)
+                    .then(
+                        //success
+                        (response) => {
+                            let values = response.data.values;
 
-                                        if (values) {
-                                            values.forEach(value => {
-                                                if (value[2]) {
-                                                    let date = new Date(Date.parse(value[3]) + 24 * 3600 * 1000);
-                                                    date.setHours(0, 0, 0, 0);
+                            if (values) {
+                                values.forEach(value => {
+                                    if (value[2]) {
+                                        let date = new Date(Date.parse(value[3]) + 24 * 3600 * 1000);
+                                        date.setHours(0, 0, 0, 0);
 
-                                                    results.push({
-                                                        id: value[0],
-                                                        name: value[1],
-                                                        year: value[2],
-                                                        date: date
-                                                    });
-                                                }
-                                            });
-                                        }
-
-                                        resolve();
-                                    },
-
-                                    //failure
-                                    (response) => {
-                                        console.log(response.data.error);
+                                        results.push({
+                                            id: value[0],
+                                            name: value[1],
+                                            year: value[2],
+                                            date: date
+                                        });
                                     }
-                                );
-                        });
-                    });
+                                });
+                            }
 
-                    promise.then(() => {
-                        deferred.resolve(results);
-                    });
-                });
+                            resolve();
+                        },
+
+                        //failure
+                        (response) => {
+                            console.log(response.data.error);
+                        }
+                    );
+                })
+            );
+        }
+
+        Promise.all(promises)
+            .then(() => {
+                deferred.resolve(results);
             });
 
         return deferred.promise;
