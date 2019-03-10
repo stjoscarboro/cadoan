@@ -1,30 +1,22 @@
 let app = angular.module('stjoscarboro', ['ui.bootstrap']);
 
-app.directive('loading', ['$http', '$window', function ($http, $window) {
+app.directive('loading', ['$http', function ($http) {
     return {
         restrict: 'A',
 
         link: (scope, element) => {
-            let content = $window.angular.element('.content');
-
             scope.isLoading = () => {
                 return $http.pendingRequests.length > 0;
             };
 
             scope.$watch(scope.isLoading, (value) => {
-                if (value) {
-                    element.removeClass('ng-hide');
-                    content && content.addClass('ng-hide');
-                } else {
-                    element.addClass('ng-hide');
-                    content && content.removeClass('ng-hide');
-                }
+                value ? element.removeClass('ng-hide') : element.addClass('ng-hide');
             });
         }
     };
 }]);
 
-app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $interval, $timeout) => {
+app.factory('AppUtil', ['$document', '$window', '$interval', '$timeout', ($document, $window, $interval, $timeout) => {
     let util = {};
 
     /**
@@ -58,6 +50,9 @@ app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $inter
         scope.$on('$destroy', () => {
             $interval.cancel(promise);
         });
+
+        //display content
+        $window.angular.element('.content').removeClass('ng-hide');
     };
 
     /**
