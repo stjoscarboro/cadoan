@@ -1,6 +1,7 @@
 .library {
     font-family: sans-serif;
     font-size: 11pt;
+    overflow: hidden;
 }
 
 .library .main {
