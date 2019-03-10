@@ -44,11 +44,6 @@ app.factory('AppUtil', ['$document', '$interval', '$timeout', ($document, $inter
             }
         };
 
-        //resize frame
-        $timeout(() => {
-            resize();
-        }, 100);
-
         //set frame resize interval
         promise = $interval(() => {
             resize();
