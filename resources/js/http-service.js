@@ -40,7 +40,9 @@ app.factory('HttpService', ['$http', 'QueueHttp', ($http, QueueHttp) => {
      */
     service.getData = (url, params) => {
         params = getParams(params);
-        return $http.get(url, {
+        return QueueHttp({
+            url: url,
+            method: 'GET',
             params: params
         });
     };
@@ -49,14 +51,17 @@ app.factory('HttpService', ['$http', 'QueueHttp', ($http, QueueHttp) => {
      * postData
      *
      * @param url
-     * @param payload
+     * @param data
      * @param params
      *
      * @returns {*}
      */
-    service.postData = (url, payload, params) => {
+    service.postData = (url, data, params) => {
         params = getParams(params);
-        return $http.post(url, payload, {
+        return QueueHttp({
+            url: url,
+            method: 'POST',
+            data: data,
             params: params
         });
     };
@@ -65,14 +70,17 @@ app.factory('HttpService', ['$http', 'QueueHttp', ($http, QueueHttp) => {
      * updateData
      *
      * @param url
-     * @param payload
+     * @param data
      * @param params
      *
      * @returns {*}
      */
-    service.updateData = (url, payload, params) => {
+    service.updateData = (url, data, params) => {
         params = getParams(params);
-        return $http.patch(url, payload, {
+        return QueueHttp({
+            url: url,
+            method: 'PATCH',
+            data: data,
             params: params
         });
     };
