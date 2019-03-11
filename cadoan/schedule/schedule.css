@@ -84,9 +84,9 @@
 .schedule .loader {
     display: block;
     margin: auto;
-    width: 24px;
-    height: 24px;
-    background: url('../../resources/images/loading.gif') no-repeat 0/24px;
+    width: 36px;
+    height: 36px;
+    background: url('../../resources/images/loading.gif') no-repeat 0/36px;
 }
 
 .schedule a {
