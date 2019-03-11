@@ -1,4 +1,4 @@
-app.factory('HttpService', ['$http', ($http) => {
+app.factory('HttpService', ['$http', 'QueueHttp', ($http, QueueHttp) => {
 
     let gapiKey = Base64.decode('QUl6YVN5RFZLNXpQMFRuaFJhbTBCc3Z2YjU5UnZGWk1tUjNqR1c4');
 
@@ -23,7 +23,9 @@ app.factory('HttpService', ['$http', ($http) => {
      */
     service.getFile = (url, params) => {
         url = getURL(url);
-        return $http.get(url, {
+        return QueueHttp({
+            url: url,
+            method: 'GET',
             params: params
         });
     };
@@ -100,3 +102,15 @@ app.factory('HttpService', ['$http', ($http) => {
     return service;
 
 }]);
+
+app.factory('QueueHttp', ($q, $http) => {
+    let promise = $q.when();
+
+    return (conf) => {
+        let queue = () => {
+            return $http(conf);
+        };
+
+        return promise = promise.then(queue, queue);
+    };
+});

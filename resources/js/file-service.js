@@ -63,7 +63,8 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
      * listFolder
      */
     service.listFolder = (folder) => {
-        let deferred = $q.defer();
+        let deferred = $q.defer(),
+            results = [], promises = [];
 
         service.getFolderData(folder)
             .then(
@@ -71,9 +72,20 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                 (response) => {
                     let folders = response.data.files;
 
-                    // service.sequencelListFolders(folders)
-                    service.groupListFolders(folders, 2)
-                        .then(results => {
+                    folders.forEach(folder => {
+                        promises.push(
+                            new Promise(resolve => {
+                                service.listFiles(folder)
+                                    .then(result => {
+                                        results.push(result);
+                                        resolve();
+                                    });
+                            })
+                        );
+                    });
+
+                    Promise.all(promises)
+                        .then(() => {
                             deferred.resolve(results);
                         });
                 },
@@ -83,74 +95,6 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                     console.log(response.data.error);
                 }
             );
-
-        return deferred.promise;
-    };
-
-    /**
-     * sequencelListFolders
-     */
-    service.sequencelListFolders = (folders) => {
-        let results = [],
-            promise = $q.when(),
-            deferred = $q.defer();
-
-        folders.forEach(folder => {
-            promise = promise.then(() => {
-                return service.listFiles(folder);
-            })
-                .then(result => {
-                    results.push(result);
-                });
-        });
-
-        promise.then(() => {
-            deferred.resolve(results);
-        });
-
-        return deferred.promise;
-    };
-
-    /**
-     * groupListFolders
-     */
-    service.groupListFolders = (folders, count) => {
-        let results = [], groups = [],
-            promise = $q.when(),
-            deferred = $q.defer();
-
-        for (let i = 0; i < Math.ceil(folders.length / count); i++) {
-            let group = [];
-            for (let j = 0; j < count; j++) {
-                let folder = folders[i * count + j];
-                folder && group.push(folders[i * count + j]);
-            }
-            groups.push(group);
-        }
-
-        groups.forEach(group => {
-            promise = promise.then(() => {
-                return new Promise(resolve => {
-                    let promises = [];
-
-                    group.forEach(folder => {
-                        promises.push(service.listFiles(folder));
-                    });
-
-                    Promise.all(promises)
-                        .then(values => {
-                            values.forEach(value => {
-                                results.push(value);
-                            });
-                            resolve();
-                        });
-                });
-            });
-        });
-
-        promise.then(() => {
-            deferred.resolve(results);
-        });
 
         return deferred.promise;
     };
