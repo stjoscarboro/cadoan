@@ -164,42 +164,30 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
 
         //iterate through years to get all liturgies
         for(let i = 1; i <= 3; i++) {
-            promises.push(new Promise(resolve => {
-                    service.getSheetData('liturgies.' + i)
-                        .then(
-                            //success
-                            (response) => {
-                                let values = response.data.values;
+            promises.push(
+                $q.when(service.getSheetData('liturgies.' + i), response => {
+                    let values = response.data.values;
 
-                                if (values) {
-                                    values.forEach(value => {
-                                        if (value[2]) {
-                                            let date = new Date(Date.parse(value[3]) + 24 * 3600 * 1000);
-                                            date.setHours(0, 0, 0, 0);
+                    if (values) {
+                        values.forEach(value => {
+                            if (value[2]) {
+                                let date = new Date(Date.parse(value[3]) + 24 * 3600 * 1000);
+                                date.setHours(0, 0, 0, 0);
 
-                                            results.push({
-                                                id: value[0],
-                                                name: value[1],
-                                                year: value[2],
-                                                date: date
-                                            });
-                                        }
-                                    });
-                                }
-
-                                resolve();
-                            },
-
-                            //failure
-                            (response) => {
-                                console.log(response.data.error);
+                                results.push({
+                                    id: value[0],
+                                    name: value[1],
+                                    year: value[2],
+                                    date: date
+                                });
                             }
-                        );
+                        });
+                    }
                 })
             );
         }
 
-        Promise.all(promises)
+        $q.all(promises)
             .then(() => {
                 deferred.resolve(results);
             });

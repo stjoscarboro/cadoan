@@ -74,17 +74,13 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
                     folders.forEach(folder => {
                         promises.push(
-                            new Promise(resolve => {
-                                service.listFiles(folder)
-                                    .then(result => {
-                                        results.push(result);
-                                        resolve();
-                                    });
+                            $q.when(service.listFiles(folder), result => {
+                                results.push(result);
                             })
                         );
                     });
 
-                    Promise.all(promises)
+                    $q.all(promises)
                         .then(() => {
                             deferred.resolve(results);
                         });

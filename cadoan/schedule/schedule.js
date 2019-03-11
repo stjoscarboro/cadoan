@@ -292,7 +292,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
             }
         });
 
-        Promise.all(removed)
+        $q.all(removed)
             .then(() => {
                 //add new schedule
                 DataService.appendSheetData('cadoan.schedules', payload, {
@@ -321,7 +321,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
     $scope.loadData = () => {
         let deferred = $q.defer();
 
-        Promise.all([
+        $q.all([
             FileService.listFolder('cadoan.sheets'),
             DataService.loadLiturgies(),
             DataService.loadSingers(),

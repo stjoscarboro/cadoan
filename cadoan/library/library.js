@@ -131,7 +131,7 @@ app.controller("LibraryCtrl", ($scope, $q, $window, $uibModal, $timeout, $filter
     $scope.loadData = () => {
         let deferred = $q.defer();
 
-        Promise.all([
+        $q.all([
             FileService.listFolder('cadoan.sheets')
         ])
             .then((values) => {
