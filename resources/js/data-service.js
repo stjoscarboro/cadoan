@@ -159,13 +159,12 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
      */
     service.loadLiturgies = () => {
         let results = [],
-            promise = $q.when(),
-            deferred = $q.defer();
+            deferred = $q.defer(),
+            promises = [];
 
         //iterate through years to get all liturgies
         for(let i = 1; i <= 3; i++) {
-            promise.then(() => {
-                return new Promise(resolve => {
+            promises.push(new Promise(resolve => {
                     service.getSheetData('liturgies.' + i)
                         .then(
                             //success
@@ -196,13 +195,14 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
                                 console.log(response.data.error);
                             }
                         );
-                });
-            });
+                })
+            );
         }
 
-        promise.then(() => {
-            deferred.resolve(results);
-        });
+        Promise.all(promises)
+            .then(() => {
+                deferred.resolve(results);
+            });
 
         return deferred.promise;
     };
