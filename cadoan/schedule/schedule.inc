@@ -12,7 +12,14 @@
             </div>
 
             <div class="liturgy">
-                {{schedule.liturgy.name}} - {{schedule.liturgy.year}}
+                <span>
+                    {{schedule.liturgy.name}}
+                </span>
+
+                <span ng-if="schedule.liturgy.year">
+                    - {{schedule.liturgy.year}}
+                </span>
+
                 <a href="" ng-click="edit($index)" title="Thay Đổi Lịch" ng-if="accessToken"><i class="glyphicon glyphicon-edit edit"></i></a>
                 <a href="" ng-click="remove($index)" title="Xoá Lịch" ng-if="accessToken"><i class="glyphicon glyphicon-remove delete"></i></a>
 

@@ -9,9 +9,11 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
         $scope.singers = [];
         $scope.songs = [];
         $scope.categories = [];
+        $scope.years = [];
 
         $scope.dateFormat = "DD, dd/mm/yy";
-        $scope.week = 7 * 24 * 3600 * 1000;
+        $scope.dayms = 24 * 3600 * 1000;
+        $scope.weekms = 7 * $scope.dayms;
 
         $scope.clear();
 
@@ -140,7 +142,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
 
                     for (let liturgy of $scope.liturgies) {
                         if (date.getTime() === liturgy.date.getTime()) {
-                            Object.assign($scope.schedule.liturgy, AppUtil.pick(liturgy, 'id', 'year'));
+                            Object.assign($scope.schedule.liturgy, AppUtil.pick(liturgy, 'id', 'name', 'year'));
                         }
                     }
                 };
@@ -170,8 +172,10 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
                 //set datepicker to a week from last scheduled date
                 if (!$scope.schedule.date) {
                     for (let schedule of $scope.schedules) {
-                        let date = $.datepicker.parseDate($scope.dateFormat, schedule.date);
-                        $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(date.getTime() + $scope.week));
+                        let date = $.datepicker.parseDate($scope.dateFormat, schedule.date),
+                            timediff = $scope.weekms - (date.getDay() * $scope.dayms);
+
+                        $scope.schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(date.getTime() + timediff));
                     }
                 }
 
@@ -247,13 +251,25 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
      */
     $scope.save = () => {
         let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date),
-            liturgy = Object.assign({}, AppUtil.pick($scope.schedule.liturgy, 'id', 'year', 'special')),
-            songs = [], payload, removed = [],
+            liturgy = {}, songs = [], payload, removed = [],
             deferred = $q.defer();
 
         //parse songs
         for (let song of $scope.schedule.songs) {
             songs.push(Object.assign({}, AppUtil.pick(song, 'id', 'singer')));
+        }
+
+        //parse liturgy
+        for (let liturgy of $scope.liturgies) {
+            if(liturgy.name === $scope.schedule.liturgy.name) {
+                $scope.schedule.liturgy.id = liturgy.id;
+            }
+        }
+
+        if($scope.schedule.liturgy.id) {
+            Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'id', 'year', 'special'));
+        } else {
+            Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'name', 'year', 'special'));
         }
 
         //create payload
@@ -308,7 +324,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
         Promise.all([
             FileService.listFolder('cadoan.sheets'),
             DataService.loadLiturgies(),
-            DataService.loadSingers()
+            DataService.loadSingers(),
+            DataService.loadYears()
         ])
             .then((values) => {
                 //populate songs
@@ -324,6 +341,9 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
 
                 //populate singers
                 $scope.singers = values[2];
+
+                //populate years
+                $scope.years = values[3];
 
                 //sort data
                 DataService.sortByLocale($scope.songs, 'title');

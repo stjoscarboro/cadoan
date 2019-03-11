@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="col-md-2" style="width: 98px;">
-                        <input type="text" ng-model="schedule.liturgy.year" class="form-control" style="background-color: unset;" readonly>
+                        <input type="text" ng-model="schedule.liturgy.year" class="form-control" style="background-color: unset;" placeholder="Năm">
                     </div>
                 </div>
             </div>
@@ -27,10 +27,7 @@
             <div class="col-md-10">
                 <div class="row row-no-padding">
                     <div class="col-md-5">
-                        <select ng-model="schedule.liturgy.id" class="form-control" required>
-                            <option></option>
-                            <option ng-repeat="liturgy in liturgies" ng-value="liturgy.id">{{liturgy.name}}</option>
-                        </select>
+                        <input ng-model="schedule.liturgy.name" class="form-control" required>
                     </div>
 
                     <div class="col-md-6">
