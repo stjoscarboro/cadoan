@@ -1,4 +1,4 @@
-app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, AppUtil) => {
+app.factory('DataService', ($q, HttpService, AppUtil) => {
 
     let sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/',
 
@@ -373,4 +373,4 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
 
     return service;
 
-}]);
+});

@@ -1,4 +1,4 @@
-app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
+app.factory('FileService', ($q, HttpService) => {
 
     let docURL = 'https://docs.google.com/document/d/',
         openURL = 'https://drive.google.com/open?id=',
@@ -174,4 +174,4 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     return service;
 
-}]);
+});
