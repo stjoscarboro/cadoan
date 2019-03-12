@@ -163,9 +163,9 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
             promises = [];
 
         //iterate through years to get all liturgies
-        for(let i = 1; i <= 3; i++) {
+        for (let i = 1; i <= 3; i++) {
             promises.push(
-                $q.when(service.getSheetData('liturgies.' + i), response => {
+                $q.resolve(service.getSheetData('liturgies.' + i), response => {
                     let values = response.data.values;
 
                     if (values) {
