@@ -123,17 +123,16 @@ app.factory('QueueHttp', ($q, $http) => {
     };
 });
 
-app.factory('DelayHttp', ($q, $http, $timeout, DelayQueue) => {
+app.factory('DelayHttp', ($q, $http, $timeout) => {
+    let counter = 0,
+        delay = 100;
+
     return (conf) => {
-        DelayQueue.push(conf);
+        counter += 1;
 
         return $timeout(() => {
-            DelayQueue.shift();
+            counter -= 1;
             return $http(conf);
-        }, DelayQueue.length * 100);
+        }, counter * delay);
     };
-});
-
-app.factory('DelayQueue', () => {
-    return [];
 });
