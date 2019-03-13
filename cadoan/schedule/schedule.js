@@ -143,6 +143,10 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
                     for (let liturgy of $scope.liturgies) {
                         if (date.getTime() === liturgy.date.getTime()) {
                             Object.assign($scope.schedule.liturgy, AppUtil.pick(liturgy, 'id', 'name', 'year'));
+
+                            if(!$scope.schedule.liturgy.special) {
+                                $scope.schedule.liturgy.special = liturgy.special;
+                            }
                         }
                     }
                 };
@@ -202,7 +206,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
         let liturgy = $scope.liturgies.find(i => {
             return i.id === $scope.schedule.liturgy.id;
         });
-        liturgy && Object.assign($scope.schedule.liturgy, liturgy);
+        liturgy && Object.assign($scope.schedule.liturgy, AppUtil.pick(liturgy, 'name'));
 
         $scope.schedule.songs.forEach((song, index) => {
             //get singer

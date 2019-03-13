@@ -11,17 +11,17 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
 
                 1: {
                     id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                    range: 'A!A:D', // [id, text, year, date]
+                    range: 'A!A:E', // [id, text, year, date, special]
                 },
 
                 2: {
                     id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                    range: 'B!A:D', // [id, text, year, date]
+                    range: 'B!A:E', // [id, text, year, date, special]
                 },
 
                 3: {
                     id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                    range: 'C!A:D', // [id, text, year, date]
+                    range: 'C!A:E', // [id, text, year, date, special]
                 }
             },
 
@@ -170,7 +170,7 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
 
                     if (values) {
                         values.forEach(value => {
-                            if (value[2]) {
+                            if (value[3]) {
                                 let date = new Date(Date.parse(value[3]) + 24 * 3600 * 1000);
                                 date.setHours(0, 0, 0, 0);
 
@@ -178,7 +178,8 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
                                     id: value[0],
                                     name: value[1],
                                     year: value[2],
-                                    date: date
+                                    date: date,
+                                    special: value[4]
                                 });
                             }
                         });
