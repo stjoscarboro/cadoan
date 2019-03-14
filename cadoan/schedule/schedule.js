@@ -57,9 +57,9 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
 
                 for (let schedule of schedules) {
                     let display = $scope.accessToken ||
-                                  schedules.length <= 5 ||
+                                  schedules.length <= 4 ||
                                   schedule.date >= today.getTime() ||
-                                  schedule.date >= new Date(last.getTime() - 4 * $scope.weekms).getTime();
+                                  schedule.date >= new Date(last.getTime() - 3 * $scope.weekms).getTime();
 
                     if (display) {
                         schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(schedule.date));
