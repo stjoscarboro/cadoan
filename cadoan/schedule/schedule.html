@@ -32,7 +32,7 @@
             <div ng-repeat="song in schedule.songs">
                 <div class="category">{{song.category}}</div>
                 <div class="song">
-                    <a href="{{song.url}}" target="_blank" title="{{song.title}}">{{song.title}} (<em>{{song.author}}</em>)</a>
+                    <a href="{{song.url}}" target="_blank" title="{{song.title}}">{{song.title}} <em ng-if="song.author">({{song.author}})</em></a>
                     <a href="{{song.audio}}" title="Nghe Bài Hát" ng-if="song.audio" target="_blank"><i class="glyphicon glyphicon-music audio"></i></a>
                 </div>
                 <div class="singer" ng-if="song.singer">Solo: {{(singers | filter: {'id': song.singer})[0].name}}</div>
