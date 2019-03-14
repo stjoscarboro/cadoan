@@ -45,6 +45,8 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
      * get
      */
     $scope.get = () => {
+        $scope.schedules = [];
+
         DataService.loadSchedules($scope.songs)
             .then(schedules => {
                 let today = new Date(),
