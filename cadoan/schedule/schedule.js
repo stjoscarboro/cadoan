@@ -49,11 +49,19 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
 
         DataService.loadSchedules($scope.songs)
             .then(schedules => {
-                let today = new Date();
+                let today = new Date(),
+                    last = new Date(schedules[schedules.length - 1].date);
+
                 today.setHours(0, 0, 0, 0);
+                last.setHours(0, 0, 0, 0);
 
                 for (let schedule of schedules) {
-                    if ($scope.accessToken || schedules.length <= 4 || schedule.date >= today.getTime()) {
+                    let display = $scope.accessToken ||
+                                  new Date(schedule.date).getMonth() >= today.getMonth() ||
+                                  schedule.date >= today.getTime() ||
+                                  schedule.date >= new Date(last.getTime() - 4 * $scope.weekms).getTime();
+
+                    if (display) {
                         schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(schedule.date));
 
                         //parse liturgy

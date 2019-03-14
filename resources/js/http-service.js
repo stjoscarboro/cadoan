@@ -111,7 +111,7 @@ app.factory('HttpService', ($http, DelayHttp) => {
 
 });
 
-app.factory('QueueHttp', ($q, $http) => {
+app.factory('QueueHttp', ($http, $q) => {
     let promise = $q.resolve();
 
     return (conf) => {
@@ -123,7 +123,7 @@ app.factory('QueueHttp', ($q, $http) => {
     };
 });
 
-app.factory('DelayHttp', ($q, $http, $timeout) => {
+app.factory('DelayHttp', ($http, $timeout) => {
     let counter = 0,
         delay = 100;
 
