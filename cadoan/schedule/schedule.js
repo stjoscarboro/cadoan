@@ -57,7 +57,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
 
                 for (let schedule of schedules) {
                     let display = $scope.accessToken ||
-                                  new Date(schedule.date).getMonth() >= today.getMonth() ||
+                                  schedules.length <= 5 ||
                                   schedule.date >= today.getTime() ||
                                   schedule.date >= new Date(last.getTime() - 4 * $scope.weekms).getTime();
 
