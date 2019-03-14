@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c46644d-cb6b-4aa5-a4d1-0ddee90c505f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cadoan/schedule/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/cadoan/schedule/schedule.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -118,8 +117,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="52" column="103" selection-start-line="52" selection-start-column="103" selection-end-line="52" selection-end-column="103" />
+            <state relative-caret-position="196">
+              <caret line="47" selection-start-line="47" selection-end-line="47" />
             </state>
           </provider>
         </entry>
@@ -438,7 +437,7 @@
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="1" />
       <window_info anchor="bottom" id="Terminal" order="2" show_stripe_button="false" sideWeight="0.49946064" weight="0.32985386" />
-      <window_info anchor="bottom" id="Find" order="3" sideWeight="0.50053936" side_tool="true" visible="true" weight="0.18074866" />
+      <window_info active="true" anchor="bottom" id="Find" order="3" sideWeight="0.50053936" side_tool="true" visible="true" weight="0.18074866" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Run" order="6" weight="0.32941177" />
@@ -451,8 +450,8 @@
       <window_info anchor="right" id="Commander" order="1" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info active="true" anchor="right" content_ui="combo" id="Project" order="4" sideWeight="0.4459893" visible="true" weight="0.31111112" />
-      <window_info anchor="right" id="Version Control" order="5" sideWeight="0.5540107" side_tool="true" visible="true" weight="0.31111112" />
+      <window_info anchor="right" content_ui="combo" id="Project" order="4" sideWeight="0.4464752" visible="true" weight="0.31111112" />
+      <window_info anchor="right" id="Version Control" order="5" sideWeight="0.5535248" side_tool="true" visible="true" weight="0.31111112" />
       <window_info anchor="right" id="Database" order="6" sideWeight="0.54010695" side_tool="true" weight="0.31234568" />
       <window_info anchor="right" id="Structure" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Favorites" order="8" sideWeight="0.48770052" weight="0.26896977" />
@@ -765,8 +764,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cadoan/schedule/schedule.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="52" column="103" selection-start-line="52" selection-start-column="103" selection-end-line="52" selection-end-column="103" />
+        <state relative-caret-position="196">
+          <caret line="47" selection-start-line="47" selection-end-line="47" />
         </state>
       </provider>
     </entry>
