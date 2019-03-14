@@ -50,18 +50,13 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
         DataService.loadSchedules($scope.songs)
             .then(schedules => {
                 let today = new Date(),
-                    last = new Date(schedules[schedules.length - 1].date);
+                    first = new Date((schedules.length >= 4 ? schedules.slice(-4) : schedules.slice(0))[0].date);
 
                 today.setHours(0, 0, 0, 0);
-                last.setHours(0, 0, 0, 0);
+                first.setHours(0, 0, 0, 0);
 
                 for (let schedule of schedules) {
-                    let display = $scope.accessToken ||
-                                  schedules.length <= 4 ||
-                                  schedule.date >= today.getTime() ||
-                                  schedule.date >= new Date(last.getTime() - 3 * $scope.weekms).getTime();
-
-                    if (display) {
+                    if ($scope.accessToken || schedule.date >= today.getTime() || schedule.date >= first.getTime()) {
                         schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(schedule.date));
 
                         //parse liturgy
