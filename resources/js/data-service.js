@@ -172,7 +172,6 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
                         values.forEach(value => {
                             if (value[3]) {
                                 let date = parseDate(value[3]);
-                                date.setHours(0, 0, 0, 0);
 
                                 results.push({
                                     id: value[0],
