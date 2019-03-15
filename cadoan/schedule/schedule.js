@@ -381,7 +381,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
     $scope.previewSong = (index) => {
         let song = $scope.schedule.songs[index];
 
-        if (song) {
+        if (song && song.id) {
             $window.open(FileService.getOpenURL(song.id), '_blank');
         }
     };
