@@ -133,8 +133,8 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
                                 results.push({
                                     id: value[0],
                                     name: value[1],
-                                    start: Date.parse(value[2]),
-                                    end: Date.parse(value[3])
+                                    start: parseDate(value[2]),
+                                    end: parseDate(value[3])
                                 });
                             }
                         });
@@ -171,7 +171,7 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
                     if (values) {
                         values.forEach(value => {
                             if (value[3]) {
-                                let date = new Date(Date.parse(value[3]) + 24 * 3600 * 1000);
+                                let date = parseDate(value[3]);
                                 date.setHours(0, 0, 0, 0);
 
                                 results.push({
@@ -252,7 +252,7 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
 
                     if (values) {
                         values.forEach(value => {
-                            let date = Number.parseInt(value[0]),
+                            let date = parseDate(value[0]),
                                 liturgy = JSON.parse(value[1]),
                                 list = JSON.parse(value[2]);
 
@@ -370,6 +370,19 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
         });
 
         return sheet;
+    };
+
+    /**
+     * parseDate
+     *
+     * @param value
+     * @returns {Date}
+     */
+    let parseDate = (value) => {
+        let date = new Date(Date.parse(value));
+
+        date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+        return date;
     };
 
     return service;

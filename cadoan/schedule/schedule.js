@@ -9,7 +9,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
         $scope.singers = [];
         $scope.songs = [];
         $scope.categories = [];
-        $scope.years = [];
 
         $scope.dateFormat = "DD, dd/mm/yy";
         $scope.dayms = 24 * 3600 * 1000;
@@ -50,14 +49,14 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
         DataService.loadSchedules($scope.songs)
             .then(schedules => {
                 let today = new Date(),
-                    first = new Date((schedules.length >= 4 ? schedules.slice(-4) : schedules.slice(0))[0].date);
+                    first = (schedules.length >= 4 ? schedules.slice(-4) : schedules.slice(0))[0].date;
 
                 today.setHours(0, 0, 0, 0);
                 first.setHours(0, 0, 0, 0);
 
                 for (let schedule of schedules) {
-                    if ($scope.accessToken || schedule.date >= today.getTime() || schedule.date >= first.getTime()) {
-                        schedule.date = $.datepicker.formatDate($scope.dateFormat, new Date(schedule.date));
+                    if ($scope.accessToken || schedule.date >= today || schedule.date >= first) {
+                        schedule.date = $.datepicker.formatDate($scope.dateFormat, schedule.date);
 
                         //parse liturgy
                         for (let liturgy of $scope.liturgies) {
@@ -283,7 +282,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
         payload = {
             values: [
                 [
-                    date.getTime(),
+                    $.datepicker.formatDate('yy-mm-dd', date),
                     JSON.stringify(liturgy),
                     JSON.stringify(songs)
                 ]
@@ -331,8 +330,7 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
         $q.all([
             FileService.listFolder('cadoan.sheets'),
             DataService.loadLiturgies(),
-            DataService.loadSingers(),
-            DataService.loadYears()
+            DataService.loadSingers()
         ])
             .then((values) => {
                 //populate songs
@@ -348,9 +346,6 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
 
                 //populate singers
                 $scope.singers = values[2];
-
-                //populate years
-                $scope.years = values[3];
 
                 //sort data
                 DataService.sortByLocale($scope.songs, 'title');
