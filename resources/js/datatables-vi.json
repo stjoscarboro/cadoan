@@ -6,7 +6,7 @@
   "sInfoEmpty": "0/0 / 0",
   "sInfoFiltered": "<span class=\"brand-color\">: _MAX_</span>",
   "sInfoPostFix": "",
-  "sSearch": "<i class=\"glyphicon glyphicon-search horizontal-flip brand-color\" style=\"top: 3px;\"></i>",
+  "sSearch": "<i class=\"glyphicon glyphicon-search hflip brand-color\" style=\"top: 3px;\"></i>",
   "sUrl": "",
   "oPaginate": {
     "sFirst": "<i class=\"glyphicon glyphicon-triangle-left brand-color\"></i>",
