@@ -8,12 +8,8 @@
     overflow: auto;
 }
 
-.schedule .content {
-    padding: 0 10px 0 10px;
-}
-
 .schedule .schedule {
-    padding-bottom: 10px;
+    padding: 0 10px 10px 10px;
     line-height: 26px;
 }
 
