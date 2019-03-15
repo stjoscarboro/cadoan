@@ -171,13 +171,11 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
                     if (values) {
                         values.forEach(value => {
                             if (value[3]) {
-                                let date = parseDate(value[3]);
-
                                 results.push({
                                     id: value[0],
                                     name: value[1],
                                     year: value[2],
-                                    date: date,
+                                    date: parseDate(value[3]),
                                     special: value[4]
                                 });
                             }
