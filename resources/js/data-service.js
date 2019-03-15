@@ -31,16 +31,6 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
                     range: 'A:C' // [date, liturgy, songs]
                 },
 
-                members: {
-                    id: '1rrjh3TAPnDz7odZTEQ6YIWKqFXxSVylVGstyb3VkqL0',
-                    range: 'A:C' // [id, email, name]
-                },
-
-                messages: {
-                    id: '1R462i8PpuGfpI38MNFexgtrTAplinMC5lcYSDTYLZdw',
-                    range: 'A:C' // [date, member, text]
-                },
-
                 singers: {
                     id: '1c-CU_cRvWy_Wp5PhrkKN_k-H3TKArH9-5z098Wx6Ibo',
                     range: 'A:B' // [id, name]
@@ -256,10 +246,7 @@ app.factory('DataService', ($q, HttpService, AppUtil) => {
                             //populate songs
                             list.forEach(item => {
                                 //find song
-                                let song = (songs.find(i => {
-                                    return i.id === item.id;
-                                }));
-
+                                let song = (songs.find(i => { return i.id === item.id; }));
                                 if (song) {
                                     Object.assign(item, AppUtil.pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
                                 }
