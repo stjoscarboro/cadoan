@@ -1,4 +1,6 @@
-app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $document, HttpService, DataService, FileService, AppUtil) => {
+app.controller("ScheduleCtrl", [
+    '$scope', '$q', '$window', '$uibModal', '$timeout', '$document', 'HttpService', 'DataService', 'FileService', 'AppUtil',
+    ($scope, $q, $window, $uibModal, $timeout, $document, HttpService, DataService, FileService, AppUtil) => {
 
     /**
      * init
@@ -385,4 +387,4 @@ app.controller("ScheduleCtrl", ($scope, $q, $window, $uibModal, $timeout, $docum
             $window.open(FileService.getOpenURL(song.id), '_blank');
         }
     };
-});
+}]);
