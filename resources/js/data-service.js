@@ -273,6 +273,28 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
     };
 
     /**
+     * addSchedule
+     *
+     * @param payload
+     * @returns {*|void}
+     */
+    service.addSchedule = (payload) => {
+        return service.appendSheetData('cadoan.schedules', payload, {
+            valueInputOption: "USER_ENTERED"
+        });
+    };
+
+    /**
+     * updateSchedule
+     *
+     * @param payload
+     * @returns {*|void}
+     */
+    service.updateSchedule = (payload) => {
+        return service.updateSheetData('cadoan.schedules', payload);
+    };
+
+    /**
      * listCategories
      *
      * @param songs

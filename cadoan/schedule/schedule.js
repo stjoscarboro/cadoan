@@ -94,7 +94,7 @@ app.controller("ScheduleCtrl", [
             }]
         };
 
-        DataService.updateSheetData('cadoan.schedules', payload)
+        DataService.updateSchedule(payload)
             .then(() => {
                 $scope.clear();
                 $scope.get();
@@ -245,7 +245,7 @@ app.controller("ScheduleCtrl", [
             }]
         };
 
-        DataService.updateSheetData('cadoan.schedules', payload)
+        DataService.updateSchedule(payload)
             .then(() => {
                 $scope.schedules.splice(id, 1);
                 deferred.resolve();
@@ -303,9 +303,7 @@ app.controller("ScheduleCtrl", [
         $q.all(removed)
             .then(() => {
                 //add new schedule
-                DataService.appendSheetData('cadoan.schedules', payload, {
-                    valueInputOption: "USER_ENTERED"
-                })
+                DataService.addSchedule(payload)
                     .then(
                         //success
                         () => {
@@ -313,6 +311,7 @@ app.controller("ScheduleCtrl", [
                             deferred.resolve();
                         },
 
+                        //failure
                         (response) => {
                             console.log(response.data.error);
                             deferred.reject();
