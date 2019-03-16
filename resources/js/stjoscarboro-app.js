@@ -1,6 +1,6 @@
 let app = angular.module('stjoscarboro', ['ui.bootstrap']);
 
-app.directive('loading', ($http) => {
+app.directive('loading', ['$http', ($http) => {
     return {
         restrict: 'A',
 
@@ -14,9 +14,9 @@ app.directive('loading', ($http) => {
             });
         }
     };
-});
+}]);
 
-app.factory('AppUtil', ($document, $window, $interval, $timeout) => {
+app.factory('AppUtil', ['$document', '$window', '$interval', '$timeout', ($document, $window, $interval, $timeout) => {
     let util = {};
 
     /**
@@ -73,9 +73,9 @@ app.factory('AppUtil', ($document, $window, $interval, $timeout) => {
     };
 
     return util;
-});
+}]);
 
-app.filter('range', () => {
+app.filter('range', [() => {
     return (input, total) => {
         total = parseInt(total);
 
@@ -85,4 +85,4 @@ app.filter('range', () => {
 
         return input;
     };
-});
+}]);

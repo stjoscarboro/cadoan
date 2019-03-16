@@ -1,4 +1,4 @@
-app.factory('HttpService', ($http, DelayHttp) => {
+app.factory('HttpService', ['$http', 'DelayHttp', ($http, DelayHttp) => {
 
     let gapiKey = Base64.decode('QUl6YVN5RFZLNXpQMFRuaFJhbTBCc3Z2YjU5UnZGWk1tUjNqR1c4');
 
@@ -109,9 +109,9 @@ app.factory('HttpService', ($http, DelayHttp) => {
 
     return service;
 
-});
+}]);
 
-app.factory('QueueHttp', ($http, $q) => {
+app.factory('QueueHttp', ['$http', '$q', ($http, $q) => {
     let promise = $q.resolve();
 
     return (conf) => {
@@ -121,9 +121,9 @@ app.factory('QueueHttp', ($http, $q) => {
 
         return promise = promise.then(next);
     };
-});
+}]);
 
-app.factory('DelayHttp', ($http, $timeout) => {
+app.factory('DelayHttp', ['$http', '$timeout', ($http, $timeout) => {
     let counter = 0,
         delay = 100;
 
@@ -135,4 +135,4 @@ app.factory('DelayHttp', ($http, $timeout) => {
             return $http(conf);
         }, counter * delay);
     };
-});
+}]);
