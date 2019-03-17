@@ -6,7 +6,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
             liturgies: {
                 years: {
                     id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                    range: 'Years!A:D', // [id, name, from, to]
+                    range: 'Years!A:C', // [id, name, from]
                 },
 
                 1: {
@@ -123,8 +123,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
                                 results.push({
                                     id: value[0],
                                     name: value[1],
-                                    start: parseDate(value[2]),
-                                    end: parseDate(value[3])
+                                    start: parseDate(value[2])
                                 });
                             }
                         });
