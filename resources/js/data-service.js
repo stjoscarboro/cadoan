@@ -32,7 +32,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
                 },
 
                 singers: {
-                    id: '1c-CU_cRvWy_Wp5PhrkKN_k-H3TKArH9-5z098Wx6Ibo',
+                    id: '1UUNHdYv2V4JZ492eiQUCaujSMy2zti1aLblefL36yjs',
                     range: 'A:B' // [id, name]
                 }
             }
