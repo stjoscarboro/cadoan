@@ -1,6 +1,6 @@
 app.factory('HttpService', ['$http', 'DelayHttp', ($http, DelayHttp) => {
 
-    let gapiKey = Base64.decode('QUl6YVN5RFZLNXpQMFRuaFJhbTBCc3Z2YjU5UnZGWk1tUjNqR1c4');
+    let gapiKey = Base64.decode('QUl6YVN5Q1NobnFUbHBhLTg4ajhlSGtWaWJDTjVTT21WLWFTVHd3');
 
     let service = {},
         access_token;
@@ -63,6 +63,22 @@ app.factory('HttpService', ['$http', 'DelayHttp', ($http, DelayHttp) => {
             method: 'POST',
             data: data,
             params: params
+        });
+    };
+
+    /**
+     * postRawData
+     *
+     * @param url
+     * @param data
+     *
+     * @returns {*}
+     */
+    service.postRawData = (url, data) => {
+        return $http({
+            url: url,
+            method: 'POST',
+            data: data
         });
     };
 
