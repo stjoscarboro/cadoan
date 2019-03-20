@@ -67,18 +67,21 @@ app.factory('HttpService', ['$http', 'DelayHttp', ($http, DelayHttp) => {
     };
 
     /**
-     * postRawData
+     * postFormData
      *
      * @param url
      * @param data
      *
      * @returns {*}
      */
-    service.postRawData = (url, data) => {
+    service.postFormData = (url, data) => {
         return $http({
             url: url,
             method: 'POST',
-            data: data
+            data: $.param(data),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         });
     };
 
