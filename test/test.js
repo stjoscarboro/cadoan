@@ -22,8 +22,9 @@ app.controller("TestCtrl", ($scope, $q, $uibModal, HttpService) => {
     $scope.authorize = () => {
         let deferred = $q.defer();
 
-        $.getJSON("../resources/js/stjoscarboro-api.json", (json) => {
-            let header = {alg: 'RS256', typ: 'JWT'},
+        $.get("../resources/js/stjoscarboro-api.data", (data) => {
+            let json = JSON.parse(Base64.decode(data)),
+                header = {alg: 'RS256', typ: 'JWT'},
                 payload = {
                     iss: json['client_email'],
                     scope: 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets',
