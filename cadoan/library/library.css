@@ -31,11 +31,6 @@
     display: none;
 }
 
-.library table tr th {
-    background: #337ab7;
-    color: white;
-}
-
 .library input[type=search] {
     width: 200px !important;
     font-size: inherit;
@@ -104,8 +99,4 @@
 
 .library .dataTables_wrapper .hflip {
     transform: scale(-1, 1);
-}
-
-.library .dataTables_wrapper .brand-color {
-    color: #337ab7
 }
