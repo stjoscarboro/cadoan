@@ -1,9 +1,14 @@
 <div>
     <div class="modal-header">
         <a href="" ng-click="cancel()" title="Đóng" class="close" style="margin-top: 4px;"><i class="glyphicon glyphicon-remove"></i></a>
-        <h4 class="modal-title">Có Lỗi</h4>
+        <h4 class="modal-title text-danger">Có Lỗi</h4>
     </div>
+
     <div class="modal-body">
         <p>{{error}}</p>
+    </div>
+
+    <div class="modal-footer">
+        <input id="close" type="button" class="btn btn-default center-block" ng-click="cancel()" value="Đóng" />
     </div>
 </div>
