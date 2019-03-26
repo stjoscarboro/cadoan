@@ -32,7 +32,7 @@ app.factory('AppUtil', ['$document', '$window', '$interval', '$timeout', ($docum
 
             if (currentHeight !== contentHeight) {
                 currentHeight = contentHeight;
-                parent.postMessage("resize::" + (currentHeight > 600 ? currentHeight : 600) + 20, "*");
+                parent.postMessage("resize::" + ((currentHeight > 600 ? currentHeight : 600) + 20), "*");
             }
         };
 
