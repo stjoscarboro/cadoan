@@ -25,7 +25,7 @@ app.factory('AppUtil', ['$document', '$window', '$interval', '$timeout', ($docum
      * @param scope
      */
     util.resizeFrame = (scope) => {
-        let promise, currentHeight = 0, minHeight = 480;
+        let promise, currentHeight = 0, minHeight = 500;
 
         let resize = () => {
             let contentHeight = $document.offsetParent().outerHeight();
