@@ -245,7 +245,9 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
                             //populate songs
                             list.forEach(item => {
                                 //find song
-                                let song = (songs.find(i => { return i.id === item.id; }));
+                                let song = (songs.find(i => {
+                                    return i.id === item.id;
+                                }));
                                 if (song) {
                                     Object.assign(item, AppUtil.pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
                                 }
