@@ -35,7 +35,10 @@
                     <a href="{{song.url}}" target="_blank" title="{{song.title}}">{{song.title}} <em ng-if="song.author">({{song.author}})</em></a>
                     <a href="{{song.audio}}" title="Nghe Bài Hát" ng-if="song.audio" target="_blank"><i class="glyphicon glyphicon-music audio"></i></a>
                 </div>
-                <div class="singer" ng-if="song.singer">Solo: {{(singers | filter: {'id': song.singer})[0].name}}</div>
+                <div ng-if="song.singer">
+                    <div class="category"></div>
+                    <div class="singer">Solo: {{(singers | filter: {'id': song.singer})[0].name}}</div>
+                </div>
             </div>
         </div>
     </div>

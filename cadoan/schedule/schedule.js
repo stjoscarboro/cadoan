@@ -67,6 +67,24 @@ app.controller("ScheduleCtrl", [
                             }
                         }
 
+                        //count duplicate category
+                        let categories = schedule.songs.reduce((count, song) => {
+                            count[song.category] = (count[song.category] || 0) + 1 ;
+                            return count;
+                        }, {});
+
+                        //parse duplicate categories
+                        Object.keys(categories).forEach(category => {
+                            if(categories[category] > 1) {
+                                let index = 1;
+                                schedule.songs.forEach(song => {
+                                    if (song.category === category) {
+                                        song.category = category + ' ' + (index++);
+                                    }
+                                });
+                            }
+                        });
+
                         $scope.schedules.push(schedule);
                     }
                 }
@@ -264,7 +282,9 @@ app.controller("ScheduleCtrl", [
 
         //parse songs
         for (let song of $scope.schedule.songs) {
-            songs.push(Object.assign({}, AppUtil.pick(song, 'id', 'singer')));
+            if(song.id) {
+                songs.push(Object.assign({}, AppUtil.pick(song, 'id', 'singer')));
+            }
         }
 
         //parse liturgy

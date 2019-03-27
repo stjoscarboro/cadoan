@@ -35,18 +35,17 @@
 
 .schedule .category {
     display: inline-flex;
-    margin-left: 20px;
-    width: 100px;
+    padding-left: 30px;
+    width: 180px;
     vertical-align: top;
 }
 
 .schedule .song {
     display: inline-block;
-    width: calc(100% - 140px);
 }
 
 .schedule .singer {
-    margin-left: 123px;
+    display: inline;
     color: darkgreen;
     font-style: italic;
 }
