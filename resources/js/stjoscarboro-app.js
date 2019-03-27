@@ -25,14 +25,14 @@ app.factory('AppUtil', ['$document', '$window', '$interval', '$timeout', ($docum
      * @param scope
      */
     util.resizeFrame = (scope) => {
-        let promise, currentHeight = 0;
+        let promise, currentHeight = 0, minHeight = 480;
 
         let resize = () => {
             let contentHeight = $document.offsetParent().outerHeight();
 
             if (currentHeight !== contentHeight) {
                 currentHeight = contentHeight;
-                parent.postMessage("resize::" + ((currentHeight > 600 ? currentHeight : 600) + 20), "*");
+                parent.postMessage("resize::" + ((currentHeight > minHeight ? currentHeight : minHeight) + 20), "*");
             }
         };
 
