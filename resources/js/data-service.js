@@ -302,17 +302,18 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
      * @returns {Array}
      */
     service.listCategories = (songs) => {
-        let categories = {}, category;
+        let categories = songs.reduce((count, song) => {
+            count[song.category] = (count[song.category] || 0) + 1;
+            return count;
+        }, {});
 
-        for (let song of songs) {
-            category = categories[song.category] || 0;
-            categories[song.category] = category + 1;
-        }
-
-        return Object.keys(categories).reduce((values, key) => {
+        categories = Object.keys(categories).reduce((values, key) => {
             categories[key] > 0 && values.push(key);
             return values;
         }, []);
+
+        service.sortCategories(categories);
+        return categories;
     };
 
     /**

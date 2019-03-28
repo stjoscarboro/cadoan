@@ -361,6 +361,7 @@ app.controller("ScheduleCtrl", [
 
                     //parse categories
                     $scope.categories = DataService.listCategories($scope.songs);
+                    $scope.categories.push('Tất Cả');
 
                     //populate liturgies
                     $scope.liturgies = values[1];
@@ -371,7 +372,6 @@ app.controller("ScheduleCtrl", [
                     //sort data
                     DataService.sortByLocale($scope.songs, 'title');
                     DataService.sortByLocale($scope.singers, 'name');
-                    DataService.sortCategories($scope.categories);
 
                     deferred.resolve();
                 });
@@ -392,6 +392,10 @@ app.controller("ScheduleCtrl", [
                     if (song.category === songs.category) {
                         $scope.lists[index].songs.push(song);
                     }
+                }
+
+                if($scope.lists[index].songs.length === 0) {
+                    $scope.lists[index].songs = $scope.songs;
                 }
             }
         };
