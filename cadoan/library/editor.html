@@ -22,8 +22,8 @@
                     <ui-select-match>
                         {{$select.selected}}
                     </ui-select-match>
-                    <ui-select-choices repeat="author in (authors | filter: $select.search)">
-                        {{author | highlight: $select.search}}
+                    <ui-select-choices repeat="author in authors | filter: $select.search">
+                        {{author}}
                     </ui-select-choices>
                 </ui-select>
             </div>
@@ -37,8 +37,8 @@
                     <ui-select-match>
                         {{$select.selected}}
                     </ui-select-match>
-                    <ui-select-choices repeat="category in (categories | filter: $select.search)">
-                        {{category | highlight: $select.search}}
+                    <ui-select-choices repeat="category in categories | filter: $select.search">
+                        {{category}}
                     </ui-select-choices>
                 </ui-select>
             </div>

@@ -186,4 +186,9 @@ app.controller("LibraryCtrl", [
 
             return deferred.promise;
         };
+
+        $scope.refreshSearch = (param) => {
+            console.log(param);
+            console.log($ngModel);
+        }
     }]);

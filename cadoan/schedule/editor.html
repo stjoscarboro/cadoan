@@ -55,11 +55,11 @@
             <div class="col-md-10">
                 <div class="row row-no-padding">
                     <div class="col-md-3">
-                        <ui-select ng-model="schedule.songs[x].category" ng-change="selectSongs(x)">
+                        <ui-select ng-model="schedule.songs[x].category" search-enabled="false" ng-change="selectSongs(x)">
                             <ui-select-match>
                                 {{$select.selected}}
                             </ui-select-match>
-                            <ui-select-choices repeat="category in (categories | filter: $select.search)">
+                            <ui-select-choices repeat="category in categories | filter: $select.search">
                                 {{category}}
                             </ui-select-choices>
                         </ui-select>
@@ -71,14 +71,14 @@
                             <ui-select-match>
                                 {{$select.selected.title}} (<em>{{$select.selected.author}}</em>)
                             </ui-select-match>
-                            <ui-select-choices repeat="song.id as song in (lists[x].songs | filter: $select.search)">
+                            <ui-select-choices repeat="song.id as song in lists[x].songs | filter: $select.search">
                                 {{song.title}} (<em>{{song.author}}</em>)
                             </ui-select-choices>
                         </ui-select>
                     </div>
 
                     <div class="col-md-2">
-                        <ui-select ng-model="schedule.songs[x].singer">
+                        <ui-select ng-model="schedule.songs[x].singer" search-enabled="false">
                             <ui-select-match>
                                 {{$select.selected.name}}
                             </ui-select-match>
