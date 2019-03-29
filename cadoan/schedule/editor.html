@@ -55,23 +55,37 @@
             <div class="col-md-10">
                 <div class="row row-no-padding">
                     <div class="col-md-3">
-                        <select ng-model="schedule.songs[x].category" ng-change="selectSongs(x)" class="form-control">
-                            <option ng-repeat="category in categories" ng-value="category">{{category}}</option>
-                        </select>
+                        <ui-select ng-model="schedule.songs[x].category" ng-change="selectSongs(x)">
+                            <ui-select-match>
+                                {{$select.selected}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="category in (categories | filter: $select.search)">
+                                {{category}}
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
 
                     <div class="col-md-6">
-                        <select ng-model="schedule.songs[x].id" class="form-control" required>
-                            <option></option>
-                            <option ng-repeat="song in lists[x].songs" ng-value="song.id">{{song.title}} (<em>{{song.author}}</em>)</option>
-                        </select>
+                        <input ng-model="schedule.songs[x].id" class="hidden-text" required />
+                        <ui-select ng-model="schedule.songs[x].id">
+                            <ui-select-match>
+                                {{$select.selected.title}} (<em>{{$select.selected.author}}</em>)
+                            </ui-select-match>
+                            <ui-select-choices repeat="song.id as song in (lists[x].songs | filter: $select.search)">
+                                {{song.title}} (<em>{{song.author}}</em>)
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
 
                     <div class="col-md-2">
-                        <select ng-model="schedule.songs[x].singer" class="form-control">
-                            <option></option>
-                            <option ng-repeat="singer in singers" ng-value="singer.id">{{singer.name}}</option>
-                        </select>
+                        <ui-select ng-model="schedule.songs[x].singer">
+                            <ui-select-match>
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="singer.id as singer in singers">
+                                {{singer.name || "&nbsp;"}}
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
 
                     <div class="col-md-1" style="margin-top: 8px;">

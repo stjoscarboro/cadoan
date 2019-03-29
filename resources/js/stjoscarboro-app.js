@@ -1,4 +1,4 @@
-let app = angular.module('stjoscarboro', ['ui.bootstrap']);
+let app = angular.module('stjoscarboro', ['ui.bootstrap', 'ui.select', 'ngSanitize']);
 
 app.directive('loading', ['$http', ($http) => {
     return {

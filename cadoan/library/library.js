@@ -97,6 +97,7 @@ app.controller("LibraryCtrl", [
                             $scope.save()
                                 .then(() => {
                                     Object.assign(song, AppUtil.pick($scope.song, 'title', 'category', 'author', 'others'));
+                                    $scope.refresh();
                                     popup.close();
                                 });
                         };
@@ -143,6 +144,20 @@ app.controller("LibraryCtrl", [
         };
 
         /**
+         * refresh
+         */
+        $scope.refresh = () => {
+            //parse categories
+            $scope.categories = DataService.listCategories($scope.songs);
+
+            //parse authors
+            $scope.authors = DataService.listAuthors($scope.songs);
+
+            //refresh table
+            $('.table').DataTable().draw();
+        };
+
+        /**
          * loadData
          */
         $scope.loadData = () => {
@@ -165,8 +180,6 @@ app.controller("LibraryCtrl", [
 
                     //sort data
                     DataService.sortByLocale($scope.songs, 'title');
-                    DataService.sortByLocale($scope.authors, 'name');
-                    DataService.sortCategories($scope.categories);
 
                     deferred.resolve();
                 });

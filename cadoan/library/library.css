@@ -40,6 +40,10 @@
     -webkit-appearance: searchfield-cancel-button;
 }
 
+.library input.ui-select-search {
+    width: 100% !important;
+}
+
 .library .modal-dialog {
     width: 640px;
 }

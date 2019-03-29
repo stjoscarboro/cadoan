@@ -18,10 +18,14 @@
             <label for="author" class="col-md-3 control-label">Tác Giả</label>
 
             <div class="col-md-8">
-                <input id="author" list="authors" class="form-control" ng-model="song.author" required>
-                <datalist id="authors">
-                    <option ng-repeat="author in authors" ng-value="author">{{author}}</option>
-                </datalist>
+                <ui-select ng-model="song.author" tagging tagging-label="false">
+                    <ui-select-match>
+                        {{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="author in (authors | filter: $select.search)">
+                        {{author | highlight: $select.search}}
+                    </ui-select-choices>
+                </ui-select>
             </div>
         </div>
 
@@ -29,10 +33,14 @@
             <label for="category" class="col-md-3 control-label">Thể Loại</label>
 
             <div class="col-md-8">
-                <input id="category" list="categories" class="form-control" ng-model="song.category" required>
-                <datalist id="categories">
-                    <option ng-repeat="category in categories" ng-value="category">{{category}}</option>
-                </datalist>
+                <ui-select ng-model="song.category" tagging tagging-label="false">
+                    <ui-select-match>
+                        {{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="category in (categories | filter: $select.search)">
+                        {{category | highlight: $select.search}}
+                    </ui-select-choices>
+                </ui-select>
             </div>
         </div>
 

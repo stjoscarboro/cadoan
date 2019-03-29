@@ -323,17 +323,18 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
      * @returns {Array}
      */
     service.listAuthors = (songs) => {
-        let authors = {}, author;
+        let authors = songs.reduce((count, song) => {
+            count[song.author] = (count[song.author] || 0) + 1;
+            return count;
+        }, {});
 
-        for (let song of songs) {
-            author = authors[song.author] || 0;
-            authors[song.author] = author + 1;
-        }
-
-        return Object.keys(authors).reduce((values, key) => {
-            authors[key] > 1 && values.push(key);
+        authors = Object.keys(authors).reduce((values, key) => {
+            authors[key] > 0 && values.push(key);
             return values;
         }, []);
+
+        service.sortByLocale(authors, 'name');
+        return authors;
     };
 
     /**

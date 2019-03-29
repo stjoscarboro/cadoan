@@ -368,6 +368,7 @@ app.controller("ScheduleCtrl", [
 
                     //populate singers
                     $scope.singers = values[2];
+                    $scope.singers.unshift({ id: null, name: null });
 
                     //sort data
                     DataService.sortByLocale($scope.songs, 'title');

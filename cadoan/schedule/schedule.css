@@ -102,6 +102,14 @@
     padding-left: 8px;
 }
 
+.schedule input.hidden-text {
+    position: absolute;
+    top: 24px;
+    left: 4px;
+    max-width: 0;
+    max-height: 0;
+}
+
 .schedule select {
     padding-left: 5px;
 }
