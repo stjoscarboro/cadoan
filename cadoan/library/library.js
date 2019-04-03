@@ -154,7 +154,7 @@ app.controller("LibraryCtrl", [
             $scope.authors = DataService.listAuthors($scope.songs);
 
             //refresh table
-            $('.table').DataTable().draw();
+            $('.table').DataTable().draw(false);
         };
 
         /**
