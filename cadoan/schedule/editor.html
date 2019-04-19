@@ -73,6 +73,7 @@
                             </ui-select-match>
                             <ui-select-choices repeat="song.id as song in lists[x].songs | filter: $select.search">
                                 {{song.title}} (<em>{{song.author}}</em>)
+                                <div ng-if="song.others" class="small " title="{{song.others}}"><em>{{song.others}}</em></div>
                             </ui-select-choices>
                         </ui-select>
                     </div>
