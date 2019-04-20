@@ -390,7 +390,8 @@ app.controller("ScheduleCtrl", [
                 $scope.lists[index] = {songs: []};
 
                 for (let song of $scope.songs) {
-                    if (song.category === songs.category) {
+                    if (songs.category.indexOf(song.category) !== -1) {
+                        songs.category = song.category;
                         $scope.lists[index].songs.push(song);
                     }
                 }
