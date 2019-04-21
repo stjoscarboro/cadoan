@@ -11,17 +11,17 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
 
                 1: {
                     id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                    range: 'A!A:E', // [id, text, year, date, special]
+                    range: 'A!A:E', // [id, name, year, date, intention]
                 },
 
                 2: {
                     id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                    range: 'B!A:E', // [id, text, year, date, special]
+                    range: 'B!A:E', // [id, name, year, date, intention]
                 },
 
                 3: {
                     id: '1iax4O8R0IiZd9N77bK9XNRDllG40ZUJL7wiGCZocUak',
-                    range: 'C!A:E', // [id, text, year, date, special]
+                    range: 'C!A:E', // [id, name, year, date, intention]
                 }
             },
 
@@ -165,7 +165,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
                                     name: value[1],
                                     year: value[2],
                                     date: parseDate(value[3]),
-                                    special: value[4]
+                                    intention: value[4]
                                 });
                             }
                         });

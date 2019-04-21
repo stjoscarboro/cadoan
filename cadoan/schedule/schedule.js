@@ -166,8 +166,8 @@ app.controller("ScheduleCtrl", [
                             if (date.getTime() === liturgy.date.getTime()) {
                                 Object.assign($scope.schedule.liturgy, AppUtil.pick(liturgy, 'id', 'name', 'year'));
 
-                                if (!$scope.schedule.liturgy.special) {
-                                    $scope.schedule.liturgy.special = liturgy.special;
+                                if (!$scope.schedule.liturgy.intention) {
+                                    $scope.schedule.liturgy.intention = liturgy.intention;
                                 }
                             }
                         }
@@ -295,9 +295,9 @@ app.controller("ScheduleCtrl", [
             }
 
             if ($scope.schedule.liturgy.id) {
-                Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'id', 'year', 'special'));
+                Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'id', 'year', 'intention'));
             } else {
-                Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'name', 'year', 'special'));
+                Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'name', 'year', 'intention'));
             }
 
             //create payload
