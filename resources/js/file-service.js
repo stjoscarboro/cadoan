@@ -14,6 +14,9 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     /**
      * getFolderURL
+     *
+     * @param folderId
+     * @returns {string}
      */
     service.getFolderURL = (folderId) => {
         let folder = getFolder(folderId) || folderId;
@@ -22,6 +25,9 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     /**
      * getPreviewURL
+     *
+     * @param docId
+     * @returns {string}
      */
     service.getPreviewURL = (docId) => {
         return docURL + docId + '/preview';
@@ -29,6 +35,9 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     /**
      * getOpenURL
+     *
+     * @param docId
+     * @returns {string}
      */
     service.getOpenURL = (docId) => {
         return openURL + docId;
@@ -36,6 +45,10 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     /**
      * getFolderData
+     *
+     * @param folderId
+     * @param filters
+     * @returns {*}
      */
     service.getFolderData = (folderId, filters) => {
         let folder = getFolder(folderId) || folderId,
@@ -61,6 +74,9 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     /**
      * listFolder
+     *
+     * @param folder
+     * @returns {f}
      */
     service.listFolder = (folder) => {
         let deferred = $q.defer(),
@@ -97,6 +113,9 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     /**
      * listFiles
+     *
+     * @param folder
+     * @returns {f}
      */
     service.listFiles = (folder) => {
         let deferred = $q.defer(),
@@ -119,7 +138,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                                         // No-Op
                                     } finally {
                                         sheet = Object.assign(sheet, properties || {});
-                                        sheet.title = sheet.title || sheet.name;
+                                        // sheet.title = sheet.title || sheet.name;
                                         properties = null;
                                     }
 
@@ -152,6 +171,10 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     /**
      * updateFile
+     *
+     * @param id
+     * @param payload
+     * @returns {*}
      */
     service.updateFile = (id, payload) => {
         let url = driveURL + '/' + id;
@@ -160,6 +183,9 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
     /**
      * getFolder
+     *
+     * @param folderId
+     * @returns {{cadoan: {sheets: string}}}
      */
     let getFolder = (folderId) => {
         let split = folderId.split('.'),

@@ -117,6 +117,9 @@ app.factory('HttpService', ['$http', 'DelayHttp', ($http, DelayHttp) => {
 
     /**
      * getParams
+     * 
+     * @param params
+     * @returns {*}
      */
     let getParams = (params) => {
         !params && (params = {});

@@ -339,6 +339,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
 
     /**
      * sortByLocale
+     *
      * @param array
      * @param property
      */
@@ -352,6 +353,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
 
     /**
      * sortCategories
+     *
      * @param array
      */
     service.sortCategories = (array) => {

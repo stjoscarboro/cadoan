@@ -412,4 +412,20 @@ app.controller("ScheduleCtrl", [
                 $window.open(FileService.getOpenURL(song.id), '_blank');
             }
         };
+
+        /**
+         * addSong
+         */
+        $scope.addSong = () => {
+            $scope.rows += 1;
+            $scope.schedule.songs.push({});
+        };
+
+        /**
+         * removeSong
+         */
+        $scope.removeSong = () => {
+            $scope.rows -= 1;
+            $scope.schedule.songs.splice($scope.rows, 1);
+        };
     }]);
