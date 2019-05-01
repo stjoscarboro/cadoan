@@ -138,7 +138,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                                         // No-Op
                                     } finally {
                                         sheet = Object.assign(sheet, properties || {});
-                                        // sheet.title = sheet.title || sheet.name;
+                                        sheet.title = sheet.title || sheet.name;
                                         properties = null;
                                     }
 

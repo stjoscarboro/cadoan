@@ -15,7 +15,7 @@
             <tbody>
             <tr ng-repeat="song in songs" class="song">
                 <td class="title">
-                    <a href="{{song.url}}" target="_blank" title="{{song.title || song.name}}">{{song.title || song.name}}</a>
+                    <a href="{{song.url}}" target="_blank" title="{{song.title}}">{{song.title}}</a>
                     <a href="{{song.audio}}" ng-if="song.audio" target="_blank" title="Nghe Bài Hát"><i class="glyphicon glyphicon-music audio"></i></a>
                     <span ng-if="song.others">
                             <span class="quick-tip" data-qtip="{{song.others}}"><i class="glyphicon glyphicon-info-sign info"></i></span>
@@ -36,7 +36,7 @@
                 </td>
 
                 <td class="hidden">
-                    {{song.name}}, {{song.title}}, {{song.author}}, {{song.category}}, {{song.others}}
+                    {{song.title}}, {{song.author}}, {{song.category}}, {{song.others}}
                 </td>
             </tr>
             </tbody>
