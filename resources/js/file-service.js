@@ -6,7 +6,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
         folders = {
             cadoan: {
-                sheets: '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p'
+                music: '1lUpluzFLr3t_FN1jvDgAvLfu2e2_vcYB'
             }
         };
 
@@ -68,7 +68,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
             });
         }
 
-        let url = driveURL + '?' + query + '&fields=files(id,kind,mimeType,name,description)&orderBy=name';
+        let url = driveURL + '?' + query + '&fields=files(id,kind,mimeType,name,description),nextPageToken&orderBy=name&pageSize=1000';
         return HttpService.getFile(url);
     };
 
@@ -89,11 +89,13 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                     let folders = response.data.files;
 
                     folders.forEach(folder => {
-                        promises.push(
-                            $q.resolve(service.listFiles(folder), result => {
-                                results.push(result);
-                            })
-                        );
+                        if (folder.mimeType === 'application/vnd.google-apps.folder') {
+                            promises.push(
+                                $q.resolve(service.listFiles(folder), result => {
+                                    results.push(result);
+                                })
+                            );
+                        }
                     });
 
                     $q.all(promises)

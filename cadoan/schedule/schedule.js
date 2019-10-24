@@ -349,7 +349,7 @@ app.controller("ScheduleCtrl", [
             let deferred = $q.defer();
 
             $q.all([
-                FileService.listFolder('cadoan.sheets'),
+                FileService.listFolder('cadoan.music'),
                 DataService.loadLiturgies(),
                 DataService.loadSingers()
             ])

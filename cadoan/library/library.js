@@ -164,7 +164,7 @@ app.controller("LibraryCtrl", [
             let deferred = $q.defer();
 
             $q.all([
-                FileService.listFolder('cadoan.sheets')
+                FileService.listFolder('cadoan.music')
             ])
                 .then((values) => {
                     //populate songs
