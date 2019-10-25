@@ -51,9 +51,39 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
      * @returns {*}
      */
     service.getFolderData = (folderId, filters) => {
-        let folder = getFolder(folderId) || folderId,
+        let deferred = $q.defer(),
+            folder = getFolder(folderId) || folderId,
             query = 'q="' + folder + '"+in+parents',
-            params;
+            params, files = [];
+
+        let loadURL = (url, pageToken) => {
+            let deferred = $q.defer();
+
+            HttpService.getFile(url + (pageToken ? '&pageToken=' + pageToken : ''))
+                .then(
+                    //success
+                    response => {
+                        files = files.concat(response.data.files);
+
+                        if(response.data['nextPageToken']) {
+                            loadURL(url, response.data['nextPageToken'])
+                                .then(() => {
+                                    deferred.resolve();
+                                });
+                        } else {
+                            deferred.resolve();
+                        }
+                    },
+
+                    //failure
+                    response => {
+                        console.log(response.data.error);
+                        deferred.reject();
+                    }
+                );
+
+            return deferred.promise;
+        };
 
         if (filters) {
             Object.keys(filters).forEach(filter => {
@@ -68,8 +98,12 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
             });
         }
 
-        let url = driveURL + '?' + query + '&fields=files(id,kind,mimeType,name,description),nextPageToken&orderBy=name&pageSize=1000';
-        return HttpService.getFile(url);
+        loadURL(driveURL + '?' + query + '&fields=files(id,kind,mimeType,name,description),nextPageToken&orderBy=name&pageSize=512')
+            .then(() => {
+                deferred.resolve(files);
+            });
+
+        return deferred.promise;
     };
 
     /**
@@ -85,28 +119,19 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
         service.getFolderData(folder)
             .then(
                 //success
-                (response) => {
-                    let folders = response.data.files;
-
+                (folders) => {
                     folders.forEach(folder => {
-                        if (folder.mimeType === 'application/vnd.google-apps.folder') {
-                            promises.push(
-                                $q.resolve(service.listFiles(folder), result => {
-                                    results.push(result);
-                                })
-                            );
-                        }
+                        promises.push(
+                            $q.resolve(service.listFiles(folder), result => {
+                                results.push(result);
+                            })
+                        );
                     });
 
                     $q.all(promises)
                         .then(() => {
                             deferred.resolve(results);
                         });
-                },
-
-                //failure
-                (response) => {
-                    console.log(response.data.error);
                 }
             );
 
@@ -126,45 +151,37 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
         service.getFolderData(folder.id)
             .then(
                 //success
-                (response) => {
-                    if (response.data.files.length > 0) {
-                        let sheets = response.data.files,
-                            properties;
+                (files) => {
+                    let properties;
 
-                        if (sheets && sheets.length > 0) {
-                            sheets.forEach(sheet => {
-                                if (sheet.mimeType === 'application/pdf') {
-                                    try {
-                                        properties = JSON.parse(sheet.description);
-                                    } catch (e) {
-                                        // No-Op
-                                    } finally {
-                                        sheet = Object.assign(sheet, properties || {});
-                                        sheet.title = sheet.title || sheet.name;
-                                        properties = null;
-                                    }
-
-                                    let title = sheet.name.replace(/(.*)(.pdf)$/, '$1');
-                                    sheets.forEach(file => {
-                                        if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
-                                            sheet.audio = service.getOpenURL(file.id);
-                                        }
-                                    });
-
-                                    sheet.folder = folder.name;
-                                    sheet.url = service.getOpenURL(sheet.id);
-                                    results.push(sheet);
+                    if (files && files.length > 0) {
+                        files.forEach(sheet => {
+                            if (sheet.mimeType === 'application/pdf') {
+                                try {
+                                    properties = JSON.parse(sheet.description);
+                                } catch (e) {
+                                    // No-Op
+                                } finally {
+                                    sheet = Object.assign(sheet, properties || {});
+                                    sheet.title = sheet.title || sheet.name;
+                                    properties = null;
                                 }
-                            });
-                        }
+
+                                let title = sheet.name.replace(/(.*)(.pdf)$/, '$1');
+                                files.forEach(file => {
+                                    if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
+                                        sheet.audio = service.getOpenURL(file.id);
+                                    }
+                                });
+
+                                sheet.folder = folder.name;
+                                sheet.url = service.getOpenURL(sheet.id);
+                                results.push(sheet);
+                            }
+                        });
                     }
 
                     deferred.resolve(results);
-                },
-
-                //failure
-                (response) => {
-                    console.log(response.data.error);
                 }
             );
 
