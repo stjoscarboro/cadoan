@@ -89,15 +89,17 @@
 }
 
 .library .dataTables_drive {
-    display: inline-block;
+    display: inline-flex;
     float: right;
     padding-top: 5px;
+    color: #337ab7
 }
 
 .library .dataTables_drive .drive-icon {
     display: inline-block;
     width: 24px;
     height: 20px;
+    margin-left: 5px;
     background: url('../../resources/images/drive.png') no-repeat 0/26px;
 }
 
