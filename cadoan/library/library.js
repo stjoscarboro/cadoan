@@ -12,7 +12,7 @@ app.controller("LibraryCtrl", [
             $scope.song = {};
 
             $scope.dateFormat = "DD, dd/mm/yy";
-            $scope.driveURL = FileService.getFolderURL('cadoan.sheets');
+            $scope.driveURL = FileService.getFolderURL('cadoan.music.sheets.id');
 
             $scope.pageSize = 10;
             $scope.pageCounter = 1;

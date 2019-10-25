@@ -6,8 +6,13 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
         folders = {
             cadoan: {
-                music: '1lUpluzFLr3t_FN1jvDgAvLfu2e2_vcYB',
-                sheets: '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p'
+                music: {
+                    id: '1lUpluzFLr3t_FN1jvDgAvLfu2e2_vcYB',
+
+                    sheets: {
+                        id: '1M7iDcM3nVTZ8nDnij9cSnM8zKI4AhX6p'
+                    }
+                }
             }
         };
 
@@ -51,10 +56,9 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
      * @param filters
      * @returns {*}
      */
-    service.getFolderData = (folderId, filters) => {
+    service.getFiles = (folderId, filters) => {
         let deferred = $q.defer(),
-            folder = getFolder(folderId) || folderId,
-            query = 'q="' + folder + '"+in+parents',
+            query = 'q="' + folderId + '"+in+parents',
             params, files = [];
 
         let loadURL = (url, pageToken) => {
@@ -65,9 +69,10 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                     //success
                     response => {
                         files = files.concat(response.data.files);
+                        pageToken = response.data['nextPageToken'];
 
-                        if(response.data['nextPageToken']) {
-                            loadURL(url, response.data['nextPageToken'])
+                        if(pageToken) {
+                            loadURL(url, pageToken)
                                 .then(() => {
                                     deferred.resolve();
                                 });
@@ -117,7 +122,8 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
         let deferred = $q.defer(),
             results = [], promises = [];
 
-        service.getFolderData(folder)
+        folder = getFolder(folder) || folder;
+        service.getFiles(folder.id)
             .then(
                 //success
                 (folders) => {
@@ -149,7 +155,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
         let deferred = $q.defer(),
             results = [];
 
-        service.getFolderData(folder.id)
+        service.getFiles(folder.id)
             .then(
                 //success
                 (files) => {
