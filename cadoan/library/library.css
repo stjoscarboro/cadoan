@@ -84,6 +84,25 @@
     font-size: smaller;
 }
 
+.library .dataTables_paginate .pagination a:focus,
+.library .dataTables_paginate .pagination a:hover {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.library .dataTables_paginate .pagination>li>a:focus {
+    background-color: #fff;
+}
+
+.library .dataTables_paginate .pagination>li>a:hover {
+    background-color: #eee;
+}
+
+.library .dataTables_paginate .pagination>.active>a:focus,
+.library .dataTables_paginate .pagination>.active>a:hover {
+    background-color: #337ab7;
+}
+
 .library .dataTables_info {
     display: inline-block;
     padding-top: 5px;
