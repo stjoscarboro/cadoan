@@ -68,7 +68,7 @@ app.controller("LibraryCtrl", [
                     dom: '<fpl<t>i<"dataTables_drive">>',
                     initComplete: () => {
                         if ($scope.accessToken) {
-                            $(".dataTables_drive").append('Danh Sách Bài Hát => <a href="' + $scope.driveURL + '" target="_blank" title="Danh Sách Bài Hát" class="drive-icon"></a>');
+                            $(".dataTables_drive").append('Danh Sách Bài Hát ➡ <a href="' + $scope.driveURL + '" target="_blank" title="Danh Sách Bài Hát" class="drive-icon"></a>');
                         }
 
                         //resize host's iframe
