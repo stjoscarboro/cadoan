@@ -46,8 +46,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
      * @returns {string}
      */
     service.getOpenURL = (docId) => {
-        // return openURL + docId;
-        return docURL + docId + '/preview';
+        return openURL + docId;
     };
 
     /**
