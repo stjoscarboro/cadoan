@@ -409,7 +409,7 @@ app.controller("ScheduleCtrl", [
             let song = $scope.schedule.songs[index];
 
             if (song && song.id) {
-                $window.open(FileService.getOpenURL(song.id), '_blank');
+                $window.open(FileService.getViewURL(song.id), '_blank');
             }
         };
 

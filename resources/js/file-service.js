@@ -40,14 +40,23 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
     };
 
     /**
+     * getViewURL
+     *
+     * @param docId
+     * @returns {string}
+     */
+    service.getViewURL = (docId) => {
+        return docURL + docId + '/view';
+    };
+
+    /**
      * getOpenURL
      *
      * @param docId
      * @returns {string}
      */
     service.getOpenURL = (docId) => {
-        // return openURL + docId;
-        return docURL + docId + '/preview';
+        return openURL + docId;
     };
 
     /**
@@ -178,12 +187,12 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
                                 let title = sheet.name.replace(/(.*)(.pdf)$/, '$1');
                                 files.forEach(file => {
                                     if (file.mimeType === 'audio/mp3' && file.name.indexOf(title) !== -1) {
-                                        sheet.audio = service.getOpenURL(file.id);
+                                        sheet.audio = service.getViewURL(file.id);
                                     }
                                 });
 
                                 sheet.folder = folder.name;
-                                sheet.url = service.getOpenURL(sheet.id);
+                                sheet.url = service.getViewURL(sheet.id);
                                 results.push(sheet);
                             }
                         });
@@ -212,7 +221,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
      * getFolder
      *
      * @param folderId
-     * @returns {{cadoan: {sheets: string}}}
+     * @returns {{cadoan: {music: {sheets: {id: string}, id: string}}}}
      */
     let getFolder = (folderId) => {
         let split = folderId.split('.'),
