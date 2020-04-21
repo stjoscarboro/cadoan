@@ -1,6 +1,6 @@
 app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
 
-    let docURL = 'https://docs.google.com/document/d/',
+    let docURL = 'https://drive.google.com/file/d/',
         openURL = 'https://drive.google.com/open?id=',
         driveURL = 'https://www.googleapis.com/drive/v3/files',
 
@@ -46,7 +46,8 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
      * @returns {string}
      */
     service.getOpenURL = (docId) => {
-        return openURL + docId;
+        // return openURL + docId;
+        return docURL + docId + '/preview';
     };
 
     /**
