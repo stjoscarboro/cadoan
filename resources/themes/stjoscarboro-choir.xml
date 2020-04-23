@@ -584,7 +584,7 @@ html .mobile .mobile-date-outer, html .mobile .blog-pager {
 }
 
 .header-inner .Header .titlewrapper {
-    width: 380px;
+    width: 560px;
     text-align: center;
     margin: 0 auto;
     padding: 0 0 4px;
@@ -794,7 +794,7 @@ h3.post-title {
       gapi.load(&quot;gapi.iframes:gapi.iframes.style.bubble&quot;, function() {
         if (gapi.iframes &amp;&amp; gapi.iframes.getContext) {
           gapi.iframes.getContext().openChild({
-              url: &#39;https://www.blogger.com/navbar.g?targetBlogID\x3d4444289724320916769\x26blogName\x3dC%E1%BB%99ng+%C4%90o%C3%A0n+Th%C3%A1nh+Giu-se+Scarborough\x26publishMode\x3dPUBLISH_MODE_BLOGSPOT\x26navbarType\x3dDISABLED\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttps://stjoscarboro.blogspot.com/search\x26blogLocale\x3dvi\x26v\x3d2\x26homepageUrl\x3dhttps://stjoscarboro.blogspot.com/\x26vt\x3d-8354828341969645392&#39;,
+              url: &#39;https://www.blogger.com/navbar.g?targetBlogID\x3d4220605675730851566\x26blogName\x3dC%E1%BB%99ng+%C4%90o%C3%A0n+Th%C3%A1nh+Giu-se+Scarborough+Ca...\x26publishMode\x3dPUBLISH_MODE_BLOGSPOT\x26navbarType\x3dDISABLED\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttps://stjoscarborochoir.blogspot.com/search\x26blogLocale\x3dvi\x26v\x3d2\x26homepageUrl\x3dhttps://stjoscarborochoir.blogspot.com/\x26vt\x3d-1638347990298439472&#39;,
               where: document.getElementById(&quot;navbar-iframe-container&quot;),
               id: &quot;navbar-iframe&quot;
           });
@@ -879,11 +879,11 @@ head.appendChild(script);
     <div class='fauxborder-right header-fauxborder-right'/>
     <div class='region-inner header-inner'>
       <b:section class='header' id='header' maxwidgets='1' name='Header' showaddelement='no'>
-        <b:widget id='Header1' locked='true' title='Cộng Đoàn Thánh Giu-se Scarborough (Tiêu đề)' type='Header'>
+        <b:widget id='Header1' locked='true' title='Cộng Đoàn Thánh Giu-se Scarborough Ca Đoàn (Tiêu đề)' type='Header'>
           <b:widget-settings>
             <b:widget-setting name='displayUrl'/>
             <b:widget-setting name='displayHeight'>0</b:widget-setting>
-            <b:widget-setting name='sectionWidth'>1020</b:widget-setting>
+            <b:widget-setting name='sectionWidth'>-1</b:widget-setting>
             <b:widget-setting name='useImage'>false</b:widget-setting>
             <b:widget-setting name='shrinkToFit'>false</b:widget-setting>
             <b:widget-setting name='imagePlacement'>BEHIND</b:widget-setting>
@@ -976,7 +976,7 @@ head.appendChild(script);
       <b:section class='tabs' id='crosscol' maxwidgets='1' name='Cross-Column' showaddelement='yes'>
         <b:widget id='PageList2' locked='false' title='Pages' type='PageList'>
           <b:widget-settings>
-            <b:widget-setting name='pageListJson'><![CDATA[{'home': {'href': 'https://stjoscarboro.blogspot.com/', 'title': 'Trang chủ', 'position': 0}, '3272946305941940523': {'href': 'https://stjoscarboro.blogspot.com/p/lich-hat-thanh-ca.html', 'title': 'Lịch Hát Thánh Ca', 'position': 1}, '8626447928537291370': {'href': 'https://stjoscarboro.blogspot.com/p/thu-vien-thanh-ca.html', 'title': 'Thư Viện Thánh Ca', 'position': 2}, '6516347122353425018': {'href': 'https://stjoscarboro.blogspot.com/p/sinhhoat.html', 'title': 'Sinh Hoạt Cộng Đoàn', 'position': 3}}]]></b:widget-setting>
+            <b:widget-setting name='pageListJson'><![CDATA[{'676960082293629589': {'href': 'https://stjoscarborochoir.blogspot.com/p/trang-chu.html', 'title': 'Trang Chủ', 'position': 0}, '3563703168948084094': {'href': 'https://stjoscarborochoir.blogspot.com/p/lich-hat-thanh-ca.html', 'title': 'Lịch Hát Thánh Ca', 'position': 1}, '5817982105365084385': {'href': 'https://stjoscarborochoir.blogspot.com/p/thu-vien-thanh-ca.html', 'title': 'Thư Viện Thánh Ca', 'position': 2}, '2552986663834055874': {'href': 'https://stjoscarborochoir.blogspot.com/p/ca-doan.html', 'title': ' Ca Đoàn', 'position': 3}}]]></b:widget-setting>
             <b:widget-setting name='homeTitle'>Trang chủ</b:widget-setting>
           </b:widget-settings>
           <b:includable id='main'>
@@ -2104,6 +2104,14 @@ head.appendChild(script);
         document.body.className = document.body.className.replace(&#39;loading&#39;, &#39;&#39;);
       }, 10);
   </script>
+
+  <script type='text/javascript'>
+    var pageList = document.getElementById(&quot;PageList2&quot;), tabs = pageList.getElementsByTagName(&quot;li&quot;);
+    tabs.item(3).setAttribute(&quot;class&quot;, &quot;selected&quot;);
+
+    var pageList3 = document.getElementById(&quot;PageList3&quot;), tabs = pageList3.getElementsByTagName(&quot;li&quot;);
+    tabs.item(2).setAttribute(&quot;class&quot;, &quot;selected&quot;);
+  </script>
 </body>
 
 <macro:includable id='sections' var='col'>
@@ -2148,7 +2156,7 @@ head.appendChild(script);
 <b:section-contents id='sidebar-right-1'>
   <b:widget id='PageList1' locked='false' title='Sinh Hoạt Cộng Đoàn' type='PageList'>
     <b:widget-settings>
-      <b:widget-setting name='pageListJson'><![CDATA[{'5695515137781337624': {'href': 'https://stjoscarboro.blogspot.com/p/thongbao.html', 'title': 'Thông Báo', 'position': 0}, '723050331060760676': {'href': 'https://stjoscarboro.blogspot.com/p/tamsu.html', 'title': 'Tâm Sự', 'position': 1}, '5335284266825833948': {'href': 'https://stjoscarboro.blogspot.com/p/raovat.html', 'title': 'Rao Vặt', 'position': 2}}]]></b:widget-setting>
+      <b:widget-setting name='pageListJson'><![CDATA[{'7429078625048972902': {'href': 'https://stjoscarborochoir.blogspot.com/p/thongbao.html', 'title': 'Thông Báo', 'position': 0}, '8427601450082084077': {'href': 'https://stjoscarborochoir.blogspot.com/p/tamsu.html', 'title': 'Tâm Sự', 'position': 1}, '836253905737435615': {'href': 'https://stjoscarborochoir.blogspot.com/p/raovat.html', 'title': 'Rao Vặt', 'position': 2}}]]></b:widget-setting>
       <b:widget-setting name='homeTitle'>Trang chủ</b:widget-setting>
     </b:widget-settings>
     <b:includable id='main'>
@@ -2180,7 +2188,7 @@ head.appendChild(script);
   </b:widget>
   <b:widget id='PageList3' locked='false' title='Các Hội Đoàn' type='PageList'>
     <b:widget-settings>
-      <b:widget-setting name='pageListJson'><![CDATA[{'3788246619050930167': {'href': 'https://stjoscarboro.blogspot.com/p/thanh-thu.html', 'title': 'Ban Đọc Thánh Thư', 'position': 0}, '8628823550109443451': {'href': 'https://stjoscarboro.blogspot.com/p/ban-giup-le.html', 'title': 'Ban Giúp Lễ', 'position': 1}, '4507891004554498674': {'href': 'https://stjoscarboro.blogspot.com/p/ca-doan.html', 'title': 'Ca Đoàn', 'position': 2}}]]></b:widget-setting>
+      <b:widget-setting name='pageListJson'><![CDATA[{'259571707356454206': {'href': 'https://stjoscarborochoir.blogspot.com/p/ban-doc-thanh-thu.html', 'title': 'Ban Đọc Thánh Thư', 'position': 0}, '149520040114491911': {'href': 'https://stjoscarborochoir.blogspot.com/p/ban-giup-le.html', 'title': 'Ban Giúp Lễ', 'position': 1}, '2552986663834055874': {'href': 'https://stjoscarborochoir.blogspot.com/p/ca-doan.html', 'title': ' Ca Đoàn', 'position': 2}}]]></b:widget-setting>
       <b:widget-setting name='homeTitle'>Trang chủ</b:widget-setting>
     </b:widget-settings>
     <b:includable id='main'>
