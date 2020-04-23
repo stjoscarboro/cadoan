@@ -2,9 +2,20 @@
 <!DOCTYPE html>
 <html b:version='2' class='v2' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
   <head>
-    <meta expr:content='data:blog.isMobile         ? &quot;width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0&quot;         : &quot;width=1100&quot;' name='viewport'/>
+    <meta expr:content='data:blog.isMobile         ? "width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"         : "width=1100"' name='viewport'/>
     <b:include data='blog' name='all-head-content'/>
-    <title><data:blog.pageTitle/></title>
+    <title>Cộng Đoàn Thánh Giu-se Scarborough</title>
+
+    <script type='text/javascript'>
+      var _mainDom = 'stjoscarboro';
+      var _mainURL = _mainDom + '.blogspot.com';
+      var _adminURL = _mainDom + 'admin.blogspot.com';
+      var _liturgyURL = _mainDom + 'liturgy.blogspot.com';
+      var _altarURL = _mainDom + 'altar.blogspot.com';
+      var _choirURL = _mainDom + 'choir.blogspot.com';
+      var _forumURL = _mainDom + 'forum.blogspot.com';
+      var _bibleURL = _mainDom + 'bible.blogspot.com';
+    </script>
 
     <b:skin><![CDATA[/*-----------------------------------------------
 
@@ -584,10 +595,10 @@ html .mobile .mobile-date-outer, html .mobile .blog-pager {
 }
 
 .header-inner .Header .titlewrapper {
-    width: 560px;
+    width: 720px;
     text-align: center;
     margin: 0 auto;
-    padding: 0 0 4px;
+    padding: 0;
 }
 
 h3.post-title {
@@ -733,6 +744,10 @@ h3.post-title {
     margin-top: 0
 }
 
+.sidebar.section a:link {
+	color: #6699cc;
+}
+
 ]]></b:skin>
 
     <b:template-skin>
@@ -809,43 +824,43 @@ h3.post-title {
     </b:template-skin>
 
     <b:if cond='data:skin.vars.body_background.image.isResizable'>
-      <b:include cond='not data:view.isPreview' data='{                          image: data:skin.vars.body_background.image,                          selector: &quot;body&quot;                        }' name='responsiveImageStyle'/>
+      <b:include cond='not data:view.isPreview' data='{                          image: data:skin.vars.body_background.image,                          selector: "body"                        }' name='responsiveImageStyle'/>
     </b:if>
 
     <b:include data='blog' name='google-analytics'/>
   </head>
 
-  <body expr:class='&quot;loading&quot; + data:blog.mobileClass'>
+  <body expr:class='"loading" + data:blog.mobileClass'>
   <b:section class='navbar' id='navbar' maxwidgets='1' name='Navbar' showaddelement='no'>
     <b:widget id='Navbar1' locked='true' title='Thanh điều hướng' type='Navbar' version='1'>
-      <b:includable id='main'>&lt;script type=&quot;text/javascript&quot;&gt;
+      <b:includable id='main'>&lt;script type="text/javascript"&gt;
     function setAttributeOnload(object, attribute, val) {
       if(window.addEventListener) {
-        window.addEventListener(&#39;load&#39;,
+        window.addEventListener('load',
           function(){ object[attribute] = val; }, false);
       } else {
-        window.attachEvent(&#39;onload&#39;, function(){ object[attribute] = val; });
+        window.attachEvent('onload', function(){ object[attribute] = val; });
       }
     }
   &lt;/script&gt;
-&lt;div id=&quot;navbar-iframe-container&quot;&gt;&lt;/div&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://apis.google.com/js/plusone.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-      gapi.load(&quot;gapi.iframes:gapi.iframes.style.bubble&quot;, function() {
+&lt;div id="navbar-iframe-container"&gt;&lt;/div&gt;
+&lt;script type="text/javascript" src="https://apis.google.com/js/plusone.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+      gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
         if (gapi.iframes &amp;&amp; gapi.iframes.getContext) {
           gapi.iframes.getContext().openChild({
-              url: &#39;https://www.blogger.com/navbar.g?targetBlogID\x3d2781480526718002936\x26blogName\x3dC%E1%BB%99ng+%C4%90o%C3%A0n+Th%C3%A1nh+Giu-se+Scarborough+Si...\x26publishMode\x3dPUBLISH_MODE_BLOGSPOT\x26navbarType\x3dDISABLED\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttps://stjoscarboroforum.blogspot.com/search\x26blogLocale\x3dvi\x26v\x3d2\x26homepageUrl\x3dhttps://stjoscarboroforum.blogspot.com/\x26vt\x3d7723203831014472286&#39;,
-              where: document.getElementById(&quot;navbar-iframe-container&quot;),
-              id: &quot;navbar-iframe&quot;
+              url: 'https://www.blogger.com/navbar.g?targetBlogID\x3d2781480526718002936\x26blogName\x3dC%E1%BB%99ng+%C4%90o%C3%A0n+Th%C3%A1nh+Giu-se+ScarboroughSin...\x26publishMode\x3dPUBLISH_MODE_BLOGSPOT\x26navbarType\x3dDISABLED\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttps://stjoscarboroforum.blogspot.com/search\x26blogLocale\x3dvi\x26v\x3d2\x26homepageUrl\x3dhttps://stjoscarboroforum.blogspot.com/\x26vt\x3d7723203831014472286',
+              where: document.getElementById("navbar-iframe-container"),
+              id: "navbar-iframe"
           });
         }
       });
-    &lt;/script&gt;&lt;script type=&quot;text/javascript&quot;&gt;
+    &lt;/script&gt;&lt;script type="text/javascript"&gt;
 (function() {
-var script = document.createElement(&#39;script&#39;);
-script.type = &#39;text/javascript&#39;;
-script.src = &#39;//pagead2.googlesyndication.com/pagead/js/google_top_exp.js&#39;;
-var head = document.getElementsByTagName(&#39;head&#39;)[0];
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//pagead2.googlesyndication.com/pagead/js/google_top_exp.js';
+var head = document.getElementsByTagName('head')[0];
 if (head) {
 head.appendChild(script);
 }})();
@@ -854,7 +869,7 @@ head.appendChild(script);
     </b:widget>
   </b:section>
 
-  <b:if cond='data:blog.pageType == &quot;index&quot;'>
+  <b:if cond='data:blog.pageType == "index"'>
     <div itemscope='itemscope' itemtype='http://schema.org/Blog' style='display: none;'>
       <meta expr:content='data:blog.title' itemprop='name'/>
       <b:if cond='data:blog.metaDescription'>
@@ -919,7 +934,7 @@ head.appendChild(script);
     <div class='fauxborder-right header-fauxborder-right'/>
     <div class='region-inner header-inner'>
       <b:section class='header' id='header' maxwidgets='1' name='Header' showaddelement='no'>
-        <b:widget id='Header1' locked='true' title='Cộng Đoàn Thánh Giu-se Scarborough Sinh Hoạt Cộng Đoàn (Tiêu đề)' type='Header'>
+        <b:widget id='Header1' locked='true' title='Cộng Đoàn Thánh Giu-se Scarborough&lt;br&gt;Sinh Hoạt Cộng Đoàn (Tiêu đề)' type='Header'>
           <b:widget-settings>
             <b:widget-setting name='displayUrl'/>
             <b:widget-setting name='displayHeight'>0</b:widget-setting>
@@ -932,7 +947,7 @@ head.appendChild(script);
           <b:includable id='main'>
 
   <b:if cond='data:useImage'>
-    <b:if cond='data:imagePlacement == &quot;BEHIND&quot;'>
+    <b:if cond='data:imagePlacement == "BEHIND"'>
       <!--
       Show image as background to text. You can't really calculate the width
       reliably in JS because margins are not taken into account by any of
@@ -951,7 +966,7 @@ head.appendChild(script);
           <b:include name='description'/>
         </div>
       <b:else/>
-        <div expr:style='&quot;background-image: url(\&quot;&quot; + data:sourceUrl + &quot;\&quot;); &quot;                      + &quot;background-position: &quot;                      + data:backgroundPositionStyleStr + &quot;; &quot;                      + data:widthStyleStr                      + &quot;min-height: &quot; + data:height                      + &quot;_height: &quot; + data:height                      + &quot;background-repeat: no-repeat; &quot;' id='header-inner'>
+        <div expr:style='"background-image: url(\"" + data:sourceUrl + "\"); "                      + "background-position: "                      + data:backgroundPositionStyleStr + "; "                      + data:widthStyleStr                      + "min-height: " + data:height                      + "_height: " + data:height                      + "background-repeat: no-repeat; "' id='header-inner'>
           <div class='titlewrapper' style='background: transparent'>
             <h1 class='title' style='background: transparent; border-width: 0px'>
               <b:include name='title'/>
@@ -964,10 +979,10 @@ head.appendChild(script);
       <!--Show the image only-->
       <div id='header-inner'>
         <a expr:href='data:blog.homepageUrl' style='display: block'>
-          <img expr:alt='data:title' expr:height='data:height' expr:id='data:widget.instanceId + &quot;_headerimg&quot;' expr:src='data:sourceUrl' expr:width='data:width' style='display: block'/>
+          <img expr:alt='data:title' expr:height='data:height' expr:id='data:widget.instanceId + "_headerimg"' expr:src='data:sourceUrl' expr:width='data:width' style='display: block'/>
         </a>
         <!--Show the description-->
-        <b:if cond='data:imagePlacement == &quot;BEFORE_DESCRIPTION&quot;'>
+        <b:if cond='data:imagePlacement == "BEFORE_DESCRIPTION"'>
           <b:include name='description'/>
         </b:if>
       </div>
@@ -1016,14 +1031,14 @@ head.appendChild(script);
       <b:section class='tabs' id='crosscol' maxwidgets='1' name='Cross-Column' showaddelement='yes'>
         <b:widget id='PageList1' locked='false' title='Trang' type='PageList'>
           <b:widget-settings>
-            <b:widget-setting name='pageListJson'><![CDATA[{'1953120702363978963': {'href': 'https://stjoscarboroforum.blogspot.com/p/home.html', 'title': 'Trang Chủ', 'position': 0}, '5825125101434365557': {'href': 'https://stjoscarboroforum.blogspot.com/p/lich-hat-thanh-ca.html', 'title': 'Lịch Hát Thánh Ca', 'position': 1}, '8285162580847251440': {'href': 'https://stjoscarboroforum.blogspot.com/p/thu-vien-thanh-ca.html', 'title': 'Thư Viện Thánh Ca', 'position': 2}, '1933004428299533682': {'href': 'https://stjoscarboroforum.blogspot.com/p/sinh-hoat-ca-doan.html', 'title': 'Sinh Hoạt Cộng Đoàn', 'position': 3}}]]></b:widget-setting>
+            <b:widget-setting name='pageListJson'><![CDATA[{'1953120702363978963': {'href': 'https://stjoscarboroforum.blogspot.com/p/home.html', 'title': 'Trang Chủ', 'position': 0}, '5825125101434365557': {'href': 'https://stjoscarboroforum.blogspot.com/p/lich-hat-thanh-ca.html', 'title': 'Lịch Hát Thánh Ca', 'position': 1}, '8285162580847251440': {'href': 'https://stjoscarboroforum.blogspot.com/p/thu-vien-thanh-ca.html', 'title': 'Thư Viện Thánh Ca', 'position': 2}, '2479901382553373460': {'href': 'https://stjoscarboroforum.blogspot.com/p/thanh-kinh.html', 'title': 'Tìm Hiểu Thánh Kinh', 'position': 3}, '4171819680678466745': {'href': 'https://stjoscarboroforum.blogspot.com/p/sinh-hoat.html', 'title': 'Sinh Hoạt Cộng Đoàn', 'position': 4}}]]></b:widget-setting>
             <b:widget-setting name='homeTitle'>Trang chủ</b:widget-setting>
           </b:widget-settings>
           <b:includable id='main'>
-  <b:if cond='data:title != &quot;&quot;'><h2><data:title/></h2></b:if>
+  <b:if cond='data:title != ""'><h2><data:title/></h2></b:if>
   <div class='widget-content'>
     <b:if cond='data:mobile'>
-      <select expr:id='data:widget.instanceId + &quot;_select&quot;'>
+      <select expr:id='data:widget.instanceId + "_select"'>
         <b:loop values='data:links' var='link'>
           <option expr:value='data:link.href'>
             <b:attr cond='data:link.isCurrentPage' name='selected' value='selected'/>
@@ -1122,7 +1137,7 @@ head.appendChild(script);
         <div class='column-center-outer'>
         <div class='column-center-inner'>
           <b:section class='main' id='main' name='Main' showaddelement='no'>
-            <b:widget id='Blog1' locked='true' title='Bài đăng trên Blog' type='Blog'>
+            <b:widget id='Blog1' locked='true' title='Bài đăng trên Blog' type='Blog' version='1'>
               <b:widget-settings>
                 <b:widget-setting name='commentLabel'>comments</b:widget-setting>
                 <b:widget-setting name='showShareButtons'>false</b:widget-setting>
@@ -1163,17 +1178,17 @@ head.appendChild(script);
           &lt;/div&gt;&lt;/div&gt;
         </b:if>
         <b:if cond='data:post.isDateStart'>
-          &lt;div class=&quot;date-outer&quot;&gt;
+          &lt;div class="date-outer"&gt;
         </b:if>
         <b:if cond='data:post.dateHeader'>
           <h2 class='date-header'><span><data:post.dateHeader/></span></h2>
         </b:if>
         <b:if cond='data:post.isDateStart'>
-          &lt;div class=&quot;date-posts&quot;&gt;
+          &lt;div class="date-posts"&gt;
         </b:if>
         <div class='post-outer'>
           <b:include data='post' name='post'/>
-          <b:include cond='data:blog.pageType in {&quot;static_page&quot;,&quot;item&quot;}' data='post' name='comment_picker'/>
+          <b:include cond='data:blog.pageType in {"static_page","item"}' data='post' name='comment_picker'/>
         </div>
 
         <!-- Ad -->
@@ -1201,7 +1216,7 @@ head.appendChild(script);
   <b:include cond='data:top.showPlusOne' name='googlePlusBootstrap'/>
 </b:includable>
               <b:includable id='backlinkDeleteIcon' var='backlink'>
-  <span expr:class='&quot;item-control &quot; + data:backlink.adminClass'>
+  <span expr:class='"item-control " + data:backlink.adminClass'>
     <a expr:href='data:backlink.deleteUrl' expr:title='data:top.deleteBacklinkMsg'>
       <img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
     </a>
@@ -1230,7 +1245,7 @@ head.appendChild(script);
     </dl>
   </b:if>
   <p class='comment-footer'>
-    <a class='comment-link' expr:href='data:post.createLinkUrl' expr:id='data:widget.instanceId + &quot;_backlinks-create-link&quot;' target='_blank'><data:post.createLinkLabel/></a>
+    <a class='comment-link' expr:href='data:post.createLinkUrl' expr:id='data:widget.instanceId + "_backlinks-create-link"' target='_blank'><data:post.createLinkLabel/></a>
   </p>
 </b:includable>
               <b:includable id='comment-form' var='post'>
@@ -1238,7 +1253,7 @@ head.appendChild(script);
     <a name='comment-form'/>
     <b:if cond='data:mobile'>
       <h4 id='comment-post-message'>
-        <a expr:id='data:widget.instanceId + &quot;_comment-editor-toggle-link&quot;' href='javascript:void(0)'><data:postCommentMsg/></a></h4>
+        <a expr:id='data:widget.instanceId + "_comment-editor-toggle-link"' href='javascript:void(0)'><data:postCommentMsg/></a></h4>
       <p><data:blogCommentMessage/></p>
       <data:blogTeamBlogMessage/>
       <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
@@ -1252,12 +1267,12 @@ head.appendChild(script);
     </b:if>
     <data:post.cmtfpIframe/>
     <script type='text/javascript'>
-      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+      BLOG_CMT_createIframe('<data:post.appRpcRelayPath/>');
     </script>
   </div>
 </b:includable>
               <b:includable id='commentDeleteIcon' var='comment'>
-  <span expr:class='&quot;item-control &quot; + data:comment.adminClass'>
+  <span expr:class='"item-control " + data:comment.adminClass'>
     <b:if cond='data:showCmtPopup'>
       <div class='goog-toggle-button'>
         <div class='goog-inline-block comment-action-icon'/>
@@ -1314,10 +1329,10 @@ head.appendChild(script);
         </span>
       </b:if>
 
-      <div expr:id='data:widget.instanceId + &quot;_comments-block-wrapper&quot;'>
+      <div expr:id='data:widget.instanceId + "_comments-block-wrapper"'>
         <dl expr:class='data:post.avatarIndentClass' id='comments-block'>
           <b:loop values='data:post.comments' var='comment'>
-            <dt expr:class='&quot;comment-author &quot; + data:comment.authorClass' expr:id='data:comment.anchorName'>
+            <dt expr:class='"comment-author " + data:comment.authorClass' expr:id='data:comment.anchorName'>
               <b:if cond='data:comment.favicon'>
                 <img expr:src='data:comment.favicon' height='16px' style='margin-bottom:-2px;' width='16px'/>
               </b:if>
@@ -1393,14 +1408,14 @@ head.appendChild(script);
     </b:if>
 
     <div id='backlinks-container'>
-    <div expr:id='data:widget.instanceId + &quot;_backlinks-container&quot;'>
+    <div expr:id='data:widget.instanceId + "_backlinks-container"'>
        <b:include cond='data:post.showBacklinks' data='post' name='backlinks'/>
     </div>
     </div>
   </div>
 </b:includable>
               <b:includable id='feedLinks'>
-  <b:if cond='data:blog.pageType != &quot;item&quot;'> <!-- Blog feed links -->
+  <b:if cond='data:blog.pageType != "item"'> <!-- Blog feed links -->
     <b:if cond='data:feedLinks'>
       <div class='blog-feeds'>
         <b:include data='feedLinks' name='feedLinksBody'/>
@@ -1429,7 +1444,7 @@ head.appendChild(script);
     <script expr:src='data:post.iframeCommentSrc' type='text/javascript'/>
     <div class='cmt_iframe_holder' expr:data-href='data:post.url.canonical' expr:data-viewtype='data:post.viewType'/>
 
-    <b:if cond='data:post.embedCommentForm == &quot;false&quot;'>
+    <b:if cond='data:post.embedCommentForm == "false"'>
       <a expr:href='data:post.addCommentUrl' expr:onclick='data:post.addCommentOnclick'><data:postCommentMsg/></a>
     </b:if>
   </b:if>
@@ -1468,7 +1483,7 @@ head.appendChild(script);
       </a>
 
       <div class='mobile-index-comment'>
-        <b:include cond='data:blog.pageType != &quot;static_page&quot;                          and data:post.allowComments                          and data:post.numComments != 0' data='post' name='comment_count_picker'/>
+        <b:include cond='data:blog.pageType != "static_page"                          and data:post.allowComments                          and data:post.numComments != 0' data='post' name='comment_count_picker'/>
       </div>
     </div>
   </div>
@@ -1479,7 +1494,7 @@ head.appendChild(script);
 
       <b:include data='top' name='status-message'/>
 
-      <b:if cond='data:blog.pageType == &quot;index&quot;'>
+      <b:if cond='data:blog.pageType == "index"'>
         <b:loop values='data:posts' var='post'>
           <b:include data='post' name='mobile-index-post'/>
         </b:loop>
@@ -1496,13 +1511,13 @@ head.appendChild(script);
   <div class='blog-pager' id='blog-pager'>
     <b:if cond='data:newerPageUrl'>
       <div class='mobile-link-button' id='blog-pager-newer-link'>
-      <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-newer-link&quot;' expr:title='data:newerPageTitle'>&amp;lsaquo;</a>
+      <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + "_blog-pager-newer-link"' expr:title='data:newerPageTitle'>&amp;lsaquo;</a>
       </div>
     </b:if>
 
     <b:if cond='data:olderPageUrl'>
       <div class='mobile-link-button' id='blog-pager-older-link'>
-      <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-older-link&quot;' expr:title='data:olderPageTitle'>&amp;rsaquo;</a>
+      <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + "_blog-pager-older-link"' expr:title='data:olderPageTitle'>&amp;rsaquo;</a>
       </div>
     </b:if>
 
@@ -1549,7 +1564,7 @@ head.appendChild(script);
             <div class='post-header-line-1'/>
           </div>
 
-          <div class='post-body entry-content' expr:id='&quot;post-body-&quot; + data:post.id' itemprop='articleBody'>
+          <div class='post-body entry-content' expr:id='"post-body-" + data:post.id' itemprop='articleBody'>
             <data:post.body/>
             <div style='clear: both;'/> <!-- clear for photos floats -->
           </div>
@@ -1584,7 +1599,7 @@ head.appendChild(script);
               </span>
 
               <span class='post-comment-link'>
-                <b:include cond='data:blog.pageType not in {&quot;item&quot;,&quot;static_page&quot;}                                  and data:post.allowComments' data='post' name='comment_count_picker'/>
+                <b:include cond='data:blog.pageType not in {"item","static_page"}                                  and data:post.allowComments' data='post' name='comment_count_picker'/>
               </span>
             </div>
 
@@ -1602,7 +1617,7 @@ head.appendChild(script);
           </div>
         </div>
 
-        <b:include cond='data:blog.pageType in {&quot;static_page&quot;,&quot;item&quot;}' data='post' name='comment_picker'/>
+        <b:include cond='data:blog.pageType in {"static_page","item"}' data='post' name='comment_picker'/>
       </div>
     </div>
   </div>
@@ -1611,13 +1626,13 @@ head.appendChild(script);
   <div class='blog-pager' id='blog-pager'>
     <b:if cond='data:newerPageUrl'>
       <span id='blog-pager-newer-link'>
-      <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-newer-link&quot;' expr:title='data:newerPageTitle'><data:newerPageTitle/></a>
+      <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + "_blog-pager-newer-link"' expr:title='data:newerPageTitle'><data:newerPageTitle/></a>
       </span>
     </b:if>
 
     <b:if cond='data:olderPageUrl'>
       <span id='blog-pager-older-link'>
-      <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-older-link&quot;' expr:title='data:olderPageTitle'><data:olderPageTitle/></a>
+      <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + "_blog-pager-older-link"' expr:title='data:olderPageTitle'><data:olderPageTitle/></a>
       </span>
     </b:if>
 
@@ -1656,14 +1671,14 @@ head.appendChild(script);
     </div>
 
     <!-- Then use the post body as the schema.org description, for good G+/FB snippeting. -->
-    <div class='post-body entry-content' expr:id='&quot;post-body-&quot; + data:post.id' expr:itemprop='(data:blog.metaDescription ? &quot;&quot; : &quot;description &quot;) + &quot;articleBody&quot;'>
+    <div class='post-body entry-content' expr:id='"post-body-" + data:post.id' expr:itemprop='(data:blog.metaDescription ? "" : "description ") + "articleBody"'>
       <data:post.body/>
       <div style='clear: both;'/> <!-- clear for photos floats -->
     </div>
 
     <b:if cond='data:post.hasJumpLink'>
       <div class='jump-link'>
-        <a expr:href='data:post.url + &quot;#more&quot;' expr:title='data:post.title'><data:post.jumpText/></a>
+        <a expr:href='data:post.url + "#more"' expr:title='data:post.title'><data:post.jumpText/></a>
       </div>
     </b:if>
 
@@ -1709,13 +1724,13 @@ head.appendChild(script);
       </span>
 
       <span class='post-comment-link'>
-        <b:include cond='data:blog.pageType not in {&quot;item&quot;,&quot;static_page&quot;}                          and data:post.allowComments' data='post' name='comment_count_picker'/>
+        <b:include cond='data:blog.pageType not in {"item","static_page"}                          and data:post.allowComments' data='post' name='comment_count_picker'/>
       </span>
 
        <!-- backlinks -->
        <span class='post-backlinks post-comment-link'>
-         <b:if cond='data:blog.pageType not in {&quot;item&quot;,&quot;static_page&quot;}                      and data:post.showBacklinks'>
-           <a class='comment-link' expr:href='data:post.url + &quot;#links&quot;'><data:top.backlinkLabel/></a>
+         <b:if cond='data:blog.pageType not in {"item","static_page"}                      and data:post.showBacklinks'>
+           <a class='comment-link' expr:href='data:post.url + "#links"'><data:top.backlinkLabel/></a>
          </b:if>
        </span>
 
@@ -1777,7 +1792,7 @@ head.appendChild(script);
 </b:includable>
               <b:includable id='postQuickEdit' var='post'>
   <b:if cond='data:post.editUrl'>
-    <span expr:class='&quot;item-control &quot; + data:post.adminClass'>
+    <span expr:class='"item-control " + data:post.adminClass'>
       <a expr:href='data:post.editUrl' expr:title='data:top.editPostMsg'>
         <img alt='' class='icon-action' height='18' src='https://resources.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
       </a>
@@ -1785,7 +1800,7 @@ head.appendChild(script);
   </b:if>
 </b:includable>
               <b:includable id='shareButtons' var='post'>
-  <b:if cond='data:top.showEmailButton'><a class='goog-inline-block share-button sb-email' expr:href='data:post.sharePostUrl + &quot;&amp;target=email&quot;' expr:title='data:top.emailThisMsg' target='_blank'><span class='share-button-link-text'><data:top.emailThisMsg/></span></a></b:if><b:if cond='data:top.showBlogThisButton'><a class='goog-inline-block share-button sb-blog' expr:href='data:post.sharePostUrl + &quot;&amp;target=blog&quot;' expr:onclick='&quot;window.open(this.href, \&quot;_blank\&quot;, \&quot;height=270,width=475\&quot;); return false;&quot;' expr:title='data:top.blogThisMsg' target='_blank'><span class='share-button-link-text'><data:top.blogThisMsg/></span></a></b:if><b:if cond='data:top.showTwitterButton'><a class='goog-inline-block share-button sb-twitter' expr:href='data:post.sharePostUrl + &quot;&amp;target=twitter&quot;' expr:title='data:top.shareToTwitterMsg' target='_blank'><span class='share-button-link-text'><data:top.shareToTwitterMsg/></span></a></b:if><b:if cond='data:top.showFacebookButton'><a class='goog-inline-block share-button sb-facebook' expr:href='data:post.sharePostUrl + &quot;&amp;target=facebook&quot;' expr:onclick='&quot;window.open(this.href, \&quot;_blank\&quot;, \&quot;height=430,width=640\&quot;); return false;&quot;' expr:title='data:top.shareToFacebookMsg' target='_blank'><span class='share-button-link-text'><data:top.shareToFacebookMsg/></span></a></b:if><b:if cond='data:top.showPinterestButton'><a class='goog-inline-block share-button sb-pinterest' expr:href='data:post.sharePostUrl + &quot;&amp;target=pinterest&quot;' expr:title='data:top.shareToPinterestMsg' target='_blank'><span class='share-button-link-text'><data:top.shareToPinterestMsg/></span></a></b:if><b:if cond='data:top.showPlusOne'><div class='goog-inline-block google-plus-share-container'><data:post.googlePlusShareTag/></div></b:if>
+  <b:if cond='data:top.showEmailButton'><a class='goog-inline-block share-button sb-email' expr:href='data:post.sharePostUrl + "&amp;target=email"' expr:title='data:top.emailThisMsg' target='_blank'><span class='share-button-link-text'><data:top.emailThisMsg/></span></a></b:if><b:if cond='data:top.showBlogThisButton'><a class='goog-inline-block share-button sb-blog' expr:href='data:post.sharePostUrl + "&amp;target=blog"' expr:onclick='"window.open(this.href, \"_blank\", \"height=270,width=475\"); return false;"' expr:title='data:top.blogThisMsg' target='_blank'><span class='share-button-link-text'><data:top.blogThisMsg/></span></a></b:if><b:if cond='data:top.showTwitterButton'><a class='goog-inline-block share-button sb-twitter' expr:href='data:post.sharePostUrl + "&amp;target=twitter"' expr:title='data:top.shareToTwitterMsg' target='_blank'><span class='share-button-link-text'><data:top.shareToTwitterMsg/></span></a></b:if><b:if cond='data:top.showFacebookButton'><a class='goog-inline-block share-button sb-facebook' expr:href='data:post.sharePostUrl + "&amp;target=facebook"' expr:onclick='"window.open(this.href, \"_blank\", \"height=430,width=640\"); return false;"' expr:title='data:top.shareToFacebookMsg' target='_blank'><span class='share-button-link-text'><data:top.shareToFacebookMsg/></span></a></b:if><b:if cond='data:top.showPinterestButton'><a class='goog-inline-block share-button sb-pinterest' expr:href='data:post.sharePostUrl + "&amp;target=pinterest"' expr:title='data:top.shareToPinterestMsg' target='_blank'><span class='share-button-link-text'><data:top.shareToPinterestMsg/></span></a></b:if><b:if cond='data:top.showPlusOne'><div class='goog-inline-block google-plus-share-container'><data:post.googlePlusShareTag/></div></b:if>
 </b:includable>
               <b:includable id='status-message'>
   <b:if cond='data:navMessage'>
@@ -1818,7 +1833,7 @@ head.appendChild(script);
     </b:if>
     <data:post.cmtfpIframe/>
     <script type='text/javascript'>
-      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+      BLOG_CMT_createIframe('<data:post.appRpcRelayPath/>');
     </script>
   </div>
 </b:includable>
@@ -2036,7 +2051,7 @@ head.appendChild(script);
     </b:if>
 
     <div id='backlinks-container'>
-    <div expr:id='data:widget.instanceId + &quot;_backlinks-container&quot;'>
+    <div expr:id='data:widget.instanceId + "_backlinks-container"'>
       <b:include cond='data:post.showBacklinks' data='post' name='backlinks'/>
     </div>
     </div>
@@ -2111,7 +2126,7 @@ head.appendChild(script);
           </b:widget-settings>
           <b:includable id='main'>
     <div class='widget-content' style='text-align: center;'>
-      <b:if cond='data:attribution != &quot;&quot;'>
+      <b:if cond='data:attribution != ""'>
        <data:attribution/>
       </b:if>
     </div>
@@ -2141,49 +2156,53 @@ head.appendChild(script);
 
   <script type='text/javascript'>
     window.setTimeout(function() {
-        document.body.className = document.body.className.replace(&quot;loading&quot;, &quot;&quot;);
+        document.body.className = document.body.className.replace("loading", "");
       }, 10);
   </script>
 
+  <script type='text/javascript'>
+    var pageList1 = document.getElementById("PageList1"), tabs = pageList1.getElementsByTagName("li");
+    tabs.item(4).setAttribute("class", "selected");
+  </script>
 
 <!-- Custom -->
 <script type='text/javascript'>
   function toggleHeight(id) {
-    var content = document.getElementById(&quot;content-&quot; + id);
-    if(content.classList.contains(&quot;comment-collapsed&quot;)) {
-      content.classList.remove(&quot;comment-collapsed&quot;);
-      content.classList.add(&quot;comment-expanded&quot;);
+    var content = document.getElementById("content-" + id);
+    if(content.classList.contains("comment-collapsed")) {
+      content.classList.remove("comment-collapsed");
+      content.classList.add("comment-expanded");
     } else {
-      content.classList.remove(&quot;comment-expanded&quot;);
-      content.classList.add(&quot;comment-collapsed&quot;);
+      content.classList.remove("comment-expanded");
+      content.classList.add("comment-collapsed");
     }
 
-    var toggle = document.getElementById(&quot;toggle-&quot; + id);
-    if(toggle.classList.contains(&quot;toggle-collapsed&quot;)) {
-      toggle.classList.remove(&quot;toggle-collapsed&quot;);
-      toggle.classList.add(&quot;toggle-expanded&quot;);
+    var toggle = document.getElementById("toggle-" + id);
+    if(toggle.classList.contains("toggle-collapsed")) {
+      toggle.classList.remove("toggle-collapsed");
+      toggle.classList.add("toggle-expanded");
     } else {
-      toggle.classList.remove(&quot;toggle-expanded&quot;);
-      toggle.classList.add(&quot;toggle-collapsed&quot;);
+      toggle.classList.remove("toggle-expanded");
+      toggle.classList.add("toggle-collapsed");
     }
   }
 
-  var replies = document.getElementsByClassName(&quot;comment-replies&quot;);
+  var replies = document.getElementsByClassName("comment-replies");
   var replyContents = [];
 
   for (var reply of replies) {
-    var contents = reply.getElementsByClassName(&quot;comment-content&quot;);
+    var contents = reply.getElementsByClassName("comment-content");
 
     for (var content of contents) {
       replyContents.push(content);
     }
   }
 
-  var comments = document.getElementsByClassName(&quot;comment&quot;);
+  var comments = document.getElementsByClassName("comment");
   var commentContents = [];
 
   for (var comment of comments) {
-    var contents = comment.getElementsByClassName(&quot;comment-content&quot;);
+    var contents = comment.getElementsByClassName("comment-content");
 
     for (var content of contents) {
       if (replyContents.indexOf(content) === -1) {
@@ -2195,18 +2214,18 @@ head.appendChild(script);
   commentContents.forEach((comment, index) =&gt; {
     var parent = comment.parentNode;
 
-    comment.setAttribute(&quot;id&quot;, &quot;content-&quot; + index);
-    comment.classList.add(&quot;comment-collapsed&quot;);
+    comment.setAttribute("id", "content-" + index);
+    comment.classList.add("comment-collapsed");
 
-    var collapsed = document.createElement(&quot;div&quot;);
-    collapsed.innerHTML = &quot;<a href='#' onclick='toggleHeight(&quot; + index + &quot;); return false;'/>&quot;;
+    var collapsed = document.createElement("div");
+    collapsed.innerHTML = "<a href='#' onclick='toggleHeight(" + index + "); return false;'/>";
 
     var toggle = collapsed.firstChild;
-    toggle.setAttribute(&quot;id&quot;, &quot;toggle-&quot; + index);
-    toggle.classList.add(&quot;toggle-collapsed&quot;);
+    toggle.setAttribute("id", "toggle-" + index);
+    toggle.classList.add("toggle-collapsed");
 
-    var wrapper = document.createElement(&quot;div&quot;);
-    wrapper.setAttribute(&quot;id&quot;, &quot;comment-wrapper&quot;);
+    var wrapper = document.createElement("div");
+    wrapper.setAttribute("id", "comment-wrapper");
     wrapper.appendChild(comment);
     wrapper.appendChild(toggle);
 
@@ -2214,16 +2233,16 @@ head.appendChild(script);
   });
 
 
-  var inline = document.getElementsByClassName(&quot;inline-thread&quot;);
+  var inline = document.getElementsByClassName("inline-thread");
   for (var item of inline) {
-    if(!item.classList.contains(&quot;hidden&quot;)) {
+    if(!item.classList.contains("hidden")) {
       for (var child of item.childNodes) {
-        child.classList.remove(&quot;thread-expanded&quot;);
-        child.classList.add(&quot;thread-collapsed&quot;);
+        child.classList.remove("thread-expanded");
+        child.classList.add("thread-collapsed");
       }
 
-      var reply = item.parentElement.previousSibling.getElementsByClassName(&quot;comment-reply&quot;)[0];
-      reply.style.display = &quot;none&quot;;
+      var reply = item.parentElement.previousSibling.getElementsByClassName("comment-reply")[0];
+      reply.style.display = "none";
     }
   }
 </script>
@@ -2241,12 +2260,12 @@ head.appendChild(script);
   }
 
   #comment-wrapper a.toggle-collapsed:after  {
-    content: &#39;&gt;&gt;&gt;&#39;;
+    content: '&gt;&gt;&gt;';
     font-weight: bold;
   }
 
   #comment-wrapper a.toggle-expanded:after {
-    content: &#39;&lt;&lt;&lt;&#39;;
+    content: '&lt;&lt;&lt;';
     font-weight: bold;
   }
 </style>
@@ -2256,29 +2275,29 @@ head.appendChild(script);
 <macro:includable id='sections' var='col'>
   <macro:if cond='data:col.num == 0'>
   <macro:else/>
-    <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + &quot;-1&quot;' preferred='yes' showaddelement='yes'/>
+    <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + "-1"' preferred='yes' showaddelement='yes'/>
 
     <macro:if cond='data:col.num &gt;= 2'>
-      <table border='0' cellpadding='0' cellspacing='0' mexpr:class='&quot;section-columns columns-&quot; + data:col.num'>
+      <table border='0' cellpadding='0' cellspacing='0' mexpr:class='"section-columns columns-" + data:col.num'>
       <tbody>
       <tr>
         <td class='first columns-cell'>
-          <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + &quot;-2-1&quot;'/>
+          <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + "-2-1"'/>
         </td>
 
         <td class='columns-cell'>
-          <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + &quot;-2-2&quot;'/>
+          <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + "-2-2"'/>
         </td>
 
         <macro:if cond='data:col.num &gt;= 3'>
           <td class='columns-cell'>
-            <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + &quot;-2-3&quot;'/>
+            <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + "-2-3"'/>
           </td>
         </macro:if>
 
         <macro:if cond='data:col.num &gt;= 4'>
           <td class='columns-cell'>
-            <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + &quot;-2-4&quot;'/>
+            <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + "-2-4"'/>
           </td>
         </macro:if>
       </tr>
@@ -2286,7 +2305,7 @@ head.appendChild(script);
       </table>
 
       <macro:if cond='data:col.includeBottom'>
-        <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + &quot;-3&quot;' showaddelement='no'/>
+        <b:section mexpr:class='data:col.class' mexpr:id='data:col.idPrefix + "-3"' showaddelement='no'/>
       </macro:if>
     </macro:if>
   </macro:if>
@@ -2299,10 +2318,10 @@ head.appendChild(script);
       <b:widget-setting name='homeTitle'>Trang chủ</b:widget-setting>
     </b:widget-settings>
     <b:includable id='main'>
-  <b:if cond='data:title != &quot;&quot;'><h2><data:title/></h2></b:if>
+  <b:if cond='data:title != ""'><h2><data:title/></h2></b:if>
   <div class='widget-content'>
     <b:if cond='data:mobile'>
-      <select expr:id='data:widget.instanceId + &quot;_select&quot;'>
+      <select expr:id='data:widget.instanceId + "_select"'>
         <b:loop values='data:links' var='link'>
           <option expr:value='data:link.href'>
             <b:attr cond='data:link.isCurrentPage' name='selected' value='selected'/>
@@ -2331,10 +2350,10 @@ head.appendChild(script);
       <b:widget-setting name='homeTitle'>Trang chủ</b:widget-setting>
     </b:widget-settings>
     <b:includable id='main'>
-  <b:if cond='data:title != &quot;&quot;'><h2><data:title/></h2></b:if>
+  <b:if cond='data:title != ""'><h2><data:title/></h2></b:if>
   <div class='widget-content'>
     <b:if cond='data:mobile'>
-      <select expr:id='data:widget.instanceId + &quot;_select&quot;'>
+      <select expr:id='data:widget.instanceId + "_select"'>
         <b:loop values='data:links' var='link'>
           <option expr:value='data:link.href'>
             <b:attr cond='data:link.isCurrentPage' name='selected' value='selected'/>
