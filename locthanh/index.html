@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cộng Đoàn Thánh Giuse - Scarborough</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-store" />
+
+    <script src="../resources/js/jquery.min.js"></script>
+    <script src="../resources/js/jquery-ui.min.js"></script>
+    <script src="../resources/js/angular.min.js"></script>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../resources/js/bootstrap.min.js"></script>
+    <script src="../resources/js/ui-bootstrap.min.js"></script>
+
+    <script src="./locthanh.min.js"></script>
+    <link href="./locthanh.min.css" rel="stylesheet">
+</head>
+
+<body ng-app="locthanh" ng-controller="LocThanhCtrl" data-ng-init="init()" class="locthanh">
+
+<div id="main" class="main">
+
+    <!--<div class="button">-->
+        <!--<button type="button" ng-click="next()">Hái Lộc Thánh</button>-->
+    <!--</div>-->
+
+    <div class="image" ng-if="image">
+        <img src="./images/locthanh-thanhlinh.net_{{image}}.jpg" />
+    </div>
+
+</div>
+
+</body>
+
+</html>
