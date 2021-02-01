@@ -12,8 +12,9 @@ app.controller("LocThanhCtrl", [
         };
 
         $scope.next = () => {
-            const total = 80;
-            const number = Math.floor(Math.random() * Math.floor(total)) + 1;
+            let total = 240,
+                number = Math.floor(Math.random() * Math.floor(total)) + 1;
+
             $scope.image = number < 10 ? `00${number}` : number < 100 ? `0${number}` : number;
         }
 

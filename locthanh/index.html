@@ -19,18 +19,10 @@
     <link href="./locthanh.min.css" rel="stylesheet">
 </head>
 
-<body ng-app="locthanh" ng-controller="LocThanhCtrl" data-ng-init="init()" class="locthanh">
+<body ng-app="locthanh" ng-controller="LocThanhCtrl" ng-init="init()" class="locthanh">
 
 <div id="main" class="main">
-
-    <!--<div class="button">-->
-        <!--<button type="button" ng-click="next()">Hái Lộc Thánh</button>-->
-    <!--</div>-->
-
-    <div class="image" ng-if="image">
-        <img src="./images/locthanh-thanhlinh.net_{{image}}.jpg" />
-    </div>
-
+    <ng-include src="'./locthanh.html'"></ng-include>
 </div>
 
 </body>
