@@ -16,16 +16,25 @@ html, body {
     height: 100%;
 }
 
-.locthanh .button {
-    margin-left: 44px;
-}
-
-.locthanh .image {
+.locthanh .vertical {
     height: calc(100%);
     display: flex;
     align-items: center;
 }
 
-.locthanh .image img {
+.locthanh .horizontal {
+    width: 80%;
     margin: 0 auto;
+    text-align: center;
+}
+
+.locthanh .image {
+    width: 100%;
+    height: auto;
+    transform: translateY(3%);
+}
+
+.locthanh .footer {
+    width: 20%;
+    transform: translateY(-75%);
 }
