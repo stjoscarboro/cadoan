@@ -1,6 +1,6 @@
 app.controller("LibraryCtrl", [
-    '$scope', '$q', '$window', '$uibModal', '$timeout', '$filter', '$document', 'HttpService', 'DataService', 'FileService', 'AppUtil',
-    ($scope, $q, $window, $uibModal, $timeout, $filter, $document, HttpService, DataService, FileService, AppUtil) => {
+    '$scope', '$q', '$window', '$uibModal', '$timeout', '$filter', '$document', 'GoogleService', 'SheetsService', 'DriveService', 'AppUtil',
+    ($scope, $q, $window, $uibModal, $timeout, $filter, $document, GoogleService, SheetsService, DriveService, AppUtil) => {
 
         /**
          * init
@@ -12,7 +12,7 @@ app.controller("LibraryCtrl", [
             $scope.song = {};
 
             $scope.dateFormat = "DD, dd/mm/yy";
-            $scope.driveURL = FileService.getFolderURL('cadoan.music.sheets.id');
+            $scope.driveURL = DriveService.getFolderURL('cadoan.music.sheets.id');
 
             $scope.pageSize = 10;
             $scope.pageCounter = 1;
@@ -34,7 +34,7 @@ app.controller("LibraryCtrl", [
         $scope.signin = (profile, token) => {
             $scope.profile = profile;
             $scope.accessToken = token;
-            HttpService.setAccessToken(token);
+            GoogleService.setAccessToken(token);
 
             $scope.loadData()
                 .then(() => {
@@ -135,7 +135,7 @@ app.controller("LibraryCtrl", [
                     others: $scope.song.others
                 };
 
-            FileService.updateFile($scope.song.id, {description: JSON.stringify(description)})
+            DriveService.updateFile($scope.song.id, {description: JSON.stringify(description)})
                 .then(() => {
                     deferred.resolve();
                 });
@@ -148,10 +148,10 @@ app.controller("LibraryCtrl", [
          */
         $scope.refresh = () => {
             //parse categories
-            $scope.categories = DataService.listCategories($scope.songs);
+            $scope.categories = SheetsService.listCategories($scope.songs);
 
             //parse authors
-            $scope.authors = DataService.listAuthors($scope.songs);
+            $scope.authors = SheetsService.listAuthors($scope.songs);
 
             //refresh table
             $('.table').DataTable().draw(false);
@@ -164,7 +164,7 @@ app.controller("LibraryCtrl", [
             let deferred = $q.defer();
 
             $q.all([
-                FileService.listFolder('cadoan.music')
+                DriveService.listFolder('cadoan.music')
             ])
                 .then((values) => {
                     //populate songs
@@ -173,13 +173,13 @@ app.controller("LibraryCtrl", [
                     }
 
                     //parse categories
-                    $scope.categories = DataService.listCategories($scope.songs);
+                    $scope.categories = SheetsService.listCategories($scope.songs);
 
                     //parse authors
-                    $scope.authors = DataService.listAuthors($scope.songs);
+                    $scope.authors = SheetsService.listAuthors($scope.songs);
 
                     //sort data
-                    DataService.sortByLocale($scope.songs, 'title');
+                    SheetsService.sortByLocale($scope.songs, 'title');
 
                     deferred.resolve();
                 });

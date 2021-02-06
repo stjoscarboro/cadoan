@@ -1,4 +1,4 @@
-app.factory('HttpService', ['$http', 'DelayHttp', ($http, DelayHttp) => {
+app.factory('GoogleService', ['$http', 'DelayHttp', ($http, DelayHttp) => {
 
     let gapiKey = Base64.decode('QUl6YVN5Q1NobnFUbHBhLTg4ajhlSGtWaWJDTjVTT21WLWFTVHd3');
 

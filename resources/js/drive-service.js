@@ -1,4 +1,4 @@
-app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
+app.factory('DriveService', ['$q', 'GoogleService', ($q, GoogleService) => {
 
     let docURL = 'https://drive.google.com/file/d/',
         openURL = 'https://drive.google.com/open?id=',
@@ -74,7 +74,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
         let loadURL = (url, pageToken) => {
             let deferred = $q.defer();
 
-            HttpService.getFile(url + (pageToken ? '&pageToken=' + pageToken : ''))
+            GoogleService.getFile(url + (pageToken ? '&pageToken=' + pageToken : ''))
                 .then(
                     //success
                     response => {
@@ -214,7 +214,7 @@ app.factory('FileService', ['$q', 'HttpService', ($q, HttpService) => {
      */
     service.updateFile = (id, payload) => {
         let url = driveURL + '/' + id;
-        return HttpService.updateData(url, payload);
+        return GoogleService.updateData(url, payload);
     };
 
     /**

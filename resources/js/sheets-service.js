@@ -1,4 +1,4 @@
-app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, AppUtil) => {
+app.factory('SheetsService', ['$q', 'GoogleService', 'AppUtil', ($q, GoogleService, AppUtil) => {
 
     let sheetURL = 'https://sheets.googleapis.com/v4/spreadsheets/',
 
@@ -67,7 +67,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
         let sheet = getSheet(sheetId),
             url = sheetURL + sheet.id + '/values/' + sheet.range;
 
-        return HttpService.getData(url, params);
+        return GoogleService.getData(url, params);
     };
 
     /**
@@ -83,7 +83,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
         let sheet = getSheet(sheetId),
             url = sheetURL + sheet.id + '/values/' + sheet.range + ':append';
 
-        return HttpService.postData(url, payload, params);
+        return GoogleService.postData(url, payload, params);
     };
 
     /**
@@ -99,7 +99,7 @@ app.factory('DataService', ['$q', 'HttpService', 'AppUtil', ($q, HttpService, Ap
         let sheet = getSheet(sheetId),
             url = sheetURL + sheet.id + ':batchUpdate';
 
-        return HttpService.postData(url, payload, params);
+        return GoogleService.postData(url, payload, params);
     };
 
     /**

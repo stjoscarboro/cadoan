@@ -1,6 +1,6 @@
 app.controller("ScheduleCtrl", [
-    '$scope', '$q', '$window', '$uibModal', '$timeout', '$document', 'HttpService', 'DataService', 'FileService', 'AppUtil',
-    ($scope, $q, $window, $uibModal, $timeout, $document, HttpService, DataService, FileService, AppUtil) => {
+    '$scope', '$q', '$window', '$uibModal', '$timeout', '$document', 'GoogleService', 'SheetsService', 'DriveService', 'AppUtil',
+    ($scope, $q, $window, $uibModal, $timeout, $document, GoogleService, SheetsService, DriveService, AppUtil) => {
 
         /**
          * init
@@ -34,7 +34,7 @@ app.controller("ScheduleCtrl", [
         $scope.signin = (profile, token) => {
             $scope.profile = profile;
             $scope.accessToken = token;
-            HttpService.setAccessToken(token);
+            GoogleService.setAccessToken(token);
 
             $scope.loadData()
                 .then(() => {
@@ -48,7 +48,7 @@ app.controller("ScheduleCtrl", [
         $scope.get = () => {
             $scope.schedules = [];
 
-            DataService.loadSchedules($scope.songs)
+            SheetsService.loadSchedules($scope.songs)
                 .then(schedules => {
                     let today = new Date(),
                         first = (schedules.length >= 4 ? schedules.slice(-4) : schedules.slice(0))[0].date;
@@ -112,7 +112,7 @@ app.controller("ScheduleCtrl", [
                 }]
             };
 
-            DataService.updateSchedule(payload)
+            SheetsService.updateSchedule(payload)
                 .then(() => {
                     $scope.clear();
                     $scope.get();
@@ -263,7 +263,7 @@ app.controller("ScheduleCtrl", [
                 }]
             };
 
-            DataService.updateSchedule(payload)
+            SheetsService.updateSchedule(payload)
                 .then(() => {
                     $scope.schedules.splice(id, 1);
                     deferred.resolve();
@@ -323,7 +323,7 @@ app.controller("ScheduleCtrl", [
             $q.all(removed)
                 .then(() => {
                     //add new schedule
-                    DataService.addSchedule(payload)
+                    SheetsService.addSchedule(payload)
                         .then(
                             //success
                             () => {
@@ -349,9 +349,9 @@ app.controller("ScheduleCtrl", [
             let deferred = $q.defer();
 
             $q.all([
-                FileService.listFolder('cadoan.music'),
-                DataService.loadLiturgies(),
-                DataService.loadSingers()
+                DriveService.listFolder('cadoan.music'),
+                SheetsService.loadLiturgies(),
+                SheetsService.loadSingers()
             ])
                 .then((values) => {
                     //populate songs
@@ -360,7 +360,7 @@ app.controller("ScheduleCtrl", [
                     }
 
                     //parse categories
-                    $scope.categories = DataService.listCategories($scope.songs);
+                    $scope.categories = SheetsService.listCategories($scope.songs);
                     $scope.categories.push('Tất Cả');
 
                     //populate liturgies
@@ -371,8 +371,8 @@ app.controller("ScheduleCtrl", [
                     $scope.singers.unshift({ id: null, name: null });
 
                     //sort data
-                    DataService.sortByLocale($scope.songs, 'title');
-                    DataService.sortByLocale($scope.singers, 'name');
+                    SheetsService.sortByLocale($scope.songs, 'title');
+                    SheetsService.sortByLocale($scope.singers, 'name');
 
                     deferred.resolve();
                 });
@@ -409,7 +409,7 @@ app.controller("ScheduleCtrl", [
             let song = $scope.schedule.songs[index];
 
             if (song && song.id) {
-                $window.open(FileService.getViewURL(song.id), '_blank');
+                $window.open(DriveService.getViewURL(song.id), '_blank');
             }
         };
 
