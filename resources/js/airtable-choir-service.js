@@ -1,33 +1,23 @@
 app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil', ($q, $http, AirtableService, AppUtil) => {
 
     let service = {},
-        tableURL = 'https://api.airtable.com/v0/appct8Cpvuk7NtKiQ',
-        apiKey = Base64.decode('a2V5UUxrUm82andCeTdNWmg='),
+        config = {
+            url: 'https://api.airtable.com/v0/appct8Cpvuk7NtKiQ',
+            key: Base64.decode('a2V5UUxrUm82andCeTdNWmg='),
+            tables: {
+                singers: {
+                    fields: [ 'id', 'name' ]
+                },
 
-        tables = {
-            singers: {
-                fields: [ 'id', 'name' ]
-            },
+                liturgies: {
+                    fields: [ 'id', 'name', 'year', 'date', 'intention' ]
+                },
 
-            liturgies: {
-                fields: [ 'id', 'name', 'year', 'date', 'intention' ]
-            },
-
-            schedules: {
-                fields: [ 'id', 'date', 'liturgy', 'songs' ]
+                schedules: {
+                    fields: [ 'id', 'date', 'liturgy', 'songs' ]
+                }
             }
         };
-
-    /**
-     * init
-     */
-    service.init = () => {
-        AirtableService.setConfig({
-            url: tableURL,
-            tables: tables,
-            key: apiKey
-        });
-    };
 
     /**
      * getCategories
@@ -46,7 +36,7 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
     service.loadSingers = () => {
         let deferred = $q.defer();
 
-        AirtableService.getData('singers')
+        AirtableService.getData('singers', config)
             .then(records => {
                 deferred.resolve(records);
             });
@@ -62,7 +52,7 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
     service.loadLiturgies = () => {
         let deferred = $q.defer();
 
-        AirtableService.getData('liturgies')
+        AirtableService.getData('liturgies', config)
             .then(records => {
                 deferred.resolve(records);
             });
@@ -80,7 +70,7 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
         let deferred = $q.defer(),
             results = [];
 
-        AirtableService.getData('schedules')
+        AirtableService.getData('schedules', config)
             .then(records => {
                 records.forEach(record => {
                     let list = JSON.parse(record.songs);
@@ -125,7 +115,7 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
                 fields: payload
             };
 
-        return AirtableService.createData('schedules', data);
+        return AirtableService.createData('schedules', data, config);
     };
 
     /**
@@ -141,7 +131,7 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
                 fields: payload
             };
 
-        return AirtableService.updateData('schedules', refId, data);
+        return AirtableService.updateData('schedules', refId, data, config);
     };
 
     /**
@@ -152,7 +142,7 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
      * @returns {*|void}
      */
     service.deleteSchedule = (refId) => {
-        return AirtableService.deleteData('schedules', refId);
+        return AirtableService.deleteData('schedules', refId, config);
     };
 
     /**

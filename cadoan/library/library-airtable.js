@@ -1,195 +1,181 @@
 app.controller("LibraryCtrl", [
-    '$scope', '$q', '$window', '$uibModal', '$timeout', '$filter', '$document', 'GoogleService', 'DriveService', 'AirtableChoirService', 'AppUtil',
-    ($scope, $q, $window, $uibModal, $timeout, $filter, $document, GoogleService, DriveService, AirtableService, AppUtil) => {
+    '$scope', '$q', '$window', '$uibModal', '$timeout', '$filter', '$document', 'GoogleService', 'AirtableChoirService', 'AirtableFilesService', 'AppUtil',
+    ($scope, $q, $window, $uibModal, $timeout, $filter, $document, GoogleService, AirtableChoirService, AirtableFilesService, AppUtil) => {
 
-        /**
-         * init
-         */
-        $scope.init = () => {
-            $scope.songs = [];
-            $scope.categories = [];
-            $scope.authors = [];
-            $scope.song = {};
+    /**
+     * init
+     */
+    $scope.init = () => {
+        $scope.songs = [];
+        $scope.categories = [];
+        $scope.authors = [];
+        $scope.song = {};
 
-            $scope.dateFormat = "DD, dd/mm/yy";
-            $scope.driveURL = DriveService.getFolderURL('cadoan.music.sheets.id');
+        $scope.dateFormat = "DD, dd/mm/yy";
+        $scope.driveURL = AirtableFilesService.getDriveURL();
 
-            $scope.pageSize = 10;
-            $scope.pageCounter = 1;
-            $scope.maxSize = 7;
+        $scope.pageSize = 10;
+        $scope.pageCounter = 1;
+        $scope.maxSize = 7;
 
-            AirtableService.init();
-            $document.ready(() => {
-                if ($window.angular.element('.signin').length === 0) {
-                    $scope.loadData()
-                        .then(() => {
-                            $scope.get();
-                        });
+        $document.ready(() => {
+            if ($window.angular.element('.signin').length === 0) {
+                $scope.loadData()
+                    .then(() => {
+                        $scope.get();
+                    });
+            }
+        });
+    };
+
+    /**
+     * signin
+     */
+    $scope.signin = (profile, token) => {
+        $scope.profile = profile;
+        $scope.accessToken = token;
+        GoogleService.setAccessToken(token);
+
+        $scope.loadData()
+            .then(() => {
+                $scope.get();
+            });
+    };
+
+    /**
+     * get
+     */
+    $scope.get = () => {
+        let admin = $scope.accessToken !== null && $scope.accessToken !== undefined,
+            columns = [
+                {width: 'calc(50% - 16)', targets: 0},
+                {width: '35%', targets: 1},
+                {width: '15%', targets: 2},
+                {width: 16, targets: 3, visible: admin, searchable: false, orderable: false},
+                {width: 0, targets: 4, visible: false, type: 'hidden'}
+            ];
+
+        $timeout(() => {
+            $('.table').DataTable({
+                language: {
+                    "url": "../../resources/js/datatables-vi.json"
+                },
+                columns: columns,
+                autoWidth: false,
+                ordering: false,
+                pageLength: 15,
+                lengthMenu: [[10, 15, 25, 50, -1], [10, 15, 25, 50, "All"]],
+                dom: '<fpl<t>i<"dataTables_drive">>',
+                initComplete: () => {
+                    if ($scope.accessToken) {
+                        $(".dataTables_drive").append('Danh Sách Bài Hát ➡ <a href="' + $scope.driveURL + '" target="_blank" title="Danh Sách Bài Hát" class="drive-icon"></a>');
+                    }
+
+                    //resize host's iframe
+                    AppUtil.resizeFrame($scope);
                 }
             });
-        };
+        }, 1);
+    };
 
-        /**
-         * signin
-         */
-        $scope.signin = (profile, token) => {
-            $scope.profile = profile;
-            $scope.accessToken = token;
-            GoogleService.setAccessToken(token);
+    /**
+     * edit
+     */
+    $scope.edit = (id) => {
+        let song = $filter('filter')($scope.songs, {'id': id})[0];
 
-            $scope.loadData()
-                .then(() => {
-                    $scope.get();
-                });
-        };
+        $scope.song = angular.copy(song);
 
-        /**
-         * get
-         */
-        $scope.get = () => {
-            let admin = $scope.accessToken !== null && $scope.accessToken !== undefined,
-                columns = [
-                    {width: 'calc(50% - 16)', targets: 0},
-                    {width: '35%', targets: 1},
-                    {width: '15%', targets: 2},
-                    {width: 16, targets: 3, visible: admin, searchable: false, orderable: false},
-                    {width: 0, targets: 4, visible: false, type: 'hidden'}
-                ];
+        let popup = $uibModal.open({
+                scope: $scope,
+                templateUrl: 'editor.html',
+                backdrop: 'static',
+                backdropClass: 'light',
+                keyboard: false,
+                controller: () => {
+                    $scope.submit = () => {
+                        $scope.save()
+                            .then(() => {
+                                Object.assign(song, AppUtil.pick($scope.song, 'title', 'category', 'author', 'others'));
+                                $scope.refresh();
+                                popup.close();
+                            });
+                    };
 
-            $timeout(() => {
-                $('.table').DataTable({
-                    language: {
-                        "url": "../../resources/js/datatables-vi.json"
-                    },
-                    columns: columns,
-                    autoWidth: false,
-                    ordering: false,
-                    pageLength: 15,
-                    lengthMenu: [[10, 15, 25, 50, -1], [10, 15, 25, 50, "All"]],
-                    dom: '<fpl<t>i<"dataTables_drive">>',
-                    initComplete: () => {
-                        if ($scope.accessToken) {
-                            $(".dataTables_drive").append('Danh Sách Bài Hát ➡ <a href="' + $scope.driveURL + '" target="_blank" title="Danh Sách Bài Hát" class="drive-icon"></a>');
-                        }
-
-                        //resize host's iframe
-                        AppUtil.resizeFrame($scope);
-                    }
-                });
-            }, 1);
-        };
-
-        /**
-         * edit
-         */
-        $scope.edit = (id) => {
-            let song = $filter('filter')($scope.songs, {'id': id})[0];
-
-            $scope.song = angular.copy(song);
-
-            let popup = $uibModal.open({
-                    scope: $scope,
-                    templateUrl: 'editor.html',
-                    backdrop: 'static',
-                    backdropClass: 'light',
-                    keyboard: false,
-                    controller: () => {
-                        $scope.submit = () => {
-                            $scope.save()
-                                .then(() => {
-                                    Object.assign(song, AppUtil.pick($scope.song, 'title', 'category', 'author', 'others'));
-                                    $scope.refresh();
-                                    popup.close();
-                                });
-                        };
-
-                        $scope.cancel = () => {
-                            popup.close();
-                        };
-                    }
-                });
-
-            popup.opened.then(() => {
-                $timeout(() => {
-                    //scroll host's iframe
-                    AppUtil.scrollFrame();
-                }, 100);
+                    $scope.cancel = () => {
+                        popup.close();
+                    };
+                }
             });
-        };
 
-        /**
-         * search
-         */
-        $scope.search = (param) => {
-            $('.table').DataTable().search(param).draw();
-        };
+        popup.opened.then(() => {
+            $timeout(() => {
+                //scroll host's iframe
+                AppUtil.scrollFrame();
+            }, 100);
+        });
+    };
 
-        /**
-         * save
-         */
-        $scope.save = () => {
-            let deferred = $q.defer(),
-                description = {
-                    title: $scope.song.title,
-                    author: $scope.song.author,
-                    category: $scope.song.category,
-                    others: $scope.song.others
-                };
+    /**
+     * search
+     */
+    $scope.search = (param) => {
+        $('.table').DataTable().search(param).draw();
+    };
 
-            DriveService.updateFile($scope.song.id, {description: JSON.stringify(description)})
-                .then(() => {
-                    deferred.resolve();
-                });
+    /**
+     * save
+     */
+    $scope.save = () => {
+        let deferred = $q.defer(),
+            payload = AppUtil.pick($scope.song, 'id', 'title', 'author', 'category', 'others');
 
-            return deferred.promise;
-        };
+        AirtableFilesService.updateFile($scope.song.refId, payload)
+            .then(() => {
+                deferred.resolve();
+            });
 
-        /**
-         * refresh
-         */
-        $scope.refresh = () => {
-            //parse categories
-            $scope.categories = AirtableService.listCategories($scope.songs);
+        return deferred.promise;
+    };
 
-            //parse authors
-            $scope.authors = AirtableService.listAuthors($scope.songs);
+    /**
+     * refresh
+     */
+    $scope.refresh = () => {
+        //parse categories
+        $scope.categories = AirtableChoirService.listCategories($scope.songs);
 
-            //refresh table
-            $('.table').DataTable().draw(false);
-        };
+        //parse authors
+        $scope.authors = AirtableChoirService.listAuthors($scope.songs);
 
-        /**
-         * loadData
-         */
-        $scope.loadData = () => {
-            let deferred = $q.defer();
+        //refresh table
+        $('.table').DataTable().draw(false);
+    };
 
-            $q.all([
-                DriveService.listFolder('cadoan.music')
-            ])
-                .then((values) => {
-                    //populate songs
-                    for (let list of values[0]) {
-                        Array.prototype.push.apply($scope.songs, list);
-                    }
+    /**
+     * loadData
+     */
+    $scope.loadData = () => {
+        let deferred = $q.defer();
 
-                    //parse categories
-                    $scope.categories = AirtableService.listCategories($scope.songs);
+        AirtableFilesService.loadFiles()
+            .then((records) => {
+                //populate songs
+                Array.prototype.push.apply($scope.songs, records);
 
-                    //parse authors
-                    $scope.authors = AirtableService.listAuthors($scope.songs);
+                //parse categories
+                $scope.categories = AirtableChoirService.listCategories($scope.songs);
 
-                    //sort data
-                    AirtableService.sortByLocale($scope.songs, 'title');
+                //parse authors
+                $scope.authors = AirtableChoirService.listAuthors($scope.songs);
 
-                    deferred.resolve();
-                });
+                //sort data
+                AirtableChoirService.sortByLocale($scope.songs, 'title');
 
-            return deferred.promise;
-        };
+                deferred.resolve();
+            });
 
-        $scope.refreshSearch = (param) => {
-            console.log(param);
-            console.log($ngModel);
-        }
-    }]);
+        return deferred.promise;
+    };
+
+}]);

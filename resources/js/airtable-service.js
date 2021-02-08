@@ -1,20 +1,16 @@
 app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHttp) => {
 
-    let service = {},
-        config = {};
-
-    service.setConfig = (args) => {
-        config = args;
-    };
+    let service = {};
 
     /**
      * getData
      *
      * @param table
+     * @param config
      *
      * @return {*}
      */
-    service.getData = (table) => {
+    service.getData = (table, config) => {
         let deferred = $q.defer(),
             url = `${config.url}/${table}?api_key=${config.key}`,
             records = [];
@@ -26,7 +22,7 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
                     method: 'GET'
                 };
 
-            DelayHttp(conf, 200)
+            DelayHttp(conf, 100)
                 .then(
                     //success
                     response => {
@@ -36,7 +32,7 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
 
                             config.tables[table].fields.forEach(field => {
                                 switch(true) {
-                                    case field === 'date':
+                                    case field === 'date' && record.fields[field]:
                                         value[field] = parseDate(record.fields[field]);
                                         break;
 
@@ -45,7 +41,7 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
                                         break;
 
                                     default:
-                                        value[field] = `${record.fields[field]}`;
+                                        value[field] = record.fields[field] ? `${record.fields[field]}` : '';
                                 }
                             });
 
@@ -94,10 +90,11 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
      *
      * @param table
      * @param data
+     * @param config
      *
      * @returns {*|void}
      */
-    service.createData = (table, data) => {
+    service.createData = (table, data, config) => {
         let deferred = $q.defer();
 
         $http({
@@ -126,10 +123,11 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
      * @param table
      * @param refId
      * @param data
+     * @param config
      *
      * @returns {*|void}
      */
-    service.updateData = (table, refId, data) => {
+    service.updateData = (table, refId, data, config) => {
         let deferred = $q.defer();
 
         $http({
@@ -157,10 +155,11 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
      *
      * @param table
      * @param refId
+     * @param config
      *
      * @returns {*|void}
      */
-    service.deleteData = (table, refId) => {
+    service.deleteData = (table, refId, config) => {
         let deferred = $q.defer();
 
         $http({
