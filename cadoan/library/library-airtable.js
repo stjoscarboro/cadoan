@@ -1,5 +1,5 @@
 app.controller("LibraryCtrl", [
-    '$scope', '$q', '$window', '$uibModal', '$timeout', '$filter', '$document', 'GoogleService', 'DriveService', 'AirtableService', 'AppUtil',
+    '$scope', '$q', '$window', '$uibModal', '$timeout', '$filter', '$document', 'GoogleService', 'DriveService', 'AirtableChoirService', 'AppUtil',
     ($scope, $q, $window, $uibModal, $timeout, $filter, $document, GoogleService, DriveService, AirtableService, AppUtil) => {
 
         /**
@@ -18,6 +18,7 @@ app.controller("LibraryCtrl", [
             $scope.pageCounter = 1;
             $scope.maxSize = 7;
 
+            AirtableService.init();
             $document.ready(() => {
                 if ($window.angular.element('.signin').length === 0) {
                     $scope.loadData()

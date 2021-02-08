@@ -1,5 +1,5 @@
 app.controller("ScheduleCtrl", [
-    '$scope', '$q', '$window', '$uibModal', '$timeout', '$document', 'GoogleService', 'DriveService', 'AirtableService', 'AppUtil',
+    '$scope', '$q', '$window', '$uibModal', '$timeout', '$document', 'GoogleService', 'DriveService', 'AirtableChoirService', 'AppUtil',
     ($scope, $q, $window, $uibModal, $timeout, $document, GoogleService, DriveService, AirtableService, AppUtil) => {
 
         /**
@@ -18,6 +18,7 @@ app.controller("ScheduleCtrl", [
 
             $scope.clear();
 
+            AirtableService.init();
             $document.ready(() => {
                 if ($window.angular.element('.signin').length === 0) {
                     $scope.loadData()

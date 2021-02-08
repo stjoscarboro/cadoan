@@ -1,233 +1,10 @@
-app.factory('AirtableService', ['$q', '$http', 'AppUtil', ($q, $http, AppUtil) => {
+app.factory('AirtableService', ['$q', '$http', 'AppUtil', ($q, $http) => {
 
     let service = {},
-        tableURL = 'https://api.airtable.com/v0/appct8Cpvuk7NtKiQ',
-        apiKey = Base64.decode('a2V5UUxrUm82andCeTdNWmg='),
+        config = {};
 
-        tables = {
-            singers: {
-                fields: [ 'id', 'name' ]
-            },
-
-            liturgies: {
-                fields: [ 'id', 'name', 'year', 'date', 'intention' ]
-            },
-
-            schedules: {
-                fields: [ 'id', 'date', 'liturgy', 'songs' ]
-            }
-        };
-
-    /**
-     * getCategories
-     *
-     * @returns {string[]}
-     */
-    service.getCategories = () => {
-        return [ 'Nhập Lễ', 'Đáp Ca', 'Dâng Lễ', 'Hiệp Lễ', 'Kết Lễ' ];
-    };
-
-    /**
-     * loadSingers
-     *
-     * @returns {f}
-     */
-    service.loadSingers = () => {
-        let deferred = $q.defer();
-
-        service.getData('singers')
-            .then(records => {
-                deferred.resolve(records);
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * loadLiturgies
-     *
-     * @returns {f}
-     */
-    service.loadLiturgies = () => {
-        let deferred = $q.defer();
-
-        service.getData('liturgies')
-            .then(records => {
-                deferred.resolve(records);
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * loadSchedules
-     *
-     * @param songs
-     * @returns {f}
-     */
-    service.loadSchedules = (songs) => {
-        let deferred = $q.defer(),
-            results = [];
-
-        service.getData('schedules')
-            .then(records => {
-                records.forEach(record => {
-                    let list = JSON.parse(record.songs);
-
-                    //populate songs
-                    list.forEach(item => {
-                        //find song
-                        let song = (songs.find(i => {
-                            return i.id === item.id;
-                        }));
-
-                        if (song) {
-                            Object.assign(item, AppUtil.pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
-                        }
-                    });
-
-                    results.push({
-                        id: record.id,
-                        refId: record.refId,
-                        date: record.date,
-                        liturgy: JSON.parse(record.liturgy),
-                        songs: list
-                    });
-                });
-
-                results.sort((r1, r2) => { return r1.date - r2.date; });
-                deferred.resolve(results);
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * createData
-     *
-     * @param payload
-     *
-     * @returns {*|void}
-     */
-    service.createSchedule = (payload) => {
-        let data = {
-                fields: payload
-            };
-
-        return service.createData('schedules', data);
-    };
-
-    /**
-     * updateSchedule
-     *
-     * @param refId
-     * @param payload
-     *
-     * @returns {*|void}
-     */
-    service.updateSchedule = (refId, payload) => {
-        let data = {
-                fields: payload
-            };
-
-        return service.updateData('schedules', refId, data);
-    };
-
-    /**
-     * deleteSchedule
-     *
-     * @param refId
-     *
-     * @returns {*|void}
-     */
-    service.deleteSchedule = (refId) => {
-        return service.deleteData('schedules', refId);
-    };
-
-    /**
-     * listCategories
-     *
-     * @param songs
-     *
-     * @returns {Array}
-     */
-    service.listCategories = (songs) => {
-        let categories = songs.reduce((count, song) => {
-            count[song.category] = (count[song.category] || 0) + 1;
-            return count;
-        }, {});
-
-        categories = Object.keys(categories).reduce((values, key) => {
-            categories[key] > 0 && values.push(key);
-            return values;
-        }, []);
-
-        service.sortCategories(categories);
-        return categories;
-    };
-
-    /**
-     * listAuthors
-     *
-     * @param songs
-     *
-     * @returns {Array}
-     */
-    service.listAuthors = (songs) => {
-        let authors = songs.reduce((count, song) => {
-            count[song.author] = (count[song.author] || 0) + 1;
-            return count;
-        }, {});
-
-        authors = Object.keys(authors).reduce((values, key) => {
-            authors[key] > 0 && values.push(key);
-            return values;
-        }, []);
-
-        service.sortByLocale(authors, 'name');
-        return authors;
-    };
-
-    /**
-     * sortByLocale
-     *
-     * @param array
-     * @param property
-     */
-    service.sortByLocale = (array, property) => {
-        array && array.sort((v1, v2) => {
-            let p1 = typeof v1 === 'object' && property ? v1[property] : v1,
-                p2 = typeof v2 === 'object' && property ? v2[property] : v2;
-            return p1 && p2 ? p1.localeCompare(p2) : 0;
-        });
-    };
-
-    /**
-     * sortCategories
-     *
-     * @param array
-     */
-    service.sortCategories = (array) => {
-        service.sortByLocale(array);
-
-        array && array.sort((v1, v2) => {
-            let order = service.getCategories().reverse();
-            return order.indexOf(v2) - order.indexOf(v1);
-        });
-    };
-
-    /**
-     * parseDate
-     *
-     * @param value
-     *
-     * @returns {Date}
-     */
-    let parseDate = (value) => {
-        let date = new Date(Date.parse(value));
-
-        date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-        return date;
+    service.setConfig = (args) => {
+        config = args;
     };
 
     /**
@@ -239,7 +16,7 @@ app.factory('AirtableService', ['$q', '$http', 'AppUtil', ($q, $http, AppUtil) =
      */
     service.getData = (table) => {
         let deferred = $q.defer(),
-            url = `${tableURL}/${table}?api_key=${apiKey}`,
+            url = `${config.url}/${table}?api_key=${config.key}`,
             records = [];
 
         let loadURL = (url, offset) => {
@@ -256,7 +33,7 @@ app.factory('AirtableService', ['$q', '$http', 'AppUtil', ($q, $http, AppUtil) =
                         (response.data['records'] || []).forEach(record => {
                             let value = {refId: record.id};
 
-                            tables[table].fields.forEach(field => {
+                            config.tables[table].fields.forEach(field => {
                                 switch(true) {
                                     case field === 'date':
                                         value[field] = parseDate(record.fields[field]);
@@ -323,7 +100,7 @@ app.factory('AirtableService', ['$q', '$http', 'AppUtil', ($q, $http, AppUtil) =
         let deferred = $q.defer();
 
         $http({
-            url: `${tableURL}/${table}?api_key=${apiKey}`,
+            url: `${config.url}/${table}?api_key=${config.key}`,
             method: 'POST',
             data: data
         })
@@ -355,7 +132,7 @@ app.factory('AirtableService', ['$q', '$http', 'AppUtil', ($q, $http, AppUtil) =
         let deferred = $q.defer();
 
         $http({
-            url: `${tableURL}/${table}/${refId}?api_key=${apiKey}`,
+            url: `${config.url}/${table}/${refId}?api_key=${config.key}`,
             method: 'PUT',
             data: data
         })
@@ -386,7 +163,7 @@ app.factory('AirtableService', ['$q', '$http', 'AppUtil', ($q, $http, AppUtil) =
         let deferred = $q.defer();
 
         $http({
-            url: `${tableURL}/${table}/${refId}?api_key=${apiKey}`,
+            url: `${config.url}/${table}/${refId}?api_key=${config.key}`,
             method: 'DELETE'
         })
             .then(
@@ -402,6 +179,20 @@ app.factory('AirtableService', ['$q', '$http', 'AppUtil', ($q, $http, AppUtil) =
             );
 
         return deferred.promise;
+    };
+
+    /**
+     * parseDate
+     *
+     * @param value
+     *
+     * @returns {Date}
+     */
+    let parseDate = (value) => {
+        let date = new Date(Date.parse(value));
+
+        date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+        return date;
     };
 
     return service;
