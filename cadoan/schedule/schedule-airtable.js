@@ -1,6 +1,6 @@
 app.controller("ScheduleCtrl", [
-    '$scope', '$q', '$window', '$uibModal', '$timeout', '$document', 'GoogleService', 'SheetsService', 'DriveService', 'AppUtil',
-    ($scope, $q, $window, $uibModal, $timeout, $document, GoogleService, SheetsService, DriveService, AppUtil) => {
+    '$scope', '$q', '$window', '$uibModal', '$timeout', '$document', 'GoogleService', 'DriveService', 'AirtableService', 'AppUtil',
+    ($scope, $q, $window, $uibModal, $timeout, $document, GoogleService, DriveService, AirtableService, AppUtil) => {
 
         /**
          * init
@@ -48,10 +48,10 @@ app.controller("ScheduleCtrl", [
         $scope.get = () => {
             $scope.schedules = [];
 
-            SheetsService.loadSchedules($scope.songs)
+            AirtableService.loadSchedules($scope.songs)
                 .then(schedules => {
                     let today = new Date(),
-                        count = 4,
+                        count = 5,
                         first = (schedules.length >= count ? schedules.slice(-count) : schedules.slice(0))[0].date;
 
                     today.setHours(0, 0, 0, 0);
@@ -96,37 +96,20 @@ app.controller("ScheduleCtrl", [
         };
 
         /**
-         * sort
-         */
-        $scope.sort = () => {
-            let payload = {
-                "requests": [{
-                    "sortRange": {
-                        "range": {
-                            sheetId: 0
-                        },
-                        "sortSpecs": [{
-                            "dimensionIndex": 0,
-                            "sortOrder": "ASCENDING"
-                        }]
-                    }
-                }]
-            };
-
-            SheetsService.updateSchedule(payload)
-                .then(() => {
-                    $scope.clear();
-                    $scope.get();
-                });
-        };
-
-        /**
          * clear
          */
         $scope.clear = () => {
             $scope.lists = {};
             $scope.schedule = {liturgy: {}, songs: []};
             $scope.rows = 5;
+        };
+
+        /**
+         * refresh
+         */
+        $scope.refresh = () => {
+            $scope.clear();
+            $scope.get();
         };
 
         /**
@@ -221,8 +204,8 @@ app.controller("ScheduleCtrl", [
         /**
          * edit
          */
-        $scope.edit = (id) => {
-            $scope.schedule = angular.copy($scope.schedules[id]);
+        $scope.edit = (index) => {
+            $scope.schedule = angular.copy($scope.schedules[index]);
             $scope.rows = $scope.schedule.songs.length;
 
             //get liturgy
@@ -248,25 +231,13 @@ app.controller("ScheduleCtrl", [
         /**
          * remove
          */
-        $scope.remove = (id) => {
-            let deferred = $q.defer();
+        $scope.remove = (index) => {
+            let deferred = $q.defer(),
+                schedule = $scope.schedules[index] || {};
 
-            let payload = {
-                "requests": [{
-                    "deleteDimension": {
-                        "range": {
-                            "sheetId": 0,
-                            "dimension": "ROWS",
-                            "startIndex": id,
-                            "endIndex": id + 1
-                        }
-                    }
-                }]
-            };
-
-            SheetsService.updateSchedule(payload)
+            AirtableService.deleteSchedule(schedule.refId)
                 .then(() => {
-                    $scope.schedules.splice(id, 1);
+                    $scope.schedules.splice(index, 1);
                     deferred.resolve();
                 });
 
@@ -278,7 +249,7 @@ app.controller("ScheduleCtrl", [
          */
         $scope.save = () => {
             let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date),
-                liturgy = {}, songs = [], payload, removed = [],
+                liturgy = {}, songs = [], payload,
                 deferred = $q.defer();
 
             //parse songs
@@ -303,43 +274,34 @@ app.controller("ScheduleCtrl", [
 
             //create payload
             payload = {
-                values: [
-                    [
-                        $.datepicker.formatDate('yy-mm-dd', date),
-                        JSON.stringify(liturgy),
-                        JSON.stringify(songs)
-                    ]
-                ]
+                date: $.datepicker.formatDate('yy-mm-dd', date),
+                liturgy: JSON.stringify(liturgy),
+                songs: JSON.stringify(songs)
             };
 
-            //remove existing schedule
-            $scope.schedules.find((schedule, index) => {
-                let sdate = $.datepicker.parseDate($scope.dateFormat, schedule.date);
-
-                if (sdate.getTime() === date.getTime()) {
-                    removed.push($scope.remove(index));
-                }
+            //find schedule with this date
+            let schedule = $scope.schedules.find(i => {
+                return i.date === $scope.schedule.date;
             });
 
-            $q.all(removed)
-                .then(() => {
-                    //add new schedule
-                    SheetsService.addSchedule(payload)
-                        .then(
-                            //success
-                            () => {
-                                $scope.sort();
-                                deferred.resolve();
-                            },
+            //create or update
+            if(schedule) {
+                //update
+                AirtableService.updateSchedule(schedule.refId, payload)
+                    .then(() => {
+                        $scope.refresh();
+                        deferred.resolve();
+                    });
+            } else {
+                //create
+                AirtableService.createSchedule(payload)
+                    .then(() => {
+                        $scope.refresh();
+                        deferred.resolve();
+                    });
+            }
 
-                            //failure
-                            (response) => {
-                                console.log(response.data.error);
-                                deferred.reject();
-                            }
-                        );
-                });
-
+            deferred.resolve();
             return deferred.promise;
         };
 
@@ -351,8 +313,8 @@ app.controller("ScheduleCtrl", [
 
             $q.all([
                 DriveService.listFolder('cadoan.music'),
-                SheetsService.loadLiturgies(),
-                SheetsService.loadSingers()
+                AirtableService.loadLiturgies(),
+                AirtableService.loadSingers()
             ])
                 .then((values) => {
                     //populate songs
@@ -361,7 +323,7 @@ app.controller("ScheduleCtrl", [
                     }
 
                     //parse categories
-                    $scope.categories = SheetsService.listCategories($scope.songs);
+                    $scope.categories = AirtableService.listCategories($scope.songs);
                     $scope.categories.push('Tất Cả');
 
                     //populate liturgies
@@ -372,8 +334,8 @@ app.controller("ScheduleCtrl", [
                     $scope.singers.unshift({ id: null, name: null });
 
                     //sort data
-                    SheetsService.sortByLocale($scope.songs, 'title');
-                    SheetsService.sortByLocale($scope.singers, 'name');
+                    AirtableService.sortByLocale($scope.songs, 'title');
+                    AirtableService.sortByLocale($scope.singers, 'name');
 
                     deferred.resolve();
                 });
