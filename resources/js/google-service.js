@@ -132,29 +132,3 @@ app.factory('GoogleService', ['$http', 'DelayHttp', ($http, DelayHttp) => {
     return service;
 
 }]);
-
-app.factory('QueueHttp', ['$http', '$q', ($http, $q) => {
-    let promise = $q.resolve();
-
-    return (conf) => {
-        let next = () => {
-            return $http(conf);
-        };
-
-        return promise = promise.then(next);
-    };
-}]);
-
-app.factory('DelayHttp', ['$http', '$timeout', ($http, $timeout) => {
-    let counter = 0,
-        delay = 100;
-
-    return (conf) => {
-        counter += 1;
-
-        return $timeout(() => {
-            counter -= 1;
-            return $http(conf);
-        }, counter * delay);
-    };
-}]);
