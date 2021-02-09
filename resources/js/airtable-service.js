@@ -16,14 +16,12 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
             records = [];
 
         let loadURL = (url, offset) => {
-            let deferred = $q.defer(),
-                conf = {
-                    url: url + (offset ? `&offset=${ offset }` : ''),
-                    method: 'GET'
-                };
+            let deferred = $q.defer();
 
-            DelayHttp(conf, 100)
-                .then(
+            DelayHttp({
+                url: url + (offset ? `&offset=${ offset }` : ''),
+                method: 'GET'
+            }).then(
                     //success
                     response => {
                         //process records

@@ -130,10 +130,18 @@ app.controller("LibraryCtrl", [
         let deferred = $q.defer(),
             payload = AppUtil.pick($scope.song, 'id', 'title', 'author', 'category', 'others');
 
-        AirtableFilesService.updateFile($scope.song.refId, payload)
-            .then(() => {
-                deferred.resolve();
-            });
+        //create or update
+        if(!$scope.song.refId) {
+            AirtableFilesService.createFile(payload)
+                .then(() => {
+                    deferred.resolve();
+                });
+        } else {
+            AirtableFilesService.updateFile($scope.song.refId, payload)
+                .then(() => {
+                    deferred.resolve();
+                });
+        }
 
         return deferred.promise;
     };

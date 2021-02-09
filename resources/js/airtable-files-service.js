@@ -1,4 +1,6 @@
-app.factory('AirtableFilesService', ['$q', '$http', 'AirtableService', 'DriveService', ($q, $http, AirtableService, DriveService) => {
+app.factory('AirtableFilesService', [
+    '$q', '$http', 'AirtableService', 'DriveService', 'AppUtil',
+    ($q, $http, AirtableService, DriveService, AppUtil) => {
 
     let service = {},
         config = {
@@ -28,12 +30,36 @@ app.factory('AirtableFilesService', ['$q', '$http', 'AirtableService', 'DriveSer
     service.loadFiles = () => {
         let deferred = $q.defer();
 
-        AirtableService.getData('files', config)
-            .then(records => {
-                records.forEach(record => {
-                    record.url = `${DriveService.getViewURL(record.id)}`;
+        $q.all([
+            AirtableService.getData('files', config),
+            DriveService.listFolder('cadoan.music')
+        ])
+            .then(data => {
+                let records = data[0],
+                    files = data[1][0],
+                    removes = [];
+
+                //check added files
+                files.forEach(file => {
+                    let record = records.find(record => { return record.id === file.id; });
+
+                    if(!record) {
+                        records.push(AppUtil.pick(file, 'id', 'title', 'category', 'author', 'others', 'audio'));
+                    } else {
+                        Object.assign(record, AppUtil.pick(file, 'audio'));
+                    }
                 });
 
+                //check removed files
+                records.forEach(record => {
+                    record.url = `${DriveService.getViewURL(record.id)}`;
+
+                    if(!files.find(file => { return file.id === record.id; })) {
+                        removes.push(record.refId);
+                    }
+                });
+
+                removes.length > 0 && console.log(`removes: ${removes}`);
                 deferred.resolve(records);
             });
 
