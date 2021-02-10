@@ -9,6 +9,7 @@ app.controller("ScheduleCtrl", [
         $scope.schedules = [];
         $scope.liturgies = [];
         $scope.singers = [];
+        $scope.years = [];
         $scope.songs = [];
         $scope.categories = [];
 
@@ -63,7 +64,7 @@ app.controller("ScheduleCtrl", [
 
                         //parse liturgy
                         for(let liturgy of $scope.liturgies) {
-                            if(liturgy.id === schedule.liturgy.id && liturgy.year === schedule.liturgy.year) {
+                            if(liturgy.id === schedule.liturgy.id) {
                                 Object.assign(schedule.liturgy, AppUtil.pick(liturgy, 'name', 'year'));
                             }
                         }
@@ -146,6 +147,7 @@ app.controller("ScheduleCtrl", [
                 let setLiturgy = () => {
                     let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date);
 
+                    //set liturgy
                     for(let liturgy of $scope.liturgies) {
                         if(date.getTime() === liturgy.date.getTime()) {
                             Object.assign($scope.schedule.liturgy, AppUtil.pick(liturgy, 'id', 'name', 'year'));
@@ -153,6 +155,13 @@ app.controller("ScheduleCtrl", [
                             if(!$scope.schedule.liturgy.intention) {
                                 $scope.schedule.liturgy.intention = liturgy.intention;
                             }
+                        }
+                    }
+
+                    //set year
+                    for(let year of $scope.years) {
+                        if(!$scope.schedule.liturgy.year && date.getTime() >= year.date.getTime()) {
+                            Object.assign($scope.schedule.liturgy, AppUtil.pick(year, 'year'));
                         }
                     }
                 };
@@ -260,7 +269,17 @@ app.controller("ScheduleCtrl", [
         }
 
         //parse liturgy
-        Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'name', 'year', 'intention'));
+        for(let liturgy of $scope.liturgies) {
+            if(liturgy.name === $scope.schedule.liturgy.name && liturgy.year === $scope.schedule.liturgy.year) {
+                $scope.schedule.liturgy.id = liturgy.id;
+            }
+        }
+
+        if($scope.schedule.liturgy.id) {
+            Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'id', 'intention'));
+        } else {
+            Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'name', 'year', 'intention'));
+        }
 
         //create payload
         payload = {
@@ -304,7 +323,8 @@ app.controller("ScheduleCtrl", [
         $q.all([
             AirtableFilesService.loadFiles(),
             AirtableChoirService.loadLiturgies(),
-            AirtableChoirService.loadSingers()
+            AirtableChoirService.loadSingers(),
+            AirtableChoirService.loadYears()
         ])
             .then((values) => {
                 //populate songs
@@ -320,6 +340,9 @@ app.controller("ScheduleCtrl", [
                 //populate singers
                 $scope.singers = values[2];
                 $scope.singers.unshift({ id: null, name: null });
+
+                //populate years
+                $scope.years = values[3];
 
                 //sort data
                 AirtableChoirService.sortByLocale($scope.songs, 'title');

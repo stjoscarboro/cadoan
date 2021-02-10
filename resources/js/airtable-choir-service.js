@@ -9,6 +9,10 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
                     fields: [ 'id', 'name' ]
                 },
 
+                years: {
+                    fields: [ 'id', 'year', 'date' ]
+                },
+
                 liturgies: {
                     fields: [ 'id', 'name', 'year', 'date', 'intention' ]
                 },
@@ -45,6 +49,22 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
     };
 
     /**
+     * loadYears
+     *
+     * @returns {f}
+     */
+    service.loadYears = () => {
+        let deferred = $q.defer();
+
+        AirtableService.getData('years', config)
+            .then(records => {
+                deferred.resolve(records);
+            });
+
+        return deferred.promise;
+    };
+
+    /**
      * loadLiturgies
      *
      * @returns {f}
@@ -53,7 +73,18 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
         let deferred = $q.defer();
 
         AirtableService.getData('liturgies', config)
-            .then(records => {
+            .then(values => {
+                let records = [];
+
+                values.forEach(value => {
+                    let record = records.find(record => { return record.date.getTime() === value.date.getTime(); });
+                    if(record) {
+                        record.intention = value.name;
+                    } else {
+                        value.date && records.push(value);
+                    }
+                });
+
                 deferred.resolve(records);
             });
 

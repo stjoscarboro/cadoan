@@ -1,6 +1,4 @@
-app.factory('AirtableFilesService', [
-    '$q', '$http', 'AirtableService', 'DriveService', 'AppUtil',
-    ($q, $http, AirtableService, DriveService, AppUtil) => {
+app.factory('AirtableFilesService', ['$q', '$http', 'AirtableService', 'DriveService', 'AppUtil', ($q, $http, AirtableService, DriveService, AppUtil) => {
 
     let service = {},
         config = {
