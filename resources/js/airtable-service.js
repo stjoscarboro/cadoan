@@ -47,7 +47,7 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
                         });
 
                         //process next page
-                        if (response.data['offset']) {
+                        if(response.data['offset']) {
                             loadURL(url, response.data['offset'])
                                 .then(() => {
                                     deferred.resolve();

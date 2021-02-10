@@ -44,9 +44,9 @@ app.factory('AirtableFilesService', [
                     let record = records.find(record => { return record.id === file.id; });
 
                     if(!record) {
-                        records.push(AppUtil.pick(file, 'id', 'title', 'category', 'author', 'others', 'audio'));
+                        records.push(AppUtil.pick(file, 'id', 'title', 'category', 'author', 'others', 'name', 'audio'));
                     } else {
-                        Object.assign(record, AppUtil.pick(file, 'audio'));
+                        Object.assign(record, AppUtil.pick(file, 'name', 'audio'));
                     }
                 });
 

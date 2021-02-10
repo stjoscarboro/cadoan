@@ -19,7 +19,7 @@ app.controller("ScheduleCtrl", [
         $scope.clear();
 
         $document.ready(() => {
-            if ($window.angular.element('.signin').length === 0) {
+            if($window.angular.element('.signin').length === 0) {
                 $scope.loadData()
                     .then(() => {
                         $scope.get();
@@ -57,13 +57,13 @@ app.controller("ScheduleCtrl", [
                 today.setHours(0, 0, 0, 0);
                 first.setHours(0, 0, 0, 0);
 
-                for (let schedule of schedules) {
-                    if ($scope.accessToken || schedule.date >= today || schedule.date >= first) {
+                for(let schedule of schedules) {
+                    if($scope.accessToken || schedule.date >= today || schedule.date >= first) {
                         schedule.date = $.datepicker.formatDate($scope.dateFormat, schedule.date);
 
                         //parse liturgy
-                        for (let liturgy of $scope.liturgies) {
-                            if (liturgy.id === schedule.liturgy.id && liturgy.year === schedule.liturgy.year) {
+                        for(let liturgy of $scope.liturgies) {
+                            if(liturgy.id === schedule.liturgy.id && liturgy.year === schedule.liturgy.year) {
                                 Object.assign(schedule.liturgy, AppUtil.pick(liturgy, 'name', 'year'));
                             }
                         }
@@ -76,10 +76,10 @@ app.controller("ScheduleCtrl", [
 
                         //parse duplicate categories
                         Object.keys(categories).forEach(category => {
-                            if (categories[category] > 1) {
+                            if(categories[category] > 1) {
                                 let index = 1;
                                 schedule.songs.forEach(song => {
-                                    if (song.category === category) {
+                                    if(song.category === category) {
                                         song.category = category + ' ' + (index++);
                                     }
                                 });
@@ -146,11 +146,11 @@ app.controller("ScheduleCtrl", [
                 let setLiturgy = () => {
                     let date = $.datepicker.parseDate($scope.dateFormat, $scope.schedule.date);
 
-                    for (let liturgy of $scope.liturgies) {
-                        if (date.getTime() === liturgy.date.getTime()) {
+                    for(let liturgy of $scope.liturgies) {
+                        if(date.getTime() === liturgy.date.getTime()) {
                             Object.assign($scope.schedule.liturgy, AppUtil.pick(liturgy, 'id', 'name', 'year'));
 
-                            if (!$scope.schedule.liturgy.intention) {
+                            if(!$scope.schedule.liturgy.intention) {
                                 $scope.schedule.liturgy.intention = liturgy.intention;
                             }
                         }
@@ -158,8 +158,8 @@ app.controller("ScheduleCtrl", [
                 };
 
                 let setCategories = () => {
-                    if ($scope.schedule.songs.length === 0) {
-                        for (let i = 0; i < 5; i++) {
+                    if($scope.schedule.songs.length === 0) {
+                        for(let i = 0; i < 5; i++) {
                             $scope.schedule.songs.push({category: $scope.categories[i]});
                             $scope.selectSongs(i);
                         }
@@ -180,8 +180,8 @@ app.controller("ScheduleCtrl", [
                 });
 
                 //set datepicker to a week from last scheduled date
-                if (!$scope.schedule.date) {
-                    for (let schedule of $scope.schedules) {
+                if(!$scope.schedule.date) {
+                    for(let schedule of $scope.schedules) {
                         let date = $.datepicker.parseDate($scope.dateFormat, schedule.date),
                             timediff = $scope.weekms - (date.getDay() * $scope.dayms);
 
@@ -253,24 +253,14 @@ app.controller("ScheduleCtrl", [
             deferred = $q.defer();
 
         //parse songs
-        for (let song of $scope.schedule.songs) {
-            if (song.id) {
+        for(let song of $scope.schedule.songs) {
+            if(song.id) {
                 songs.push(Object.assign({}, AppUtil.pick(song, 'id', 'singer')));
             }
         }
 
         //parse liturgy
-        for (let liturgy of $scope.liturgies) {
-            if (liturgy.name === $scope.schedule.liturgy.name) {
-                $scope.schedule.liturgy.id = liturgy.id;
-            }
-        }
-
-        if ($scope.schedule.liturgy.id) {
-            Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'id', 'name', 'year', 'intention'));
-        } else {
-            Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'name', 'year', 'intention'));
-        }
+        Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'name', 'year', 'intention'));
 
         //create payload
         payload = {
@@ -347,11 +337,11 @@ app.controller("ScheduleCtrl", [
     $scope.selectSongs = (index) => {
         let songs = $scope.schedule.songs[index];
 
-        if (songs && songs.category) {
+        if(songs && songs.category) {
             $scope.lists[index] = {songs: []};
 
-            for (let song of $scope.songs) {
-                if (songs.category.indexOf(song.category) !== -1) {
+            for(let song of $scope.songs) {
+                if(songs.category.indexOf(song.category) !== -1) {
                     songs.category = song.category;
                     $scope.lists[index].songs.push(song);
                 }
@@ -369,7 +359,7 @@ app.controller("ScheduleCtrl", [
     $scope.previewSong = (index) => {
         let song = $scope.schedule.songs[index];
 
-        if (song && song.id) {
+        if(song && song.id) {
             $window.open(song.url, '_blank');
         }
     };

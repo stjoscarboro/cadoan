@@ -19,7 +19,7 @@ app.controller("LibraryCtrl", [
         $scope.maxSize = 7;
 
         $document.ready(() => {
-            if ($window.angular.element('.signin').length === 0) {
+            if($window.angular.element('.signin').length === 0) {
                 $scope.loadData()
                     .then(() => {
                         $scope.get();
@@ -67,7 +67,7 @@ app.controller("LibraryCtrl", [
                 lengthMenu: [[10, 15, 25, 50, -1], [10, 15, 25, 50, "All"]],
                 dom: '<fpl<t>i<"dataTables_drive">>',
                 initComplete: () => {
-                    if ($scope.accessToken) {
+                    if($scope.accessToken) {
                         $(".dataTables_drive").append('Danh Sách Bài Hát ➡ <a href="' + $scope.driveURL + '" target="_blank" title="Danh Sách Bài Hát" class="drive-icon"></a>');
                     }
 

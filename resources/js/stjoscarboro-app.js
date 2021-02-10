@@ -69,7 +69,7 @@ app.factory('AppUtil', ['$document', '$window', '$interval', '$timeout', ($docum
      * @param keys
      */
     util.pick = (obj, ...keys) => {
-        return keys.reduce((o, k) => (o[k] = obj[k], o), {});
+        return keys.reduce((o, k) => (obj[k] && (o[k] = obj[k]), o), {});
     };
 
     return util;

@@ -82,7 +82,7 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
                             return i.id === item.id;
                         }));
 
-                        if (song) {
+                        if(song) {
                             Object.assign(item, AppUtil.pick(song, 'title', 'category', 'author', 'audio', 'url', 'folder'));
                         }
                     });
