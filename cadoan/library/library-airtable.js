@@ -48,9 +48,9 @@ app.controller("LibraryCtrl", [
     $scope.get = () => {
         let admin = $scope.accessToken !== null && $scope.accessToken !== undefined,
             columns = [
-                {width: 'calc(50% - 16)', targets: 0},
+                {width: 'calc(45% - 16)', targets: 0},
                 {width: '35%', targets: 1},
-                {width: '15%', targets: 2},
+                {width: '20%', targets: 2},
                 {width: 16, targets: 3, visible: admin, searchable: false, orderable: false},
                 {width: 0, targets: 4, visible: false, type: 'hidden'}
             ];
