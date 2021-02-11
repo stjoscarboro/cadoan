@@ -402,4 +402,14 @@ app.controller("ScheduleCtrl", [
         $scope.rows -= 1;
         $scope.schedule.songs.splice($scope.rows, 1);
     };
+
+    /**
+     * tagHandler
+     * Fixed error when expanding select using the arrow with search-enabled="false"
+     *
+     * @return {null}
+     */
+    $scope.tagHandler = function (){
+        return null;
+    }
 }]);

@@ -55,7 +55,7 @@
             <div class="col-md-10">
                 <div class="row row-no-padding">
                     <div class="col-md-3">
-                        <ui-select ng-model="schedule.songs[x].category" search-enabled="false" ng-change="selectSongs(x)">
+                        <ui-select ng-model="schedule.songs[x].category" search-enabled="false" ng-change="selectSongs(x)" tagging="tagHandler">
                             <ui-select-match>
                                 {{$select.selected}}
                             </ui-select-match>
@@ -79,7 +79,7 @@
                     </div>
 
                     <div class="col-md-2">
-                        <ui-select ng-model="schedule.songs[x].singer" search-enabled="false">
+                        <ui-select ng-model="schedule.songs[x].singer" search-enabled="false" tagging="tagHandler">
                             <ui-select-match>
                                 {{$select.selected.name}}
                             </ui-select-match>
