@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ca Đoàn Thánh Giuse - Scarborough</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <script src="../resources/js/jquery.min.js"></script>
+    <script src="../resources/js/angular.min.js"></script>
+    <script src="../resources/js/angular-sanitize.min.js"></script>
+    <script src="../resources/js/base64.min.js"></script>
+
+    <script src="../resources/js/jquery-ui.min.js"></script>
+    <script src="../resources/js/jquery-ui-datepicker-vi.min.js"></script>
+
+    <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../resources/js/bootstrap.min.js"></script>
+    <script src="../resources/js/ui-bootstrap.min.js"></script>
+
+    <link href="../resources/css/select.min.css" rel="stylesheet">
+    <script src="../resources/js/select.min.js"></script>
+
+    <script src="../resources/js/stjoscarboro-app.min.js"></script>
+    <script src="../resources/js/google-service.min.js"></script>
+    <script src="../resources/js/drive-service.min.js"></script>
+
+    <script src="../resources/js/airtable-service.min.js"></script>
+    <script src="../resources/js/airtable-choir-service.min.js"></script>
+    <script src="../resources/js/airtable-files-service.min.js"></script>
+
+    <link href="./schedule.min.css" rel="stylesheet">
+    <script src="./schedule-airtable.min.js"></script>
+</head>
+
+<body ng-app="stjoscarboro" ng-controller="ScheduleCtrl" data-ng-init="init()" class="schedule">
+
+<div id="main" class="main">
+    <ng-include src="'./schedule.html'"></ng-include>
+</div>
+
+</body>
+
+</html>

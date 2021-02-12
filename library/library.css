@@ -13,7 +13,7 @@
     margin: auto;
     width: 36px;
     height: 36px;
-    background: url('../../resources/images/loading.gif') no-repeat 0/36px;
+    background: url('../resources/images/loading.gif') no-repeat 0/36px;
 }
 
 .library .audio {
@@ -121,7 +121,7 @@
     width: 24px;
     height: 20px;
     margin-left: 5px;
-    background: url('../../resources/images/drive.png') no-repeat 0/26px;
+    background: url('../resources/images/drive.png') no-repeat 0/26px;
 }
 
 .library .dataTables_wrapper .hflip {

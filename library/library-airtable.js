@@ -58,7 +58,7 @@ app.controller("LibraryCtrl", [
         $timeout(() => {
             $('.table').DataTable({
                 language: {
-                    "url": "../../resources/js/datatables-vi.json"
+                    "url": "../resources/js/datatables-vi.json"
                 },
                 columns: columns,
                 autoWidth: false,
