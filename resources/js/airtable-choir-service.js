@@ -6,15 +6,7 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
             key: Base64.decode('a2V5UUxrUm82andCeTdNWmg='),
             tables: {
                 singers: {
-                    fields: [ 'id', 'name' ]
-                },
-
-                years: {
-                    fields: [ 'id', 'year', 'date' ]
-                },
-
-                liturgies: {
-                    fields: [ 'id', 'name', 'year', 'date', 'intention' ]
+                    fields: [ 'id', 'name', 'active' ]
                 },
 
                 schedules: {
@@ -38,54 +30,13 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
      * @returns {f}
      */
     service.loadSingers = () => {
-        let deferred = $q.defer();
+        let deferred = $q.defer(),
+            results = [];
 
         AirtableService.getData('singers', config)
             .then(records => {
-                deferred.resolve(records);
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * loadYears
-     *
-     * @returns {f}
-     */
-    service.loadYears = () => {
-        let deferred = $q.defer();
-
-        AirtableService.getData('years', config)
-            .then(records => {
-                deferred.resolve(records);
-            });
-
-        return deferred.promise;
-    };
-
-    /**
-     * loadLiturgies
-     *
-     * @returns {f}
-     */
-    service.loadLiturgies = () => {
-        let deferred = $q.defer();
-
-        AirtableService.getData('liturgies', config)
-            .then(values => {
-                let records = [];
-
-                values.forEach(value => {
-                    let record = records.find(record => { return record.date.getTime() === value.date.getTime(); });
-                    if(record) {
-                        record.intention = value.name;
-                    } else {
-                        value.date && records.push(value);
-                    }
-                });
-
-                deferred.resolve(records);
+                results = records.reduce((p, v) => { v.active && p.push(v); return p; }, []);
+                deferred.resolve(results);
             });
 
         return deferred.promise;

@@ -1,6 +1,6 @@
 app.controller("ScheduleCtrl", [
-    '$scope', '$q', '$window', '$uibModal', '$timeout', '$document', 'GoogleService', 'AirtableChoirService', 'AirtableFilesService', 'AppUtil',
-    ($scope, $q, $window, $uibModal, $timeout, $document, GoogleService, AirtableChoirService, AirtableFilesService, AppUtil) => {
+    '$scope', '$q', '$window', '$uibModal', '$timeout', '$document', 'GoogleService', 'AirtableChoirService', 'AirtableLiturgyService', 'AirtableFilesService', 'AppUtil',
+    ($scope, $q, $window, $uibModal, $timeout, $document, GoogleService, AirtableChoirService, AirtableLiturgyService, AirtableFilesService, AppUtil) => {
 
     /**
      * init
@@ -322,9 +322,9 @@ app.controller("ScheduleCtrl", [
 
         $q.all([
             AirtableFilesService.loadFiles(),
-            AirtableChoirService.loadLiturgies(),
-            AirtableChoirService.loadSingers(),
-            AirtableChoirService.loadYears()
+            AirtableLiturgyService.loadYears(),
+            AirtableLiturgyService.loadLiturgies(),
+            AirtableChoirService.loadSingers()
         ])
             .then((values) => {
                 //populate songs
@@ -334,15 +334,15 @@ app.controller("ScheduleCtrl", [
                 $scope.categories = AirtableChoirService.listCategories($scope.songs);
                 $scope.categories.push('Tất Cả');
 
+                //populate years
+                $scope.years = values[1];
+
                 //populate liturgies
-                $scope.liturgies = values[1];
+                $scope.liturgies = values[2];
 
                 //populate singers
-                $scope.singers = values[2];
+                $scope.singers = values[3];
                 $scope.singers.unshift({ id: null, name: null });
-
-                //populate years
-                $scope.years = values[3];
 
                 //sort data
                 AirtableChoirService.sortByLocale($scope.songs, 'title');
