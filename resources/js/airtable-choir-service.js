@@ -30,13 +30,12 @@ app.factory('AirtableChoirService', ['$q', '$http', 'AirtableService', 'AppUtil'
      * @returns {f}
      */
     service.loadSingers = () => {
-        let deferred = $q.defer(),
-            results = [];
+        let deferred = $q.defer();
 
         AirtableService.getData('singers', config)
-            .then(records => {
-                results = records.reduce((p, v) => { v.active && p.push(v); return p; }, []);
-                deferred.resolve(results);
+            .then(values => {
+                let records = values.reduce((p, v) => { v.active && p.push(v); return p; }, []);
+                deferred.resolve(records);
             });
 
         return deferred.promise;

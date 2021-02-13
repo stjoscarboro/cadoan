@@ -41,16 +41,11 @@ app.factory('AirtableLiturgyService', ['$q', '$http', 'AirtableService', ($q, $h
 
         AirtableService.getData('liturgies', config)
             .then(values => {
-                let records = [];
-
-                values.forEach(value => {
-                    let record = records.find(record => { return record.date.getTime() === value.date.getTime(); });
-                    if(record) {
-                        record.intention = value.name;
-                    } else {
-                        value.date && records.push(value);
-                    }
-                });
+                let records = values.reduce((p, v) => {
+                    let r = v.date && p.find(r => { return r.date.getTime() === v.date.getTime(); });
+                    r ? (r.intention = v.name) : v.date && p.push(v);
+                    return p;
+                }, []);
 
                 deferred.resolve(records);
             });
