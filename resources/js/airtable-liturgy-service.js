@@ -6,11 +6,15 @@ app.factory('AirtableLiturgyService', ['$q', '$http', 'AirtableService', ($q, $h
             key: Base64.decode('a2V5UUxrUm82andCeTdNWmg='),
             tables: {
                 years: {
-                    fields: [ 'id', 'year', 'date' ]
+                    fields: [ 'id', 'name', 'date' ]
                 },
 
                 liturgies: {
-                    fields: [ 'id', 'name', 'year', 'date', 'intention' ]
+                    fields: [ 'id', 'name', 'date_a', 'date_b', 'date_c' ]
+                },
+
+                intentions: {
+                    fields: [ 'id', 'name', 'date_a', 'date_b', 'date_c' ]
                 }
             }
         };
@@ -37,15 +41,54 @@ app.factory('AirtableLiturgyService', ['$q', '$http', 'AirtableService', ($q, $h
      * @returns {f}
      */
     service.loadLiturgies = () => {
-        let deferred = $q.defer();
+        let deferred = $q.defer(),
+            years = { a: '1', b: '2', c: '3' };
 
-        AirtableService.getData('liturgies', config)
+        let getIntention = (intentions, date) => {
+            let intention = null;
+
+            intentions.find(i => {
+                for(let y of Object.keys(years)) {
+                    if(i[`date_${ y }`].getTime() === date.getTime()) {
+                        intention = i;
+                    }
+                }
+            });
+
+            return intention;
+        };
+
+        $q.all([
+            AirtableService.getData('liturgies', config),
+            AirtableService.getData('intentions', config)
+        ])
             .then(values => {
-                let records = values.reduce((p, v) => {
-                    let r = v.date && p.find(r => { return r.date.getTime() === v.date.getTime(); });
-                    r ? (r.intention = v.name) : v.date && p.push(v);
-                    return p;
-                }, []);
+                let liturgies = values[0],
+                    intentions = values[1],
+                    records = liturgies.reduce((p, v) => {
+                        for(let y of Object.keys(years)) {
+                            let date = v[`date_${y}`],
+                                record = date && p.find(r => { return r.date.getTime() === date.getTime(); });
+
+                            if(record) {
+                                record.intention = {name: v.name}
+                            } else {
+                                if(date) {
+                                    record = {
+                                        id: v.id,
+                                        name: v.name,
+                                        year: years[y],
+                                        date: date,
+                                        intention: getIntention(intentions, date)
+                                    };
+
+                                    p.push(record);
+                                }
+                            }
+                        }
+
+                        return p;
+                    }, []);
 
                 deferred.resolve(records);
             });

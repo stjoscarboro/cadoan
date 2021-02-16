@@ -60,12 +60,20 @@ app.controller("ScheduleCtrl", [
 
                 for(let schedule of schedules) {
                     if($scope.accessToken || schedule.date >= today || schedule.date >= first) {
-                        schedule.date = $.datepicker.formatDate($scope.dateFormat, schedule.date);
-
                         //parse liturgy
                         for(let liturgy of $scope.liturgies) {
-                            if(liturgy.id === schedule.liturgy.id) {
+                            if(liturgy.id === schedule.liturgy.id && liturgy.date.getTime() === schedule.date.getTime()) {
                                 Object.assign(schedule.liturgy, AppUtil.pick(liturgy, 'name', 'year'));
+
+                                //assign liturgy year
+                                $scope.years.forEach(year => {
+                                    year.id === schedule.liturgy.year && (schedule.liturgy.year = year);
+                                });
+
+                                //assign liturgy intention
+                                if(liturgy.intention) {
+                                    schedule.liturgy.intention = liturgy.intention;
+                                }
                             }
                         }
 
@@ -87,6 +95,7 @@ app.controller("ScheduleCtrl", [
                             }
                         });
 
+                        schedule.date = $.datepicker.formatDate($scope.dateFormat, schedule.date);
                         $scope.schedules.push(schedule);
                     }
                 }
@@ -160,8 +169,8 @@ app.controller("ScheduleCtrl", [
 
                     //set year
                     for(let year of $scope.years) {
-                        if(!$scope.schedule.liturgy.year && date.getTime() >= year.date.getTime()) {
-                            Object.assign($scope.schedule.liturgy, AppUtil.pick(year, 'year'));
+                        if($scope.schedule.liturgy.year === year.id) {
+                            $scope.schedule.liturgy.year = year;
                         }
                     }
                 };
@@ -270,16 +279,22 @@ app.controller("ScheduleCtrl", [
 
         //parse liturgy
         for(let liturgy of $scope.liturgies) {
-            if(liturgy.name === $scope.schedule.liturgy.name && liturgy.year === $scope.schedule.liturgy.year) {
+            if(liturgy.name === $scope.schedule.liturgy.name && liturgy.year === $scope.schedule.liturgy.year.id) {
                 $scope.schedule.liturgy.id = liturgy.id;
+                $scope.schedule.liturgy.year = $scope.schedule.liturgy.year.id;
             }
         }
 
+        //set liturgy
         if($scope.schedule.liturgy.id) {
-            Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'id', 'intention'));
+            Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'id', 'year', 'intention'));
         } else {
             Object.assign(liturgy, AppUtil.pick($scope.schedule.liturgy, 'name', 'year', 'intention'));
         }
+
+        //set intention
+        liturgy.intention = liturgy.intention && liturgy.intention.name && !liturgy.intention.id && {name: liturgy.intention.name} || null;
+        !liturgy.intention && delete liturgy.intention;
 
         //create payload
         payload = {

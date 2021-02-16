@@ -30,7 +30,7 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
 
                             config.tables[table].fields.forEach(field => {
                                 switch(true) {
-                                    case field === 'date':
+                                    case field.startsWith('date'):
                                         value[field] = parseDate(record.fields[field]);
                                         break;
 
