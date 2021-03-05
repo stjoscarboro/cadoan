@@ -7,13 +7,14 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
      *
      * @param table
      * @param config
+     * @param refId
      *
      * @return {*}
      */
-    service.getData = (table, config) => {
+    service.getData = (table, config, refId) => {
         let deferred = $q.defer(),
-            url = `${config.url}/${table}?api_key=${config.key}`,
-            records = [];
+            url = `${config.url}/${table}${refId ? '/' + refId : ''}?api_key=${config.key}`,
+            results = [];
 
         let loadURL = (url, offset) => {
             let deferred = $q.defer();
@@ -25,7 +26,8 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
                     //success
                     response => {
                         //process records
-                        (response.data['records'] || []).forEach(record => {
+                        let records = response.data['records'] || (response.data ? [response.data] : []);
+                        records.forEach(record => {
                             let value = {refId: record.id};
 
                             config.tables[table].fields.forEach(field => {
@@ -43,7 +45,7 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
                                 }
                             });
 
-                            records.push(value);
+                            results.push(value);
                         });
 
                         //process next page
@@ -70,8 +72,8 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
             .then(
                 //success
                 () => {
-                    records.sort((r1, r2) => { return parseInt(r1.id) - parseInt(r2.id); });
-                    deferred.resolve(records);
+                    results.sort((r1, r2) => { return parseInt(r1.id) - parseInt(r2.id); });
+                    deferred.resolve(results);
                 },
 
                 //failure
@@ -191,6 +193,20 @@ app.factory('AirtableService', ['$q', '$http', 'DelayHttp', ($q, $http, DelayHtt
 
         date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
         return date;
+    };
+
+    /**
+     * sortByLocale
+     *
+     * @param array
+     * @param property
+     */
+    service.sortByLocale = (array, property) => {
+        array && array.sort((v1, v2) => {
+            let p1 = typeof v1 === 'object' && property ? v1[property] : v1,
+                p2 = typeof v2 === 'object' && property ? v2[property] : v2;
+            return p1 && p2 ? p1.localeCompare(p2) : 0;
+        });
     };
 
     return service;
